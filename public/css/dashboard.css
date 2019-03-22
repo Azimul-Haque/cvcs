@@ -1,0 +1,43 @@
+.table-fixed-left table,
+.table-fixed-right table {
+  border-collapse: collapse;
+}
+.table-fixed-right td,
+.table-fixed-right th,
+.table-fixed-left td,
+.table-fixed-left th {
+  border: 1px solid #00897b ;
+  padding: 7px 5px;
+}
+.table-fixed-left {
+  width: 110px;
+  float: left;
+  position: relative;
+  white-space: nowrap;
+  text-align: left;
+  border: 1px solid #00897b ;
+  z-index: 2;
+}
+.table-fixed-left-side, .table-fixed-right-side {
+  width: 100%;
+}
+.table-fixed-right-side {
+  background: #fff;
+  color: #00897b ;
+}
+.table-fixed-right {
+  width: calc(100% - 110px);
+  right: 15px;
+  overflow-x: scroll;
+  border: 1px solid #00897b ;
+  white-space: nowrap;
+}
+.table-fixed-right td,
+.table-fixed-right th {
+  padding: 7px 10px;
+  cursor: pointer;
+  text-align: center;
+}
+.table-fixed-right td:hover {
+  color: #000;
+}
