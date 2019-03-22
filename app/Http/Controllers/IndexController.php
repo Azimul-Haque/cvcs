@@ -33,6 +33,11 @@ class IndexController extends Controller
         return view('index.index')->withBlogs($blogs);
     }
 
+    public function getAbout()
+    {
+        return view('index.about');
+    }
+
     public function getJourney()
     {
         return view('index.journey');

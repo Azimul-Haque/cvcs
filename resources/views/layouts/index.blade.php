@@ -69,7 +69,7 @@
                     <!-- address -->
                     <div class="col-md-4 col-sm-4 text-center">
                         <i class="icon-map-pin small-icon black-text"></i>
-                        <h6 class="black-text margin-two no-margin-bottom">CVCS</h6>
+                        <h6 class="black-text margin-two no-margin-bottom">Dhaka, Bangladesh</h6>
                     </div>
                     <!-- end address -->
                     <!-- email -->
@@ -152,7 +152,7 @@
                     <!-- logo -->
                     <div class="col-md-6 col-sm-6 col-xs-12 footer-logo text-right xs-text-center">
                         <a href="{{ route('index.index') }}">
-                            <img src="{{ asset('vendor/hcode/images/logo-light-gray.png') }}" alt="" />
+                            <img src="{{ asset('images/custom.png') }}" alt="" />
                         </a>
                     </div>
                     <!-- end logo -->

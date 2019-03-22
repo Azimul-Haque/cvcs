@@ -1,5 +1,5 @@
 <!-- slider -->
-<section id="slider" class="no-padding content-top-margin">
+<section id="slider" class="no-padding ">
     <div id="owl-demo" class="owl-carousel owl-theme owl-half-slider owl-small-slider">
         <!-- slider item #1 -->
         <div class="item owl-bg-img" style="background-image:url('{{ asset('images/slider/1.jpg') }}');">

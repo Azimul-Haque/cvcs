@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'IIT Alumni',
+    'title' => 'CVCS',
 
     'title_prefix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>IIT</b>Alumni',
+    'logo' => '<b>CV</b>CS',
 
-    'logo_mini' => '<b>IIT</b>A',
+    'logo_mini' => '<b>CV</b>CS',
 
     /*
     |--------------------------------------------------------------------------

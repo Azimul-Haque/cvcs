@@ -17,6 +17,7 @@ Route::get('/clear', ['as'=>'clear','uses'=>'IndexController@clear']);
 // index routes
 // index routes
 Route::get('/', ['as'=>'index.index','uses'=>'IndexController@index']);
+Route::get('/about', ['as'=>'index.about','uses'=>'IndexController@getAbout']);
 Route::get('/journey', ['as'=>'index.journey','uses'=>'IndexController@getJourney']);
 Route::get('/constitution', ['as'=>'index.constitution','uses'=>'IndexController@getConstitution']);
 Route::get('/faq', ['as'=>'index.faq','uses'=>'IndexController@getFaq']);

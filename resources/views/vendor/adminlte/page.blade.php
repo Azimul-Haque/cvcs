@@ -87,7 +87,7 @@
                               <!-- Menu Footer-->
                               <li class="user-footer">
                                 <div class="pull-left">
-                                  <a href="{{ route('users.edit', Auth::User()->id) }}" class="btn btn-default btn-flat">Profile</a>
+                                  <a href="#!" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
                                   @if(config('adminlte.logout_method') == 'GET' || !config('adminlte.logout_method') && version_compare(\Illuminate\Foundation\Application::VERSION, '5.3.0', '<'))

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'IIT Alumni')
+@section('title', 'CVCS')
 
 @section('content_header')
     <h1>Dashboard</h1>

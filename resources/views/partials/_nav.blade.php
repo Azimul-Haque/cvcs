@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top nav-transparent overlay-nav sticky-nav nav-border-bottom bg-white" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top nav-transparent overlay-nav sticky-nav  nav-border-bottom @if(Request::is('/')) nav-white @else bg-white @endif" role="navigation">
     <div class="container">
         <div class="row">
             <!-- logo -->
@@ -7,28 +7,28 @@
                     <img alt="" src="{{ asset('images/custom.png') }}" class="logo" style="max-height: 60px;" />
                 </a>
                 <a class="logo-dark" href="{{ route('index.index') }}">
-                    <img alt="" src="{{ asset('images/custom.png') }}" class="logo" style="max-height: 60px;" />
+                    <img alt="" src="{{ asset('images/custom.png') }}" class="logo" style="max-height: 60px;" /> {{-- kaaj ta korte hobe --}}
                 </a>
             </div>
             <!-- end logo -->
             <!-- search and cart  -->
-            <div class="col-md-1 no-padding-left search-cart-header pull-right">
-                <div id="top-search">
-                    <!-- nav search -->
-                    <a href="#search-header" class="header-search-form">
-                        <i class="fa fa-search search-button"></i>
-                    </a>
-                    <!-- end nav search -->
-                </div>
-                <!-- search input-->
-                <form id="search-header" method="post" action="#" name="search-header" class="mfp-hide search-form-result">
-                    <div class="search-form position-relative">
-                        <button type="submit" class="fa fa-search close-search search-button"></button>
-                        <input type="text" name="search" class="search-input" placeholder="Enter your keywords..." autocomplete="off">
-                    </div>
-                </form>
-
-            </div>
+           <!--  <div class="col-md-1 no-padding-left search-cart-header pull-right">
+               <div id="top-search">
+                   nav search
+                   <a href="#search-header" class="header-search-form">
+                       <i class="fa fa-search search-button"></i>
+                   </a>
+                   end nav search
+               </div>
+               search input
+               <form id="search-header" method="post" action="#" name="search-header" class="mfp-hide search-form-result">
+                   <div class="search-form position-relative">
+                       <button type="submit" class="fa fa-search close-search search-button"></button>
+                       <input type="text" name="search" class="search-input" placeholder="Enter your keywords..." autocomplete="off">
+                   </div>
+               </form>
+           
+           </div> -->
             <!-- end search and cart  -->
             <!-- toggle navigation -->
             <div class="navbar-header col-sm-8 col-xs-2 pull-right">
@@ -90,6 +90,9 @@
                                 </li>
                             </ul>
                         </li> --}}
+                        <li>
+                            <a href="{{ route('index.about') }}">আমাদের সম্পর্কে</a>
+                        </li>
                         <li>
                             <a href="{{ route('index.gallery') }}">গ্যালারি</a>
                         </li>
