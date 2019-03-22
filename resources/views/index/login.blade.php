@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    IIT Alumni | Login
+    CVCS | Login
 @endsection
 
 @section('css')

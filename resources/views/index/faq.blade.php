@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    IIT Alumni | FAQ
+    CVCS | FAQ
 @endsection
 
 @section('css')

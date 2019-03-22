@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    IIT Alumni | Journey of DUIITAA
+    CVCS | Journey of DUIITAA
 @endsection
 
 @section('css')

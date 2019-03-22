@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top nav-transparent overlay-nav sticky-nav  nav-border-bottom @if(Request::is('/')) nav-white @else bg-white @endif" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top nav-transparent overlay-nav sticky-nav  nav-border-bottom nav-white @if(Request::is('/')) @else bg-royal-blue @endif" role="navigation">
     <div class="container">
         <div class="row">
             <!-- logo -->
@@ -136,7 +136,7 @@
                         </li>
                         @else
                         <li>
-                            <a href="{{ route('index.login') }}" class="">লগইন</a>
+                            <a href="{{ url('login') }}" class="">লগইন</a>
                         </li>
                         @endif
                         <!-- end menu item -->

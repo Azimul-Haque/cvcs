@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    IIT Alumni | Ad Hoc Committee
+    CVCS | Ad Hoc Committee
 @endsection
 
 @section('css')

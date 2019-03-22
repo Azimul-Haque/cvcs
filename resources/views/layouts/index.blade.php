@@ -45,6 +45,15 @@
             <script src="{{ asset('vendor/hcode/js/html5shiv.js') }}"></script>
         <![endif]-->
     @yield('css')
+    <style type="text/css">
+        @font-face {
+          font-family: kalpurush;
+          src: url({{ asset('font/kalpurush.ttf') }});
+        }
+        body, h1, h2, h3, h4, h5, h6, p, a, span, li, td {
+            font-family: kalpurush;
+        }
+    </style>
 </head>
 
 <body>
@@ -212,6 +221,20 @@
     <script type="text/javascript" src="{{ asset('vendor/hcode/js/main.js') }}"></script>
     @include('partials._messages')
     @yield('js')
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/5c954f9c101df77a8be4044a/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 
 <!-- Mirrored from www.themezaa.com/html/h-code/portfolio-short-description.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Sep 2018 20:27:12 GMT -->

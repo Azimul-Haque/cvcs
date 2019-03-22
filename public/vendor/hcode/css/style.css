@@ -8,7 +8,7 @@
  body{
      font-family: 'Open Sans', sans-serif;
      -webkit-font-smoothing: antialiased;
-     font-size:13px;
+     font-size:14px;
      color:#626262;
      line-height:23px;
      letter-spacing: 0.02em 
@@ -164,7 +164,7 @@
      line-height: 30px
 }
  h3 {
-     font-size:14px;
+     font-size:18px;
      letter-spacing:inherit;
      font-weight:700;
 }
@@ -178,12 +178,12 @@
  h5 {
      letter-spacing: 2px;
      font-weight:600;
-     font-size:11px
+     font-size:13px
 }
  h6 {
      font-family: 'Open Sans', sans-serif;
      letter-spacing: 1px;
-     font-size: 13px;
+     font-size: 12px;
      font-weight: 400;
      line-height: 20px
 }
@@ -475,7 +475,10 @@
      background-color: #fcfcfc !important;
 }
  .bg-gray {
-    background-color: #f6f6f6 !important;
+    background-color: #dbdada !important; /*actual gray f6f6f6*/
+}
+ .bg-royal-blue {
+    background-color: #002366 !important;
 }
  .bg-yellow-ochre {
      background-color: #997546 !important;
@@ -588,7 +591,7 @@
      height: 4px;
      margin: 0 auto;
      width: 30px;
-     margin:7% auto
+     margin:2% auto
 }
  .separator-line-vertical {
      width:7px;
@@ -1188,7 +1191,7 @@
      height: 60px;
 }
  .shrink-nav {
-     background-color:#FFF;
+     background-color:#002366; /*actual #FFF*/
 }
  .sticky-nav{
      position: fixed;
@@ -1239,7 +1242,7 @@
      color: #fff
 }
  .nav-white.shrink-nav .navbar-nav li a {
-     color: #000
+     color: #fff
 }
  .nav-white.sticky-nav .navbar-nav li a:hover, .nav-white.sticky-nav .navbar-nav > .open > a {
      border-bottom-color: #fff
@@ -2201,7 +2204,7 @@
 }
  footer ul li a {
      color: #626262;
-     font-size: 11px;
+     font-size: 15px;
      text-transform: uppercase;
      letter-spacing: 1px
 }
