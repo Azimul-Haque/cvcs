@@ -9,35 +9,141 @@
 
 @section('content')
     <!-- head section -->
-      <section class="content-top-margin page-title page-title-small bg-gray">
+      <section class="content-top-margin wow fadeInUp">
           <div class="container">
               <div class="row">
-                  <div class="col-lg-8 col-md-7 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
-                      <!-- page title -->
-                      <h1 class="black-text">CVCS সম্পর্কে</h1>
-                      <!-- end page title -->
+                  <!-- section title -->
+                  <div class="col-md-6 col-sm-6 xs-margin-bottom-four">
+                      <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">আমরা কারা</span>
                   </div>
-                  <div class="col-lg-4 col-md-5 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
-                      <!-- breadcrumb -->
-                      <ul>
-                          <li><a href="#">নীড় পাতা</a></li>
-                          <li><a href="#">CVCS সম্পর্কে</a></li>
-                      </ul>
-                      <!-- end breadcrumb -->
+                  <!-- end section title -->
+                  <!-- section highlight text -->
+                  <div class="col-md-6 col-sm-6 text-right xs-text-left">
+                      <span class="text-extra-large font-weight-400"></span>
                   </div>
+                  <!-- end section highlight text -->
               </div>
           </div>
       </section>
       <!-- end head section -->
       <!-- WHATWEDO section -->
-      <section class="border-bottom-light sm-text-center">
+      <section class="wow fadeInUp bg-gray">
           <div class="container">
               <div class="row">
-                  {{-- <div class="col-md-7 wow fadeInUp" data-wow-duration="400ms"><img src="{{ asset('vendor/hcode/images/about-us-img-12.png') }}" alt=""/></div> --}}
-                  <div class="col-md-12 wow fadeInUp" data-wow-duration="800ms">
-                      <h1 class="title-extra-large font-weight-700 black-text margin-five text-transform-none">CVCS</h1>
-                      <p class="title-small font-weight-300">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum industry's standard dummy text.</p>
-                      <p class="title-small font-weight-300">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                  <div class="col-md-8">
+                      <span class="title-large text-uppercase letter-spacing-1 font-weight-600 black-text"></span>
+                      <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
+                      <p class="">
+                          {{ $whoweare->text }}
+                      </p>
+                  </div>
+                  <div class="col-md-4">
+                      <center>
+                        <img src="{{ asset('images/whoweare.png') }}" class="img-responsive" style="max-height: 250px;">
+                      </center>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      <section class="wow fadeInUp">
+          <div class="container">
+              <div class="row">
+                  <!-- section highlight text -->
+                  <div class="col-md-6 col-sm-6 text-right xs-text-left">
+                      <span class="text-extra-large font-weight-400"></span>
+                  </div>
+                  <!-- end section highlight text -->
+                  <!-- section title -->
+                  <div class="col-md-6 col-sm-6 xs-margin-bottom-four text-right">
+                      <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">আমরা যা করি</span>
+                  </div>
+                  <!-- end section title -->
+              </div>
+          </div>
+      </section>
+      <section class="wow fadeInUp bg-fast-pink">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-4">
+                      <center>
+                        <img src="{{ asset('images/whatwedo.png') }}" class="img-responsive" style="max-height: 250px;">
+                      </center>
+                  </div>
+                  <div class="col-md-8">
+                      <span class="title-large text-uppercase letter-spacing-1 font-weight-600 white-text"></span>
+                      <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
+                      <p class="white-text">
+                          {{ $whoweare->text }}
+                      </p>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section class="wow fadeInUp">
+          <div class="container">
+              <div class="row">
+                  <!-- section title -->
+                  <div class="col-md-6 col-sm-6 xs-margin-bottom-four">
+                      <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">সদস্যপদ</span>
+                  </div>
+                  <!-- end section title -->
+                  <!-- section highlight text -->
+                  <div class="col-md-6 col-sm-6 text-right xs-text-left">
+                      <span class="text-extra-large font-weight-400"></span>
+                  </div>
+                  <!-- end section highlight text -->
+              </div>
+          </div>
+      </section>
+      <section class="wow fadeInUp bg-gray">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-8">
+                      <span class="title-large text-uppercase letter-spacing-1 font-weight-600 black-text"></span>
+                      <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
+                      <p class="">
+                          {{ $membership->text }}
+                      </p>
+                  </div>
+                  <div class="col-md-4">
+                      <center>
+                        <img src="{{ asset('images/membership.png') }}" class="img-responsive" style="max-height: 250px;">
+                      </center>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section class="wow fadeInUp">
+          <div class="container">
+              <div class="row">
+                  <!-- section highlight text -->
+                  <div class="col-md-6 col-sm-6 text-right xs-text-left">
+                      <span class="text-extra-large font-weight-400"></span>
+                  </div>
+                  <!-- end section highlight text -->
+                  <!-- section title -->
+                  <div class="col-md-6 col-sm-6 xs-margin-bottom-four text-right">
+                      <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">এক নজরে</span>
+                  </div>
+                  <!-- end section title -->
+              </div>
+          </div>
+      </section>
+      <section class="wow fadeInUp bg-yellow">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-4">
+                      <center>
+                        <img src="{{ asset('images/ataglance.png') }}" class="img-responsive" style="max-height: 250px;">
+                      </center>
+                  </div>
+                  <div class="col-md-8">
+                      <span class="title-large text-uppercase letter-spacing-1 font-weight-600 black-text"></span>
+                      <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
+                      <p class="white-text">
+                          {{ $ataglance->text }}
+                      </p>
                   </div>
               </div>
           </div>

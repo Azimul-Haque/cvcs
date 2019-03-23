@@ -108,6 +108,12 @@ return [
     */
 
     'menu' => [
+        'Homepage Management',
+        [
+            'text'   => 'Dashboard',
+            'route'  => 'dashboard.index',
+            'icon'   => 'home',
+        ],
         'MAIN NAVIGATION',
         [
             'text'   => 'Committee',

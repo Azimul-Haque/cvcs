@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
+use App\About;
 use App\Adhocmember;
 
 use DB;
@@ -33,7 +34,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $about = About::where('type', 'about')->get()->first();
+        $whoweare = About::where('type', 'whoweare')->get()->first();
+        $whatwedo = About::where('type', 'whatwedo')->get()->first();
+        $ataglance = About::where('type', 'ataglance')->get()->first();
+        $membership = About::where('type', 'membership')->get()->first();
+
+        return view('dashboard.index')
+                    ->withAbout($about)
+                    ->withWhoweare($whoweare)
+                    ->withWhatwedo($whatwedo)
+                    ->withAtaglance($ataglance)
+                    ->withMembership($membership);
     }
 
     public function getCommittee()
@@ -170,5 +182,19 @@ class DashboardController extends Controller
     public function getApplications()
     {
         return view('dashboard.index');
+    }
+
+    public function updateAbouts(Request $request, $id) {
+        $this->validate($request,array(
+            'text' => 'required',
+        ));
+
+        $about = About::find($id);
+        $about->text = $request->text;
+     
+        $about->save();
+        
+        Session::flash('success', 'Updated Successfully!');
+        return redirect()->route('dashboard.index');
     }
 }

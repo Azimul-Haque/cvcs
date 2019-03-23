@@ -9,6 +9,7 @@ use App\User;
 use App\Blog;
 use App\Category;
 use App\Adhocmember;
+use App\About;
 
 use Carbon\Carbon;
 use DB;
@@ -29,13 +30,25 @@ class IndexController extends Controller
 
     public function index()
     {
+        $about = About::where('type', 'about')->get()->first();
         $blogs = Blog::orderBy('id', 'DESC')->get()->take(4);
-        return view('index.index')->withBlogs($blogs);
+        return view('index.index')
+                    ->withAbout($about)
+                    ->withBlogs($blogs);
     }
 
     public function getAbout()
     {
-        return view('index.about');
+        $whoweare = About::where('type', 'whoweare')->get()->first();
+        $whatwedo = About::where('type', 'whatwedo')->get()->first();
+        $ataglance = About::where('type', 'ataglance')->get()->first();
+        $membership = About::where('type', 'membership')->get()->first();
+
+        return view('index.about')
+                    ->withWhoweare($whoweare)
+                    ->withWhatwedo($whatwedo)
+                    ->withAtaglance($ataglance)
+                    ->withMembership($membership);
     }
 
     public function getJourney()

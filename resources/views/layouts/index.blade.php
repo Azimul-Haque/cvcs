@@ -96,10 +96,10 @@
             <div class="row">
                 <div class="col-md-3 col-sm-3 footer-link1 xs-display-none">
                     <!-- headline -->
-                    <h5>আমাদের সম্পর্কে</h5>
+                    <h5>সিভিসিএস</h5>
                     <!-- end headline -->
                     <!-- text -->
-                    <p class="footer-text">সিভিসিএস সম্পর্কে...</p>
+                    <p class="footer-text">কাস্টোমস অ্যান্ড ভ্যাট কো=অপারেটিভ সোসাইটি</p>
                     <!-- end text -->
                 </div>
                 <div class="col-md-2 col-sm-3 col-xs-4 footer-link2 col-md-offset-3">
@@ -155,7 +155,7 @@
                 <div class="row margin-three">
                     <!-- copyright -->
                     <div class="col-md-6 col-sm-6 col-xs-12 copyright text-left letter-spacing-1 xs-text-center xs-margin-bottom-one">
-                        &copy; {{ date('Y') }} CVCS. Developed by ...
+                        &copy; {{ date('Y') }} CVCS. Developed by...
                     </div>
                     <!-- end copyright -->
                     <!-- logo -->

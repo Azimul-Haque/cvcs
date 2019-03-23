@@ -9,27 +9,45 @@
 
 @section('content')
     @extends('partials._slider')
-    <section>
+    <section id="about-studio" class="padding-three">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <span class="title-large text-uppercase letter-spacing-1 font-weight-600 black-text">আমরা কারা?</span>
-                    <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
-                    <p class="no-margin-bottom">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-                        it to make a type specimen book.</p>
-                    <a class="highlight-button-black-border btn btn-small no-margin-bottom inner-link sm-margin-bottom-ten" href="{{ route('index.about') }}">আরও পড়ুন</a>
+                <!-- section title -->
+                <div class="col-md-6 col-sm-6 xs-margin-bottom-four">
+                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">CVCS সম্পর্কে</span>
                 </div>
-                {{-- <div class="col-md-3 col-sm-6 text-center col-md-offset-1 xs-margin-bottom-ten">
-                    <img src="{{ asset('vendor/hcode/images/spa-img3.jpg') }}" class="xs-img-full" alt="" />
+                <!-- end section title -->
+                <!-- section highlight text -->
+                <div class="col-md-6 col-sm-6 text-right xs-text-left">
+                    <span class="text-extra-large font-weight-400"></span>
                 </div>
-                <div class="col-md-3 col-sm-6 text-center ">
-                    <img src="{{ asset('vendor/hcode/images/spa-img4.jpg') }}" class="xs-img-full" alt="" />
+                <!-- end section highlight text -->
+            </div>
+        </div>
+    </section>
+    <!-- section text -->
+    <section class="wow fadeInUp bg-gray no-padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-10 text-center center-col">
+                    <span class="margin-five no-margin-top display-block letter-spacing-2">স্থাপিত ২০১৯</span>
+                    <h1>কো-অপারেটিভ সোসাইটি সম্পর্কে</h1>
+                    <p class="text-med width-90 center-col margin-seven no-margin-bottom">
+                        {{ $about->text }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid margin-five no-margin-bottom">
+            <div class="row">
+                {{-- <div class="col-md-12 col-sm-12 col-xs-12 bg-fast-yellow padding-three text-center">
+                    <span class="text-small text-uppercase font-weight-600 black-text letter-spacing-2">Web Design &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Graphics &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Magento &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WordPress &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Applications</span>
                 </div> --}}
             </div>
         </div>
     </section>
-    <section class="wow fadeIn bg-gray">
+    <!-- end section text -->
+    <section class="wow fadeIn bg-yellow">
         <div class="container">
             <div class="row">
                 <!-- call to action -->
@@ -41,10 +59,10 @@
             </div>
         </div>
     </section>
-    <section style="">
+    <!-- <section style="">
         <div class="container">
             <div class="row">
-                <!-- features item -->
+                features item
                 <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center">
                     <h3>ইভেন্ট</h3>
                     <span class="title-small text-uppercase font-weight-700 black-text letter-spacing-1 margin-seven display-block">ইভেন্ট একঃ টাইটেল</span>
@@ -53,8 +71,8 @@
                         <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
                     </a>
                 </div>
-                <!-- end features item -->
-                <!-- features item -->
+                end features item
+                features item
                 <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center">
                     <h3>ইভেন্ট</h3>
                     <span class="title-small text-uppercase font-weight-700 black-text letter-spacing-1 margin-seven display-block">ইভেন্ট দুইঃ টাইটেল</span>
@@ -63,8 +81,8 @@
                         <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
                     </a>
                 </div>
-                <!-- end features item -->
-                <!-- features item -->
+                end features item
+                features item
                 <div class="col-md-4 col-sm-6 xs-margin-bottom-ten xs-text-center">
                     <h3>ইভেন্ট</h3>
                     <span class="title-small text-uppercase font-weight-700 black-text letter-spacing-1 margin-seven display-block">ইভেন্ট তিনঃ টাইটেল</span>
@@ -73,11 +91,11 @@
                         <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
                     </a>
                 </div>
-                <!-- end features item -->
-
+                end features item
+    
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- blog content section -->
 
     <!-- end blog content section -->
