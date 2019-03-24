@@ -16,7 +16,7 @@
 @stop
 
 @section('content')
-    <table class="table table-bordered">
+    <table class="table table-bordered table-condensed">
       <thead>
         <tr>
           <th>Title</th>
@@ -255,12 +255,6 @@
               }, 1000);
           }
       });
-    });
-  </script>
-  <script type="text/javascript">
-    $(function(){
-     $('a[title]').tooltip();
-     $('button[title]').tooltip();
     });
   </script>
 @stop

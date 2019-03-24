@@ -10,9 +10,23 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('vendor/hcode/images/apple-touch-icon-57x57.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('vendor/hcode/images/apple-touch-icon-72x72.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('vendor/hcode/images/apple-touch-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('images/favicons/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('images/favicons/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('images/favicons/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/favicons/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('images/favicons/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('images/favicons/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('images/favicons/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('images/favicons/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicons/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('images/favicons//android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/favicons/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('images/favicons//manifest.json') }}">
+    <meta name="msapplication-TileColor" content="#022265">
+    <meta name="msapplication-TileImage" content="{{ asset('images/favicons/ms-icon-144x144.png') }}">
+    <meta name="theme-color" content="#022265">
     <!-- animation -->
     <link rel="stylesheet" href="{{ asset('vendor/hcode/css/animate.css') }}" />
     <!-- bootstrap -->
@@ -72,10 +86,10 @@
             <div class="row">
                 <div class="col-md-3 col-sm-3 footer-link1 xs-display-none">
                     <!-- headline -->
-                    <h5>সিভিসিএস</h5>
+                    <h2>সিভিসিএস</h2>
                     <!-- end headline -->
                     <!-- text -->
-                    <p class="footer-text">কাস্টোমস অ্যান্ড ভ্যাট কো=অপারেটিভ সোসাইটি</p>
+                    <p class="footer-text">কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি</p>
                     <!-- end text -->
                 </div>
                 <div class="col-md-2 col-sm-3 col-xs-4 footer-link2 col-md-offset-3">
@@ -94,10 +108,10 @@
                     <!-- link -->
                     <ul class="list-inline footer-link text-uppercase">
                         <li>
-                            <a href="{{ route('blogs.index') }}">নোটিশ</a>
+                            <a href="{{ route('index.notice') }}">নোটিশ</a>
                         </li>
                         <li>
-                            <a href="{{ route('index.news') }}">গ্যালারি</a>
+                            <a href="{{ route('index.gallery') }}">গ্যালারি</a>
                         </li>
                         <li>
                             <a href="{{ route('index.events') }}">ইভেন্ট</a>
@@ -107,19 +121,19 @@
                 </div>
                 <div class="col-md-6 col-sm-12 footer-social text-right sm-text-center">
                     <!-- social media link -->
-                    <a target="_blank" href="https://www.facebook.com/">
+                    <a target="_blank" href="{{ $sharedbasicinfo->fb }}">
                         <i class="fa fa-facebook"></i>
                     </a>
-                    <a target="_blank" href="https://twitter.com/">
+                    <a target="_blank" href="{{ $sharedbasicinfo->twitter }}">
                         <i class="fa fa-twitter"></i>
                     </a>
-                    <a target="_blank" href="https://plus.google.com/">
+                    <a target="_blank" href="{{ $sharedbasicinfo->gplus }}">
                         <i class="fa fa-google-plus"></i>
                     </a>
-                    <a target="_blank" href="https://www.youtube.com/">
+                    <a target="_blank" href="{{ $sharedbasicinfo->ytube }}">
                         <i class="fa fa-youtube"></i>
                     </a>
-                    <a target="_blank" href="https://www.linkedin.com/">
+                    <a target="_blank" href="{{ $sharedbasicinfo->linkedin }}">
                         <i class="fa fa-linkedin"></i>
                     </a>
                     <!-- end social media link -->
@@ -131,7 +145,7 @@
                 <div class="row margin-three">
                     <!-- copyright -->
                     <div class="col-md-6 col-sm-6 col-xs-12 copyright text-left letter-spacing-1 xs-text-center xs-margin-bottom-one">
-                        &copy; {{ date('Y') }} CVCS. Developed by...
+                        &copy; {{ date('Y') }} CVCS. Developed by Loence Solutions
                     </div>
                     <!-- end copyright -->
                     <!-- logo -->

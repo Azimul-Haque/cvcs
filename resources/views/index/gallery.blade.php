@@ -17,7 +17,7 @@
                     <h1 class="black-text">গ্যালারি</h1>
                     <!-- end page title -->
                     <!-- page title tagline -->
-                    <span class="black-text xs-display-none">CVCS-এর স্থিরচিত্র সংকলন</span>
+                    <span class="black-text xs-display-none">সিভিসিএস-এর স্থিরচিত্র সংকলন</span>
                     <!-- end title tagline -->
                 </div>
             </div>

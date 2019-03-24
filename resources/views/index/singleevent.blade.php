@@ -44,7 +44,7 @@
                             <img src="{{ asset('images/events/default_event.jpg') }}" alt="Event Image" >
                         @endif
                     </div>
-                    <p>{{ $event->description }}</p>
+                    <p class="about-us-page-text">{{ $event->description }}</p>
                     
                 </div>
                 <!-- end content  -->

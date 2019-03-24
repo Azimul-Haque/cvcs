@@ -13,6 +13,7 @@ use App\About;
 use App\Album;
 use App\Event;
 use App\Notice;
+use App\Formmessage;
 
 use Carbon\Carbon;
 use DB;
@@ -27,6 +28,8 @@ class IndexController extends Controller
 {
     public function __construct()
     {
+        parent::__construct();
+        
         $this->middleware('guest')->only('getLogin');
         $this->middleware('auth')->only('getProfile');
     }
@@ -220,6 +223,30 @@ class IndexController extends Controller
         Session::flash('success', 'You have registered Successfully!');
         Auth::login($application);
         return redirect()->route('index.profile', $unique_key);
+    }
+
+    public function storeFormMessage(Request $request)
+    {
+        $this->validate($request,array(
+            'name'                      => 'required|max:255',
+            'email'                     => 'required|max:255',
+            'message'                   => 'required',
+            'contact_sum_result_hidden'   => 'required',
+            'contact_sum_result'   => 'required'
+        ));
+
+        if($request->contact_sum_result_hidden == $request->contact_sum_result) {
+            $message = new Formmessage;
+            $message->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
+            $message->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
+            $message->message = htmlspecialchars(preg_replace("/\s+/", " ", $request->message));
+            $message->save();
+            
+            Session::flash('success', 'আপনার বার্তা আমাদের কাছে পৌঁছেছে। ধন্যবাদ!');
+            return redirect()->route('index.contact');
+        } else {
+            return redirect()->route('index.contact')->with('warning', 'যোগফল ভুল হয়েছে! আবার চেষ্টা করুন।')->withInput();
+        }
     }
 
 

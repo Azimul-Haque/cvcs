@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row">
                 <!-- section title -->
-                <div class="col-md-12 col-sm-12 xs-margin-bottom-four text-center wow fadeInUp">
+                <div class="col-md-12 col-sm-12 xs-margin-bottom-four wow fadeInUp">
                     <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">ইভেন্ট তালিকা</span>
                 </div>
                 <!-- end section title -->
@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row">
                 @foreach($events as $event)
-                    <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center" style="min-height: 350px;">
+                    <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center" style="min-height: 370px;">
                         <div class="blog-post">
                             <div class="blog-post-images">
                                 <a href="{{ route('index.singleevent', $event->id) }}">

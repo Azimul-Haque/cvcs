@@ -34,6 +34,7 @@ Route::get('/application', ['as'=>'index.application','uses'=>'IndexController@g
 Route::get('/member/login', ['as'=>'index.login','uses'=>'IndexController@getLogin']);
 Route::get('/member/profile/{unique_key}', ['as'=>'index.profile','uses'=>'IndexController@getProfile']);
 Route::post('/member/application/store', ['as'=>'index.storeapplication','uses'=>'IndexController@storeApplication']);
+Route::post('/contact/form/message/store', ['as'=>'index.storeformmessage','uses'=>'IndexController@storeFormMessage']);
 // index routes
 // index routes
 
@@ -84,6 +85,10 @@ Route::get('/dashboard/blogs', ['as'=>'dashboard.blogs','uses'=>'DashboardContro
 Route::get('/dashboard/members', ['as'=>'dashboard.members','uses'=>'DashboardController@getMembers']);
 Route::get('/dashboard/applications', ['as'=>'dashboard.applications','uses'=>'DashboardController@getApplications']);
 
+Route::get('/dashboard/form/messages', ['as'=>'dashboard.formmessage','uses'=>'DashboardController@getFormMessages']);
+Route::delete('/dashboard/form/message/{id}/delete', ['as'=>'dashboard.deleteformmessage','uses'=>'DashboardController@deleteFormMessage']);
+
 Route::put('/dashboard/abouts/{id}', ['as'=>'dashboard.updateabouts','uses'=>'DashboardController@updateAbouts']);
+Route::put('/dashboard/basic/information/{id}', ['as'=>'dashboard.updatebasicinfo','uses'=>'DashboardController@updateBasicInfo']);
 // dashboard routes
 // dashboard routes

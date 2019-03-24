@@ -57,7 +57,13 @@
                 <div class="navbar-custom-menu">
 
                     <ul class="nav navbar-nav">
-                        <li class="dropdown user user-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <li class="tasks-menu">
+                            <a href="{{ url('/') }}" target="_blank" title="View Website" data-placement="bottom">
+                                <i class="fa fa-fw fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown user user-menu">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <img src="{{ asset('images/user.png')}}" class="user-image" alt="User Image">
                             {{ Auth::User()->name }}</a>
                             <ul class="dropdown-menu" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -166,6 +172,12 @@
 
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script type="text/javascript">
+      $(function(){
+       $('a[title]').tooltip();
+       $('button[title]').tooltip();
+      });
+    </script>
     @stack('js')
     @yield('js')
 @stop

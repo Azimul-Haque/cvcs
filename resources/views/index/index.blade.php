@@ -52,8 +52,8 @@
             <div class="row">
                 <!-- call to action -->
                 <div class="col-md-7 col-sm-12 text-center center-col">
-                    <p class="title-large text-uppercase letter-spacing-1 black-text font-weight-600 wow fadeIn">CVCS-এর সদস্যপদ পেতে...</p>
-                    <a href="contact-us.html" class="highlight-button-black-border btn margin-six wow fadeInUp">আবেদন করুন!</a>
+                    <p class="title-large text-uppercase letter-spacing-1 royal-blue-text font-weight-600 wow fadeIn">সিভিসিএস-এর সদস্যপদ পেতে...</p>
+                    <a href="#!" class="highlight-button-royal-blue-border btn margin-six wow fadeInUp">আবেদন করুন!</a>
                 </div>
                 <!-- end call to action -->
             </div>

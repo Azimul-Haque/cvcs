@@ -28,7 +28,7 @@
   </div> --}}
   <script type="text/javascript">
     if($(window).width() > 768) {
-      toastr.success('{{Session::get('success')}}', 'SUCCESS').css('width', '400px;');
+      toastr.success('{{Session::get('success')}}', 'SUCCESS').css('width', '400px');
     } else {
       toastr.success('{{Session::get('success')}}', 'SUCCESS').css('width', ($(window).width()-25)+'px');
     }

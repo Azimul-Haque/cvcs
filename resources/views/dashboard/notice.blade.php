@@ -16,7 +16,7 @@
 @stop
 
 @section('content')
-    <table class="table table-bordered">
+    <table class="table table-bordered table-condensed">
       <thead>
         <tr>
           <th>Title</th>
@@ -115,7 +115,7 @@
                   </div>
                   <div class="modal-footer">
                     {!! Form::model($notice, ['route' => ['dashboard.deletenotice', $notice->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::submit('Delete Event', array('class' => 'btn btn-danger')) !!}
+                        {!! Form::submit('Delete Notice', array('class' => 'btn btn-danger')) !!}
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     {!! Form::close() !!}
                   </div>
@@ -195,12 +195,6 @@
             toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
           }
       });
-    });
-  </script>
-  <script type="text/javascript">
-    $(function(){
-     $('a[title]').tooltip();
-     $('button[title]').tooltip();
     });
   </script>
 @stop

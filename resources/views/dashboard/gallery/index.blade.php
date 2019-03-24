@@ -16,7 +16,7 @@
 @stop
 
 @section('content')
-    <table class="table table-bordered">
+    <table class="table table-bordered table-condensed">
       <thead>
         <tr>
           <th>Name</th>

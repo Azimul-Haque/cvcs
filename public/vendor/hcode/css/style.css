@@ -321,6 +321,9 @@
 }
  .black-text{
      color:#000 !important
+} 
+ .royal-blue-text{
+     color:#002366 !important
 }
  .yellow-text{
      color:#e6af2a !important
@@ -4792,6 +4795,19 @@
  .highlight-button-black-border:hover {
      border: 4px solid #000;
      background-color: #000;
+     color: #fff
+}
+ .highlight-button-royal-blue-border{
+     border: 4px solid #002366;
+     background-color: transparent;
+     font-size: 22px;
+     padding: 20px 30px;
+     color: #002366;
+     font-weight: 700
+}
+ .highlight-button-royal-blue-border:hover {
+     border: 4px solid #002366;
+     background-color: #002366;
      color: #fff
 }
  .highlight-button-orange-border{

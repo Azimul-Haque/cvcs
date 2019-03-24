@@ -129,6 +129,11 @@ return [
             'route'  => 'dashboard.notice',
             'icon'   => 'bell-o',
         ],
+        [
+            'text'   => 'Form Messages',
+            'route'  => 'dashboard.formmessage',
+            'icon'   => 'envelope-o',
+        ],
         // 'MAIN NAVIGATION',
         // [
         //     'text'   => 'Committee',

@@ -32,15 +32,15 @@
             <div class="row">
                 <!-- office address -->
                 <div class="col-md-6 col-sm-6 xs-margin-bottom-ten">
-                    <div class="position-relative"><img src="{{ asset('images/contact2.jpg') }}" alt=""/><a class="highlight-button-dark btn btn-very-small view-map no-margin bg-black white-text" href="https://www.google.co.in/maps" target="_blank">View Map</a></div>
-                    <p class="text-med black-text letter-spacing-1 margin-ten no-margin-bottom text-uppercase font-weight-600 xs-margin-top-five">London - Head Office</p>
+                    <div class="position-relative"><img src="{{ asset('images/contact2.jpg') }}" alt=""/><a class="highlight-button-dark btn btn-very-small view-map no-margin bg-black white-text" href="https://www.google.co.in/maps" target="_blank">মানচিত্রে দেখুন</a></div>
+                    <p class="text-med black-text letter-spacing-1 margin-ten no-margin-bottom text-uppercase font-weight-600 xs-margin-top-five">হেডঅফিস</p>
                     <div class="row">
                         <div class="col-md-6">
-                            <p>Suite 4 Level 1, 141 Bridge Road<br> London, E2 8DY.</p>
+                            <p>{{ $sharedbasicinfo->address }}</p>
                         </div>
-                        <div class="col-md-6">
-                            <p class="black-text no-margin-bottom"><strong>T.</strong> 123 456 7890</p>
-                            <p class="black-text"><strong>E.</strong> <a href="mailto:no-reply@domain.com">no-reply@domain.com</a></p>
+                        <div class="col-md-6 xs-text-center">
+                            <p class="black-text no-margin-bottom"><strong><i class="fa fa-phone black-text"></i></strong> {{ $sharedbasicinfo->contactno }}</p>
+                            <p class="black-text"><strong><i class="fa fa-envelope black-text"></i></strong> <a href="mailto:{{ $sharedbasicinfo->email }}">{{ $sharedbasicinfo->email }}</a></p>
                         </div>
                     </div>
                 </div>
@@ -48,13 +48,21 @@
 
                 <div class="col-md-6 col-sm-6">
                     <span class="text-large letter-spacing-2 black-text font-weight-600 agency-title">যোগাযোগ ফরম</span><br/><br/><br/>
-                    <form id="contactusform" action="javascript:void(0)" method="post">
+                    {!! Form::open(['route' => 'index.storeformmessage', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div id="success" class="no-margin-lr"></div>
-                        <input name="name" type="text" placeholder="Your Name" />
-                        <input name="email" type="text" placeholder="Your Email"  />
-                        <textarea placeholder="Your Message" name="comment"></textarea>
-                        <input name="email" type="text" placeholder="5 + 7 = ?"  />
-                        <button id="contact-us-button" type="submit" class="highlight-button-dark btn btn-small button xs-margin-bottom-five">Send message</button>
+                        <input name="name" type="text" value="{{ old('name') }}" placeholder="আপনার নাম" required="" />
+                        <input name="email" type="email" value="{{ old('email') }}" placeholder="ইমেইল এড্রেস"  required="" />
+                        <textarea name="message" placeholder="বার্তা লিখুন"  required="">{{ old('message') }}</textarea>
+                        
+                        @php
+                          $contact_num1 = rand(1,20);
+                          $contact_num2 = rand(1,20);
+                          $contact_sum_result_hidden = $contact_num1 + $contact_num2;
+                        @endphp
+                        <input type="hidden" name="contact_sum_result_hidden" value="{{ $contact_sum_result_hidden }}">
+                        <input type="text" name="contact_sum_result" id="" class="form-control" placeholder="{{ $contact_num1 }} এবং {{ $contact_num2 }} এর যোগফল ইংরেজি সংখ্যায় লিখুন" required="">
+                        
+                        <button id="contact-us-button" type="submit" class="highlight-button-dark btn btn-small button xs-margin-bottom-five"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
                     </form>
                 </div>
             </div>

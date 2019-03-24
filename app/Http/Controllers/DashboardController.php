@@ -10,6 +10,8 @@ use App\Album;
 use App\Albumphoto;
 use App\Event;
 use App\Notice;
+use App\Basicinfo;
+use App\Formmessage;
 use App\Adhocmember;
 
 use DB;
@@ -27,6 +29,8 @@ class DashboardController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
+        
         $this->middleware('auth');
         $this->middleware('admin');
     }
@@ -43,13 +47,15 @@ class DashboardController extends Controller
         $whatwedo = About::where('type', 'whatwedo')->get()->first();
         $ataglance = About::where('type', 'ataglance')->get()->first();
         $membership = About::where('type', 'membership')->get()->first();
+        $basicinfo = Basicinfo::where('id', 1)->first();
 
         return view('dashboard.index')
                     ->withAbout($about)
                     ->withWhoweare($whoweare)
                     ->withWhatwedo($whatwedo)
                     ->withAtaglance($ataglance)
-                    ->withMembership($membership);
+                    ->withMembership($membership)
+                    ->withBasicinfo($basicinfo);
     }
 
     public function getCommittee()
@@ -173,7 +179,7 @@ class DashboardController extends Controller
     {
         $this->validate($request,array(
             'name'          =>   'required',
-            'attachment'    => 'required|mimes:doc,docx,ppt,pptx,png,jpg,pdf,gif|max:2000'
+            'attachment'    => 'required|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif|max:2000'
         ));
 
         $notice = new Notice;
@@ -197,7 +203,7 @@ class DashboardController extends Controller
     {
         $this->validate($request,array(
             'name'          =>   'required',
-            'attachment'    => 'sometimes|mimes:doc,docx,ppt,pptx,png,jpg,pdf,gif|max:2000'
+            'attachment'    => 'sometimes|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif|max:2000'
         ));
 
         $notice = Notice::find($id);
@@ -470,5 +476,50 @@ class DashboardController extends Controller
         
         Session::flash('success', 'Updated Successfully!');
         return redirect()->route('dashboard.index');
+    }
+
+    public function updateBasicInfo(Request $request, $id) {
+        $this->validate($request,array(
+            'address'      => 'required',
+            'contactno'    => 'required',
+            'email'        => 'required',
+            'fb'           => 'sometimes',
+            'twitter'      => 'sometimes',
+            'gplus'        => 'sometimes',
+            'ytube'        => 'sometimes',
+            'linkedin'     => 'sometimes'
+        ));
+
+        $basicinfo = Basicinfo::find($id);
+        $basicinfo->address = $request->address;
+        $basicinfo->contactno = $request->contactno;
+        $basicinfo->email = $request->email;
+        $basicinfo->fb = $request->fb;
+        $basicinfo->twitter = $request->twitter;
+        $basicinfo->gplus = $request->gplus;
+        $basicinfo->ytube = $request->ytube;
+        $basicinfo->linkedin = $request->linkedin;
+     
+        $basicinfo->save();
+        
+        Session::flash('success', 'Updated Successfully!');
+        return redirect()->route('dashboard.index');
+    }
+
+    public function getFormMessages() 
+    {
+        $messages = Formmessage::orderBy('id', 'desc')->paginate(10);
+
+        return view('dashboard.formmessage')
+                    ->withMessages($messages);
+    }
+
+    public function deleteFormMessage($id) 
+    {
+        $messages = Formmessage::find($id);
+        $messages->delete();
+
+        Session::flash('success', 'Deleted Successfully!');
+        return redirect()->route('dashboard.formmessage');
     }
 }

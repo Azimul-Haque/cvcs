@@ -31,13 +31,13 @@
         <div class="container">
             <div class="row">
                 @foreach($notices as $notice)
-                    <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center">
+                    <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center" style="min-height: 250px !important;">
                         <span class="title-small text-uppercase font-weight-700 black-text letter-spacing-1 margin-seven display-block">{{ $notice->name }}</span>
                         <span class="text-large">
                             {{ date('F d, Y', strtotime($notice->created_at)) }}
                         </span>
                         <p class="margin-ten no-margin-top width-90 xs-center-col xs-display-block"></p>
-                        <a href="{{ asset('files/'. $notice->attachment) }}" class="highlight-link text-uppercase white-text" download="">Download Attachment
+                        <a href="{{ asset('files/'. $notice->attachment) }}" class="highlight-link text-uppercase white-text" style="position: absolute; bottom: 10px;" download="">ফাইল ডাউনলোড করুন
                             <i class="fa fa-long-arrow-down extra-small-icon white-text"></i>
                         </a>
                     </div>

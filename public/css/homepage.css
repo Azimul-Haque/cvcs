@@ -3,6 +3,6 @@
   */
 
 .about-us-page-text {
-    font-size: 16px;
-    line-height: 29px;
+    font-size: 16px !important;
+    line-height: 29px !important;;
 }
