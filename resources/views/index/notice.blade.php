@@ -9,7 +9,7 @@
 
 @section('content')
     <!-- head section -->
-    <section class="content-top-margin wow fadeInUp bg-fast-pink">
+    <section class="content-top-margin wow fadeInUp bg-gray">
         <div class="container">
             <div class="row">
                 <!-- section title -->
@@ -30,37 +30,26 @@
     <section style="padding: 13px 0;">
         <div class="container">
             <div class="row">
-                <!-- features item -->
-                <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center">
-                    <span class="title-small text-uppercase font-weight-700 black-text letter-spacing-1 margin-seven display-block">We're ready to start now</span>
-                    <span class="text-large">March 24, 2019</span>
-                    <p class="margin-ten no-margin-top width-90 xs-center-col xs-display-block">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the text.</p>
-                    <a href="#" class="highlight-link text-uppercase white-text">Download Attachment
-                        <i class="fa fa-long-arrow-down extra-small-icon white-text"></i>
-                    </a>
+                @foreach($notices as $notice)
+                    <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center">
+                        <span class="title-small text-uppercase font-weight-700 black-text letter-spacing-1 margin-seven display-block">{{ $notice->name }}</span>
+                        <span class="text-large">
+                            {{ date('F d, Y', strtotime($notice->created_at)) }}
+                        </span>
+                        <p class="margin-ten no-margin-top width-90 xs-center-col xs-display-block"></p>
+                        <a href="{{ asset('files/'. $notice->attachment) }}" class="highlight-link text-uppercase white-text" download="">Download Attachment
+                            <i class="fa fa-long-arrow-down extra-small-icon white-text"></i>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <br/><br/>
+                        @include('pagination.default', ['paginator' => $notices])
+                    </div>
                 </div>
-                <!-- end features item -->
-                <!-- features item -->
-                <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center">
-                    <span class="title-small text-uppercase font-weight-700 black-text letter-spacing-1 margin-seven display-block">Always on time call support</span>
-                    <span class="text-large">March 24, 2019</span>
-                    <p class="margin-ten no-margin-top width-90 xs-center-col xs-display-block">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the text.</p>
-                    <a href="#" class="highlight-link text-uppercase white-text">Download Attachment
-                        <i class="fa fa-long-arrow-down extra-small-icon white-text"></i>
-                    </a>
-                </div>
-                <!-- end features item -->
-                <!-- features item -->
-                <div class="col-md-4 col-sm-6 xs-margin-bottom-ten xs-text-center">
-                    <span class="title-small text-uppercase font-weight-700 black-text letter-spacing-1 margin-seven display-block">We Deliver the highest quality</span>
-                    <span class="text-large">March 24, 2019</span>
-                    <p class="margin-ten no-margin-top width-90 xs-center-col xs-display-block">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the text.</p>
-                    <a href="#" class="highlight-link text-uppercase white-text">Download Attachment
-                        <i class="fa fa-long-arrow-down extra-small-icon white-text"></i>
-                    </a>
-                </div>
-                <!-- end features item -->
-
             </div>
         </div>
     </section>

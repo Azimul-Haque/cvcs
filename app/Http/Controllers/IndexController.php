@@ -12,6 +12,7 @@ use App\Adhocmember;
 use App\About;
 use App\Album;
 use App\Event;
+use App\Notice;
 
 use Carbon\Carbon;
 use DB;
@@ -76,18 +77,28 @@ class IndexController extends Controller
 
     public function getNews()
     {
-        return view('index.notice');
+
     }
 
     public function getNotice()
     {
-        //
+        $notices = Notice::orderBy('id', 'desc')->paginate(6);
+        return view('index.notice')->withNotices($notices);
     }
 
-    public function getEvents()
+    public function getEvents() // paginate korte hobe...
     {
         $events = Event::orderBy('id', 'desc')->get();
         return view('index.event')->withevents($events);
+    }
+
+    public function singleEvent($id)
+    {
+        $event = Event::find($id);
+        $events = Event::orderBy('id', 'desc')->get()->take(7);
+        return view('index.singleevent')
+                                ->withEvent($event)
+                                ->withEvents($events);
     }
 
     public function getGallery()

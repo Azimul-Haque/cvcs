@@ -25,50 +25,27 @@
     <section style="padding: 13px 0;">
         <div class="container">
             <div class="row">
-                <!-- features item -->
-                <div class="col-md-4 col-sm-6 xs-margin-bottom-ten xs-text-center">
-                    <div class="blog-post">
-                        <div class="blog-post-images"><a href="#!"><img src="{{ asset('images/portfolio-img27.jpg') }}" alt=""></a></div>
-                        <div class="post-details">
-                            <a href="#!" class="post-title text-large">Standard post with picture</a>
-                            <span class="post-author">10 January 2015</span>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                            <br/>
-                            <a href="#" class="highlight-link text-uppercase white-text">Read More
-                                <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
-                            </a>
+                @foreach($events as $event)
+                    <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center" style="min-height: 350px;">
+                        <div class="blog-post">
+                            <div class="blog-post-images">
+                                <a href="{{ route('index.singleevent', $event->id) }}">
+                                    @if(($event->image != null) || !file_exists(public_path('images/events/'.$event->image)))
+                                        <img src="{{ asset('images/events/'.$event->image) }}" alt="">
+                                    @else
+                                        <img src="{{ asset('images/events/default_event.jpg') }}" alt="">
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="post-details">
+                                <a href="{{ route('index.singleevent', $event->id) }}" class="post-title text-large">{{ $event->name }}</a>
+                                <span class="post-author">
+                                    {{ date('F d, Y', strtotime($event->created_at)) }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-6 xs-margin-bottom-ten xs-text-center">
-                    <div class="blog-post">
-                        <div class="blog-post-images"><a href="#!"><img src="{{ asset('images/portfolio-img27.jpg') }}" alt=""></a></div>
-                        <div class="post-details">
-                            <a href="#!" class="post-title text-large">Standard post with picture</a>
-                            <span class="post-author">10 January 2015</span>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                            <br/>
-                            <a href="#" class="highlight-link text-uppercase white-text">Read More
-                                <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 xs-margin-bottom-ten xs-text-center">
-                    <div class="blog-post">
-                        <div class="blog-post-images"><a href="#!"><img src="{{ asset('images/portfolio-img27.jpg') }}" alt=""></a></div>
-                        <div class="post-details">
-                            <a href="#!" class="post-title text-large">Standard post with picture</a>
-                            <span class="post-author">10 January 2015</span>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                            <br/>
-                            <a href="#" class="highlight-link text-uppercase white-text">Read More
-                                <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- end features item -->
+                @endforeach
             </div>
         </div>
     </section>

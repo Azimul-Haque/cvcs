@@ -14,7 +14,7 @@
             <div class="row">
                 <!-- section title -->
                 <div class="col-md-6 col-sm-6 xs-margin-bottom-four">
-                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">CVCS সম্পর্কে</span>
+                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">সিভিসিএস সম্পর্কে</span>
                 </div>
                 <!-- end section title -->
                 <!-- section highlight text -->
@@ -31,8 +31,8 @@
             <div class="row">
                 <div class="col-md-10 col-sm-10 text-center center-col">
                     <span class="margin-five no-margin-top display-block letter-spacing-2">স্থাপিত ২০১৯</span>
-                    <h1>কো-অপারেটিভ সোসাইটি সম্পর্কে</h1>
-                    <p class="text-med width-90 center-col margin-seven no-margin-bottom">
+                    <h1>কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি</h1>
+                    <p class="text-med width-90 center-col margin-seven no-margin-bottom about-us-page-text">
                         {{ $about->text }}
                     </p>
                 </div>

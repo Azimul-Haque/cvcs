@@ -100,7 +100,7 @@
                             <a href="{{ route('index.events') }}">ইভেন্ট</a>
                         </li>
                         <li>
-                            <a href="{{ route('index.news') }}">নোটিশ</a>
+                            <a href="{{ route('index.notice') }}">নোটিশ</a>
                         </li>
                         <!-- <li>
                             <a href="{{ route('index.members') }}">Members</a>

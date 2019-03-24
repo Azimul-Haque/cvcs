@@ -9,6 +9,7 @@ use App\About;
 use App\Album;
 use App\Albumphoto;
 use App\Event;
+use App\Notice;
 use App\Adhocmember;
 
 use DB;
@@ -162,11 +163,154 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
+    public function getNotice()
+    {
+        $notices = Notice::orderBy('id', 'desc')->get();
+        return view('dashboard.notice')->withNotices($notices);
+    }
+
+    public function storeNotice(Request $request)
+    {
+        $this->validate($request,array(
+            'name'          =>   'required',
+            'attachment'    => 'required|mimes:doc,docx,ppt,pptx,png,jpg,pdf,gif|max:2000'
+        ));
+
+        $notice = new Notice;
+        $notice->name = $request->name;
+
+        if($request->hasFile('attachment')) {
+            $newfile = $request->file('attachment');
+            $filename   = 'file_'.time() .'.' . $newfile->getClientOriginalExtension();
+            $location   = public_path('/files/');
+            $newfile->move($location, $filename);
+            $notice->attachment = $filename;
+        }
+        
+        $notice->save();
+        
+        Session::flash('success', 'Notice has been created successfully!');
+        return redirect()->route('dashboard.notice');
+    }
+
+    public function updateNotice(Request $request, $id)
+    {
+        $this->validate($request,array(
+            'name'          =>   'required',
+            'attachment'    => 'sometimes|mimes:doc,docx,ppt,pptx,png,jpg,pdf,gif|max:2000'
+        ));
+
+        $notice = Notice::find($id);
+        $notice->name = $request->name;
+
+        if($request->hasFile('attachment')) {
+            // delete the previous one
+            $file_path = public_path('files/'. $notice->attachment);
+            if(File::exists($file_path)) {
+                File::delete($file_path);
+            }
+            $newfile = $request->file('attachment');
+            $filename   = 'file_'.time() .'.' . $newfile->getClientOriginalExtension();
+            $location   = public_path('/files/');
+            $newfile->move($location, $filename);
+            $notice->attachment = $filename;
+        }
+        
+        $notice->save();
+        
+        Session::flash('success', 'Notice has been created successfully!');
+        return redirect()->route('dashboard.notice');
+    }
+
+    public function deleteNotice($id)
+    {
+        $notice = Notice::find($id);
+        $file_path = public_path('files/'. $notice->attachment);
+        if(File::exists($file_path)) {
+            File::delete($file_path);
+        }
+        $notice->delete();
+        
+        Session::flash('success', 'Deleted Successfully!');
+        return redirect()->route('dashboard.notice');
+    }
+
     public function getEvents()
     {
         $events = Event::orderBy('id', 'desc')->get();
-
         return view('dashboard.event')->withEvents($events);
+    }
+
+    public function storeEvent(Request $request)
+    {
+        $this->validate($request,array(
+            'name'          =>   'required',
+            'description'   =>   'required',
+            'image'         =>   'sometimes|image|max:500'
+        ));
+
+        $event = new Event;
+        $event->name = $request->name;
+        $event->description = $request->description;
+
+        // image upload
+        if($request->hasFile('image')) {
+            $image      = $request->file('image');
+            $filename   = 'event_' . time() .'.' . $image->getClientOriginalExtension();
+            $location   = public_path('/images/events/'. $filename);
+            Image::make($image)->resize(400, 250)->save($location);
+            $event->image = $filename;
+        }
+        
+        $event->save();
+        
+        Session::flash('success', 'Event has been created successfully!');
+        return redirect()->route('dashboard.events');
+    }
+
+    public function updateEvent(Request $request, $id)
+    {
+        $this->validate($request,array(
+            'name'          =>   'required',
+            'description'   =>   'required',
+            'image'         =>   'sometimes|image|max:500'
+        ));
+
+        $event = Event::find($id);
+        $event->name = $request->name;
+        $event->description = $request->description;
+
+        // image upload
+        if($request->hasFile('image')) {
+            // delete the previous one
+            $image_path = public_path('images/events/'. $event->image);
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+            $image      = $request->file('image');
+            $filename   = 'event_' . time() .'.' . $image->getClientOriginalExtension();
+            $location   = public_path('/images/events/'. $filename);
+            Image::make($image)->resize(400, 250)->save($location);
+            $event->image = $filename;
+        }
+        
+        $event->save();
+        
+        Session::flash('success', 'Event has been updated successfully!');
+        return redirect()->route('dashboard.events');
+    }
+
+    public function deleteEvent($id)
+    {
+        $event = Event::find($id);
+        $image_path = public_path('images/events/'. $event->image);
+        if(File::exists($image_path)) {
+            File::delete($image_path);
+        }
+        $event->delete();
+        
+        Session::flash('success', 'Deleted Successfully!');
+        return redirect()->route('dashboard.events');
     }
 
     public function getGallery()
@@ -186,10 +330,10 @@ class DashboardController extends Controller
         $this->validate($request,array(
             'name'          =>   'required',
             'description'   =>   'required',
-            'thumbnail'     =>   'required|image|max:250',
-            'image1'        =>   'sometimes|image|max:250',
-            'image2'        =>   'sometimes|image|max:250',
-            'image3'        =>   'sometimes|image|max:250',
+            'thumbnail'     =>   'required|image|max:500',
+            'image1'        =>   'sometimes|image|max:500',
+            'image2'        =>   'sometimes|image|max:500',
+            'image3'        =>   'sometimes|image|max:500',
             'caption1'      =>   'sometimes',
             'caption2'      =>   'sometimes',
             'caption3'      =>   'sometimes'
@@ -206,7 +350,7 @@ class DashboardController extends Controller
             $thumbnail      = $request->file('thumbnail');
             $filename   = 'thumbnail_' . time() .'.' . $thumbnail->getClientOriginalExtension();
             $location   = public_path('/images/gallery/'. $filename);
-            Image::make($thumbnail)->resize(500, 312)->save($location);
+            Image::make($thumbnail)->resize(600, 375)->save($location);
             $album->thumbnail = $filename;
         }
         
@@ -218,7 +362,7 @@ class DashboardController extends Controller
                 $image      = $request->file('image'.$i);
                 $filename   = 'photo_'. $i . time() .'.' . $image->getClientOriginalExtension();
                 $location   = public_path('/images/gallery/'. $filename);
-                Image::make($image)->resize(400, 250)->save($location);
+                Image::make($image)->resize(600, 375)->save($location);
                 $albumphoto = new Albumphoto;
                 $albumphoto->album_id = $album->id;
                 $albumphoto->image = $filename;
@@ -227,8 +371,42 @@ class DashboardController extends Controller
             }
         }
         
-        Session::flash('success', 'Album has been creaed successfully!');
+        Session::flash('success', 'Album has been created successfully!');
         return redirect()->route('dashboard.gallery');
+    }
+
+    public function getEditGalleryAlbum($id) {
+        $album = Album::find($id);
+        return view('dashboard.gallery.edit')->withAlbum($album);
+    }
+
+    public function updateGalleryAlbum(Request $request, $id) {
+        $this->validate($request,array(
+            'name'          =>   'required',
+            'description'   =>   'required',
+            'image'         =>   'sometimes|image|max:500',
+            'caption'       =>   'sometimes'
+        ));
+
+        $album = Album::find($id);
+        $album->name =$request->name;
+        $album->description =$request->description;
+        $album->save();
+
+        if($request->hasFile('image')) {
+            $image      = $request->file('image');
+            $filename   = 'photo_'. time() .'.' . $image->getClientOriginalExtension();
+            $location   = public_path('/images/gallery/'. $filename);
+            Image::make($image)->resize(600, 375)->save($location);
+            $albumphoto = new Albumphoto;
+            $albumphoto->album_id = $album->id;
+            $albumphoto->image = $filename;
+            $albumphoto->caption = $request->caption;
+            $albumphoto->save();
+        }
+
+        Session::flash('success', 'Uploaded successfully!');
+        return redirect()->route('dashboard.editgallery', $id);
     }
 
     public function deleteAlbum($id)
@@ -250,6 +428,19 @@ class DashboardController extends Controller
 
         Session::flash('success', 'Deleted Successfully!');
         return redirect()->route('dashboard.gallery');
+    }
+
+    public function deleteSinglePhoto($id)
+    {
+        $albumphoto = Albumphoto::find($id);
+        $image_path = public_path('images/gallery/'. $albumphoto->image);
+        if(File::exists($image_path)) {
+            File::delete($image_path);
+        }
+        $albumphoto->delete();
+        
+        Session::flash('success', 'Deleted Successfully!');
+        return redirect()->route('dashboard.editgallery', $albumphoto->album->id);
     }
 
     public function getBlogs()

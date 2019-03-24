@@ -9,15 +9,15 @@
 
 @section('content')
     <!-- head section -->
-    <section class="content-top-margin page-title bg-fast-pink">
+    <section class="content-top-margin page-title bg-gray">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-sm-12 text-center wow fadeInUp">
                     <!-- page title -->
-                    <h1 class="white-text">গ্যালারি</h1>
+                    <h1 class="black-text">গ্যালারি</h1>
                     <!-- end page title -->
                     <!-- page title tagline -->
-                    <span class="white-text xs-display-none">CVCS-এর স্থিরচিত্র সংকলন</span>
+                    <span class="black-text xs-display-none">CVCS-এর স্থিরচিত্র সংকলন</span>
                     <!-- end title tagline -->
                 </div>
             </div>

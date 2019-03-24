@@ -124,6 +124,11 @@ return [
             'route'  => 'dashboard.events',
             'icon'   => 'bullhorn',
         ],
+        [
+            'text'   => 'Notice',
+            'route'  => 'dashboard.notice',
+            'icon'   => 'bell-o',
+        ],
         // 'MAIN NAVIGATION',
         // [
         //     'text'   => 'Committee',

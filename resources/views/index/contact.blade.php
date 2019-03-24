@@ -9,7 +9,7 @@
 
 @section('content')
     <!-- head section -->
-    <section class="content-top-margin wow fadeInUp bg-yellow">
+    <section class="content-top-margin wow fadeInUp bg-gray">
         <div class="container">
             <div class="row">
                 <!-- section title -->

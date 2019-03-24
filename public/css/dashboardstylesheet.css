@@ -302,6 +302,25 @@ ul.errorlist > li {
     width: 40px;
 }
 
+.delete-img-box {
+    display: inline-block;
+    position: relative;
+    background:rgba(0,0,0,0.6);
+}
+
+.delete-img-box img:hover{
+    opacity: .5;
+    transition: all .5s;
+    -webkit-transition: all .5s;
+}
+
+.delete-img-box a {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #FFF;
+}
+
 /* print css */
 @media print {
     header, .footer, footer {

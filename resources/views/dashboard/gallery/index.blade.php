@@ -34,7 +34,7 @@
             <img src="{{ asset('images/gallery/'.$album->thumbnail) }}" class="img-responsive" style="max-height: 80px;">
           </td>
           <td>
-            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editMemberModal{{ $album->id }}" data-backdrop="static" title="অ্যালবাম সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
+            <a href="{{ route('dashboard.editgallery', $album->id) }}" class="btn btn-sm btn-primary" title="অ্যালবাম সম্পাদনা করুন"><i class="fa fa-pencil"></i></a>
             
 
             <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAlbumModal{{ $album->id }}" data-backdrop="static" title="অ্যালবাম ডিলিট করুন"><i class="fa fa-trash-o"></i></button>

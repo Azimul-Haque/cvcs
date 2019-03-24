@@ -33,7 +33,7 @@
                 <textarea class="form-control text-blue" name="description" style="resize: none; height: 100px;" placeholder="Album Description" required=""></textarea>
               </div>
               <div class="form-group">
-                  <label>Thumbnail (800 X 500 &amp; 250Kb Max):</label>
+                  <label>Thumbnail (8:5 &amp; 500Kb Max):</label>
                   <div class="input-group">
                       <span class="input-group-btn">
                           <span class="btn btn-default btn-file">
@@ -63,7 +63,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                        <label>Photo 1 (800 X 500 &amp; 250Kb Max):</label>
+                        <label>Photo 1 (8:5 &amp; 500Kb Max):</label>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
@@ -93,7 +93,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                        <label>Photo 2 (800 X 500 &amp; 250Kb Max):</label>
+                        <label>Photo 2 (8:5 &amp; 500Kb Max):</label>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
@@ -123,7 +123,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                        <label>Photo 3 (800 X 500 &amp; 250Kb Max):</label>
+                        <label>Photo 3 (8:5 &amp; 500Kb Max):</label>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
@@ -189,9 +189,9 @@
       $("#image").change(function(){
           readURL(this);
           var filesize = parseInt((this.files[0].size)/1024);
-          if(filesize > 250) {
+          if(filesize > 500) {
             $("#image").val('');
-            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
+            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
               setTimeout(function() {
                 $("#img-upload").attr('src', '{{ asset('images/800x500.png') }}');
               }, 1000);
@@ -209,9 +209,9 @@
       $("#image1").change(function(){
           readURL1(this);
           var filesize = parseInt((this.files[0].size)/1024);
-          if(filesize > 250) {
+          if(filesize > 500) {
             $("#image1").val('');
-            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
+            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
               setTimeout(function() {
                 $("#img-upload1").attr('src', '{{ asset('images/800x500.png') }}');
               }, 1000);
@@ -229,9 +229,9 @@
       $("#image2").change(function(){
           readURL2(this);
           var filesize = parseInt((this.files[0].size)/1024);
-          if(filesize > 250) {
+          if(filesize > 500) {
             $("#image2").val('');
-            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
+            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
               setTimeout(function() {
                 $("#img-upload2").attr('src', '{{ asset('images/800x500.png') }}');
               }, 1000);
@@ -249,9 +249,9 @@
       $("#image3").change(function(){
           readURL3(this);
           var filesize = parseInt((this.files[0].size)/1024);
-          if(filesize > 250) {
+          if(filesize > 500) {
             $("#image3").val('');
-            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
+            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
               setTimeout(function() {
                 $("#img-upload3").attr('src', '{{ asset('images/800x500.png') }}');
               }, 1000);

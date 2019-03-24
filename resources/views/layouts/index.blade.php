@@ -68,32 +68,6 @@
 
     <!-- footer -->
     <footer>
-        <div class=" bg-white footer-top">
-            <div class="container">
-                <div class="row margin-four">
-                    <!-- phone -->
-                    <div class="col-md-4 col-sm-4 text-center">
-                        <i class="icon-phone small-icon black-text"></i>
-                        <h6 class="black-text margin-two no-margin-bottom">+88 017********</h6>
-                    </div>
-                    <!-- end phone -->
-                    <!-- address -->
-                    <div class="col-md-4 col-sm-4 text-center">
-                        <i class="icon-map-pin small-icon black-text"></i>
-                        <h6 class="black-text margin-two no-margin-bottom">Dhaka, Bangladesh</h6>
-                    </div>
-                    <!-- end address -->
-                    <!-- email -->
-                    <div class="col-md-4 col-sm-4 text-center">
-                        <i class="icon-envelope small-icon black-text"></i>
-                        <h6 class="margin-two no-margin-bottom">
-                            <a href="mailto:no-reply@cvcsbd.com" class="black-text">info@cvcsbd.com</a>
-                        </h6>
-                    </div>
-                    <!-- end email -->
-                </div>
-            </div>
-        </div>
         <div class="container footer-middle">
             <div class="row">
                 <div class="col-md-3 col-sm-3 footer-link1 xs-display-none">
