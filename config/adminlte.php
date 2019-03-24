@@ -114,44 +114,54 @@ return [
             'route'  => 'dashboard.index',
             'icon'   => 'home',
         ],
-        'MAIN NAVIGATION',
         [
-            'text'   => 'Committee',
-            'route'  => 'dashboard.committee',
-            'icon'   => 'users',
-        ],
-        [
-            'text'   => 'News',
-            'route'  => 'dashboard.news',
-            'icon'   => 'newspaper-o',
+            'text' => 'Gallery',
+            'route'  => 'dashboard.gallery',
+            'icon' => 'picture-o',
         ],
         [
             'text'   => 'Events',
             'route'  => 'dashboard.events',
             'icon'   => 'bullhorn',
         ],
-        [
-            'text' => 'Gallery',
-            'route'  => 'dashboard.gallery',
-            'icon' => 'picture-o',
-        ],
-        'BLOG',
-        [
-            'text' => 'Category',
-            'route'  => 'dashboard.blogs',
-            'icon' => 'ticket',
-        ],
-        'MEMBERSHIP',
-        [
-            'text' => 'Applications &amp; Payments',
-            'route'  => 'dashboard.applications',
-            'icon' => 'line-chart',
-        ],
-        [
-            'text' => 'Members',
-            'route'  => 'dashboard.members',
-            'icon' => 'address-book-o',
-        ],
+        // 'MAIN NAVIGATION',
+        // [
+        //     'text'   => 'Committee',
+        //     'route'  => 'dashboard.committee',
+        //     'icon'   => 'users',
+        // ],
+        // [
+        //     'text'   => 'News',
+        //     'route'  => 'dashboard.news',
+        //     'icon'   => 'newspaper-o',
+        // ],
+        // [
+        //     'text'   => 'Events',
+        //     'route'  => 'dashboard.events',
+        //     'icon'   => 'bullhorn',
+        // ],
+        // [
+        //     'text' => 'Gallery',
+        //     'route'  => 'dashboard.gallery',
+        //     'icon' => 'picture-o',
+        // ],
+        // 'BLOG',
+        // [
+        //     'text' => 'Category',
+        //     'route'  => 'dashboard.blogs',
+        //     'icon' => 'ticket',
+        // ],
+        // 'MEMBERSHIP',
+        // [
+        //     'text' => 'Applications &amp; Payments',
+        //     'route'  => 'dashboard.applications',
+        //     'icon' => 'line-chart',
+        // ],
+        // [
+        //     'text' => 'Members',
+        //     'route'  => 'dashboard.members',
+        //     'icon' => 'address-book-o',
+        // ],
     ],
 
     /*

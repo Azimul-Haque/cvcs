@@ -339,8 +339,11 @@ class ComposerStaticInit5ba844acaeab7533148c65467b83a279
     public static $classMap = array (
         'CreateAboutsTable' => __DIR__ . '/../..' . '/database/migrations/2019_03_23_220755_create_abouts_table.php',
         'CreateAdhocmembersTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_28_051530_create_adhocmembers_table.php',
+        'CreateAlbumphotosTable' => __DIR__ . '/../..' . '/database/migrations/2019_03_24_013204_create_albumphotos_table.php',
+        'CreateAlbumsTable' => __DIR__ . '/../..' . '/database/migrations/2019_03_24_013136_create_albums_table.php',
         'CreateBlogsTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_25_113938_create_blogs_table.php',
         'CreateCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_25_114844_create_categories_table.php',
+        'CreateEventsTable' => __DIR__ . '/../..' . '/database/migrations/2019_03_24_055417_create_events_table.php',
         'CreateLikesTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_26_095608_create_likes_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',

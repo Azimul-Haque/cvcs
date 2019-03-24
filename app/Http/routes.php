@@ -22,9 +22,11 @@ Route::get('/journey', ['as'=>'index.journey','uses'=>'IndexController@getJourne
 Route::get('/constitution', ['as'=>'index.constitution','uses'=>'IndexController@getConstitution']);
 Route::get('/faq', ['as'=>'index.faq','uses'=>'IndexController@getFaq']);
 Route::get('/adhoc', ['as'=>'index.adhoc','uses'=>'IndexController@getAdhoc']);
-Route::get('/notice', ['as'=>'index.news','uses'=>'IndexController@getNews']);
+Route::get('/news', ['as'=>'index.news','uses'=>'IndexController@getNews']);
+Route::get('/notice', ['as'=>'index.notice','uses'=>'IndexController@getNotice']);
 Route::get('/events', ['as'=>'index.events','uses'=>'IndexController@getEvents']);
 Route::get('/gallery', ['as'=>'index.gallery','uses'=>'IndexController@getGallery']);
+Route::get('/gallery/{id}/single', ['as'=>'index.gallery.single','uses'=>'IndexController@getSingleGalleryAlbum']);
 Route::get('/members', ['as'=>'index.members','uses'=>'IndexController@getMembers']);
 Route::get('/contact', ['as'=>'index.contact','uses'=>'IndexController@getContact']);
 Route::get('/application', ['as'=>'index.application','uses'=>'IndexController@getApplication']);
@@ -58,8 +60,14 @@ Route::put('/dashboard/committee/{id}', ['as'=>'dashboard.updatecommittee','uses
 Route::delete('/dashboard/committee/{id}', ['as'=>'dashboard.deletecommittee','uses'=>'DashboardController@deleteCommittee']);
 
 Route::get('/dashboard/news', ['as'=>'dashboard.news','uses'=>'DashboardController@getNews']);
+
 Route::get('/dashboard/events', ['as'=>'dashboard.events','uses'=>'DashboardController@getEvents']);
+
 Route::get('/dashboard/gallery', ['as'=>'dashboard.gallery','uses'=>'DashboardController@getGallery']);
+Route::get('/dashboard/gallery/create', ['as'=>'dashboard.creategallery','uses'=>'DashboardController@getCreateGallery']);
+Route::post('/dashboard/gallery/store', ['as'=>'dashboard.storegallery','uses'=>'DashboardController@storeGalleryAlbum']);
+Route::delete('/dashboard/gallery/{id}', ['as'=>'dashboard.deletealbum','uses'=>'DashboardController@deleteAlbum']);
+
 Route::get('/dashboard/blogs', ['as'=>'dashboard.blogs','uses'=>'DashboardController@getBlogs']);
 Route::get('/dashboard/members', ['as'=>'dashboard.members','uses'=>'DashboardController@getMembers']);
 Route::get('/dashboard/applications', ['as'=>'dashboard.applications','uses'=>'DashboardController@getApplications']);

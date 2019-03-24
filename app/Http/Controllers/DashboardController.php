@@ -6,6 +6,9 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 
 use App\About;
+use App\Album;
+use App\Albumphoto;
+use App\Event;
 use App\Adhocmember;
 
 use DB;
@@ -161,12 +164,92 @@ class DashboardController extends Controller
 
     public function getEvents()
     {
-        return view('dashboard.index');
+        $events = Event::orderBy('id', 'desc')->get();
+
+        return view('dashboard.event')->withEvents($events);
     }
 
     public function getGallery()
     {
-        return view('dashboard.index');
+        $albums = Album::orderBy('id', 'desc')->get();
+
+        return view('dashboard.gallery.index')->withAlbums($albums);
+    }
+
+    public function getCreateGallery()
+    {
+        return view('dashboard.gallery.create');
+    }
+
+    public function storeGalleryAlbum(Request $request)
+    {
+        $this->validate($request,array(
+            'name'          =>   'required',
+            'description'   =>   'required',
+            'thumbnail'     =>   'required|image|max:250',
+            'image1'        =>   'sometimes|image|max:250',
+            'image2'        =>   'sometimes|image|max:250',
+            'image3'        =>   'sometimes|image|max:250',
+            'caption1'      =>   'sometimes',
+            'caption2'      =>   'sometimes',
+            'caption3'      =>   'sometimes'
+
+        ));
+
+        $album = new Album;
+        $album->name = $request->name;
+        $album->description = $request->description;
+        $album->description = $request->description;
+
+        // thumbnail upload
+        if($request->hasFile('thumbnail')) {
+            $thumbnail      = $request->file('thumbnail');
+            $filename   = 'thumbnail_' . time() .'.' . $thumbnail->getClientOriginalExtension();
+            $location   = public_path('/images/gallery/'. $filename);
+            Image::make($thumbnail)->resize(500, 312)->save($location);
+            $album->thumbnail = $filename;
+        }
+        
+        $album->save();
+
+        // photo (s) upload
+        for($i = 1; $i <= 3; $i++) {
+            if($request->hasFile('image'.$i)) {
+                $image      = $request->file('image'.$i);
+                $filename   = 'photo_'. $i . time() .'.' . $image->getClientOriginalExtension();
+                $location   = public_path('/images/gallery/'. $filename);
+                Image::make($image)->resize(400, 250)->save($location);
+                $albumphoto = new Albumphoto;
+                $albumphoto->album_id = $album->id;
+                $albumphoto->image = $filename;
+                $albumphoto->caption = $request->input('caption'.$i);
+                $albumphoto->save();
+            }
+        }
+        
+        Session::flash('success', 'Album has been creaed successfully!');
+        return redirect()->route('dashboard.gallery');
+    }
+
+    public function deleteAlbum($id)
+    {
+        $album = Album::find($id);
+        $thumbnail_path = public_path('images/gallery/'. $album->thumbnail);
+        if(File::exists($thumbnail_path)) {
+            File::delete($thumbnail_path);
+        }
+        if($album->albumphotoes->count() > 0) {
+            foreach ($album->albumphotoes as $albumphoto) {
+                $image_path = public_path('images/gallery/'. $albumphoto->image);
+                if(File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+            }
+        }
+        $album->delete();
+
+        Session::flash('success', 'Deleted Successfully!');
+        return redirect()->route('dashboard.gallery');
     }
 
     public function getBlogs()

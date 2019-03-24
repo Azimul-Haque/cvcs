@@ -10,6 +10,8 @@ use App\Blog;
 use App\Category;
 use App\Adhocmember;
 use App\About;
+use App\Album;
+use App\Event;
 
 use Carbon\Carbon;
 use DB;
@@ -74,17 +76,31 @@ class IndexController extends Controller
 
     public function getNews()
     {
+        return view('index.notice');
+    }
+
+    public function getNotice()
+    {
         //
     }
 
     public function getEvents()
     {
-        //
+        $events = Event::orderBy('id', 'desc')->get();
+        return view('index.event')->withevents($events);
     }
 
     public function getGallery()
     {
-        //
+        $albums = Album::orderBy('id', 'desc')->get();
+        return view('index.gallery')->withAlbums($albums);
+    }
+
+    public function getSingleGalleryAlbum($id)
+    {
+        $album = Album::where('id', $id)->get()->first();
+
+        return view('index.singlegallery')->withAlbum($album);
     }
 
     public function getMembers()
@@ -97,7 +113,7 @@ class IndexController extends Controller
 
     public function getContact()
     {
-        //
+        return view('index.contact');
     }
 
     public function getApplication()

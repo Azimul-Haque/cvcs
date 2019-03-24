@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="{{ asset('vendor/hcode/css/style.css') }}" />
     <!-- responsive -->
     <link rel="stylesheet" href="{{ asset('vendor/hcode/css/responsive.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset('css/homepage.css') }}" />
     <!--[if IE]>
             <link rel="stylesheet" href="{{ asset('vendor/hcode/css/style-ie.css') }}" />
         <![endif]-->

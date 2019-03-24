@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'CVCS')
+@section('title', 'CVCS | Dashboard')
 
 @section('content_header')
-    <h1><i class="fa fa-cogs"></i> Dashboard (Homepage Customization)</h1>
+    <h1><i class="fa fa-pic"></i> Dashboard (Homepage Customization)</h1>
 @stop
 
 @section('content')
