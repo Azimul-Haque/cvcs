@@ -16,24 +16,42 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('unique_key');
             $table->string('role');
-            $table->integer('payment_status');
-            $table->integer('amount')->nullable();
-            $table->string('trxid')->nullable();
+            $table->integer('activation_status');
+
+            $table->string('name_bangla');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone');
+            $table->string('nid');
             $table->string('dob');
-            $table->string('degree');
-            $table->string('batch');
-            $table->string('passing_year');
-            $table->string('current_job')->nullable();
-            $table->string('designation')->nullable();
-            $table->string('address');
-            $table->string('fb')->nullable();
-            $table->string('twitter')->nullable();
-            $table->string('gplus')->nullable();
-            $table->string('linkedin')->nullable();
+            $table->string('gender');
+            $table->string('spouse');
+            $table->string('spouse_profession');
+            $table->string('father');
+            $table->string('mother');
+            $table->string('profession');
+            $table->string('designation');
+            $table->string('office');
+            $table->string('present_address');
+            $table->string('permanent_address');
+            $table->string('office_telephone');
+            $table->string('mobile');
+            $table->string('home_telephone');
+            $table->string('email')->unique();
             $table->string('image');
+
+            $table->string('nominee_one_name');
+            $table->integer('nominee_one_identity_type');
+            $table->string('nominee_one_identity_text');
+            $table->string('nominee_one_relation');
+            $table->string('nominee_one_percentage');
+            $table->string('nominee_one_image');
+
+            $table->string('nominee_two_name');
+            $table->integer('nominee_two_identity_type');
+            $table->string('nominee_two_identity_text');
+            $table->string('nominee_two_relation');
+            $table->string('nominee_two_percentage');
+            $table->string('nominee_two_image');
+
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

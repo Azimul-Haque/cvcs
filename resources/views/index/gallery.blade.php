@@ -16,6 +16,7 @@
                     <!-- page title -->
                     <h1 class="black-text">গ্যালারি</h1>
                     <!-- end page title -->
+                    <div class="separator-line bg-yellow no-margin-top margin-four"></div>
                     <!-- page title tagline -->
                     <span class="black-text xs-display-none">সিভিসিএস-এর স্থিরচিত্র সংকলন</span>
                     <!-- end title tagline -->

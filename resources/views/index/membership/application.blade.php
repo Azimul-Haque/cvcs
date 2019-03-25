@@ -11,8 +11,14 @@
     <section class="wow fadeIn bg-gray">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-sm-10 col-xs-11 center-col login-box">
-                    <h1 style="text-align: center">Registration</h1>
+                <div class="col-md-8 col-sm-10 col-xs-11 center-col login-box xs-margin-top-twelve">
+                    <h3 class="text-center">
+                      কাস্টমস এন্ড ভ্যাট কো-অপারেটিভ সোসাইটি<br/><br/>
+                      <big>সিভিসিএস</big>
+                    </h3>
+                    <h4 class="text-center">গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের সমবায় মন্ত্রণালয় কর্তৃক অনুমোদিত</h4>
+                    <h5 class="text-center">নিবন্ধন নং - ০০০৩১</h5>
+                    <div class="separator-line bg-yellow margin-four"></div>
                     <form action="{{ route('index.storeapplication') }}" method="post" enctype='multipart/form-data'>
                         {!! csrf_field() !!}
                         <div class="form-group no-margin-bottom">

@@ -134,11 +134,12 @@ return [
             'route'  => 'dashboard.formmessage',
             'icon'   => 'envelope-o',
         ],
-        'MEMBERSHIP NAVIGATION',
+        'MEMBERSHIP MANAGEMENT',
         [
             'text'   => 'Membership Applications',
             'route'  => 'dashboard.applications',
             'icon'   => 'user-plus',
+            'permission'   => 'user-plus',
         ],
         // [
         //     'text'   => 'News',

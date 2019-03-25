@@ -132,7 +132,7 @@ class IndexController extends Controller
 
     public function getApplication()
     {
-        return view('index.application');
+        return view('index.membership.application');
     }
 
     public function getLogin()

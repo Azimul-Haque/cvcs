@@ -127,16 +127,26 @@
                             <!-- sub menu item  -->
                             <ul id="nav_auth_user" class="dropdown-menu panel-collapse collapse" role="menu">
                                 <li>
-                                    <a href="{{ route('index.profile', Auth::user()->unique_key) }}"><i class="icon-profile-male i-plain"></i> প্রোফাইল</a>
+                                    <a href="{{ route('index.profile', Auth::user()->unique_key) }}" class="text-large"><i class="icon-profile-male i-plain"></i> প্রোফাইল</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}"><i class="icon-key i-plain"></i> লগআউট</a>
+                                    <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" class="text-large"><i class="icon-key i-plain"></i> লগআউট</a>
                                 </li>
                             </ul>
                         </li>
                         @else
-                        <li>
-                            <a href="{{ url('login') }}" class="">লগইন</a>
+                        <li class="dropdown panel simple-dropdown">
+                            <a href="#nav_membership" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">সদস্যপদ</a>
+                            <!-- sub menu single -->
+                            <!-- sub menu item  -->
+                            <ul id="nav_membership" class="dropdown-menu panel-collapse collapse" role="menu">
+                                <li>
+                                    <a href="{{ route('index.application') }}" class="text-large"><i class="icon-profile-male i-plain"></i> সদস্যপদ আবেদন</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('login') }}" class="text-large"><i class="icon-key i-plain"></i> লগইন</a>
+                                </li>
+                            </ul>
                         </li>
                         @endif
                         <!-- end menu item -->
