@@ -261,7 +261,7 @@
                           </div>
                         </div>
 
-
+                        <h3 class="agency-title margin-two">অনলাইন একাউন্ট সংক্রান্ত</h3>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group no-margin-bottom">
@@ -328,9 +328,9 @@
           $("#image").change(function(){
               readURL(this);
               var filesize = parseInt((this.files[0].size)/1024);
-              if(filesize > 200) {
+              if(filesize > 250) {
                 $("#image").val('');
-                toastr.warning('File size is: '+filesize+' Kb. try uploading less than 200Kb', 'WARNING').css('width', '400px;');
+                toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
                   setTimeout(function() {
                     $("#img-upload").attr('src', '{{ asset('images/user.png') }}');
                   }, 1000);
@@ -348,9 +348,9 @@
           $("#nominee_one_image").change(function(){
               readURLNominee1(this);
               var filesize = parseInt((this.files[0].size)/1024);
-              if(filesize > 200) {
+              if(filesize > 250) {
                 $("#nominee_one_image").val('');
-                toastr.warning('File size is: '+filesize+' Kb. try uploading less than 200Kb', 'WARNING').css('width', '400px;');
+                toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
                   setTimeout(function() {
                     $("#nominee_one_image-upload").attr('src', '{{ asset('images/user.png') }}');
                   }, 1000);
@@ -368,9 +368,9 @@
           $("#nominee_two_image").change(function(){
               readURLNominee2(this);
               var filesize = parseInt((this.files[0].size)/1024);
-              if(filesize > 200) {
+              if(filesize > 250) {
                 $("#nominee_two_image").val('');
-                toastr.warning('File size is: '+filesize+' Kb. try uploading less than 200Kb', 'WARNING').css('width', '400px;');
+                toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
                   setTimeout(function() {
                     $("#nominee_two_image-upload").attr('src', '{{ asset('images/user.png') }}');
                   }, 1000);

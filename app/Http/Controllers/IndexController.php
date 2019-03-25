@@ -160,42 +160,65 @@ class IndexController extends Controller
     public function storeApplication(Request $request)
     {
         $this->validate($request,array(
+            'name_bangla'               => 'required|max:255',
             'name'                      => 'required|max:255',
-            'email'                     => 'required|email|unique:users,email',
-            'phone'                     => 'required|numeric',
+            'nid'                      => 'required|max:255',
             'dob'                       => 'required|max:255',
-            'degree'                    => 'required|max:255',
-            'batch'                     => 'required|max:255',
-            'passing_year'              => 'required|numeric',
-            'current_job'               => 'sometimes|max:255',
-            'designation'               => 'sometimes|max:255',
-            'address'                   => 'required|max:255',
-            'fb'                        => 'sometimes|max:255',
-            'twitter'                   => 'sometimes|max:255',
-            'gplus'                     => 'sometimes|max:255',
-            'linkedin'                  => 'sometimes|max:255',
-            'image'                     => 'required|image|max:200',
+            'gender'                       => 'required',
+            'spouse'                       => 'required|max:255',
+            'spouse_profession'                       => 'required|max:255',
+            'father'                       => 'required|max:255',
+            'mother'                       => 'required|max:255',
+            'profession'                       => 'required|max:255',
+            'designation'                       => 'required|max:255',
+            'office'                       => 'required|max:255',
+            'present_address'                       => 'required|max:255',
+            'permanent_address'                       => 'required|max:255',
+            'office_telephone'                       => 'required|max:255',
+            'mobile'                       => 'required|max:255',
+            'home_telephone'                       => 'required|max:255',
+            'email'                     => 'required|email|unique:users,email',
+            'image'                     => 'required|image|max:250',
+
+            'nominee_one_name'                     => 'required|max:255',
+            'nominee_one_identity_type'            => 'required',
+            'nominee_one_identity_text'            => 'required|max:255',
+            'nominee_one_relation'            => 'required|max:255',
+            'nominee_one_percentage'            => 'required|max:255',
+            'nominee_one_image'            => 'required|image|max:250',
+
+            'nominee_two_name'                     => 'required|max:255',
+            'nominee_two_identity_type'            => 'required',
+            'nominee_two_identity_text'            => 'required|max:255',
+            'nominee_two_relation'            => 'required|max:255',
+            'nominee_two_percentage'            => 'required|max:255',
+            'nominee_two_image'            => 'required|image|max:250',
+
             'password'                  => 'required|min:8|same:password_confirmation'
         ));
 
         $application = new User();
+        $application->name_bangla = htmlspecialchars(preg_replace("/\s+/", " ", $request->name_bangla));
         $application->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
-        $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
-        $application->phone = htmlspecialchars(preg_replace("/\s+/", " ", $request->phone));
+        $application->nid = htmlspecialchars(preg_replace("/\s+/", " ", $request->nid));
         $dob = htmlspecialchars(preg_replace("/\s+/", " ", $request->dob));
         $application->dob = new Carbon($dob);
-        $application->degree = htmlspecialchars(preg_replace("/\s+/", " ", $request->degree));
-        $application->batch = htmlspecialchars(preg_replace("/\s+/", " ", $request->batch));
-        $application->passing_year = htmlspecialchars(preg_replace("/\s+/", " ", $request->passing_year));
-        $application->current_job = htmlspecialchars(preg_replace("/\s+/", " ", $request->current_job));
+        $application->gender = htmlspecialchars(preg_replace("/\s+/", " ", $request->gender));
+        $application->spouse = htmlspecialchars(preg_replace("/\s+/", " ", $request->spouse));
+        $application->spouse_profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->spouse_profession));
+        $application->father = htmlspecialchars(preg_replace("/\s+/", " ", $request->father));
+        $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
+        $application->office = htmlspecialchars(preg_replace("/\s+/", " ", $request->office));
+        $application->profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->profession));
         $application->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
-        $application->address = htmlspecialchars(preg_replace("/\s+/", " ", $request->address));
-        $application->fb = htmlspecialchars(preg_replace("/\s+/", " ", $request->fb));
-        $application->twitter = htmlspecialchars(preg_replace("/\s+/", " ", $request->twitter));
-        $application->gplus = htmlspecialchars(preg_replace("/\s+/", " ", $request->gplus));
-        $application->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
+        $application->present_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->present_address));
+        $application->permanent_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->permanent_address));
+        $application->office_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->office_telephone));
+        $application->mobile = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile));
+        $application->home_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->home_telephone));
+        $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
 
-        // image upload
+        // applicant's image upload
         if($request->hasFile('image')) {
             $image      = $request->file('image');
             $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
@@ -203,14 +226,40 @@ class IndexController extends Controller
             Image::make($image)->resize(200, 200)->save($location);
             $application->image = $filename;
         }
+
+        $application->nominee_one_name = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_name));
+        $application->nominee_one_identity_type = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_identity_type));
+        $application->nominee_one_identity_text = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_identity_text));
+        $application->nominee_one_relation = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_relation));
+        $application->nominee_one_percentage = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_percentage));
+        // nominee one's image upload
+        if($request->hasFile('nominee_one_image')) {
+            $nominee_one_image      = $request->file('nominee_one_image');
+            $filename   = 'nominee_one_' . str_replace(' ','',$request->name).time() .'.' . $nominee_one_image->getClientOriginalExtension();
+            $location   = public_path('/images/users/'. $filename);
+            Image::make($nominee_one_image)->resize(200, 200)->save($location);
+            $application->nominee_one_image = $filename;
+        }
+
+        $application->nominee_two_name = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_name));
+        $application->nominee_two_identity_type = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_identity_type));
+        $application->nominee_two_identity_text = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_identity_text));
+        $application->nominee_two_relation = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_relation));
+        $application->nominee_two_percentage = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_percentage));
+        // nominee one's image upload
+        if($request->hasFile('nominee_two_image')) {
+            $nominee_two_image      = $request->file('nominee_two_image');
+            $filename   = 'nominee_two_' . str_replace(' ','',$request->name).time() .'.' . $nominee_two_image->getClientOriginalExtension();
+            $location   = public_path('/images/users/'. $filename);
+            Image::make($nominee_two_image)->resize(200, 200)->save($location);
+            $application->nominee_two_image = $filename;
+        }
+
+
         $application->password = Hash::make($request->password);
 
-        $application->role = 'alumni';
-        $application->payment_status = 0;
-
-        // amount will be set dynamically
-        // $application->amount = null;
-        // $application->trxid = null;
+        $application->role = 'member';
+        $application->activation_status = 0;
 
         // generate unique_key
         $unique_key_length = 100;
@@ -220,7 +269,7 @@ class IndexController extends Controller
         $application->unique_key = $unique_key;
         $application->save();
         
-        Session::flash('success', 'You have registered Successfully!');
+        Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে আবেদনটি গৃহীত হওয়া পর্যন্ত অপেক্ষা করুন।');
         Auth::login($application);
         return redirect()->route('index.profile', $unique_key);
     }
