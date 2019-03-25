@@ -11,87 +11,148 @@
     <section class="wow fadeIn bg-gray">
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-sm-10 col-xs-11 center-col login-box xs-margin-top-twelve">
+                <div class="col-md-10 col-sm-10 col-xs-11 center-col login-box xs-margin-top-twelve">
                     <h3 class="text-center">
                       কাস্টমস এন্ড ভ্যাট কো-অপারেটিভ সোসাইটি<br/><br/>
                       <big>সিভিসিএস</big>
                     </h3>
                     <h4 class="text-center">গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের সমবায় মন্ত্রণালয় কর্তৃক অনুমোদিত</h4>
                     <h5 class="text-center">নিবন্ধন নং - ০০০৩১</h5>
+                    <h2 class="text-center">মেম্বারশিপ ফরম</h2>
                     <div class="separator-line bg-yellow margin-four"></div>
                     <form action="{{ route('index.storeapplication') }}" method="post" enctype='multipart/form-data'>
                         {!! csrf_field() !!}
-                        <div class="form-group no-margin-bottom">
-                            <label for="name" class="text-uppercase">Name</label>
-                            <input type="text" name="name" id="name" required="">
+                        <h3 class="agency-title margin-two">আবেদনকারীর ব্যক্তিগত তথ্যঃ</h3>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="name_bangla" class="">আবেদনকারীর নাম (বাংলায়) *</label>
+                                <input type="text" name="name_bangla" id="name_bangla" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="name" class="">আবেদনকারীর নাম (ইংরেজিতে) *</label>
+                                <input type="text" name="name" id="name" required="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="nid" class="">জাতীয় পরিচয়পত্র নম্বর *</label>
+                                <input type="text" name="nid" id="nid" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="dob" class="">জন্মতারিখ *</label>
+                                <input type="text" name="dob" id="dob" data-field="date"  autocomplete="off"  required="">
+                                
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="gender" class="">লিঙ্গ</label>
+                                <select name="gender" id="gender" required="">
+                                    <option value="" selected="" disabled="">লিঙ্গ নির্ধারণ করুন</option>
+                                    <option value="নারী">নারী</option>
+                                    <option value="পুরুষ">পুরুষ</option>
+                                    <option value="অন্যান্য">অন্যান্য</option>
+                                </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="spouse" class="">স্বামী/স্ত্রীর নাম *</label>
+                                <input type="text" name="spouse" id="spouse" required="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="spouse_profession" class="">স্বামী/স্ত্রীর পেশা *</label>
+                                <input type="text" name="spouse_profession" id="spouse_profession" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="father" class="">পিতার নাম *</label>
+                                <input type="text" name="father" id="father" required="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="mother" class="">মাতার নাম *</label>
+                                <input type="text" name="mother" id="mother" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="office" class="">আবেদনকারীর দপ্তরের নাম *</label>
+                                <input type="text" name="office" id="office" required="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="profession" class="">আবেদনকারীর পেশা *</label>
+                                <input type="text" name="profession" id="profession" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="designation" class="">আবেদনকারীর পদবি *</label>
+                                <input type="text" name="designation" id="designation" required="">
+                            </div>
+                          </div>
                         </div>
                         <div class="form-group no-margin-bottom">
-                            <label for="email" class="text-uppercase">Email</label>
-                            <input type="text" name="email" id="email" required="">
+                            <label for="present_address" class="">বর্তমান ঠিকানা</label>
+                            <input type="text" name="present_address" id="present_address" required="">
                         </div>
                         <div class="form-group no-margin-bottom">
-                            <label for="phone" class="text-uppercase">Phone</label>
-                            <input type="text" name="phone" id="phone" required="">
+                            <label for="permanent_address" class="">স্থায়ী ঠিকানা</label>
+                            <input type="text" name="permanent_address" id="permanent_address" required="">
                         </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="dob" class="text-uppercase">Date of Birth</label>
-                            <input type="text" name="dob" id="dob" data-field="date" readonly autocomplete="off"  required="">
-                            <div id="dtBox"></div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="office_telephone" class="">অফিসের টেলিফোন *</label>
+                                <input type="text" name="office_telephone" id="office_telephone" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="mobile" class="">মোবাইল নম্বর *</label>
+                                <input type="text" name="mobile" id="mobile" required="">
+                            </div>
+                          </div>
                         </div>
-                        <div class="form-group">
-                            <label class="text-uppercase">Degree</label>
-                            <select name="degree" required="">
-                                <option value="" selected="" disabled="">Select one</option>
-                                <option value="BSSE">BSSE</option>
-                                <option value="MIT">MIT</option>
-                                <option value="PGDIT">PGDIT</option>
-                            </select>
-                        </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="batch" class="text-uppercase">Batch</label>
-                            <input type="text" name="batch" id="batch"  required="">
-                        </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="passing_year" class="text-uppercase">Passing Year</label>
-                            <select name="passing_year" required="">
-                                <option value="" selected="" disabled="">Select one</option>
-                                @for($yr = date('Y'); $yr >= 1985; $yr--)
-                                <option value="{{ $yr }}">{{ $yr }}</option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="current_job" class="text-uppercase">Current Job</label>
-                            <input type="text" name="current_job" id="current_job">
-                        </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="designation" class="text-uppercase">Job Designation</label>
-                            <input type="text" name="designation" id="designation">
-                        </div>
-                        <div class="form-group">
-                            <label for="address" class="text-uppercase">Address</label>
-                            <input type="text" id="address" name="address" required="">
-                        </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="fb" class="text-uppercase">Facebook Url</label>
-                            <input type="text" name="fb" id="fb">
-                        </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="twitter" class="text-uppercase">Twitter Url</label>
-                            <input type="text" name="twitter" id="twitter">
-                        </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="gplus" class="text-uppercase">Google plus Url</label>
-                            <input type="text" name="gplus" id="gplus">
-                        </div>
-                        <div class="form-group no-margin-bottom">
-                            <label for="linkedin" class="text-uppercase">Linkedin Url</label>
-                            <input type="text" name="linkedin" id="linkedin">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="home_telephone" class="">বাসার টেলিফোন *</label>
+                                <input type="text" name="home_telephone" id="home_telephone" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="email" class="">ইমেইল এড্রেস *</label>
+                                <input type="text" name="email" id="email" required="">
+                            </div>
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-md-8">
                               <div class="form-group no-margin-bottom">
-                                  <label><strong>Photo (300 X 300 &amp; 200Kb Max):</strong></label>
+                                  <label><strong>আবেদনকারীর রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
                                   <input type="file" id="image" name="image" required="">
                               </div>
                           </div>
@@ -99,30 +160,142 @@
                             <img src="{{ asset('images/user.png')}}" id='img-upload' style="height: 120px; width: auto; padding: 5px;" />
                           </div>
                         </div>
+
+                        <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০১)</h3>
+                        
                         <div class="form-group no-margin-bottom">
-                            <label for="password" class="text-uppercase">Password</label>
-                            <input type="password" name="password" id="password" required="">
+                            <label for="nominee_one_name" class="">নাম (বাংলায়) *</label>
+                            <input type="text" name="nominee_one_name" id="nominee_one_name" required="">
                         </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nominee_one_identity_type" class="">দলিলের ধরণ</label>
+                                <select name="nominee_one_identity_type" id="nominee_one_identity_type" required="">
+                                    <option value="" selected="" disabled="">দলিলের ধরণ নির্ধারণ করুন</option>
+                                    <option value="জাতীয় পরিচয়পত্র">জাতীয় পরিচয়পত্র</option>
+                                    <option value="জন্ম নিবন্ধন">জন্ম নিবন্ধন</option>
+                                </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="nominee_one_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর *</label>
+                                <input type="text" name="nominee_one_identity_text" id="nominee_one_identity_text" required="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="nominee_one_relation" class="">সম্পর্ক *</label>
+                                <input type="text" name="nominee_one_relation" id="nominee_one_relation" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="nominee_one_percentage" class="">শতকরা হার *</label>
+                                <input type="text" name="nominee_one_percentage" id="nominee_one_percentage" required="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-8">
+                              <div class="form-group no-margin-bottom">
+                                  <label><strong>নমিনির রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
+                                  <input type="file" id="nominee_one_image" name="nominee_one_image" required="">
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                            <img src="{{ asset('images/user.png')}}" id='nominee_one_image-upload' style="height: 120px; width: auto; padding: 5px;" />
+                          </div>
+                        </div>
+
+                        <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০২)</h3>
+                        
                         <div class="form-group no-margin-bottom">
-                            <label for="password_confirmation" class="text-uppercase">Retype Password</label>
-                            <input type="password" name="password_confirmation" id="password_confirmation" required="">
+                            <label for="nominee_two_name" class="">নাম (বাংলায়) *</label>
+                            <input type="text" name="nominee_two_name" id="nominee_two_name" required="">
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nominee_two_identity_type" class="">দলিলের ধরণ</label>
+                                <select name="nominee_two_identity_type" id="nominee_two_identity_type" required="">
+                                    <option value="" selected="" disabled="">দলিলের ধরণ নির্ধারণ করুন</option>
+                                    <option value="জাতীয় পরিচয়পত্র">জাতীয় পরিচয়পত্র</option>
+                                    <option value="জন্ম নিবন্ধন">জন্ম নিবন্ধন</option>
+                                </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="nominee_two_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর *</label>
+                                <input type="text" name="nominee_two_identity_text" id="nominee_two_identity_text" required="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="nominee_two_relation" class="">সম্পর্ক *</label>
+                                <input type="text" name="nominee_two_relation" id="nominee_two_relation" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="nominee_two_percentage" class="">শতকরা হার *</label>
+                                <input type="text" name="nominee_two_percentage" id="nominee_two_percentage" required="">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-8">
+                              <div class="form-group no-margin-bottom">
+                                  <label><strong>নমিনির রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
+                                  <input type="file" id="nominee_two_image" name="nominee_two_image" required="">
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                            <img src="{{ asset('images/user.png')}}" id='nominee_two_image-upload' style="height: 120px; width: auto; padding: 5px;" />
+                          </div>
+                        </div>
+
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="password" class="">একাউন্টের পাসওয়ার্ড</label>
+                                <input type="password" name="password" id="password" required="">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group no-margin-bottom">
+                                <label for="password_confirmation" class="">পাসওয়ার্ডটি আবার দিন</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation" required="">
+                            </div>
+                          </div>
                         </div>
                         
-                        <button class="btn highlight-button-dark btn-bg btn-round margin-five no-margin-right" type="submit">Next</button>
+                        <button class="btn highlight-button-dark btn-bg btn-round margin-five no-margin-right" type="submit">আবেদন জমা দিন</button>
                     </form>
                 </div>
 
             </div>
         </div>
     </section>
+    <div id="dtBox"></div>
 @endsection
 
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/DateTimePicker.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('js/jquery-3.1.0.min.js') }}"></script> --}}
+    <script type="text/javascript" src="{{ asset('js/DateTimePicker.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $("#dtBox").DateTimePicker({
-                dateTimeFormat: "dd-MM-yyyy hh:mm:ss"
+                mode:"date",
+                dateFormat: "dd-MM-yyyy",
+                titleContentDate: 'জন্মতারিখ নির্ধারণ করুন'
             }); 
         });
     </script>
@@ -160,6 +333,46 @@
                 toastr.warning('File size is: '+filesize+' Kb. try uploading less than 200Kb', 'WARNING').css('width', '400px;');
                   setTimeout(function() {
                     $("#img-upload").attr('src', '{{ asset('images/user.png') }}');
+                  }, 1000);
+              }
+          });
+          function readURLNominee1(input) {
+              if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+                  reader.onload = function (e) {
+                      $('#nominee_one_image-upload').attr('src', e.target.result);
+                  }
+                  reader.readAsDataURL(input.files[0]);
+              }
+          }
+          $("#nominee_one_image").change(function(){
+              readURLNominee1(this);
+              var filesize = parseInt((this.files[0].size)/1024);
+              if(filesize > 200) {
+                $("#nominee_one_image").val('');
+                toastr.warning('File size is: '+filesize+' Kb. try uploading less than 200Kb', 'WARNING').css('width', '400px;');
+                  setTimeout(function() {
+                    $("#nominee_one_image-upload").attr('src', '{{ asset('images/user.png') }}');
+                  }, 1000);
+              }
+          });
+          function readURLNominee2(input) {
+              if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+                  reader.onload = function (e) {
+                      $('#nominee_two_image-upload').attr('src', e.target.result);
+                  }
+                  reader.readAsDataURL(input.files[0]);
+              }
+          }
+          $("#nominee_two_image").change(function(){
+              readURLNominee2(this);
+              var filesize = parseInt((this.files[0].size)/1024);
+              if(filesize > 200) {
+                $("#nominee_two_image").val('');
+                toastr.warning('File size is: '+filesize+' Kb. try uploading less than 200Kb', 'WARNING').css('width', '400px;');
+                  setTimeout(function() {
+                    $("#nominee_two_image-upload").attr('src', '{{ asset('images/user.png') }}');
                   }, 1000);
               }
           });
