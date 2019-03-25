@@ -461,7 +461,7 @@ class DashboardController extends Controller
 
     public function getApplications()
     {
-        return view('dashboard.index');
+        return view('dashboard.membership.applications');
     }
 
     public function updateAbouts(Request $request, $id) {

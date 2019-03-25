@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      Form Message
+      Form Messages
       <div class="pull-right">
       </div>
     </h1>
@@ -19,7 +19,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th width="30%">Email</th>
+          <th width="25%">Email</th>
           <th width="40%">Message</th>
           <th width="10%">Action</th>
         </tr>

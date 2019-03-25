@@ -134,12 +134,12 @@ return [
             'route'  => 'dashboard.formmessage',
             'icon'   => 'envelope-o',
         ],
-        // 'MAIN NAVIGATION',
-        // [
-        //     'text'   => 'Committee',
-        //     'route'  => 'dashboard.committee',
-        //     'icon'   => 'users',
-        // ],
+        'MEMBERSHIP NAVIGATION',
+        [
+            'text'   => 'Membership Applications',
+            'route'  => 'dashboard.applications',
+            'icon'   => 'user-plus',
+        ],
         // [
         //     'text'   => 'News',
         //     'route'  => 'dashboard.news',
