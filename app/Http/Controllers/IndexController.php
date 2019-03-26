@@ -270,8 +270,18 @@ class IndexController extends Controller
         $application->save();
         
         Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে আবেদনটি গৃহীত হওয়া পর্যন্ত অপেক্ষা করুন।');
-        Auth::login($application);
-        return redirect()->route('index.profile', $unique_key);
+
+        if(Auth::guest()) {
+            Auth::login($application);
+            return redirect()->route('index.profile', $unique_key);
+        } else {
+            if(Auth::user()->role == 'admin') {
+                return redirect()->route('dashboard.applications');
+            } else {
+                return redirect()->route('index.index');
+            }
+        }
+        
     }
 
     public function storeFormMessage(Request $request)

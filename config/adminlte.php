@@ -113,11 +113,13 @@ return [
             'text'   => 'Dashboard',
             'route'  => 'dashboard.index',
             'icon'   => 'home',
+            'role'   => 'admin',
         ],
         [
             'text' => 'Gallery',
             'route'  => 'dashboard.gallery',
             'icon' => 'picture-o',
+            'role'   => 'admin',
         ],
         [
             'text'   => 'Events',
@@ -139,7 +141,11 @@ return [
             'text'   => 'Membership Applications',
             'route'  => 'dashboard.applications',
             'icon'   => 'user-plus',
-            'permission'   => 'user-plus',
+        ],
+        [
+            'text'   => 'Members',
+            'route'  => 'dashboard.members',
+            'icon'   => 'users',
         ],
         // [
         //     'text'   => 'News',

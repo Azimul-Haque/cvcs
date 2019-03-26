@@ -8,78 +8,68 @@
 @endsection
 
 @section('content')
-    <section id="features" class="border-bottom no-padding-bottom xs-onepage-section">
+    <section id="features" class="content-top-margin border-bottom no-padding-bottom xs-onepage-section">
         <div class="container">
-            <div class="row margin-four">
+            <div class="row">
                 <div class="col-md-12 text-center">
-                    <h2 class="section-title no-padding">{{ $user->name }}</h2>
+                    {{-- <h2 class="section-title no-padding">{{ $user->name_bangla }}</h2> --}}
                 </div>
             </div>
-            @if($user->payment_status == 0)
-            <div class="row margin-two">
+            @if($user->activation_status == 0)
+            <div class="row">
                 <div class="col-md-12 text-center">
-                    <span>Please Pay tk. {{ $user->amount }} to get the membership.</span><br/>
-                    <button class="btn highlight-button-dark btn-small btn-round margin-two"><i class="fa fa-pencil"></i> Pay Via AAMARPAY</button>
+                    <button class="btn highlight-button-royal-blue-border btn-lg btn-round"><i class="fa fa-exclamation-triangle"></i> একাউন্টটি প্রক্রিয়াধীন</button>
+                </div>
+            </div>
+            @else
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="section-title no-padding">প্রোফাইল</h2>
                 </div>
             </div>
             @endif
             <div class="row margin-three no-margin-bottom">
                 <div class="col-md-6 col-sm-6 text-center xs-margin-bottom-ten">
                     <center>
-                        <img src="{{ asset('images/users/'.$user->image) }}" alt="image of {{ $user->name }}" class="img-responsive shadow" style="width: 250px; height: auto;" /><br/>
-                        <button class="btn highlight-button-dark btn-small btn-round margin-two"><i class="fa fa-pencil"></i> Edit Profile</button>
+                        @if($user->image != null)
+                            <img src="{{ asset('images/users/'.$user->image)}}" alt="image of {{ $user->name }}" class="img-responsive shadow" style="max-width: 220px; height: auto;" />
+                        @else
+                            <img src="{{ asset('images/user.png')}}" alt="image of {{ $user->name }}" class="img-responsive shadow" style="max-width: 220px; height: auto;" />
+                        @endif
+                        <br/>
+                        {{-- <button class="btn highlight-button-dark btn-small btn-round margin-two"><i class="fa fa-pencil"></i> Edit Profile</button> --}}
                     </center>
                 </div>
                 <div class="col-md-6 col-sm-6 sm-margin-bottom-ten">
                     <div class="col-md-12 col-sm-12 no-padding">
-                        <table class="table table-condensed">
+                        <table class="table">
                             <tr>
-                                <td>Batch</td>
-                                <td>: {{ $user->degree }} {{ $user->batch }}</td>
+                                <td>নামঃ</td>
+                                <td>: {{ $user->name_bangla }} ({{ $user->name }})</td>
                             </tr>
                             <tr>
-                                <td>Passing Year</td>
-                                <td>: {{ $user->passing_year }}</td>
+                                <td>দপ্তর</td>
+                                <td>: {{ $user->office }}</td>
                             </tr>
                             <tr>
-                                <td>Email</td>
+                                <td>পেশা ও পদবি</td>
+                                <td>: {{ $user->profession }} ({{ $user->designation }})</td>
+                            </tr>
+                            <tr>
+                                <td>ইমেইল এড্রেস</td>
                                 <td>: {{ $user->email }}</td>
                             </tr>
                             <tr>
-                                <td>Phone</td>
-                                <td>: {{ $user->phone }}</td>
-                            </tr>
-                            <tr>
-                                <td>Date of Birth</td>
-                                <td>: {{ date('F d, Y', strtotime($user->dob)) }}</td>
-                            </tr>
-                            <tr>
-                                <td>Job(Company)</td>
-                                <td>: {{ $user->current_job }}</td>
-                            </tr>
-                            <tr>
-                                <td>Designation</td>
-                                <td>: {{ $user->designation }}</td>
-                            </tr>
-                            <tr>
-                                <td>Address</td>
-                                <td>: {{ $user->address }}</td>
-                            </tr>
-                            <tr>
-                                <td>Payable Amount</td>
-                                <td>: {{ $user->amount }}</td>
-                            </tr>
-                            <tr>
-                                <td>Payment Status</td>
+                                <td>সদস্যপদ</td>
                                 <td>: 
-                                    @if($user->payment_status == 0)
-                                    <span style="color:red;">Not Paid</span>
+                                    @if($user->activation_status == 0)
+                                    <span style="color:red;">প্রক্রিয়াধীন</span>
                                     @else
-                                    <span style="color: green;">Paid</span>
+                                    <span style="color: green;">সক্রিয়</span>
                                     @endif
                                 </td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td>Social</td>
                                 <td>: 
                                     @if($user->fb != null)
@@ -98,14 +88,14 @@
                                     <a href="{{ $user->linkedin }}" style="font-size: 25px" target="_blank"><i class="fa fa-linkedin-square" style="color: #0874B1;"></i></a>
                                     @endif
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="wow fadeIn bg-gray">
+    <!-- <section class="wow fadeIn bg-gray">
         <div class="container">
             {{-- blog part --}}
             <div class="row">
@@ -155,7 +145,7 @@
             </div>
             {{-- blog part --}}
         </div>
-    </section>
+    </section> -->
 @endsection
 
 @section('js')

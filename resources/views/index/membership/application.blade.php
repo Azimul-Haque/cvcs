@@ -130,7 +130,7 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group no-margin-bottom">
-                                <label for="mobile" class="">মোবাইল নম্বর *</label>
+                                <label for="mobile" class="">মোবাইল নম্বর (সক্রিয় নম্বর দিন, এই নম্বরে SMS যাবে) *</label>
                                 <input type="text" name="mobile" id="mobile" required="">
                             </div>
                           </div>
@@ -173,8 +173,8 @@
                                 <label for="nominee_one_identity_type" class="">দলিলের ধরণ</label>
                                 <select name="nominee_one_identity_type" id="nominee_one_identity_type" required="">
                                     <option value="" selected="" disabled="">দলিলের ধরণ নির্ধারণ করুন</option>
-                                    <option value="জাতীয় পরিচয়পত্র">জাতীয় পরিচয়পত্র</option>
-                                    <option value="জন্ম নিবন্ধন">জন্ম নিবন্ধন</option>
+                                    <option value="0">জাতীয় পরিচয়পত্র</option>
+                                    <option value="1">জন্ম নিবন্ধন</option>
                                 </select>
                             </div>
                           </div>
@@ -223,8 +223,8 @@
                                 <label for="nominee_two_identity_type" class="">দলিলের ধরণ</label>
                                 <select name="nominee_two_identity_type" id="nominee_two_identity_type" required="">
                                     <option value="" selected="" disabled="">দলিলের ধরণ নির্ধারণ করুন</option>
-                                    <option value="জাতীয় পরিচয়পত্র">জাতীয় পরিচয়পত্র</option>
-                                    <option value="জন্ম নিবন্ধন">জন্ম নিবন্ধন</option>
+                                    <option value="0">জাতীয় পরিচয়পত্র</option>
+                                    <option value="1">জন্ম নিবন্ধন</option>
                                 </select>
                             </div>
                           </div>

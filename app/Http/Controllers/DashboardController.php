@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
+use App\User;
 use App\About;
 use App\Album;
 use App\Albumphoto;
@@ -32,7 +33,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('admin')->except('index', 'getBlogs', 'getProfile');
     }
 
     /**
@@ -42,6 +43,24 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // $about = About::where('type', 'about')->get()->first();
+        // $whoweare = About::where('type', 'whoweare')->get()->first();
+        // $whatwedo = About::where('type', 'whatwedo')->get()->first();
+        // $ataglance = About::where('type', 'ataglance')->get()->first();
+        // $membership = About::where('type', 'membership')->get()->first();
+        // $basicinfo = Basicinfo::where('id', 1)->first();
+
+        return view('dashboard.index');
+                    // ->withAbout($about)
+                    // ->withWhoweare($whoweare)
+                    // ->withWhatwedo($whatwedo)
+                    // ->withAtaglance($ataglance)
+                    // ->withMembership($membership)
+                    // ->withBasicinfo($basicinfo);
+    }
+
+    public function getAbouts()
+    {
         $about = About::where('type', 'about')->get()->first();
         $whoweare = About::where('type', 'whoweare')->get()->first();
         $whatwedo = About::where('type', 'whatwedo')->get()->first();
@@ -49,13 +68,55 @@ class DashboardController extends Controller
         $membership = About::where('type', 'membership')->get()->first();
         $basicinfo = Basicinfo::where('id', 1)->first();
 
-        return view('dashboard.index')
+        return view('dashboard.abouts')
                     ->withAbout($about)
                     ->withWhoweare($whoweare)
                     ->withWhatwedo($whatwedo)
                     ->withAtaglance($ataglance)
                     ->withMembership($membership)
                     ->withBasicinfo($basicinfo);
+    }
+
+    public function updateAbouts(Request $request, $id) {
+        $this->validate($request,array(
+            'text' => 'required',
+        ));
+
+        $about = About::find($id);
+        $about->text = $request->text;
+     
+        $about->save();
+        
+        Session::flash('success', 'Updated Successfully!');
+        return redirect()->route('dashboard.abouts');
+    }
+
+    public function updateBasicInfo(Request $request, $id) {
+        $this->validate($request,array(
+            'address'      => 'required',
+            'contactno'    => 'required',
+            'email'        => 'required',
+            'fb'           => 'sometimes',
+            'twitter'      => 'sometimes',
+            'gplus'        => 'sometimes',
+            'ytube'        => 'sometimes',
+            'linkedin'     => 'sometimes'
+        ));
+
+        $basicinfo = Basicinfo::find($id);
+        $basicinfo->address = $request->address;
+        $basicinfo->contactno = $request->contactno;
+        $basicinfo->email = $request->email;
+        $basicinfo->fb = $request->fb;
+        $basicinfo->twitter = $request->twitter;
+        $basicinfo->gplus = $request->gplus;
+        $basicinfo->ytube = $request->ytube;
+        $basicinfo->linkedin = $request->linkedin;
+     
+        $basicinfo->save();
+        
+        Session::flash('success', 'Updated Successfully!');
+        return redirect()->route('dashboard.abouts');
     }
 
     public function getCommittee()
@@ -454,56 +515,88 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
-    public function getMembers()
-    {
-        return view('dashboard.index');
-    }
-
     public function getApplications()
     {
-        return view('dashboard.membership.applications');
+        $applications = User::where('activation_status', 0)
+                            ->orderBy('id', 'asc')->paginate(10);
+
+        return view('dashboard.membership.applications')
+                            ->withApplications($applications);
     }
 
-    public function updateAbouts(Request $request, $id) {
-        $this->validate($request,array(
-            'text' => 'required',
-        ));
+    public function getSignleApplication($unique_key)
+    {
+        $application = User::where('unique_key', $unique_key)->first();
 
-        $about = About::find($id);
-        $about->text = $request->text;
-     
-        $about->save();
-        
-        Session::flash('success', 'Updated Successfully!');
-        return redirect()->route('dashboard.index');
+        return view('dashboard.membership.singleapplication')
+                            ->withApplication($application);
     }
 
-    public function updateBasicInfo(Request $request, $id) {
+    public function activateMember(Request $request, $id)
+    {
+        $application = User::find($id);
+        $application->activation_status = 1;
+        $application->save();
+
+        return redirect()->route('dashboard.members');
+    }
+
+    public function deleteApplication(Request $request, $id)
+    {
+        $application = User::find($id);
+        $image_path = public_path('images/users/'. $application->image);
+        if(File::exists($image_path)) {
+            File::delete($image_path);
+        }
+        $nominee_one_path = public_path('images/users/'. $application->nominee_one_image);
+        if(File::exists($nominee_one_path)) {
+            File::delete($nominee_one_path);
+        }
+        $nominee_two_path = public_path('images/users/'. $application->nominee_two_image);
+        if(File::exists($nominee_two_path)) {
+            File::delete($nominee_two_path);
+        }
+        $application->delete();
+
+        return redirect()->route('dashboard.applications');
+    }
+
+    public function sendSMSApplicant(Request $request)
+    {
         $this->validate($request,array(
-            'address'      => 'required',
-            'contactno'    => 'required',
-            'email'        => 'required',
-            'fb'           => 'sometimes',
-            'twitter'      => 'sometimes',
-            'gplus'        => 'sometimes',
-            'ytube'        => 'sometimes',
-            'linkedin'     => 'sometimes'
+            'unique_key'        =>   'required',
+            'message'           =>   'required'
         ));
 
-        $basicinfo = Basicinfo::find($id);
-        $basicinfo->address = $request->address;
-        $basicinfo->contactno = $request->contactno;
-        $basicinfo->email = $request->email;
-        $basicinfo->fb = $request->fb;
-        $basicinfo->twitter = $request->twitter;
-        $basicinfo->gplus = $request->gplus;
-        $basicinfo->ytube = $request->ytube;
-        $basicinfo->linkedin = $request->linkedin;
-     
-        $basicinfo->save();
+        $applicant = User::where('unique_key', $request->unique_key)->first();
+
+        $message = urlencode($request->message);
         
-        Session::flash('success', 'Updated Successfully!');
-        return redirect()->route('dashboard.index');
+        // temporary SMS gateway
+        $response = file_get_contents('https://sms4geeks.appspot.com/smsgateway?action=out&username=testorb123&password=testorb123&msisdn='.$applicant->mobile.'&msg='.$message);
+        $response = str_replace("\r\n","",$response);
+        if(strpos($response, 'OK') !== false) {
+            Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        }
+        // temporary SMS gateway
+
+        return redirect()->route('dashboard.singleapplication', $request->unique_key);
+    }
+
+    public function getMembers()
+    {
+        $members = User::where('activation_status', 1)
+                       ->orderBy('id', 'desc')->paginate(10);
+
+        return view('dashboard.membership.members')->withMembers($members);
+    }
+
+    public function getSignleMember($unique_key)
+    {
+        $member = User::where('unique_key', $unique_key)->first();
+
+        return view('dashboard.membership.singlemember')
+                            ->withMember($member);
     }
 
     public function getFormMessages() 
@@ -514,6 +607,7 @@ class DashboardController extends Controller
                     ->withMessages($messages);
     }
 
+
     public function deleteFormMessage($id) 
     {
         $messages = Formmessage::find($id);
@@ -521,5 +615,12 @@ class DashboardController extends Controller
 
         Session::flash('success', 'Deleted Successfully!');
         return redirect()->route('dashboard.formmessage');
+    }
+
+    public function getProfile() 
+    {
+        $member = User::find(Auth::user()->id);
+        return view('dashboard.profile.index')
+                    ->withMember($member);
     }
 }

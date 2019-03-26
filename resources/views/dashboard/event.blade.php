@@ -74,7 +74,7 @@
                       </div>
                       <div class="col-md-6">
                         <center>
-                          @if(($event->image != null) || (!file_exists(public_path('images/events/'.$event->image))))
+                          @if($event->image != null)
                             <img src="{{ asset('images/events/'.$event->image)}}" id='img-update{{ $event->id }}' style="height: 150px; width: auto; padding: 5px;" />
                           @else
                             <img src="{{ asset('images/events/default_event.jpg')}}" id='img-update{{ $event->id }}' style="height: 150px; width: auto; padding: 5px;" />

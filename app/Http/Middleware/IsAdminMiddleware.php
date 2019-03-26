@@ -17,7 +17,7 @@ class IsAdminMiddleware
     public function handle($request, Closure $next)
     {
         if(!Auth::check() || Auth::user()->role != 'admin'){
-            return redirect()->route('index.index');
+            abort(403, 'Access Denied');
         }
         return $next($request);
     }

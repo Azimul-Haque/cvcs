@@ -98,8 +98,8 @@
                   <div class="delete-img-box">
                       <img src="{{ asset('images/gallery/'. $albumphoto->image) }}" alt="Album Image" class="img-responsive">
                       <a href="#" class="btn btn-sm btn-danger" title="Delete Photo" data-toggle="modal" data-target="#deleteAlbumPhoto{{ $albumphoto->id }}" data-backdrop="static"><i class="fa fa-trash"></i></a>
-                      <!-- Delete Member Modal -->
-                      <!-- Delete Member Modal -->
+                      <!-- Delete Photo Modal -->
+                      <!-- Delete Photo Modal -->
                       <div class="modal fade" id="deleteAlbumPhoto{{ $albumphoto->id }}" role="dialog">
                         <div class="modal-dialog modal-md">
                           <div class="modal-content">
@@ -123,8 +123,8 @@
                           </div>
                         </div>
                       </div>
-                      <!-- Delete Member Modal -->
-                      <!-- Delete Member Modal -->
+                      <!-- Delete Photo Modal -->
+                      <!-- Delete Photo Modal -->
                   </div>
                 </div>
                 @endforeach

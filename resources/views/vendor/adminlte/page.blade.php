@@ -133,7 +133,63 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
+                    {{-- @each('adminlte::partials.menu-item', $adminlte->menu(), 'item') --}}
+                    @if(Auth::user()->role == 'admin')
+                    <li class="header">ড্যাশবোর্ড</li>
+                    <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.index') }}">
+                            <i class="fa fa-fw fa-tachometer"></i>
+                            <span>ড্যাশবোর্ড</span>
+                        </a>
+                    </li>
+                    <li class="header">হোমপেইজ কাস্টমাইজেশন</li>
+                    <li class="{{ Request::is('dashboard/abouts') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/events') ? 'active menu-open' : '' }} {{ Request::is('dashboard/notice') ? 'active menu-open' : '' }} {{ Request::is('dashboard/form/messages') ? 'active menu-open' : '' }} treeview">
+                      <a href="#">
+                          <i class="fa fa-fw fa-cogs"></i>
+                          <span>হোমপেইজ কাস্টমাইজেশন</span>
+                          <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li class="{{ Request::is('dashboard/abouts') ? 'active' : '' }}"><a href="{{ route('dashboard.abouts') }}"><i class="fa fa-pencil"></i> তথ্য এবং টেক্সট</a></li>
+                        <li class="{{ Request::is('dashboard/gallery') ? 'active' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active' : '' }}"><a href="{{ route('dashboard.gallery') }}"><i class="fa fa-picture-o"></i> গ্যালারি</a></li>
+                        <li class="{{ Request::is('dashboard/events') ? 'active' : '' }}"><a href="{{ route('dashboard.events') }}"><i class="fa fa-bullhorn"></i> ইভেন্ট</a></li>
+                        <li class="{{ Request::is('dashboard/notice') ? 'active' : '' }}"><a href="{{ route('dashboard.notice') }}"><i class="fa fa-bell-o"></i> নোটিশ</a></li>
+                        <li class="{{ Request::is('dashboard/form/messages') ? 'active' : '' }}"><a href="{{ route('dashboard.formmessage') }}"><i class="fa fa-envelope-o"></i> ফরম মেসেজ</a></li>
+                      </ul>
+                    </li>
+
+                    <li class="header">মেম্বারশিপ ম্যানেজমেন্ট</li>
+                    <li class="{{ Request::is('dashboard/applications') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.applications') }}">
+                            <i class="fa fa-fw fa-user-plus"></i>
+                            <span>আবেদনসমূহ</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('dashboard/members') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.members') }}">
+                            <i class="fa fa-fw fa-users"></i>
+                            <span>সদস্যগণ</span>
+                        </a>
+                    </li>
+                    @endif
+                    
+                    @if((Auth::user()->role == 'admin') || (Auth::user()->role == 'member'))
+                    <li class="header">একাউন্ট ম্যানেজমেন্ট</li>
+                    <li class="{{ Request::is('dashboard/profile') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.profile') }}">
+                            <i class="fa fa-fw fa-user"></i>
+                            <span>ব্যক্তিগত প্রোফাইল</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('income') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.members') }}">
+                            <i class="fa fa-fw fa-line-chart"></i>
+                            <span>সদস্যগণ</span>
+                        </a>
+                    </li>
+                    @endif
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

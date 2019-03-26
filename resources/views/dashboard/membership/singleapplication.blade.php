@@ -1,0 +1,330 @@
+@extends('adminlte::page')
+
+@section('title', 'CVCS | আবেদন')
+
+@section('css')
+
+@stop
+
+@section('content_header')
+    <h1>
+      আবেদন
+      <div class="pull-right">
+        <button class="btn btn-success" data-toggle="modal" data-target="#activateMemberModal" data-backdrop="static" title="অনুমোদন করুন"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+        <a class="btn btn-warning" data-toggle="modal" data-target="#sendMessageModal" data-backdrop="static" title="বার্তা পাঠান"><i class="fa fa-fw fa-envelope" aria-hidden="true"></i></a>
+        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteApplicationModal" data-backdrop="static" title="আবেদন মুছে ফেলুন"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></a>
+      </div>
+    </h1>
+    <!-- Activate User Modal -->
+    <!-- Activate User Modal -->
+    <div class="modal fade" id="activateMemberModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header modal-header-success">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-check"></i> সদস্য অনুমোদন</h4>
+          </div>
+          <div class="modal-body">
+            আপনি কী নিশ্চিতভাবে এই আবেদনটি অনুমোদন করতে চান?
+          </div>
+          <div class="modal-footer">
+            {!! Form::model($application, ['route' => ['dashboard.activatemember', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
+                {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-success')) !!}
+                <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+            {!! Form::close() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Activate User Modal -->
+    <!-- Activate User Modal -->
+
+    <!-- Send Message Modal -->
+    <!-- Send Message Modal -->
+    <div class="modal fade" id="sendMessageModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header modal-header-warning">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-envelope"></i> আবেদনকারীকে বার্তা পাঠান</h4>
+          </div>
+          {!! Form::open(['route' => 'dashboard.sendsmsapplicant', 'method' => 'POST', 'class' => 'form-default']) !!}
+          <div class="modal-body">
+            {!! Form::hidden('unique_key', $application->unique_key) !!}
+            {!! Form::textarea('message', null, array('class' => 'form-control textarea', 'placeholder' => 'বার্তা লিখুন', 'required' => '')) !!}
+          </div>
+          <div class="modal-footer">
+                {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-warning')) !!}
+                <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+            {!! Form::close() !!}
+          </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+    <!-- Send Message Modal -->
+    <!-- Send Message Modal -->
+
+    <!-- Delete Application Modal -->
+    <!-- Delete Application Modal -->
+    <div class="modal fade" id="deleteApplicationModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header modal-header-danger">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-trash"></i> আবেদনটি মুছে ফেলুন</h4>
+          </div>
+          <div class="modal-body">
+            আপনি কি নিশ্চিতভাবে আবেদনটি মুছে ফেলতে চান?
+          </div>
+          <div class="modal-footer">
+            {!! Form::model($application, ['route' => ['dashboard.deleteapplication', $application->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::submit('মুছে ফেলুন', array('class' => 'btn btn-danger')) !!}
+                <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+            {!! Form::close() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Delete Application Modal -->
+    <!-- Delete Application Modal -->
+@stop
+
+@section('content')
+  <!-- Custom Tabs -->
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">আবেদনকারীর ব্যক্তিগত তথ্য</a></li>
+      <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত তথ্য</a></li>
+      <li class="pull-right dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
+        </a>
+        <ul class="dropdown-menu">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="personal_info_tab">
+        <div class="row">
+          <div class="col-md-6">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    <center>পরিচিতি</center>
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <center>
+                      @if($application->image != null)
+                          <img src="{{ asset('images/users/'.$application->image)}}" alt="image of {{ $application->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                      @else
+                          <img src="{{ asset('images/user.png')}}" alt="image of {{ $application->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                      @endif
+                    </center>
+                  </td>
+                </tr>
+                <tr>
+                  <th width="40%">আবেদনকারীর নাম (বাংলায়)</th>
+                  <td>{{ $application->name_bangla }}</td>
+                </tr>
+                <tr>
+                  <th>আবেদনকারীর নাম (ইংরেজিতে)</th>
+                  <td>{{ $application->name}}</td>
+                </tr>
+                <tr>
+                  <th>জাতীয় পরিচয়পত্র নং</th>
+                  <td>{{ $application->nid}}</td>
+                </tr>
+                <tr>
+                  <th>জন্ম তারিখ</th>
+                  <td>{{ date('F d, Y', strtotime($application->dob)) }}</td>
+                </tr>
+                <tr>
+                  <th>লিঙ্গ</th>
+                  <td>{{ $application->gender }}</td>
+                </tr>
+                <tr>
+                  <th>স্বামী/স্ত্রীর নাম</th>
+                  <td>{{ $application->spouse }}</td>
+                </tr>
+                <tr>
+                  <th>স্বামী/স্ত্রীর পেশা</th>
+                  <td>{{ $application->spouse_profession }}</td>
+                </tr>
+                <tr>
+                  <th>পিতার নাম</th>
+                  <td>{{ $application->father }}</td>
+                </tr>
+                <tr>
+                  <th>পিতার নাম</th>
+                  <td>{{ $application->mother }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    <center>কর্ম সংক্রান্ত</center>
+                  </th>
+                </tr>
+                <tr>
+                  <th width="40%">আবেদনকারীর পেশা</th>
+                  <td>{{ $application->profession }}</td>
+                </tr>
+                <tr>
+                  <th>আবেদনকারীর পদবি</th>
+                  <td>{{ $application->designation }}</td>
+                </tr>
+                <tr>
+                  <th>দপতের নাম</th>
+                  <td>{{ $application->office }}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="2">
+                    <center>যোগাযোগ</center>
+                  </th>
+                </tr>
+                <tr>
+                  <th>বর্তমান ঠিকানা</th>
+                  <td>{{ $application->present_address }}</td>
+                </tr>
+                <tr>
+                  <th>স্থায়ী ঠিকানা</th>
+                  <td>{{ $application->permanent_address }}</td>
+                </tr>
+                <tr>
+                  <th>অফিসের টেলিফোন</th>
+                  <td>{{ $application->office_telephone }}</td>
+                </tr>
+                <tr>
+                  <th>বাসার টেলিফোন</th>
+                  <td>{{ $application->home_telephone }}</td>
+                </tr>
+                <tr>
+                  <th>মোবাইল</th>
+                  <td>{{ $application->mobile }}</td>
+                </tr>
+                <tr>
+                  <th>ইমেইল এড্রেস</th>
+                  <td>{{ $application->email }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="mominee_tab">
+        <div class="row">
+          <div class="col-md-6">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    <center>নমিনি ০১</center>
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <center>
+                      @if($application->nominee_one_image != null)
+                          <img src="{{ asset('images/users/'.$application->nominee_one_image)}}" alt="image of {{ $application->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                      @else
+                          <img src="{{ asset('images/user.png')}}" alt="image of {{ $application->nominee_one_name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                      @endif
+                    </center>
+                  </td>
+                </tr>
+                <tr>
+                  <th width="40%">নমিনীর নাম (বাংলায়)</th>
+                  <td>{{ $application->nominee_one_name }}</td>
+                </tr>
+                <tr>
+                  <th>পরিচয় সংক্রান্ত দলিল</th>
+                  <td>
+                    {{ $application->nominee_one_identity_text }}
+                    @if($application->nominee_one_identity_type == 0)
+                      (জাতীয় পরিচয়পত্র)
+                    @else
+                      (জন্ম নিবন্ধন)
+                    @endif
+                  </td>
+                </tr>
+                <tr>
+                  <th>পরিচয় সংক্রান্ত দলিল</th>
+                  <td>{{ $application->nominee_one_relation }}</td>
+                </tr>
+                <tr>
+                  <th>শতকরা হার</th>
+                  <td>{{ $application->nominee_one_percentage }}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    <center>নমিনি ০২</center>
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <center>
+                      @if($application->nominee_two_image != null)
+                          <img src="{{ asset('images/users/'.$application->nominee_two_image)}}" alt="image of {{ $application->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                      @else
+                          <img src="{{ asset('images/user.png')}}" alt="image of {{ $application->nominee_two_name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                      @endif
+                    </center>
+                  </td>
+                </tr>
+                <tr>
+                  <th width="40%">নমিনীর নাম (বাংলায়)</th>
+                  <td>{{ $application->nominee_two_name }}</td>
+                </tr>
+                <tr>
+                  <th>পরিচয় সংক্রান্ত দলিল</th>
+                  <td>
+                    {{ $application->nominee_two_identity_text }}
+                    @if($application->nominee_two_identity_type == 0)
+                      (জাতীয় পরিচয়পত্র)
+                    @else
+                      (জন্ম নিবন্ধন)
+                    @endif
+                  </td>
+                </tr>
+                <tr>
+                  <th>পরিচয় সংক্রান্ত দলিল</th>
+                  <td>{{ $application->nominee_two_relation }}</td>
+                </tr>
+                <tr>
+                  <th>শতকরা হার</th>
+                  <td>{{ $application->nominee_two_percentage }}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.tab-content -->
+  </div>
+  <!-- nav-tabs-custom -->
+@stop
+
+@section('js')
+
+@stop
