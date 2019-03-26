@@ -38,8 +38,8 @@
                 <div class="slider-typography text-center">
                     <div class="slider-text-middle-main">
                         <div class="slider-text-middle slider-text-middle6 padding-left-right-px wow fadeInUp">
-                            <span class="slider-title-big6 white-text text-uppercase font-weight-700 letter-spacing-3">সিভিসিএস</span>
-                            <h2 class="white-text text-uppercase letter-spacing-1 margin-three no-margin-bottom display-block">কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি</h2>
+                            <span class="slider-title-big4 white-text text-uppercase font-weight-700 letter-spacing-3">কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি</span>
+                            <h2 class="white-text text-uppercase letter-spacing-1 margin-three no-margin-bottom display-block">(সিভিসিএস)</h2>
                         </div>
                     </div>
                 </div>
