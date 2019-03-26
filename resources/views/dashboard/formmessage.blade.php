@@ -18,9 +18,10 @@
     <table class="table table-bordered table-condensed">
       <thead>
         <tr>
-          <th>Name</th>
-          <th width="25%">Email</th>
-          <th width="40%">Message</th>
+          <th>নাম</th>
+          <th width="20%">ইমেইল</th>
+          <th width="35%">বার্তা</th>
+          <th width="20%">সময়</th>
           <th width="10%">Action</th>
         </tr>
       </thead>
@@ -30,6 +31,7 @@
           <td>{{ $message->name }}</td>
           <td>{{ $message->email }}</td>
           <td>{{ $message->message }}</td>
+          <td>{{ date('F d, Y H:i A', strtotime($message->created_at)) }}</td>
           <td>
             <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteFormMessageModal{{ $message->id }}" data-backdrop="static" title="Delete Message"><i class="fa fa-trash-o"></i></button>
             <!-- Delete Message Modal -->
