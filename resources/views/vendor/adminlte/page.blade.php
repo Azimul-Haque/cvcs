@@ -183,10 +183,10 @@
                             <span>ব্যক্তিগত প্রোফাইল</span>
                         </a>
                     </li>
-                    <li class="{{ Request::is('income') ? 'active' : '' }}">
-                        <a href="{{ route('dashboard.members') }}">
-                            <i class="fa fa-fw fa-line-chart"></i>
-                            <span>সদস্যগণ</span>
+                    <li class="{{ Request::is('dashboard/member/payment') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.memberpayment') }}">
+                            <i class="fa fa-fw fa-handshake-o"></i>
+                            <span>পরিশোধ</span>
                         </a>
                     </li>
                     @endif

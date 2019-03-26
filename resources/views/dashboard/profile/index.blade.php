@@ -10,8 +10,12 @@
     <h1>
       সদস্য তথ্য
       <div class="pull-right">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal" data-backdrop="static" title="প্রোফাইল সম্পাদনা করুন"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></button>
-        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>
+        @if(Auth::user()->activation_status == 0)
+
+        @else
+          <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal" data-backdrop="static" title="প্রোফাইল সম্পাদনা করুন"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></button>
+          <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>
+        @endif
       </div>
     </h1>
 

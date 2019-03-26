@@ -64,7 +64,7 @@
     <style type="text/css">
         @font-face {
           font-family: kalpurush;
-          src: url({{ asset('font/kalpurush.ttf') }});
+          src: url({{ asset('font/kalpurush.woff') }});
         }
         body, h1, h2, h3, h4, h5, h6, p, a, span, li, td {
             font-family: kalpurush;

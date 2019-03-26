@@ -57,6 +57,26 @@ class IndexController extends Controller
                     ->withMembership($membership);
     }
 
+    public function getBusinessEntity()
+    {
+        return view('index.otherpages.business_entitny');
+    }
+
+    public function getProductServices()
+    {
+        return view('index.otherpages.product_services');
+    }
+
+    public function getWelfare()
+    {
+        return view('index.otherpages.welfare');
+    }
+
+    public function getFaq()
+    {
+        return view('index.otherpages.faq');
+    }
+
     public function getJourney()
     {
         return view('index.journey');
@@ -65,11 +85,6 @@ class IndexController extends Controller
     public function getConstitution()
     {
         return view('index.constitution');
-    }
-
-    public function getFaq()
-    {
-        return view('index.faq');
     }
 
     public function getAdhoc()

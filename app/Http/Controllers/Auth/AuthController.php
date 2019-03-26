@@ -7,6 +7,8 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -38,6 +40,16 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+    }
+
+    // just to redirect admin and member to different route...
+    // just to redirect admin and member to different route...
+    protected function authenticated (Request $request, $user){
+      if(Auth::user()->role == 'admin'){
+        return redirect('/dashboard');
+      } else{
+        return redirect('/dashboard/profile');
+      }
     }
 
     /**

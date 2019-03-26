@@ -45,7 +45,7 @@
                 <div class="navbar-collapse collapse">
                     <ul id="accordion" class="nav navbar-nav navbar-right panel-group main-menu">
                         <li>
-                            <a href="{{ route('index.index') }}" class="inner-link">নীড় পাতা</a>
+                            <a href="{{ route('index.index') }}">হোম</a>
                         </li>
                         <!-- menu item -->
                         {{-- <li class="dropdown panel simple-dropdown">
@@ -91,7 +91,25 @@
                             </ul>
                         </li> --}}
                         <li>
-                            <a href="{{ route('index.about') }}">আমাদের সম্পর্কে</a>
+                            <a href="{{ route('index.about') }}">এবাউট</a>
+                        </li>
+                        <li class="dropdown panel simple-dropdown">
+                            <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
+                                অন্যান্য
+                            </a>
+                            <!-- sub menu single -->
+                            <!-- sub menu item  -->
+                            <ul id="nav_others" class="dropdown-menu panel-collapse collapse" role="menu">
+                                <li>
+                                    <a href="{{ route('index.business_entitny') }}" class="text-large">বিজনেস এন্টিটি</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('index.product_services') }}" class="text-large">প্রোডাক্ট/ সার্ভিসেস</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('index.welfare') }}" class="text-large">ওয়েলফেয়ার</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="{{ route('index.gallery') }}">গ্যালারি</a>
@@ -111,9 +129,9 @@
                         <li>
                             <a href="{{ route('index.contact') }}">যোগাযোগ</a>
                         </li>
-                        <!-- <li>
-                            <a href="{{ route('index.application') }}">Membership</a>
-                        </li> -->
+                        <li>
+                            <a href="{{ route('index.faq') }}">FAQ</a>
+                        </li>
                         @if(Auth::check())
                         <li class="dropdown panel simple-dropdown">
                             <a href="#nav_auth_user" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">

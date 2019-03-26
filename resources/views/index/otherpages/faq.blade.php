@@ -19,11 +19,11 @@
                   </div>
                   <div class="col-lg-4 col-md-5 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
                       <!-- breadcrumb -->
-                      <ul>
+                      {{-- <ul>
                           <li><a href="{{ route('index.index') }}">Home</a></li>
                           <li><a href="#">About</a></li>
                           <li>FAQ</li>
-                      </ul>
+                      </ul> --}}
                       <!-- end breadcrumb -->
                   </div>
               </div>
@@ -35,9 +35,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-sm-12 wow fadeInUp center-col text-center">
-                    <h1 class="white-text">Hello, how can we help you?</h1>
+                    <h1 class="white-text">কীভাবে আপনাকে সাহায্য করতে পারি?</h1>
                     <div class="faq-search margin-five no-margin-bottom position-relative">
-                        <input type="text" name="search" class="input-round big-input no-margin" placeholder="Search our Help Center...">
+                        <input type="text" name="search" class="input-round big-input no-margin" placeholder="আপনার প্রশ্নটি খুঁজুন">
                         <i class="fa fa-search faq-search-button"></i>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         <div class="panel panel-default" id="collapse-one">
                             <div role="tablist" id="headingOne" class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#collapse-one" href="#collapse-one-link1">
-                                    <h4 class="panel-title">Lorem Ipsum is simply text printing?
+                                    <h4 class="panel-title">প্রশ্ন এক
                                         <span class="pull-right">
                                             <i class="fa fa-plus"></i>
                                         </span>
@@ -62,9 +62,7 @@
                             </div>
                             <div id="collapse-one-link1" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-                                    it to make a type specimen book.
+                                    উত্তর এক
                                 </div>
                             </div>
                         </div>
@@ -73,7 +71,7 @@
                         <div class="panel panel-default">
                             <div role="tablist" id="headingTwo" class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#collapse-one" href="#collapse-one-link2">
-                                    <h4 class="panel-title">Lorem Ipsum is simply dummy?
+                                    <h4 class="panel-title">প্রশ্ন দুই
                                         <span class="pull-right">
                                             <i class="fa fa-plus"></i>
                                         </span>
@@ -82,9 +80,7 @@
                             </div>
                             <div id="collapse-one-link2" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-                                    it to make a type specimen book.
+                                    উত্তর দুই
                                 </div>
                             </div>
                         </div>
@@ -93,7 +89,7 @@
                         <div class="panel panel-default">
                             <div role="tablist" id="headingThree" class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#collapse-one" href="#collapse-one-link3">
-                                    <h4 class="panel-title">Lorem Ipsum is simply dummy text?
+                                    <h4 class="panel-title">প্রশ্ন তিন
                                         <span class="pull-right">
                                             <i class="fa fa-plus"></i>
                                         </span>
@@ -102,9 +98,7 @@
                             </div>
                             <div id="collapse-one-link3" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                    text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-                                    it to make a type specimen book.
+                                    উত্তর তিন
                                 </div>
                             </div>
                         </div>

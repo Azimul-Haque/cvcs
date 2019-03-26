@@ -11,6 +11,19 @@
     <section class="wow fadeIn bg-gray">
         <div class="container">
             <div class="row">
+                <div class="col-md-10 col-sm-10 col-xs-11 center-col login-box xs-margin-top-twelve margin-bottom" id="presubmission_div">
+                  <h2 class="agency-title margin-two">
+                    আবেদন করার আগে...
+                  </h2>
+                  <ul>
+                    <li><i class="fa fa-check-square-o"></i> আপনার নিজের অত্যাবশ্যক তথ্যগুলো একত্র করুন</li>
+                    <li><i class="fa fa-check-square-o"></i> আপনার নিজের এক কপি ৩০০x৩০০ সাইজের রঙিন ছবির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
+                    <li><i class="fa fa-check-square-o"></i> দুজন নমিনির ৩০০x৩০০ সাইজের রঙিন ছবির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
+                    <li><i class="fa fa-check-square-o"></i> মেম্বারশিপ ফি বাবদ ৫০০০ টাকার ব্যাংক ডিপোজিট রিসিটটির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
+                    <li><i class="fa fa-check-square-o"></i> <b>মোবাইল নম্বর</b> ঘরে ১১ ডিজিটের সক্রিয় একটি নম্বর দিন; এ নম্বরেই যাবতীয় তথ্য SMS আকারে পাঠানো হবে</li>
+                  </ul>
+                  <button class="btn highlight-button-royal-blue btn-bg no-margin-right" id="presubmission_info">ঠিক আছে</button>
+                </div>
                 <div class="col-md-10 col-sm-10 col-xs-11 center-col login-box xs-margin-top-twelve">
                     <h3 class="text-center">
                       কাস্টমস এন্ড ভ্যাট কো-অপারেটিভ সোসাইটি<br/><br/>
@@ -277,7 +290,7 @@
                           </div>
                         </div>
                         
-                        <button class="btn highlight-button-dark btn-bg btn-round margin-five no-margin-right" type="submit">আবেদন জমা দিন</button>
+                        <button class="btn highlight-button-royal-blue btn-bg margin-five no-margin-right" type="submit">আবেদন জমা দিন</button>
                     </form>
                 </div>
 
@@ -296,7 +309,10 @@
                 mode:"date",
                 dateFormat: "dd-MM-yyyy",
                 titleContentDate: 'জন্মতারিখ নির্ধারণ করুন'
-            }); 
+            });
+            $("#presubmission_info").click(function() {
+                $("#presubmission_div").hide(2000);
+            });
         });
     </script>
     <script type="text/javascript">

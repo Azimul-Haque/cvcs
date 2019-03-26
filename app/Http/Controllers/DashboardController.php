@@ -33,7 +33,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('index', 'getBlogs', 'getProfile');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage');
     }
 
     /**
@@ -622,5 +622,12 @@ class DashboardController extends Controller
         $member = User::find(Auth::user()->id);
         return view('dashboard.profile.index')
                     ->withMember($member);
+    }
+
+    public function getPaymentPage() 
+    {
+        $members = User::where('activation_status', 1)->get();
+        return view('dashboard.profile.payment')
+                    ->withMembers($members);
     }
 }
