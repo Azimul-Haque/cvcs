@@ -757,14 +757,18 @@ class DashboardController extends Controller
 
     public function getMembersPendingPayments() 
     {
-        $payments = Payment::where('payment_status', 0)->paginate(10);
+        $payments = Payment::where('payment_status', 0)
+                           ->orderBy('id', 'desc')
+                           ->paginate(10);
         return view('dashboard.payments.pending')
                     ->withPayments($payments);
     }
 
     public function getMembersApprovedPayments() 
     {
-        $payments = Payment::where('payment_status', 1)->paginate(10);
+        $payments = Payment::where('payment_status', 1)
+                           ->orderBy('id', 'desc')
+                           ->paginate(10);
         return view('dashboard.payments.approved')
                     ->withPayments($payments);
     }
