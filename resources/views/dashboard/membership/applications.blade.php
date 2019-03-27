@@ -19,10 +19,10 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Contact No & Email</th>
-        <th>Office Info</th>
-        <th>Photo</th>
+        <th>নাম</th>
+        <th>যোগাযোগের নম্বর ও ইমেইল এড্রেস</th>
+        <th>অফিস তথ্য</th>
+        <th>ছবি</th>
         <th width="10%">Action</th>
       </tr>
     </thead>

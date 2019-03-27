@@ -334,6 +334,26 @@ ul.errorlist > li {
     right: 10px;
     color: #FFF;
 }
+.badge-primary {
+    background: #337AB7 !important;
+    padding: 5px;
+}
+.badge-success {
+    background: #5CB85C !important;
+    padding: 5px;
+}
+.badge-info {
+    background: #5BC0DE !important;
+    padding: 5px;
+}
+.badge-warning {
+    background: #F0AD4E !important;
+    padding: 5px;
+}
+.badge-danger {
+    background: #D9534F !important;
+    padding: 5px;
+}
 
 /* print css */
 @media print {

@@ -108,6 +108,10 @@
                   </td>
                 </tr>
                 <tr>
+                  <th width="40%">সদস্যপদ নং</th>
+                  <td>{{ $member->member_id }}</td>
+                </tr>
+                <tr>
                   <th width="40%">আবেদনকারীর নাম (বাংলায়)</th>
                   <td>{{ $member->name_bangla }}</td>
                 </tr>

@@ -18,6 +18,8 @@ return array(
     'CreateLikesTable' => $baseDir . '/database/migrations/2018_10_26_095608_create_likes_table.php',
     'CreateNoticesTable' => $baseDir . '/database/migrations/2019_03_24_224557_create_notices_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreatePaymentreceiptsTable' => $baseDir . '/database/migrations/2019_03_27_231608_create_paymentreceipts_table.php',
+    'CreatePaymentsTable' => $baseDir . '/database/migrations/2019_03_27_230252_create_payments_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'FPDF_TPL' => $vendorDir . '/setasign/fpdi/fpdf_tpl.php',

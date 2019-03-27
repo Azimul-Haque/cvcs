@@ -48,7 +48,7 @@
 
                 <div class="col-md-6 col-sm-6">
                     <span class="text-large letter-spacing-2 black-text font-weight-600 agency-title">যোগাযোগ ফরম</span><br/><br/><br/>
-                    {!! Form::open(['route' => 'index.storeformmessage', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::open(['route' => 'index.storeformmessage', 'method' => 'POST']) !!}
                         <div id="success" class="no-margin-lr"></div>
                         <input name="name" type="text" value="{{ old('name') }}" placeholder="আপনার নাম" required="" />
                         <input name="email" type="email" value="{{ old('email') }}" placeholder="ইমেইল এড্রেস"  required="" />

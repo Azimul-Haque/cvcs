@@ -275,6 +275,7 @@ class IndexController extends Controller
 
         $application->role = 'member';
         $application->activation_status = 0;
+        $application->member_id = 0;
 
         // generate unique_key
         $unique_key_length = 100;

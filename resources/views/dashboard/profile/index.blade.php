@@ -14,27 +14,27 @@
 
         @else
           <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal" data-backdrop="static" title="প্রোফাইল সম্পাদনা করুন"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></button>
-          <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>
+          {{-- <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button> --}}
         @endif
       </div>
     </h1>
 
-    <!-- Send Message Modal -->
-    <!-- Send Message Modal -->
+    <!-- Edit Info Modal -->
+    <!-- Edit Info Modal -->
     <div class="modal fade" id="editProfileModal" role="dialog">
       <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header modal-header-primary">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><i class="fa fa-envelope"></i> জনাব {{ $member->name_bangla }}-কে বার্তা পাঠান</h4>
+            <h4 class="modal-title"><i class="fa fa-envelope"></i> তথ্য সম্পাদনা করুন</h4>
           </div>
           {!! Form::open(['route' => 'dashboard.sendsmsapplicant', 'method' => 'POST', 'class' => 'form-default']) !!}
           <div class="modal-body">
             {!! Form::hidden('unique_key', $member->unique_key) !!}
-            {!! Form::textarea('message', null, array('class' => 'form-control textarea', 'placeholder' => 'বার্তা লিখুন', 'required' => '')) !!}
+            {{-- {!! Form::textarea('message', null, array('class' => 'form-control textarea', 'placeholder' => 'বার্তা লিখুন', 'required' => '')) !!} --}}
           </div>
           <div class="modal-footer">
-                {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-primary')) !!}
+                {{-- {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-primary')) !!} --}}
                 <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
             {!! Form::close() !!}
           </div>
@@ -42,32 +42,8 @@
         </div>
       </div>
     </div>
-    <!-- Send Message Modal -->
-    <!-- Send Message Modal -->
-
-    <!-- Delete Member Modal -->
-    <!-- Delete Member Modal -->
-          {{-- <div class="modal fade" id="deleteMemberModal" role="dialog">
-            <div class="modal-dialog modal-md">
-              <div class="modal-content">
-                <div class="modal-header modal-header-danger">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title"><i class="fa fa-trash"></i> জনাব {{ $member->name_bangla }}-এর সদস্যপদ মুছে ফেলুন</h4>
-                </div>
-                <div class="modal-body">
-                  আপনি কি নিশ্চিতভাবে সদস্যপদ মুছে ফেলতে চান?
-                </div>
-                <div class="modal-footer">
-                  {!! Form::model($member, ['route' => ['dashboard.deleteapplication', $member->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
-                      {!! Form::submit('মুছে ফেলুন', array('class' => 'btn btn-danger')) !!}
-                      <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-                  {!! Form::close() !!}
-                </div>
-              </div>
-            </div>
-          </div> --}}
-    <!-- Delete Member Modal -->
-    <!-- Delete Member Modal -->
+    <!-- Edit Info Modal -->
+    <!-- Edit Info Modal -->
 @stop
 
 @section('content')
@@ -76,7 +52,7 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">আবেদনকারীর ব্যক্তিগত তথ্য</a></li>
       <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত তথ্য</a></li>
-      <li class=""><a href="#payment_tab" data-toggle="tab" aria-expanded="true">পরিশোধ সংক্রান্ত তথ্য</a></li>
+      {{-- <li class=""><a href="#payment_tab" data-toggle="tab" aria-expanded="true">পরিশোধ সংক্রান্ত তথ্য</a></li> --}}
       <li class="pull-right dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
         </a>
@@ -301,8 +277,8 @@
         </div>
       </div>
       <!-- /.tab-pane -->
-      <div class="tab-pane" id="payment_tab">
-      </div>
+      {{-- <div class="tab-pane" id="payment_tab">
+      </div> --}}
       <!-- /.tab-pane -->
     </div>
     <!-- /.tab-content -->

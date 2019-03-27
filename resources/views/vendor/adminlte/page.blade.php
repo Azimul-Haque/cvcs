@@ -173,6 +173,19 @@
                             <span>সদস্যগণ</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} treeview">
+                      <a href="#">
+                          <i class="fa fa-fw fa-handshake-o"></i>
+                          <span>পরিশোধসমূহ</span>
+                          <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li class="{{ Request::is('dashboard/members/payments/pending') ? 'active' : '' }}"><a href="{{ route('dashboard.memberspendingpayments') }}"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন পরিশোধসমূহ</a></li>
+                        <li class="{{ Request::is('dashboard/members/payments/approved') ? 'active' : '' }}"><a href="{{ route('dashboard.membersapprovedpayments') }}"><i class="fa fa-check-square-o"></i> অনুমোদিত পরিশোধসমূহ</a></li>
+                      </ul>
+                    </li>
                     @endif
                     
                     @if((Auth::user()->role == 'admin') || (Auth::user()->role == 'member'))

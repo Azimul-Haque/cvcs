@@ -13,13 +13,15 @@ use App\Event;
 use App\Notice;
 use App\Basicinfo;
 use App\Formmessage;
+use App\Payment;
+use App\Paymentreceipt;
 use App\Adhocmember;
 
 use DB;
 use Auth;
 use Image;
 use File;
-use Session;
+use Session, Config;
 
 class DashboardController extends Controller
 {
@@ -33,7 +35,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage');
     }
 
     /**
@@ -536,8 +538,50 @@ class DashboardController extends Controller
     {
         $application = User::find($id);
         $application->activation_status = 1;
+
+        $lastmember = User::orderBy('id', 'desc')
+                          ->where('activation_status', 1)
+                          ->first();
+        $lastfivedigits = substr($lastmember->member_id, -5);
+
+        $application->member_id = date('Y', strtotime($application->dob)).str_pad(($lastfivedigits+1), 5, '0', STR_PAD_LEFT);;
         $application->save();
 
+        // send activation SMS ... aro kichu kaaj baki ache...
+        // send sms
+        $mobile_number = 0;
+        if(strlen($application->mobile) == 11) {
+            $mobile_number = '88'.$application->mobile;
+        } elseif(strlen($application->mobile) > 11) {
+            if (strpos($application->mobile, '+') !== false) {
+                $mobile_number = substr($application->mobile,0,1);
+            }
+        }
+        $url = config('sms.url');
+        $number = $mobile_number;
+        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Thanks. http://cvcsbd.com';
+        $data= array(
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            'number'=>"$number",
+            'message'=>"$text"
+        );
+        // initialize send status
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        // send sms
+        if($sendstatus == 1101) {
+            Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } else {
+            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        }
+
+        Session::flash('success', 'সদস্য সফলভাবে অনুমোদন করা হয়েছে!');
         return redirect()->route('dashboard.members');
     }
 
@@ -626,8 +670,147 @@ class DashboardController extends Controller
 
     public function getPaymentPage() 
     {
-        $members = User::where('activation_status', 1)->get();
+        $payments = Payment::where('member_id', Auth::user()->member_id)->paginate(10);
         return view('dashboard.profile.payment')
-                    ->withMembers($members);
+                    ->withPayments($payments);
+    }
+
+    public function getSelfPaymentPage() 
+    {
+        return view('dashboard.profile.selfpayment');
+    }
+
+    public function storeSelfPaymentPage(Request $request) 
+    {
+        $this->validate($request,array(
+            'member_id'   =>   'required',
+            'amount'      =>   'required|integer',
+            'bank'        =>   'required',
+            'branch'      =>   'required',
+            'image'       =>   'sometimes|image|max:500'
+
+        ));
+
+        $payment = new Payment;
+        $payment->member_id = $request->member_id;
+        $payment->amount = $request->amount;
+        $payment->bank = $request->bank;
+        $payment->branch = $request->branch;
+        $payment->payment_status = 0;
+        // generate payment_key
+        $payment_key_length = 10;
+        $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+        // generate payment_key
+        $payment->payment_key = $payment_key;
+        $payment->save();
+
+        // receipt upload
+        if($request->hasFile('image')) {
+            $receipt      = $request->file('image');
+            $filename   = $payment->member_id.'_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
+            $location   = public_path('/images/receipts/'. $filename);
+            Image::make($receipt)->resize(400, 250)->save($location);
+            $paymentreceipt = new Paymentreceipt;
+            $paymentreceipt->payment_id = $payment->id;
+            $paymentreceipt->image = $filename;
+            $paymentreceipt->save();
+        }
+
+        // send pending SMS ... aro kichu kaaj baki ache...
+        // send sms
+        $mobile_number = 0;
+        if(strlen(Auth::user()->mobile) == 11) {
+            $mobile_number = '88'.Auth::user()->mobile;
+        } elseif(strlen(Auth::user()->mobile) > 11) {
+            if (strpos(Auth::user()->mobile, '+') !== false) {
+                $mobile_number = substr(Auth::user()->mobile,0,1);
+            }
+        }
+        $url = config('sms.url');
+        $number = $mobile_number;
+        $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Thanks. http://cvcsbd.com';
+        $data= array(
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            'number'=>"$number",
+            'message'=>"$text"
+        );
+        // initialize send status
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        // send sms
+        if($sendstatus == 1101) {
+            // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } else {
+            // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        }
+        
+        Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
+        return redirect()->route('dashboard.memberpayment');
+    }
+
+    public function getMembersPendingPayments() 
+    {
+        $payments = Payment::where('payment_status', 0)->paginate(10);
+        return view('dashboard.payments.pending')
+                    ->withPayments($payments);
+    }
+
+    public function getMembersApprovedPayments() 
+    {
+        $payments = Payment::where('payment_status', 1)->paginate(10);
+        return view('dashboard.payments.approved')
+                    ->withPayments($payments);
+    }
+
+    public function approveSinglePayment(Request $request, $id) 
+    {
+        $payment = Payment::find($id);
+
+        $payment->payment_status = 1;
+        $payment->save();
+
+        // send pending SMS ... aro kichu kaaj baki ache...
+        // send sms
+        $mobile_number = 0;
+        if(strlen($payment->user->mobile) == 11) {
+            $mobile_number = '88'.$payment->user->mobile;
+        } elseif(strlen($payment->user->mobile) > 11) {
+            if (strpos($payment->user->mobile, '+') !== false) {
+                $mobile_number = substr($payment->user->mobile,0,1);
+            }
+        }
+        $url = config('sms.url');
+        $number = $mobile_number;
+        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. http://cvcsbd.com';
+        $data= array(
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            'number'=>"$number",
+            'message'=>"$text"
+        );
+        // initialize send status
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        // send sms
+        if($sendstatus == 1101) {
+            Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } else {
+            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        }
+
+        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        return redirect()->route('dashboard.membersapprovedpayments');
     }
 }
