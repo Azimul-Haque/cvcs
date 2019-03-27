@@ -20,6 +20,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>পরিশোধকারী</th>
           <th>পেমেন্ট আইডি</th>
           <th>পেমেন্ট স্ট্যাটাস</th>
           <th>পরিমাণ</th>
@@ -32,6 +33,9 @@
       <tbody>
         @foreach($payments as $payment)
         <tr>
+          <td>
+            <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
+          </td>
           <td>{{ $payment->payment_key }}</td>
           <td>
             @if($payment->payment_status == 0)
@@ -45,10 +49,10 @@
           <td>{{ $payment->branch }}</td>
           <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
           <td>
-            <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-eye"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
+            <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal{{ $payment->id }}" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-eye"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
             <!-- See Receipts Modal -->
             <!-- See Receipts Modal -->
-            <div class="modal fade" id="seeReceiptModal" role="dialog">
+            <div class="modal fade" id="seeReceiptModal{{ $payment->id }}" role="dialog">
               <div class="modal-dialog modal-md">
                 <div class="modal-content">
                   <div class="modal-header modal-header-success">
@@ -56,6 +60,7 @@
                     <h4 class="modal-title"><i class="fa fa-paperclip"></i> পরিশোধ সংযুক্তি</h4>
                   </div>
                   <div class="modal-body">
+                    পরিশোধ আইডিঃ {{ $payment->payment_key }}
                     @if(count($payment->paymentreceipts) > 0)
                       @foreach($payment->paymentreceipts as $paymentreceipt)
                         <img src="{{ asset('images/receipts/'. $paymentreceipt->image) }}" alt="Album Image" class="img-responsive" style="max-height: 200px; width: auto;"><br/>
@@ -70,10 +75,10 @@
             </div>
             <!-- See Receipts Modal -->
             <!-- See Receipts Modal -->
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#approvePaymentModal" data-backdrop="static" title="অনুমোদন করুন"><i class="fa fa-check"></i></button>
+            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#approvePaymentModal{{ $payment->id }}" data-backdrop="static" title="অনুমোদন করুন"><i class="fa fa-check"></i></button>
             <!-- Approve Payment Modal -->
             <!-- Approve Payment Modal -->
-            <div class="modal fade" id="approvePaymentModal" role="dialog">
+            <div class="modal fade" id="approvePaymentModal{{ $payment->id }}" role="dialog">
               <div class="modal-dialog modal-md">
                 <div class="modal-content">
                   <div class="modal-header modal-header-success">
@@ -81,7 +86,12 @@
                     <h4 class="modal-title"><i class="fa fa-check"></i> পরিশোধ অনুমোদন</h4>
                   </div>
                   <div class="modal-body">
-                    আপনি কী নিশ্চিতভাবে এই পরিশোধটি অনুমোদন করতে চান?
+                    <big>আপনি কী নিশ্চিতভাবে এই পরিশোধটি অনুমোদন করতে চান?</big><br/>
+                    <strong>নামঃ</strong> {{ $payment->user->name_bangla }}<br/>
+                    <strong>পরিমাণঃ</strong> {{ $payment->amount }} ৳<br/>
+                    <strong>ব্যাংকঃ</strong> {{ $payment->bank }} ৳<br/>
+                    <strong>ব্রাঞ্চঃ</strong> {{ $payment->branch }}<br/>
+                    <strong>সময়কালঃ</strong> {{ date('F d, Y H:i A', strtotime($payment->created_at)) }}<br/>
                   </div>
                   <div class="modal-footer">
                     {!! Form::model($payment, ['route' => ['dashboard.approvesinglepayment', $payment->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}

@@ -35,7 +35,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPaymentPage');
     }
 
     /**
@@ -614,15 +614,39 @@ class DashboardController extends Controller
 
         $applicant = User::where('unique_key', $request->unique_key)->first();
 
-        $message = urlencode($request->message);
-        
-        // temporary SMS gateway
-        $response = file_get_contents('https://sms4geeks.appspot.com/smsgateway?action=out&username=testorb123&password=testorb123&msisdn='.$applicant->mobile.'&msg='.$message);
-        $response = str_replace("\r\n","",$response);
-        if(strpos($response, 'OK') !== false) {
-            Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        // send pending SMS ... aro kichu kaaj baki ache...
+        // send sms
+        $mobile_number = 0;
+        if(strlen($applicant->mobile) == 11) {
+            $mobile_number = '88'.$applicant->mobile;
+        } elseif(strlen($applicant->mobile) > 11) {
+            if (strpos($applicant->mobile, '+') !== false) {
+                $mobile_number = substr($applicant->mobile,0,1);
+            }
         }
-        // temporary SMS gateway
+        $url = config('sms.url');
+        $number = $mobile_number;
+        $text = $request->message;
+        $data= array(
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            'number'=>"$number",
+            'message'=>"$text"
+        );
+        // initialize send status
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        // send sms
+        if($sendstatus == 1101) {
+            Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } else {
+            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        }
 
         return redirect()->route('dashboard.singleapplication', $request->unique_key);
     }
@@ -670,7 +694,9 @@ class DashboardController extends Controller
 
     public function getPaymentPage() 
     {
-        $payments = Payment::where('member_id', Auth::user()->member_id)->paginate(10);
+        $payments = Payment::where('member_id', Auth::user()->member_id)
+                           ->orderBy('id', 'desc')
+                           ->paginate(10);
         return view('dashboard.profile.payment')
                     ->withPayments($payments);
     }

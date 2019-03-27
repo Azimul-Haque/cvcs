@@ -302,13 +302,66 @@
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="payment_tab">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        It has survived not only five centuries, but also the leap into electronic typesetting,
-        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-        like Aldus PageMaker including versions of Lorem Ipsum.
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>পেমেন্ট আইডি</th>
+                <th>পেমেন্ট স্ট্যাটাস</th>
+                <th>পরিমাণ</th>
+                <th>ব্যাংক</th>
+                <th>ব্রাঞ্চ</th>
+                <th>সময়কাল</th>
+                <th width="10%">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($member->payments as $payment)
+              <tr>
+                <td>{{ $payment->payment_key }}</td>
+                <td>
+                  @if($payment->payment_status == 0)
+                    <span class="badge badge-success"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
+                  @else
+                    <span class="badge badge-danger"><i class="fa fa-check"></i>অনুমোদিত</span>
+                  @endif
+                </td>
+                <td align="right">{{ $payment->amount }} ৳</td>
+                <td>{{ $payment->bank }}</td>
+                <td>{{ $payment->branch }}</td>
+                <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
+                <td>
+                  <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-eye"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
+                  <!-- See Receipts Modal -->
+                  <!-- See Receipts Modal -->
+                  <div class="modal fade" id="seeReceiptModal" role="dialog">
+                    <div class="modal-dialog modal-md">
+                      <div class="modal-content">
+                        <div class="modal-header modal-header-success">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title"><i class="fa fa-paperclip"></i> পরিশোধ সংযুক্তি</h4>
+                        </div>
+                        <div class="modal-body">
+                          @if(count($payment->paymentreceipts) > 0)
+                            @foreach($payment->paymentreceipts as $paymentreceipt)
+                              <img src="{{ asset('images/receipts/'. $paymentreceipt->image) }}" alt="Album Image" class="img-responsive" style="max-height: 200px; width: auto;"><br/>
+                            @endforeach
+                          @endif
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- See Receipts Modal -->
+                  <!-- See Receipts Modal -->
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
       <!-- /.tab-pane -->
     </div>
