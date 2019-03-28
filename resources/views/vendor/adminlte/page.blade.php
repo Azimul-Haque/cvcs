@@ -93,7 +93,7 @@
                               <!-- Menu Footer-->
                               <li class="user-footer">
                                 <div class="pull-left">
-                                  <a href="#!" class="btn btn-default btn-flat">Profile</a>
+                                  <a href="{{ route('dashboard.profile') }}" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
                                   @if(config('adminlte.logout_method') == 'GET' || !config('adminlte.logout_method') && version_compare(\Illuminate\Foundation\Application::VERSION, '5.3.0', '<'))
@@ -189,7 +189,7 @@
                     @endif
                     
                     @if((Auth::user()->role == 'admin') || (Auth::user()->role == 'member'))
-                    <li class="header">একাউন্ট ম্যানেজমেন্ট</li>
+                    <li class="header">একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</li>
                     <li class="{{ Request::is('dashboard/profile') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.profile') }}">
                             <i class="fa fa-fw fa-user"></i>
@@ -234,6 +234,13 @@
             @endif
         </div>
         <!-- /.content-wrapper -->
+        <footer class="main-footer">
+          <div class="pull-right hidden-xs">
+            <b>Version</b> 1.0.28
+          </div>
+          <strong>Copyright © {{ date('Y') }}</strong> 
+          All rights reserved.
+        </footer>
 
     </div>
     <!-- ./wrapper -->

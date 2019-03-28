@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CVCS | সদস্য তথ্য')
+@section('title', 'CVCS | সদস্য পরিশোধ')
 
 @section('css')
   {!!Html::style('css/parsley.css')!!}

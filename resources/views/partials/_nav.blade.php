@@ -145,6 +145,9 @@
                             <!-- sub menu item  -->
                             <ul id="nav_auth_user" class="dropdown-menu panel-collapse collapse" role="menu">
                                 <li>
+                                    <a href="@if(Auth::user()->role == 'admin') {{ route('dashboard.index') }} @else {{ route('dashboard.profile') }} @endif" class="text-large"><i class="icon-speedometer i-plain"></i> ড্যাশবোর্ড</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('index.profile', Auth::user()->unique_key) }}" class="text-large"><i class="icon-profile-male i-plain"></i> প্রোফাইল</a>
                                 </li>
                                 <li>

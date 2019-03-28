@@ -35,7 +35,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPaymentPage');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPaymentPage', 'getBulkPaymentPage');
     }
 
     /**
@@ -234,7 +234,7 @@ class DashboardController extends Controller
 
     public function getNotice()
     {
-        $notices = Notice::orderBy('id', 'desc')->get();
+        $notices = Notice::orderBy('id', 'desc')->paginate(10);
         return view('dashboard.notice')->withNotices($notices);
     }
 
@@ -306,7 +306,7 @@ class DashboardController extends Controller
 
     public function getEvents()
     {
-        $events = Event::orderBy('id', 'desc')->get();
+        $events = Event::orderBy('id', 'desc')->paginate(10);
         return view('dashboard.event')->withEvents($events);
     }
 
@@ -384,8 +384,7 @@ class DashboardController extends Controller
 
     public function getGallery()
     {
-        $albums = Album::orderBy('id', 'desc')->get();
-
+        $albums = Album::orderBy('id', 'desc')->paginate(10);
         return view('dashboard.gallery.index')->withAlbums($albums);
     }
 
@@ -779,6 +778,11 @@ class DashboardController extends Controller
         
         Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
         return redirect()->route('dashboard.memberpayment');
+    }
+
+    public function getBulkPaymentPage() 
+    {
+        return view('dashboard.profile.bulkpayment');
     }
 
     public function getMembersPendingPayments() 

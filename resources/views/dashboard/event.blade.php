@@ -16,6 +16,7 @@
 @stop
 
 @section('content')
+  <div class="table-responsive">
     <table class="table table-bordered table-condensed">
       <thead>
         <tr>
@@ -163,58 +164,60 @@
         @endforeach
       </tbody>
     </table>
+  </div>
+  {{ $events->links() }}
 
 
-    <!-- Add Event Modal -->
-    <!-- Add Event Modal -->
-    <div class="modal fade" id="addEventModal" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header modal-header-success">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Create New Event</h4>
-          </div>
-          <div class="modal-body">
-            {!! Form::open(['route' => 'dashboard.storeevent', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                <div class="form-group">
-                  {!! Form::label('name', 'Event Title:') !!}
-                  {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Write Event Title', 'required')) !!}
-                </div>
-                <div class="form-group">
-                  {!! Form::label('description', 'Event Description:') !!}
-                  {!! Form::textarea('description', null, array('class' => 'form-control textarea', 'placeholder' => 'Write Event Description', 'required')) !!}
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <label>Photo (8:5 &amp; 500Kb Max):</label>
-                          <div class="input-group">
-                              <span class="input-group-btn">
-                                  <span class="btn btn-default btn-file">
-                                      Browse <input type="file" id="image" name="image">
-                                  </span>
-                              </span>
-                              <input type="text" class="form-control" readonly>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                    <center>
-                      <img src="{{ asset('images/800x500.png')}}" id='img-upload' style="height: 150px; width: auto; padding: 5px;" />
-                    </center>
-                  </div>
-                </div>
-          </div>
-          <div class="modal-footer">
-                {!! Form::submit('Submit', array('class' => 'btn btn-success')) !!}
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          </div>
-          {!! Form::close() !!}
+  <!-- Add Event Modal -->
+  <!-- Add Event Modal -->
+  <div class="modal fade" id="addEventModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header modal-header-success">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create New Event</h4>
         </div>
+        <div class="modal-body">
+          {!! Form::open(['route' => 'dashboard.storeevent', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+              <div class="form-group">
+                {!! Form::label('name', 'Event Title:') !!}
+                {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Write Event Title', 'required')) !!}
+              </div>
+              <div class="form-group">
+                {!! Form::label('description', 'Event Description:') !!}
+                {!! Form::textarea('description', null, array('class' => 'form-control textarea', 'placeholder' => 'Write Event Description', 'required')) !!}
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Photo (8:5 &amp; 500Kb Max):</label>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class="btn btn-default btn-file">
+                                    Browse <input type="file" id="image" name="image">
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                  <center>
+                    <img src="{{ asset('images/800x500.png')}}" id='img-upload' style="height: 150px; width: auto; padding: 5px;" />
+                  </center>
+                </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+              {!! Form::submit('Submit', array('class' => 'btn btn-success')) !!}
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+        {!! Form::close() !!}
       </div>
     </div>
-    <!-- Add Event Modal -->
-    <!-- Add Event Modal -->
+  </div>
+  <!-- Add Event Modal -->
+  <!-- Add Event Modal -->
 @stop
 
 @section('js')

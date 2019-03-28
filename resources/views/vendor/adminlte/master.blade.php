@@ -9,6 +9,13 @@
     {{-- favicon --}}
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
     {{-- favicon --}}
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="{{ asset('images/favicon.png') }}">
+    <meta name="theme-color" content="#002366">
+    <meta name="msapplication-navbutton-color" content="#002366">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#002366">
+    <meta name="description" content="কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি (সিভিসিএস)-এর অফিসিয়াল ওয়েবসাইট। &copy; {{ date('Y') }} Copyright Reserved. Developed By A. H. M. Azimul Haque."/>
+    <meta name="google-site-verification" content="M_ahWtl3h3gjjzpkH2T6nGc6JzWkbQlkOGy5J3oVEJY" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->

@@ -3,11 +3,12 @@
 
 <head>
     <title>@yield('title')</title>
-    <meta name="description" content="Official website of CVCS, Custom and Vat Cooperative Society. Developed by A. H. M. Azimul Haque.">
+    <meta name="description" content="কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি (সিভিসিএস)-এর অফিসিয়াল ওয়েবসাইট। &copy; {{ date('Y') }} Copyright Reserved. Developed By A. H. M. Azimul Haque.">
     <meta name="keywords" content="CVCS, Bangladesh Customs">
     <meta charset="utf-8">
     <meta name="author" content="A. H. M. Azimul Haque">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
+    <meta name="google-site-verification" content="M_ahWtl3h3gjjzpkH2T6nGc6JzWkbQlkOGy5J3oVEJY" />
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('images/favicons/apple-icon-57x57.png') }}">

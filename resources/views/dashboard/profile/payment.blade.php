@@ -14,7 +14,7 @@
           
         @else
           <a class="btn btn-primary" href="{{ route('dashboard.memberpaymentself') }}" title="শুধু নিজের টাকা পরিশোধ করুন"><i class="fa fa-fw fa-user" aria-hidden="true"></i></a>
-          <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="একাধিক সদস্যের টাকা পরিশোধ করুন"><i class="fa fa-fw fa-users" aria-hidden="true"></i></button>
+          <a class="btn btn-success" href="{{ route('dashboard.memberpaymentbulk') }}" title="একাধিক সদস্যের টাকা পরিশোধ করুন"><i class="fa fa-fw fa-users" aria-hidden="true"></i></a>
         @endif
       </div>
     </h1>
