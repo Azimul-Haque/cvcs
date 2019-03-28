@@ -70,9 +70,9 @@
   <!-- Custom Tabs -->
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">আবেদনকারীর ব্যক্তিগত তথ্য</a></li>
-      <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত তথ্য</a></li>
-      <li class=""><a href="#payment_tab" data-toggle="tab" aria-expanded="true">পরিশোধ সংক্রান্ত তথ্য</a></li>
+      <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">ব্যক্তিগত তথ্য</a></li>
+      <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত</a></li>
+      <li class=""><a href="#payment_tab" data-toggle="tab" aria-expanded="true">পরিশোধ সংক্রান্ত</a></li>
       <li class="pull-right dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
         </a>
