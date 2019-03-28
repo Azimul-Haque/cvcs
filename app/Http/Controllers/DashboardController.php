@@ -17,7 +17,8 @@ use App\Payment;
 use App\Paymentreceipt;
 use App\Adhocmember;
 
-use DB;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Auth;
 use Image;
 use File;
@@ -51,10 +52,23 @@ class DashboardController extends Controller
         // $ataglance = About::where('type', 'ataglance')->get()->first();
         // $membership = About::where('type', 'membership')->get()->first();
         // $basicinfo = Basicinfo::where('id', 1)->first();
+        $thismonthpending = DB::table('payments')
+                                    ->select(DB::raw('SUM(amount) as totalamount'))
+                                    ->where('payment_status', '=', 0)
+                                    ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+                                    ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                                    ->first();
+        $thismonthapproved = DB::table('payments')
+                                    ->select(DB::raw('SUM(amount) as totalamount'))
+                                    ->where('payment_status', '=', 1)
+                                    ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+                                    ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                                    ->first();
 
-        return view('dashboard.index');
-                    // ->withAbout($about)
-                    // ->withWhoweare($whoweare)
+
+        return view('dashboard.index')
+                    ->withThismonthpending($thismonthpending)
+                    ->withThismonthapproved($thismonthapproved);
                     // ->withWhatwedo($whatwedo)
                     // ->withAtaglance($ataglance)
                     // ->withMembership($membership)
