@@ -33,7 +33,7 @@
                 <textarea class="form-control text-blue" name="description" style="resize: none; height: 100px;" placeholder="Album Description" required=""></textarea>
               </div>
               <div class="form-group">
-                  <label>Thumbnail (8:5 &amp; 500Kb Max):</label>
+                  <label>Thumbnail (8:5 &amp; 500Kb Max)</label>
                   <div class="input-group">
                       <span class="input-group-btn">
                           <span class="btn btn-default btn-file">

@@ -59,19 +59,19 @@
           <!-- /.box-header -->
           <div class="box-body">
                 <div class="form-group">
-                    <label>Photo (8:5 &amp; 500Kb Max):</label>
+                    <label>Photo (8:5 &amp; 500Kb Max)</label>
                     <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-default btn-file">
-                                Browse <input type="file" id="image" name="image">
+                                Browse <input type="file" id="image" name="image" required="">
                             </span>
                         </span>
                         <input type="text" class="form-control text-green" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                  <label>Caption:</label>
-                  {!! Form::text('caption', null, array('class' => 'form-control text-green', 'placeholder' => 'Caption')) !!}
+                  <label>Caption</label>
+                  {!! Form::text('caption', null, array('class' => 'form-control text-green', 'placeholder' => 'Caption', 'required' => '')) !!}
                 </div>
 
                 <center>

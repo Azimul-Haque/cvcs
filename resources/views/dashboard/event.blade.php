@@ -52,17 +52,17 @@
                   <div class="modal-body">
                   {!! Form::model($event, ['route' => ['dashboard.updateevent', $event->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
                     <div class="form-group">
-                      {!! Form::label('name', 'Event Title:') !!}
+                      {!! Form::label('name', 'Event Title') !!}
                       {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Write Event Title', 'required')) !!}
                     </div>
                     <div class="form-group">
-                      {!! Form::label('description', 'Description:') !!}
+                      {!! Form::label('description', 'Description') !!}
                       {!! Form::textarea('description', null, array('class' => 'form-control textarea', 'placeholder' => 'Write Description', 'required')) !!}
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label>Photo (300 X 300 &amp; 250Kb Max):</label>
+                              <label>Photo (300 X 300 &amp; 250Kb Max)</label>
                               <div class="input-group">
                                   <span class="input-group-btn">
                                       <span class="btn btn-default btn-file">
@@ -180,17 +180,17 @@
         <div class="modal-body">
           {!! Form::open(['route' => 'dashboard.storeevent', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
               <div class="form-group">
-                {!! Form::label('name', 'Event Title:') !!}
+                {!! Form::label('name', 'Event Title') !!}
                 {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Write Event Title', 'required')) !!}
               </div>
               <div class="form-group">
-                {!! Form::label('description', 'Event Description:') !!}
+                {!! Form::label('description', 'Event Description') !!}
                 {!! Form::textarea('description', null, array('class' => 'form-control textarea', 'placeholder' => 'Write Event Description', 'required')) !!}
               </div>
               <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Photo (8:5 &amp; 500Kb Max):</label>
+                        <label>Photo (8:5 &amp; 500Kb Max)</label>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">

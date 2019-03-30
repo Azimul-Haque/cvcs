@@ -143,7 +143,7 @@
                         </a>
                     </li>
                     <li class="header">হোমপেইজ কাস্টমাইজেশন</li>
-                    <li class="{{ Request::is('dashboard/abouts') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/events') ? 'active menu-open' : '' }} {{ Request::is('dashboard/notice') ? 'active menu-open' : '' }} {{ Request::is('dashboard/form/messages') ? 'active menu-open' : '' }} treeview">
+                    <li class="{{ Request::is('dashboard/abouts') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/events') ? 'active menu-open' : '' }} {{ Request::is('dashboard/notice') ? 'active menu-open' : '' }} {{ Request::is('dashboard/form/messages') ? 'active menu-open' : '' }} {{ Request::is('dashboard/slider') ? 'active menu-open' : '' }} {{ Request::is('dashboard/faq') ? 'active menu-open' : '' }} treeview">
                       <a href="#">
                           <i class="fa fa-fw fa-cogs"></i>
                           <span>হোমপেইজ কাস্টমাইজেশন</span>
@@ -152,10 +152,12 @@
                           </span>
                       </a>
                       <ul class="treeview-menu">
+                        <li class="{{ Request::is('dashboard/slider') ? 'active' : '' }}"><a href="{{ route('dashboard.slider') }}"><i class="fa fa-list-alt"></i> স্লাইডার</a></li>
                         <li class="{{ Request::is('dashboard/abouts') ? 'active' : '' }}"><a href="{{ route('dashboard.abouts') }}"><i class="fa fa-pencil"></i> তথ্য এবং টেক্সট</a></li>
                         <li class="{{ Request::is('dashboard/gallery') ? 'active' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active' : '' }}"><a href="{{ route('dashboard.gallery') }}"><i class="fa fa-picture-o"></i> গ্যালারি</a></li>
                         <li class="{{ Request::is('dashboard/events') ? 'active' : '' }}"><a href="{{ route('dashboard.events') }}"><i class="fa fa-bullhorn"></i> ইভেন্ট</a></li>
                         <li class="{{ Request::is('dashboard/notice') ? 'active' : '' }}"><a href="{{ route('dashboard.notice') }}"><i class="fa fa-bell-o"></i> নোটিশ</a></li>
+                        <li class="{{ Request::is('dashboard/faq') ? 'active' : '' }}"><a href="{{ route('dashboard.faq') }}"><i class="fa fa-question-circle-o"></i> FAQ</a></li>
                         <li class="{{ Request::is('dashboard/form/messages') ? 'active' : '' }}"><a href="{{ route('dashboard.formmessage') }}"><i class="fa fa-envelope-o"></i> ফরম মেসেজ</a></li>
                       </ul>
                     </li>

@@ -113,7 +113,7 @@
                         </li>
                         <li class="dropdown panel simple-dropdown">
                             <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
-                                অন্যান্য
+                                অন্যান্য ▾
                             </a>
                             <!-- sub menu single -->
                             <!-- sub menu item  -->
@@ -127,10 +127,10 @@
                                 <li>
                                     <a href="{{ route('index.welfare') }}" class="text-large">ওয়েলফেয়ার</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('index.faq') }}" class="text-large">FAQs</a>
+                                </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a href="{{ route('index.faq') }}">FAQ</a>
                         </li>
                         @if(Auth::check())
                         <li class="dropdown panel simple-dropdown">

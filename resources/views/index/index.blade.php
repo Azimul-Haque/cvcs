@@ -10,25 +10,32 @@
 @section('content')
     <section class="no-padding content-top-margin ">
         <div id="wowslider-container1">
-            <div class="ws_images"><ul>
-                <li>
-                    <img src="{{ asset('images/slider/1.jpg') }}" alt="Writing" title="" id="wows1_0"/>
-                    <span><center>পরীক্ষামূলক স্লাইডার টাইটেল ১</center></span>
-                </li>
-                <li>
-                    <img src="{{ asset('images/slider/2.jpg') }}" alt="Old Letters" title="" id="wows1_1"/>
-                    <span><center>পরীক্ষামূলক স্লাইডার টাইটেল ২</center></span>
-                </li>
-                <li>
-                    <img src="{{ asset('images/slider/3.jpg') }}" alt="Stack Letters" title="" id="wows1_2"/>
-                    <span><center>পরীক্ষামূলক স্লাইডার টাইটেল ৩</center></span>
-                </li>
-            </ul></div>
-            <div class="ws_bullets"><div>
-                <a href="#" title="Writing"><img src="{{ asset('images/slider/1.jpg') }}" alt="Writing"/></a>
-                <a href="#" title="Old Letters"><img src="{{ asset('images/slider/2.jpg') }}" alt="Old Letters"/></a>
-                <a href="#" title="Stack Letters"><img src="{{ asset('images/slider/3.jpg') }}" alt="Stack Letters"/></a>
-            </div></div>
+            <div class="ws_images">
+                <ul>
+                    @foreach($sliders as $slider)
+                        @if($slider->image != null)
+                            @if(file_exists(public_path('images/slider/'. $slider->image)))
+                            <li>
+                                <img src="{{ asset('images/slider/'. $slider->image) }}" alt="{{ $slider->title }}" title="" id="wows1_0"/>
+                                <span>{{ $slider->title }}</span>
+                            </li>
+                            @endif
+                        @endif
+                    @endforeach
+                    
+                </ul>
+            </div>
+            <div class="ws_bullets">
+                <div>
+                    @foreach($sliders as $slider)
+                        @if($slider->image != null)
+                            @if(file_exists(public_path('images/slider/'. $slider->image)))
+                            <a href="#" title=""><img src="{{ asset('images/slider/'. $slider->image) }}" alt="{{ $slider->title }}" style="height: 50px; width: 150px;" /></a>
+                            @endif
+                        @endif
+                    @endforeach
+                </div>
+            </div>
             <div class="ws_shadow"></div>
         </div>    
     </section>

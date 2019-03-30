@@ -14,7 +14,7 @@
               <div class="row">
                   <div class="col-lg-8 col-md-7 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
                       <!-- page title -->
-                      <h1 class="black-text">FAQs...</h1>
+                      <h1 class="black-text">FAQs (সাধারণ জিজ্ঞাসা)</h1>
                       <!-- end page title -->
                   </div>
                   <div class="col-lg-4 col-md-5 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
@@ -50,58 +50,30 @@
                 <div class="col-md-12 col-sm-12 no-padding">
                     <div class="panel-group toggles-style3 no-border">
                         <!-- faq item -->
-                        <div class="panel panel-default" id="collapse-one">
-                            <div role="tablist" id="headingOne" class="panel-heading">
-                                <a data-toggle="collapse" data-parent="#collapse-one" href="#collapse-one-link1">
-                                    <h4 class="panel-title">প্রশ্ন এক
-                                        <span class="pull-right">
-                                            <i class="fa fa-plus"></i>
-                                        </span>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div id="collapse-one-link1" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    উত্তর এক
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end faq item -->
-                        <!-- faq item -->
-                        <div class="panel panel-default">
-                            <div role="tablist" id="headingTwo" class="panel-heading">
-                                <a data-toggle="collapse" data-parent="#collapse-one" href="#collapse-one-link2">
-                                    <h4 class="panel-title">প্রশ্ন দুই
-                                        <span class="pull-right">
-                                            <i class="fa fa-plus"></i>
-                                        </span>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div id="collapse-one-link2" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    উত্তর দুই
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end faq item -->
-                        <!-- faq item -->
-                        <div class="panel panel-default">
-                            <div role="tablist" id="headingThree" class="panel-heading">
-                                <a data-toggle="collapse" data-parent="#collapse-one" href="#collapse-one-link3">
-                                    <h4 class="panel-title">প্রশ্ন তিন
-                                        <span class="pull-right">
-                                            <i class="fa fa-plus"></i>
-                                        </span>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div id="collapse-one-link3" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    উত্তর তিন
-                                </div>
-                            </div>
-                        </div>
+                        @php
+                          $counter = 1;
+                        @endphp
+                        @foreach($faqs as $faq)
+                          <div class="panel panel-default" id="collapse-{{ $counter }}">
+                              <div role="tablist" id="heading{{ $counter }}" class="panel-heading">
+                                  <a data-toggle="collapse" data-parent="#collapse-{{ $counter }}" href="#collapse-{{ $counter }}-link1">
+                                      <h4 class="panel-title">প্রশ্নঃ {{ $faq->question }}
+                                          <span class="pull-right">
+                                              <i class="fa fa-plus"></i>
+                                          </span>
+                                      </h4>
+                                  </a>
+                              </div>
+                              <div id="collapse-{{ $counter }}-link1" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                      উত্তরঃ {{ $faq->answer }}
+                                  </div>
+                              </div>
+                          </div>
+                          @php
+                            $counter++;
+                          @endphp
+                        @endforeach
                         <!-- end faq item -->
                     </div>
                 </div>

@@ -46,7 +46,7 @@
                   <div class="modal-body">
                   {!! Form::model($notice, ['route' => ['dashboard.updatenotice', $notice->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
                     <div class="form-group">
-                      {!! Form::label('name', 'Title:') !!}
+                      {!! Form::label('name', 'Title') !!}
                       {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Write Titile', 'required')) !!}
                     </div>
                   

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\About;
+use App\Slider;
 use App\Album;
 use App\Albumphoto;
 use App\Event;
@@ -15,6 +16,7 @@ use App\Basicinfo;
 use App\Formmessage;
 use App\Payment;
 use App\Paymentreceipt;
+use App\Faq;
 use App\Adhocmember;
 
 use Illuminate\Support\Facades\DB;
@@ -318,6 +320,53 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.notice');
     }
 
+    public function getFAQ()
+    {
+        $faqs = Faq::orderBy('id', 'desc')->paginate(10);
+        return view('dashboard.faq')->withFaqs($faqs);
+    }
+
+    public function storeFAQ(Request $request)
+    {
+        $this->validate($request,array(
+            'question'          =>   'required|max:255',
+            'answer'            =>   'required'
+        ));
+
+        $faq = new Faq;
+        $faq->question = $request->question;
+        $faq->answer = $request->answer;
+        $faq->save();
+        
+        Session::flash('success', 'প্রশ্ন-উত্তর সফলভাবে সংরক্ষন করা হয়েছে!');
+        return redirect()->route('dashboard.faq');
+    }
+
+    public function updateFAQ(Request $request, $id)
+    {
+        $this->validate($request,array(
+            'question'          =>   'required|max:255',
+            'answer'            =>   'required'
+        ));
+
+        $faq = Faq::find($id);
+        $faq->question = $request->question;
+        $faq->answer = $request->answer;
+        $faq->save();
+        
+        Session::flash('success', 'প্রশ্ন-উত্তর সফলভাবে হালনাগাদ করা হয়েছে!');
+        return redirect()->route('dashboard.faq');
+    }
+
+    public function deleteFAQ($id)
+    {
+        $faq = Faq::find($id);
+        $faq->delete();
+        
+        Session::flash('success', 'প্রশ্ন-উত্তর সফলভাবে মুছে দেওয়া হয়েছে!');
+        return redirect()->route('dashboard.faq');
+    }
+
     public function getEvents()
     {
         $events = Event::orderBy('id', 'desc')->paginate(10);
@@ -394,6 +443,50 @@ class DashboardController extends Controller
         
         Session::flash('success', 'Deleted Successfully!');
         return redirect()->route('dashboard.events');
+    }
+
+    public function getSlider()
+    {
+        $sliders = Slider::orderBy('id', 'desc')->paginate(10);
+        return view('dashboard.slider')->withSliders($sliders);
+    }
+
+    public function storeSlider(Request $request)
+    {
+        $this->validate($request,array(
+            'title'          =>   'required',
+            'image'          =>   'sometimes|image|max:1000'
+        ));
+
+        $slider = new Slider;
+        $slider->title = $request->title;
+
+        // slider upload
+        if($request->hasFile('image')) {
+            $image      = $request->file('image');
+            $filename   = 'slider_' . time() .'.' . $image->getClientOriginalExtension();
+            $location   = public_path('/images/slider/'. $filename);
+            Image::make($image)->resize(900, 300)->save($location);
+            $slider->image = $filename;
+        }
+        
+        $slider->save();
+        
+        Session::flash('success', 'সফলভাবে স্লাইডারের ছবি আপলোড করা হয়েছে!');
+        return redirect()->route('dashboard.slider');
+    }
+
+    public function deleteSlider($id)
+    {
+        $slider = Slider::find($id);
+        $image_path = public_path('images/slider/'. $slider->image);
+        if(File::exists($image_path)) {
+            File::delete($image_path);
+        }
+        $slider->delete();
+        
+        Session::flash('success', 'সফলভাবে মুছে ফেলা হয়েছে!');
+        return redirect()->route('dashboard.slider');
     }
 
     public function getGallery()

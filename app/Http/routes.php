@@ -24,7 +24,6 @@ Route::get('/welfare', ['as'=>'index.welfare','uses'=>'IndexController@getWelfar
 Route::get('/faq', ['as'=>'index.faq','uses'=>'IndexController@getFAQ']);
 Route::get('/journey', ['as'=>'index.journey','uses'=>'IndexController@getJourney']);
 Route::get('/constitution', ['as'=>'index.constitution','uses'=>'IndexController@getConstitution']);
-Route::get('/faq', ['as'=>'index.faq','uses'=>'IndexController@getFaq']);
 Route::get('/adhoc', ['as'=>'index.adhoc','uses'=>'IndexController@getAdhoc']);
 Route::get('/news', ['as'=>'index.news','uses'=>'IndexController@getNews']);
 Route::get('/notice', ['as'=>'index.notice','uses'=>'IndexController@getNotice']);
@@ -72,6 +71,11 @@ Route::get('/dashboard/abouts', ['as'=>'dashboard.abouts','uses'=>'DashboardCont
 Route::put('/dashboard/abouts/{id}', ['as'=>'dashboard.updateabouts','uses'=>'DashboardController@updateAbouts']);
 Route::put('/dashboard/basic/information/{id}', ['as'=>'dashboard.updatebasicinfo','uses'=>'DashboardController@updateBasicInfo']);
 
+// SLIDER
+Route::get('/dashboard/slider', ['as'=>'dashboard.slider','uses'=>'DashboardController@getSlider']);
+Route::post('/dashboard/slider/store', ['as'=>'dashboard.storeslider','uses'=>'DashboardController@storeSlider']);
+Route::delete('/dashboard/slider/{id}/delete', ['as'=>'dashboard.deleteslider','uses'=>'DashboardController@deleteSlider']);
+
 // GALLERY
 Route::get('/dashboard/gallery', ['as'=>'dashboard.gallery','uses'=>'DashboardController@getGallery']);
 Route::get('/dashboard/gallery/create', ['as'=>'dashboard.creategallery','uses'=>'DashboardController@getCreateGallery']);
@@ -92,6 +96,12 @@ Route::get('/dashboard/notice', ['as'=>'dashboard.notice','uses'=>'DashboardCont
 Route::post('/dashboard/notice/store', ['as'=>'dashboard.storenotice','uses'=>'DashboardController@storeNotice']);
 Route::put('/dashboard/notice/{id}/update', ['as'=>'dashboard.updatenotice','uses'=>'DashboardController@updateNotice']);
 Route::delete('/dashboard/notice/{id}/delete', ['as'=>'dashboard.deletenotice','uses'=>'DashboardController@deleteNotice']);
+
+// FAQ
+Route::get('/dashboard/faq', ['as'=>'dashboard.faq','uses'=>'DashboardController@getFAQ']);
+Route::post('/dashboard/faq/store', ['as'=>'dashboard.storefaq','uses'=>'DashboardController@storeFAQ']);
+Route::put('/dashboard/faq/{id}/update', ['as'=>'dashboard.updatefaq','uses'=>'DashboardController@updateFAQ']);
+Route::delete('/dashboard/faq/{id}/delete', ['as'=>'dashboard.deletefaq','uses'=>'DashboardController@deleteFAQ']);
 
 // FORM MESSAGE
 Route::get('/dashboard/form/messages', ['as'=>'dashboard.formmessage','uses'=>'DashboardController@getFormMessages']);

@@ -10,9 +10,11 @@ use App\Blog;
 use App\Category;
 use App\Adhocmember;
 use App\About;
+use App\Slider;
 use App\Album;
 use App\Event;
 use App\Notice;
+use App\Faq;
 use App\Formmessage;
 
 use Carbon\Carbon;
@@ -37,14 +39,14 @@ class IndexController extends Controller
     public function index()
     {
         $about = About::where('type', 'about')->get()->first();
-        $blogs = Blog::orderBy('id', 'DESC')->get()->take(4);
+        $sliders = Slider::orderBy('id', 'DESC')->get();
         $albums = Album::orderBy('id', 'DESC')->get()->take(4);
         $notices = Notice::orderBy('id', 'DESC')->get()->take(4);
         $events = Event::orderBy('id', 'DESC')->get()->take(4);
 
         return view('index.index')
                     ->withAbout($about)
-                    ->withBlogs($blogs)
+                    ->withSliders($sliders)
                     ->withAlbums($albums)
                     ->withNotices($notices)
                     ->withEvents($events);
@@ -81,7 +83,9 @@ class IndexController extends Controller
 
     public function getFaq()
     {
-        return view('index.otherpages.faq');
+        $faqs = Faq::orderBy('id', 'desc')->get();
+        return view('index.otherpages.faq')
+                        ->withFaqs($faqs);
     }
 
     public function getJourney()
