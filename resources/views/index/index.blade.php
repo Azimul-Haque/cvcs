@@ -11,9 +11,18 @@
     <section class="no-padding content-top-margin ">
         <div id="wowslider-container1">
             <div class="ws_images"><ul>
-                <li><img src="{{ asset('images/slider/1.jpg') }}" alt="Writing" title="টেস্ট ডাটা" id="wows1_0"/>টেস্ট ডাটা</li>
-                <li><img src="{{ asset('images/slider/2.jpg') }}" alt="Old Letters" title="টেস্ট ডাটা" id="wows1_1"/>টেস্ট ডাটা</li>
-                <li><img src="{{ asset('images/slider/3.jpg') }}" alt="Stack Letters" title="টেস্ট ডাটা" id="wows1_2"/>টেস্ট ডাটা</li>
+                <li>
+                    <img src="{{ asset('images/slider/1.jpg') }}" alt="Writing" title="" id="wows1_0"/>
+                    <span><center>পরীক্ষামূলক স্লাইডার টাইটেল ১</center></span>
+                </li>
+                <li>
+                    <img src="{{ asset('images/slider/2.jpg') }}" alt="Old Letters" title="" id="wows1_1"/>
+                    <span><center>পরীক্ষামূলক স্লাইডার টাইটেল ২</center></span>
+                </li>
+                <li>
+                    <img src="{{ asset('images/slider/3.jpg') }}" alt="Stack Letters" title="" id="wows1_2"/>
+                    <span><center>পরীক্ষামূলক স্লাইডার টাইটেল ৩</center></span>
+                </li>
             </ul></div>
             <div class="ws_bullets"><div>
                 <a href="#" title="Writing"><img src="{{ asset('images/slider/1.jpg') }}" alt="Writing"/></a>
@@ -93,22 +102,120 @@
             </div>
         </div>
     </section>
-    <section class="bg-royal-blue wow fadeIn">
+    <section class="bg-blue-1 wow fadeIn">
         <div class="container">
             <div class="row">
-                @foreach($albumphotoes as $albumphoto)
-                    
-                        <div class="col-md-3 col-sm-3 text-center wow fadeIn features-2" data-wow-duration="300ms">
-                            <a href="{{ route('index.gallery.single', $albumphoto->album->id) }}">
-                                <div class="key-person">
-                                    <div class="key-person-img"><img src="{{ asset('images/gallery/'.$albumphoto->image) }}" alt=""></div>
-                                    <div class="key-person-details bg-gray no-border no-padding-bottom"><h5>অ্যালবামঃ {{ $albumphoto->album->name }}</h5>
-                                        <div class="separator-line bg-black"></div>
-                                        <p>{{ $albumphoto->caption }}</p>
-                                    </div>
+                @php
+                    $albumwaitduration = 300;
+                @endphp
+                @foreach($albums as $album)
+                    <div class="col-md-3 col-sm-6 text-center wow fadeInUp features-2" data-wow-duration="{{ $albumwaitduration }}ms">
+                        <a href="{{ route('index.gallery.single', $album->id) }}">
+                            <div class="key-person">
+                                <div class="key-person-img"><img src="{{ asset('images/gallery/'.$album->thumbnail) }}" alt=""></div>
+                                <div class="key-person-details bg-gray no-border no-padding-bottom"><h5>অ্যালবামঃ {{ $album->name }}</h5>
+                                    <div class="separator-line bg-black"></div>
+                                    <p>{{ $album->description }}</p>
                                 </div>
+                            </div>
+                        </a>
+                    </div>
+                    @php
+                        $albumwaitduration = $albumwaitduration + 300;
+                    @endphp
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <section id="about-studio" class="padding-three">
+        <div class="container">
+            <div class="row">
+                <!-- section title -->
+                <div class="col-md-6 col-sm-6 xs-margin-bottom-four">
+                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">সর্বশেষ নোটিশ</span>
+                </div>
+                <!-- end section title -->
+                <!-- section highlight text -->
+                <div class="col-md-6 col-sm-6 text-right xs-text-left">
+                    <span class="text-extra-large font-weight-400"></span>
+                </div>
+                <!-- end section highlight text -->
+            </div>
+        </div>
+    </section>
+    <!-- section text -->
+    <section class="bg-gray padding-three">
+        <div class="container">
+            <div class="row">
+                @php
+                    $noticewaitduration = 1200;
+                @endphp
+                @foreach($notices as $notice)
+                    <div class="col-md-3 col-sm-6 sm-margin-bottom-ten xs-text-center wow fadeInLeft" data-wow-duration="{{ $noticewaitduration }}ms">
+                        <div class="box-notice">
+                            <h3 class="font-weight-700 black-text margin-seven display-block">{{ $notice->name }}</h3>
+                            <span class="text-large">
+                                {{ date('F d, Y', strtotime($notice->created_at)) }}
+                            </span>
+                            <p class="margin-ten no-margin-top width-90 xs-center-col xs-display-block"></p>
+                            <a href="{{ route('index.notice') }}" class="highlight-link text-uppercase white-text" style="position: absolute; bottom: 10px;">আরও দেখুন
+                                <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
                             </a>
                         </div>
+                    </div>
+                    @php
+                        $noticewaitduration = $noticewaitduration - 300;
+                    @endphp
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <section id="about-studio" class="padding-three">
+        <div class="container">
+            <div class="row">
+                <!-- section title -->
+                <div class="col-md-6 col-sm-6 xs-margin-bottom-four">
+                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">সর্বশেষ ইভেন্ট</span>
+                </div>
+                <!-- end section title -->
+                <!-- section highlight text -->
+                <div class="col-md-6 col-sm-6 text-right xs-text-left">
+                    <span class="text-extra-large font-weight-400"></span>
+                </div>
+                <!-- end section highlight text -->
+            </div>
+        </div>
+    </section>
+    <!-- section text -->
+    <section class="bg-gray padding-three">
+        <div class="container">
+            <div class="row">
+                @php
+                    $eventwaitduration = 300;
+                @endphp
+                @foreach($events as $event)
+                    <div class="col-md-3 col-sm-6 sm-margin-bottom-ten xs-text-center wow fadeInRight" data-wow-duration="{{ $eventwaitduration }}ms">
+                        <div class="blog-post box-event">
+                            <div class="blog-post-images">
+                                <a href="{{ route('index.singleevent', $event->id) }}">
+                                    @if(($event->image != null) || !file_exists(public_path('images/events/'.$event->image)))
+                                        <img src="{{ asset('images/events/'.$event->image) }}" alt="">
+                                    @else
+                                        <img src="{{ asset('images/events/default_event.jpg') }}" alt="">
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="post-details">
+                                <a href="{{ route('index.singleevent', $event->id) }}" class="post-title text-large">{{ $event->name }}</a>
+                                <span class="post-author">
+                                    {{ date('F d, Y', strtotime($event->created_at)) }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    @php
+                        $eventwaitduration = $eventwaitduration + 300;
+                    @endphp
                 @endforeach
             </div>
         </div>

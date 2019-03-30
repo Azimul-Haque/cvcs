@@ -8186,7 +8186,50 @@ a.disabled {
      border-bottom: 0px none;
 }
 .bg-blue-1 {
-     background-color: #19398A !important;
+     background-color: #002366; /* For browsers that do not support gradients */
+     background-image: linear-gradient(#002366, #2196f3); /* Standard syntax (must be last) */
+}
+
+.box-notice {
+     min-height: 250px !important;
+     padding: 10px;
+     background: #b2dfdb;
+     box-shadow: rgb(0, 0, 0) 0px 5px 5px -5px;
+     /*box-shadow: 0 4px 8px 0 rgba(17, 17, 17, 0.5);*/
+     border-bottom: 0px none;
+}
+
+.box-notice:hover {
+     box-shadow: 0 4px 8px 0 rgba(17, 17, 17, 0.5);
+     transition-timing-function: ease-in-out;
+     -moz-transition-timing-function: ease-in-out;
+     -webkit-transition-timing-function: ease-in-out;
+     -o-transition-timing-function: ease-in-out;
+     transition-duration: .2s;
+     -moz-transition-duration: .2s;
+     -webkit-transition-duration: .2s;
+     -o-transition-duration: .2s;
+}
+
+.box-event {
+     min-height: 340px;
+     padding: 10px;
+     background: #ffffff;
+     box-shadow: rgb(0, 0, 0) 0px 5px 5px -5px;
+     /*box-shadow: 0 4px 8px 0 rgba(17, 17, 17, 0.5);*/
+     border-bottom: 0px none;
+}
+
+.box-event:hover {
+     box-shadow: 0 4px 8px 0 rgba(17, 17, 17, 0.5);
+     transition-timing-function: ease-in-out;
+     -moz-transition-timing-function: ease-in-out;
+     -webkit-transition-timing-function: ease-in-out;
+     -o-transition-timing-function: ease-in-out;
+     transition-duration: .2s;
+     -moz-transition-duration: .2s;
+     -webkit-transition-duration: .2s;
+     -o-transition-duration: .2s;
 }
 
  @media screen and (-webkit-min-device-pixel-ratio:0) {
