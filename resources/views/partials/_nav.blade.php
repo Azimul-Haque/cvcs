@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top nav-transparent overlay-nav sticky-nav  nav-border-bottom nav-white @if(Request::is('/')) @else bg-royal-blue @endif" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top overlay-nav nav-white nav-transparent sticky-nav nav-border-bottom nav-shadow bg-royal-blue" role="navigation">
     <div class="container">
         <div class="row">
             <!-- logo -->
@@ -93,24 +93,6 @@
                         <li>
                             <a href="{{ route('index.about') }}">এবাউট</a>
                         </li>
-                        <li class="dropdown panel simple-dropdown">
-                            <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
-                                অন্যান্য
-                            </a>
-                            <!-- sub menu single -->
-                            <!-- sub menu item  -->
-                            <ul id="nav_others" class="dropdown-menu panel-collapse collapse" role="menu">
-                                <li>
-                                    <a href="{{ route('index.business_entitny') }}" class="text-large">বিজনেস এন্টিটি</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('index.product_services') }}" class="text-large">প্রোডাক্ট/ সার্ভিসেস</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('index.welfare') }}" class="text-large">ওয়েলফেয়ার</a>
-                                </li>
-                            </ul>
-                        </li>
                         <li>
                             <a href="{{ route('index.gallery') }}">গ্যালারি</a>
                         </li>
@@ -128,6 +110,24 @@
                         </li> -->
                         <li>
                             <a href="{{ route('index.contact') }}">যোগাযোগ</a>
+                        </li>
+                        <li class="dropdown panel simple-dropdown">
+                            <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
+                                অন্যান্য
+                            </a>
+                            <!-- sub menu single -->
+                            <!-- sub menu item  -->
+                            <ul id="nav_others" class="dropdown-menu panel-collapse collapse" role="menu">
+                                <li>
+                                    <a href="{{ route('index.business_entitny') }}" class="text-large">বিজনেস এন্টিটি</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('index.product_services') }}" class="text-large">প্রোডাক্ট/ সার্ভিসেস</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('index.welfare') }}" class="text-large">ওয়েলফেয়ার</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="{{ route('index.faq') }}">FAQ</a>

@@ -11,6 +11,7 @@ use App\Category;
 use App\Adhocmember;
 use App\About;
 use App\Album;
+use App\Albumphoto;
 use App\Event;
 use App\Notice;
 use App\Formmessage;
@@ -38,9 +39,11 @@ class IndexController extends Controller
     {
         $about = About::where('type', 'about')->get()->first();
         $blogs = Blog::orderBy('id', 'DESC')->get()->take(4);
+        $albumphotoes = Albumphoto::orderBy('id', 'DESC')->get()->take(4);
         return view('index.index')
                     ->withAbout($about)
-                    ->withBlogs($blogs);
+                    ->withBlogs($blogs)
+                    ->withAlbumphotoes($albumphotoes);
     }
 
     public function getAbout()

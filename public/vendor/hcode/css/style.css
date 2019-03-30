@@ -8180,6 +8180,15 @@ a.disabled {
    cursor: default;
 }
 
+.nav-shadow {
+     box-shadow: rgb(0, 0, 0) 0px 5px 5px -5px;
+     /*box-shadow: 0 4px 8px 0 rgba(17, 17, 17, 0.5);*/
+     border-bottom: 0px none;
+}
+.bg-blue-1 {
+     background-color: #19398A !important;
+}
+
  @media screen and (-webkit-min-device-pixel-ratio:0) {
      #safari {
          display: block;
