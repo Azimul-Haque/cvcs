@@ -4,7 +4,7 @@
 @endsection
 
 @section('css')
-    {!!Html::style('css/wowslider.css')!!}
+    {!!Html::style('css/wowslider/wowslider.css')!!}
 @endsection
 
 @section('content')
@@ -30,7 +30,7 @@
                     @foreach($sliders as $slider)
                         @if($slider->image != null)
                             @if(file_exists(public_path('images/slider/'. $slider->image)))
-                            <a href="#" title=""><img src="{{ asset('images/slider/'. $slider->image) }}" alt="{{ $slider->title }}" style="height: 50px; width: 150px;" /></a>
+                            <a href="#" title=""><span><img src="{{ asset('images/slider/'. $slider->image) }}" alt="{{ $slider->title }}" style="height: 50px; width: 150px;" /></span></a>
                             @endif
                         @endif
                     @endforeach
@@ -283,6 +283,7 @@
 @endsection
 
 @section('js')
-    {!!Html::script('js/wowslider.js')!!}
-    {!!Html::script('js/wowslider.custom.js')!!}
+    {!!Html::script('js/wowslider/jquery_for_wow.js')!!}
+    {!!Html::script('js/wowslider/wowslider.js')!!}
+    {!!Html::script('js/wowslider/wowslider.script.js')!!}
 @endsection
