@@ -18,6 +18,7 @@ Route::get('/clear', ['as'=>'clear','uses'=>'IndexController@clear']);
 // index routes
 Route::get('/', ['as'=>'index.index','uses'=>'IndexController@index']);
 Route::get('/about', ['as'=>'index.about','uses'=>'IndexController@getAbout']);
+Route::get('/mission', ['as'=>'index.mission','uses'=>'IndexController@getMission']);
 Route::get('/business_entitny', ['as'=>'index.business_entitny','uses'=>'IndexController@getBusinessEntity']);
 Route::get('/product_services', ['as'=>'index.product_services','uses'=>'IndexController@getProductServices']);
 Route::get('/welfare', ['as'=>'index.welfare','uses'=>'IndexController@getWelfare']);

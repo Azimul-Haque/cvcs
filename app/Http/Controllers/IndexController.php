@@ -66,6 +66,11 @@ class IndexController extends Controller
                     ->withMembership($membership);
     }
 
+    public function getMission()
+    {
+        return view('index.mission');
+    }
+
     public function getBusinessEntity()
     {
         return view('index.otherpages.business_entitny');

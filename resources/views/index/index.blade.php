@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    CVCS
+    কাস্টমস এন্ড ভ্যাট কর্মকর্তা-কর্মচারী সমবায় সমিতি (সিভিসিএস) লিমিটেড
 @endsection
 
 @section('css')
@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <section class="no-padding content-top-margin ">
+    <section class="no-padding content-top-margin">
         <div id="wowslider-container1">
             <div class="ws_images">
                 <ul>
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 text-center wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
                     <!-- page title -->
-                    <h1 class="white-text">কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি</h1>
+                    <h1 class="white-text">কাস্টমস এন্ড ভ্যাট কর্মকর্তা-কর্মচারী সমবায় সমিতি লিমিটেড</h1>
                     <!-- end page title -->
                     <!-- page title tagline -->
                     <span class="white-text xs-display-none">(সিভিসিএস)</span>
@@ -78,7 +78,7 @@
             <div class="row">
                 <div class="col-md-10 col-sm-10 text-center center-col">
                     <span class="margin-five no-margin-top display-block letter-spacing-2">স্থাপিত ২০১৯</span>
-                    <h1>কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি</h1>
+                    <h1>কাস্টমস এন্ড ভ্যাট কর্মকর্তা-কর্মচারী সমবায় সমিতি (সিভিসিএস) লিমিটেড</h1>
                     <p class="text-med width-90 center-col margin-seven no-margin-bottom about-us-page-text">
                         {{ $about->text }}
                     </p>

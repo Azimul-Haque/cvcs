@@ -3,7 +3,7 @@
 
 <head>
     <title>@yield('title')</title>
-    <meta name="description" content="কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি (সিভিসিএস)-এর অফিসিয়াল ওয়েবসাইট। &copy; {{ date('Y') }} Copyright Reserved. Developed By A. H. M. Azimul Haque.">
+    <meta name="description" content="কাস্টমস এন্ড ভ্যাট কর্মকর্তা-কর্মচারী সমবায় সমিতি (সিভিসিএস) লিমিটেড-এর অফিসিয়াল ওয়েবসাইট। &copy; {{ date('Y') }} Copyright Reserved. Developed By A. H. M. Azimul Haque.">
     <meta name="keywords" content="CVCS, Bangladesh Customs">
     <meta charset="utf-8">
     <meta name="author" content="A. H. M. Azimul Haque">
@@ -85,15 +85,15 @@
     <footer>
         <div class="container footer-middle">
             <div class="row">
-                <div class="col-md-3 col-sm-3 footer-link1 xs-display-none">
+                <div class="col-md-4 col-sm-4 footer-link1 xs-display-none">
                     <!-- headline -->
                     <h2>সিভিসিএস</h2>
                     <!-- end headline -->
                     <!-- text -->
-                    <p class="footer-text">কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি</p>
+                    <p class="footer-text">কাস্টমস এন্ড ভ্যাট কর্মকর্তা-কর্মচারী সমবায় সমিতি লিমিটেড</p>
                     <!-- end text -->
                 </div>
-                <div class="col-md-2 col-sm-3 col-xs-4 footer-link2 col-md-offset-3">
+                <div class="col-md-2 col-sm-2 col-xs-4 footer-link2 col-md-offset-2">
                     
                 </div>
                 <div class="col-md-2 col-sm-3 col-xs-4  footer-link3">
