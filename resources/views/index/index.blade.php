@@ -151,7 +151,7 @@
         </div>
     </section>
     <!-- section text -->
-    <section class="bg-gray padding-three">
+    <section class="bg-gray padding-four">
         <div class="container">
             <div class="row">
                 @php
@@ -165,15 +165,21 @@
                                 {{ date('F d, Y', strtotime($notice->created_at)) }}
                             </span>
                             <p class="margin-ten no-margin-top width-90 xs-center-col xs-display-block"></p>
-                            <a href="{{ route('index.notice') }}" class="highlight-link text-uppercase white-text" style="position: absolute; bottom: 10px;">আরও দেখুন
-                                <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
-                            </a>
                         </div>
                     </div>
                     @php
                         $noticewaitduration = $noticewaitduration - 300;
                     @endphp
                 @endforeach
+            </div>
+            <div class="row">
+                <div class="col-md-12 margin-two">
+                    <center>
+                        <a href="{{ route('index.notice') }}" class="highlight-link text-uppercase white-text">আরও দেখুন
+                            <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
+                        </a>
+                    </center>
+                </div>
             </div>
         </div>
     </section>

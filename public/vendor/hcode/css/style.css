@@ -8191,7 +8191,7 @@ a.disabled {
 }
 
 .box-notice {
-     min-height: 250px !important;
+     min-height: 200px !important;
      padding: 10px;
      background: #b2dfdb;
      box-shadow: rgb(0, 0, 0) 0px 5px 5px -5px;
