@@ -91,12 +91,12 @@
                             </ul>
                         </li> --}}
                         <li class="dropdown panel simple-dropdown">
-                            <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
+                            <a href="#nav_abouts" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
                                 এবাউট ▾
                             </a>
                             <!-- sub menu single -->
                             <!-- sub menu item  -->
-                            <ul id="nav_others" class="dropdown-menu panel-collapse collapse" role="menu">
+                            <ul id="nav_abouts" class="dropdown-menu panel-collapse collapse" role="menu">
                                 <li>
                                     <a href="{{ route('index.about') }}" class="text-large">সিভিসিএস সম্পর্কে</a>
                                 </li>
@@ -151,7 +151,7 @@
                                     $nav_user_name = explode(' ', Auth::user()->name);
                                     $last_name = array_pop($nav_user_name);
                                 @endphp
-                                {{ $last_name }}
+                                {{ $last_name }} ▾
                             </a>
                             <!-- sub menu single -->
                             <!-- sub menu item  -->
@@ -169,7 +169,7 @@
                         </li>
                         @else
                         <li class="dropdown panel simple-dropdown">
-                            <a href="#nav_membership" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">সদস্যপদ</a>
+                            <a href="#nav_membership" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">সদস্যপদ ▾</a>
                             <!-- sub menu single -->
                             <!-- sub menu item  -->
                             <ul id="nav_membership" class="dropdown-menu panel-collapse collapse" role="menu">

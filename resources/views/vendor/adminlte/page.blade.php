@@ -142,6 +142,21 @@
                             <span>ড্যাশবোর্ড</span>
                         </a>
                     </li>
+                    @if(Auth::user()->role_type == 'admin')
+                    <li class="{{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} treeview">
+                      <a href="#">
+                          <i class="fa fa-fw fa-key"></i>
+                          <span>অ্যাডমিন ও অন্যান্য</span>
+                          <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li class="{{ Request::is('dashboard/admins') ? 'active' : '' }} {{ Request::is('dashboard/admins/create') ? 'active' : '' }}"><a href="{{ route('dashboard.admins') }}"><i class="fa fa-user-secret"></i> অ্যাডমিনগণ</a></li>
+                        <li class="{{ Request::is('dashboard/bulk/payers') ? 'active' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active' : '' }}"><a href="{{ route('dashboard.bulkpayers') }}"><i class="fa fa-users"></i> একাধিক পরিশোধকারীগণ</a></li>
+                      </ul>
+                    </li>
+                    @endif
                     <li class="header">হোমপেইজ কাস্টমাইজেশন</li>
                     <li class="{{ Request::is('dashboard/abouts') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/events') ? 'active menu-open' : '' }} {{ Request::is('dashboard/notice') ? 'active menu-open' : '' }} {{ Request::is('dashboard/form/messages') ? 'active menu-open' : '' }} {{ Request::is('dashboard/slider') ? 'active menu-open' : '' }} {{ Request::is('dashboard/faq') ? 'active menu-open' : '' }} treeview">
                       <a href="#">
@@ -202,6 +217,16 @@
                         <a href="{{ route('dashboard.memberpayment') }}">
                             <i class="fa fa-fw fa-handshake-o"></i>
                             <span>পরিশোধ</span>
+                        </a>
+                    </li>
+                    @endif
+                    
+                    @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'bulkpayer'))
+                    <li class="header">একাধিক পরিশোধ সংক্রান্ত</li>
+                    <li class="{{ Request::is('dashboard/member/payment/bulk') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.memberpaymentbulk') }}">
+                            <i class="fa fa-fw fa-cubes"></i>
+                            <span>একাধিক পরিশোধ</span>
                         </a>
                     </li>
                     @endif

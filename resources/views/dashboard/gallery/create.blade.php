@@ -30,7 +30,7 @@
                 {!! Form::text('name', null, array('class' => 'form-control text-blue', 'required' => '', 'placeholder' => 'Album Name')) !!}
               </div>
               <div class="form-group">
-                <textarea class="form-control text-blue" name="description" style="resize: none; height: 100px;" placeholder="Album Description" required=""></textarea>
+                <textarea class="form-control text-blue" name="description" style="resize: none; height: 100px;" placeholder="Album Description"></textarea>
               </div>
               <div class="form-group">
                   <label>Thumbnail (8:5 &amp; 500Kb Max)</label>

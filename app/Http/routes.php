@@ -59,7 +59,24 @@ Route::auth();
 // dashboard routes
 // dashboard routes
 Route::resource('users','UserController');
+
+// DASHBOARD
 Route::get('/dashboard', ['as'=>'dashboard.index','uses'=>'DashboardController@index']);
+
+// ADMIN AND BULK PAYER
+Route::get('/dashboard/admins', ['as'=>'dashboard.admins','uses'=>'DashboardController@getAdmins']);
+Route::get('/dashboard/admins/create', ['as'=>'dashboard.createadmin','uses'=>'DashboardController@getCreateAdmin']);
+Route::get('/dashboard/admins/search', ['as'=>'dashboard.searchmemberforadmin','uses'=>'DashboardController@searchMemberForAdminAPI']);
+Route::post('/dashboard/admins/addadmin', ['as'=>'dashboard.addadmin','uses'=>'DashboardController@addAdmin']);
+Route::patch('/dashboard/admins/removeadmin/{id}', ['as'=>'dashboard.removeadmin','uses'=>'DashboardController@removeAdmin']);
+
+Route::get('/dashboard/bulk/payers', ['as'=>'dashboard.bulkpayers','uses'=>'DashboardController@getBulkPayers']);
+Route::get('/dashboard/bulk/payers/create', ['as'=>'dashboard.createbulkpayer','uses'=>'DashboardController@getCreateBulkPayer']);
+Route::get('/dashboard/bulk/payers/search', ['as'=>'dashboard.searchmemberforbulkpayer','uses'=>'DashboardController@searchMemberForBulkPayerAPI']);
+Route::post('/dashboard/bulk/payers/addbulkpayer', ['as'=>'dashboard.addbulkpayer','uses'=>'DashboardController@addBulkPayer']);
+Route::patch('/dashboard/bulk/payers/removebulkpayer/{id}', ['as'=>'dashboard.removebulkpayer','uses'=>'DashboardController@removeBulkPayer']);
+
+// COMMITTEE
 Route::get('/dashboard/committee', ['as'=>'dashboard.committee','uses'=>'DashboardController@getCommittee']);
 Route::post('/dashboard/committee', ['as'=>'dashboard.storecommittee','uses'=>'DashboardController@storeCommittee']);
 Route::put('/dashboard/committee/{id}', ['as'=>'dashboard.updatecommittee','uses'=>'DashboardController@updateCommittee']);
@@ -127,7 +144,10 @@ Route::get('/dashboard/profile', ['as'=>'dashboard.profile','uses'=>'DashboardCo
 Route::get('/dashboard/member/payment', ['as'=>'dashboard.memberpayment','uses'=>'DashboardController@getPaymentPage']);
 Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself','uses'=>'DashboardController@getSelfPaymentPage']); 
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPaymentPage']);
+
+// BULK PAYMENT
 Route::get('/dashboard/member/payment/bulk', ['as'=>'dashboard.memberpaymentbulk','uses'=>'DashboardController@getBulkPaymentPage']);
+Route::get('/dashboard/member/payment/bulk/search/api', ['as'=>'dashboard.searchmemberforbulkpayment','uses'=>'DashboardController@searchMemberForBulkPaymentAPI']);
 
 // PAYMENTS BY ADMIN
 Route::get('/dashboard/members/payments/pending', ['as'=>'dashboard.memberspendingpayments','uses'=>'DashboardController@getMembersPendingPayments']);

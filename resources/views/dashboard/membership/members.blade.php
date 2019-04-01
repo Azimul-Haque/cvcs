@@ -21,7 +21,8 @@
       <thead>
         <tr>
           <th>নাম</th>
-          <th>যোগাযোগের নম্বর ও ইমেইল এড্রেস</th>
+          <th>মেম্বার আইডি</th>
+          <th>যোগাযোগ</th>
           <th>অফিস তথ্য</th>
           <th>ছবি</th>
           <th width="10%">Action</th>
@@ -35,6 +36,7 @@
               {{ $member->name_bangla }}<br/>{{ $member->name }}
             </a>
           </td>
+          <td><big><b>{{ $member->member_id }}</b></big></td>
           <td>{{ $member->mobile }}<br/>{{ $member->email }}</td>
           <td>{{ $member->office }}<br/>{{ $member->profession }} ({{ $member->designation }})</td>
           <td>
@@ -46,7 +48,7 @@
           </td>
           <td>
             <a class="btn btn-sm btn-success" href="{{ route('dashboard.singlemember', $member->unique_key) }}" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
-            {{-- <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteMemberModal{{ $member->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
+            {{-- <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#deleteMemberModal{{ $member->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
           </td>
         </tr>
         @endforeach

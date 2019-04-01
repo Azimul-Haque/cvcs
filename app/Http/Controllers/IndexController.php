@@ -191,41 +191,42 @@ class IndexController extends Controller
     public function storeApplication(Request $request)
     {
         $this->validate($request,array(
-            'name_bangla'               => 'required|max:255',
-            'name'                      => 'required|max:255',
-            'nid'                      => 'required|max:255',
-            'dob'                       => 'required|max:255',
+            'name_bangla'                  => 'required|max:255',
+            'name'                         => 'required|max:255',
+            'nid'                          => 'required|max:255',
+            'dob'                          => 'required|max:255',
             'gender'                       => 'required',
             'spouse'                       => 'required|max:255',
-            'spouse_profession'                       => 'required|max:255',
+            'spouse_profession'            => 'required|max:255',
             'father'                       => 'required|max:255',
             'mother'                       => 'required|max:255',
-            'profession'                       => 'required|max:255',
-            'designation'                       => 'required|max:255',
+            'profession'                   => 'required|max:255',
+            'designation'                  => 'required|max:255',
             'office'                       => 'required|max:255',
-            'present_address'                       => 'required|max:255',
-            'permanent_address'                       => 'required|max:255',
-            'office_telephone'                       => 'required|max:255',
+            'present_address'              => 'required|max:255',
+            'permanent_address'            => 'required|max:255',
+            'office_telephone'             => 'required|max:255',
             'mobile'                       => 'required|max:255',
-            'home_telephone'                       => 'required|max:255',
-            'email'                     => 'required|email|unique:users,email',
-            'image'                     => 'required|image|max:250',
+            'home_telephone'               => 'required|max:255',
+            'email'                        => 'required|email|unique:users,email',
+            'image'                        => 'required|image|max:250',
 
-            'nominee_one_name'                     => 'required|max:255',
-            'nominee_one_identity_type'            => 'required',
-            'nominee_one_identity_text'            => 'required|max:255',
-            'nominee_one_relation'            => 'required|max:255',
-            'nominee_one_percentage'            => 'required|max:255',
+            'nominee_one_name'             => 'required|max:255',
+            'nominee_one_identity_type'    => 'required',
+            'nominee_one_identity_text'    => 'required|max:255',
+            'nominee_one_relation'         => 'required|max:255',
+            'nominee_one_percentage'       => 'required|max:255',
             'nominee_one_image'            => 'required|image|max:250',
 
-            'nominee_two_name'                     => 'required|max:255',
-            'nominee_two_identity_type'            => 'required',
-            'nominee_two_identity_text'            => 'required|max:255',
-            'nominee_two_relation'            => 'required|max:255',
-            'nominee_two_percentage'            => 'required|max:255',
+            'nominee_two_name'             => 'required|max:255',
+            'nominee_two_identity_type'    => 'required',
+            'nominee_two_identity_text'    => 'required|max:255',
+            'nominee_two_relation'         => 'required|max:255',
+            'nominee_two_percentage'       => 'required|max:255',
             'nominee_two_image'            => 'required|image|max:250',
+            'application_payment_receipt'  => 'required|image|max:500',
 
-            'password'                  => 'required|min:8|same:password_confirmation'
+            'password'                     => 'required|min:8|same:password_confirmation'
         ));
 
         $application = new User();
@@ -277,7 +278,7 @@ class IndexController extends Controller
         $application->nominee_two_identity_text = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_identity_text));
         $application->nominee_two_relation = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_relation));
         $application->nominee_two_percentage = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_percentage));
-        // nominee one's image upload
+        // nominee two's image upload
         if($request->hasFile('nominee_two_image')) {
             $nominee_two_image      = $request->file('nominee_two_image');
             $filename   = 'nominee_two_' . str_replace(' ','',$request->name).time() .'.' . $nominee_two_image->getClientOriginalExtension();
@@ -285,11 +286,20 @@ class IndexController extends Controller
             Image::make($nominee_two_image)->resize(200, 200)->save($location);
             $application->nominee_two_image = $filename;
         }
-
+        
+        // application payment receipt's image upload
+        if($request->hasFile('application_payment_receipt')) {
+            $application_payment_receipt      = $request->file('application_payment_receipt');
+            $filename   = 'application_payment_receipt_' . str_replace(' ','',$request->name).time() .'.' . $application_payment_receipt->getClientOriginalExtension();
+            $location   = public_path('/images/receipts/'. $filename);
+            Image::make($application_payment_receipt)->resize(800, 400)->save($location);
+            $application->application_payment_receipt = $filename;
+        }
 
         $application->password = Hash::make($request->password);
 
         $application->role = 'member';
+        $application->role_type = 'member';
         $application->activation_status = 0;
         $application->member_id = 0;
 

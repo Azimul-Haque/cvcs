@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('unique_key');
             $table->string('member_id');
             $table->string('role');
+            $table->string('role_type');
             $table->integer('activation_status');
 
             $table->string('name_bangla');
@@ -52,6 +53,8 @@ class CreateUsersTable extends Migration
             $table->string('nominee_two_relation');
             $table->string('nominee_two_percentage');
             $table->string('nominee_two_image');
+
+            $table->string('application_payment_receipt');
 
             $table->string('password');
             $table->rememberToken();

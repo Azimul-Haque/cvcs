@@ -122,7 +122,7 @@
                                 <div class="key-person-img"><img src="{{ asset('images/gallery/'.$album->thumbnail) }}" alt=""></div>
                                 <div class="key-person-details bg-gray no-border no-padding-bottom"><h5>অ্যালবামঃ {{ $album->name }}</h5>
                                     <div class="separator-line bg-black"></div>
-                                    <p>{{ $album->description }}</p>
+                                    <p>{{-- {{ $album->description }} --}}</p>
                                 </div>
                             </div>
                         </a>

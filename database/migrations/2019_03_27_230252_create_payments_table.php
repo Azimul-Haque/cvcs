@@ -16,6 +16,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->integer('member_id')->unsigned();
             $table->integer('payment_status')->unsigned();
+            $table->string('payment_type');
             $table->string('payment_key');
             $table->string('amount');
             $table->string('bank');

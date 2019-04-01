@@ -2,6 +2,18 @@ body{
 	/*background: white url("images/background.png");*/
 }
 
+.main-sidebar .sidebar {
+    overflow-y: scroll;
+}
+.slimScrollBar {
+    background-color: white !important;
+    opacity: 0.3 !important;
+}
+.select2-container {
+    width: 100% !important;
+    padding: 0;
+}
+
 .deleteBtn:link, .editBtn:link, .deleteBtn:visited, .editBtn:visited {
     color: #ffffff !important;
     text-decoration: none !important;

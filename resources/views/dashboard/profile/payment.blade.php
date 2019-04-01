@@ -13,8 +13,7 @@
         @if(Auth::user()->activation_status == 0)
           
         @else
-          <a class="btn btn-primary" href="{{ route('dashboard.memberpaymentself') }}" title="শুধু নিজের টাকা পরিশোধ করুন"><i class="fa fa-fw fa-user" aria-hidden="true"></i></a>
-          <a class="btn btn-success" href="{{ route('dashboard.memberpaymentbulk') }}" title="একাধিক সদস্যের টাকা পরিশোধ করুন"><i class="fa fa-fw fa-users" aria-hidden="true"></i></a>
+          <a class="btn btn-primary" href="{{ route('dashboard.memberpaymentself') }}" title="টাকা পরিশোধ করুন"><i class="fa fa-fw fa-user" aria-hidden="true"></i></a>
         @endif
       </div>
     </h1>
@@ -30,6 +29,7 @@
           <tr>
             <th>পেমেন্ট আইডি</th>
             <th>পেমেন্ট স্ট্যাটাস</th>
+            <th>পেমেন্ট টাইপ</th>
             <th>পরিমাণ</th>
             <th>ব্যাংক</th>
             <th>ব্রাঞ্চ</th>
@@ -48,6 +48,13 @@
                 <span class="badge badge-danger"><i class="fa fa-check"></i>অনুমোদিত</span>
               @endif
             </td>
+            <td>
+              @if($payment->payment_type == 1)
+                <b>SINGLE</b>
+              @elseif($payment->payment_type == 2)
+                <b>BULK</b>
+              @endif
+            </td>
             <td align="right">{{ $payment->amount }} ৳</td>
             <td>{{ $payment->bank }}</td>
             <td>{{ $payment->branch }}</td>
@@ -57,7 +64,7 @@
               <!-- See Receipts Modal -->
               <!-- See Receipts Modal -->
               <div class="modal fade" id="seeReceiptModal{{ $payment->id }}" role="dialog">
-                <div class="modal-dialog modal-md">
+                <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                     <div class="modal-header modal-header-success">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -67,7 +74,7 @@
                       পরিশোধ আইডিঃ {{ $payment->payment_key }}
                       @if(count($payment->paymentreceipts) > 0)
                         @foreach($payment->paymentreceipts as $paymentreceipt)
-                          <img src="{{ asset('images/receipts/'. $paymentreceipt->image) }}" alt="Album Image" class="img-responsive" style="max-height: 200px; width: auto;"><br/>
+                          <img src="{{ asset('images/receipts/'. $paymentreceipt->image) }}" alt="Album Image" class="img-responsive" style=""><br/>
                         @endforeach
                       @endif
                     </div>

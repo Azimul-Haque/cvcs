@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>CV</b>CS',
+    'logo' => '<b>সিভি</b>সিএস',
 
     'logo_mini' => '<b>CV</b>CS',
 

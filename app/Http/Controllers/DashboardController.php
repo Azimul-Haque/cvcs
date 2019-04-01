@@ -38,7 +38,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPaymentPage', 'getBulkPaymentPage');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPaymentPage', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI');
     }
 
     /**
@@ -76,6 +76,123 @@ class DashboardController extends Controller
                     // ->withMembership($membership)
                     // ->withBasicinfo($basicinfo);
     }
+
+    public function getAdmins()
+    {
+        $superadmins = User::where('role', 'admin')
+                           ->where('role_type', 'admin')
+                           ->paginate(10);
+
+        $admins = User::where('role', 'admin')
+                      ->where('role_type', 'manager')
+                      ->paginate(10);
+        // $whoweare = About::where('type', 'whoweare')->get()->first();
+        // $whatwedo = About::where('type', 'whatwedo')->get()->first();
+        // $ataglance = About::where('type', 'ataglance')->get()->first();
+        // $membership = About::where('type', 'membership')->get()->first();
+        // $basicinfo = Basicinfo::where('id', 1)->first();
+
+        return view('dashboard.adminsandothers.admins')
+                    ->withSuperadmins($superadmins)
+                    ->withAdmins($admins);
+    }
+
+    public function getCreateAdmin()
+    {
+        return view('dashboard.adminsandothers.createadmin');
+    }
+
+    public function searchMemberForAdminAPI(Request $request)
+    {
+        // $response = User::select('name_bangla','member_id', 'image')
+        //                 ->where('member_id', 'like', '%' . $request->searchentry . '%')
+        //                 ->orWhere('name_bangla', 'like', '%' . $request->searchentry . '%')
+        //                 ->orWhere('name', 'like', '%' . $request->searchentry . '%')
+        //                 ->orWhere('mobile', 'like', '%' . $request->searchentry . '%')
+        //                 ->get();
+        $response = User::select('name_bangla', 'member_id', 'mobile')
+                        ->where('role_type', '!=', 'admin')
+                        ->where('role_type', '!=', 'manager')
+                        ->where('activation_status', 1)
+                        ->orderBy('id', 'desc')->get();
+
+        return $response;          
+    }
+
+    public function addAdmin(Request $request)
+    {
+        $this->validate($request,array(
+            'member_id' => 'required'
+        ));
+
+        $member = User::where('member_id', $request->member_id)->first();
+        $member->role      = 'admin';
+        $member->role_type = 'manager';
+        $member->save();
+
+        Session::flash('success', 'সফলভাবে অ্যাডমিন বানানো হয়েছে!');
+        return redirect()->route('dashboard.admins');
+    }
+
+    public function removeAdmin(Request $request, $id)
+    {
+        $member = User::find($id);
+        $member->role      = 'member';
+        $member->role_type = 'member';
+        $member->save();
+
+        Session::flash('success', 'সফলভাবে অ্যাডমিন থেকে অব্যহতি দেওয়া হয়েছে!');
+        return redirect()->route('dashboard.admins');          
+    }
+
+    public function getBulkPayers()
+    {
+        $bulkpayers = User::where('role_type', 'bulkpayer')->paginate(10);
+
+        return view('dashboard.adminsandothers.bulkpayers')->withBulkpayers($bulkpayers);
+    }
+
+    public function getCreateBulkPayer()
+    {
+        return view('dashboard.adminsandothers.createbulkpayer');
+    }
+
+    public function searchMemberForBulkPayerAPI(Request $request)
+    {
+        $response = User::select('name_bangla', 'member_id', 'mobile')
+                        ->where('role_type', 'member')
+                        ->where('activation_status', 1)
+                        ->orderBy('id', 'desc')->get();
+
+        return $response;          
+    }
+
+    public function addBulkPayer(Request $request)
+    {
+        $this->validate($request,array(
+            'member_id' => 'required'
+        ));
+
+        $member = User::where('member_id', $request->member_id)->first();
+        $member->role_type = 'bulkpayer';
+        $member->save();
+
+        Session::flash('success', 'সফলভাবে একাধিক পরিশোধকারী বানানো হয়েছে!');
+        return redirect()->route('dashboard.bulkpayers');
+    }
+
+    public function removeBulkPayer(Request $request, $id)
+    {
+        $member = User::find($id);
+        $member->role_type = 'member';
+        $member->save();
+
+        Session::flash('success', 'সফলভাবে একাধিক পরিশোধকারী থেকে অব্যহতি দেওয়া হয়েছে!');
+        return redirect()->route('dashboard.bulkpayers');          
+    }
+
+
+
 
     public function getAbouts()
     {
@@ -504,7 +621,7 @@ class DashboardController extends Controller
     {
         $this->validate($request,array(
             'name'          =>   'required',
-            'description'   =>   'required',
+            'description'   =>   'sometimes',
             'thumbnail'     =>   'required|image|max:500',
             'image1'        =>   'sometimes|image|max:500',
             'image2'        =>   'sometimes|image|max:500',
@@ -517,7 +634,6 @@ class DashboardController extends Controller
 
         $album = new Album;
         $album->name = $request->name;
-        $album->description = $request->description;
         $album->description = $request->description;
 
         // thumbnail upload
@@ -829,6 +945,7 @@ class DashboardController extends Controller
         $payment->bank = $request->bank;
         $payment->branch = $request->branch;
         $payment->payment_status = 0;
+        $payment->payment_type = 1;
         // generate payment_key
         $payment_key_length = 10;
         $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -842,7 +959,7 @@ class DashboardController extends Controller
             $receipt      = $request->file('image');
             $filename   = $payment->member_id.'_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
             $location   = public_path('/images/receipts/'. $filename);
-            Image::make($receipt)->resize(400, 250)->save($location);
+            Image::make($receipt)->resize(800, 400)->save($location);
             $paymentreceipt = new Paymentreceipt;
             $paymentreceipt->payment_id = $payment->id;
             $paymentreceipt->image = $filename;
@@ -889,7 +1006,7 @@ class DashboardController extends Controller
 
     public function getBulkPaymentPage() 
     {
-        return view('dashboard.profile.bulkpayment');
+        return view('dashboard.adminsandothers.bulkpayment');
     }
 
     public function getMembersPendingPayments() 
@@ -953,5 +1070,14 @@ class DashboardController extends Controller
 
         Session::flash('success', 'অনুমোদন সফল হয়েছে!');
         return redirect()->route('dashboard.membersapprovedpayments');
+    }
+
+    public function searchMemberForBulkPaymentAPI(Request $request)
+    {
+        $response = User::select('name_bangla', 'member_id', 'mobile')
+                        ->where('activation_status', 1)
+                        ->orderBy('id', 'desc')->get();
+
+        return $response;          
     }
 }

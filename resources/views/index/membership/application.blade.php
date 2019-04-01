@@ -275,6 +275,19 @@
                           </div>
                         </div>
 
+                        <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত</h3>
+                        <div class="row">
+                          <div class="col-md-8">
+                              <div class="form-group ">
+                                  <label><strong>৫০০০ টাকা পরিশোধের রিসিট (সর্বোচ্চ ৫০০ কিলোবাইট)</strong></label>
+                                  <input type="file" id="application_payment_receipt" name="application_payment_receipt" required="">
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                            <img src="{{ asset('images/800x500.png')}}" id='application_payment_receipt-upload' style="height: 120px; width: auto; padding: 5px;" />
+                          </div>
+                        </div>
+
                         <h3 class="agency-title margin-two">অনলাইন একাউন্ট সংক্রান্ত</h3>
                         <div class="row">
                           <div class="col-md-6">
@@ -391,6 +404,26 @@
               toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
                 setTimeout(function() {
                   $("#nominee_two_image-upload").attr('src', '{{ asset('images/user.png') }}');
+                }, 1000);
+            }
+        });
+        function readURLApplicationPaymentReceipt(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#application_payment_receipt-upload').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#application_payment_receipt").change(function(){
+            readURLApplicationPaymentReceipt(this);
+            var filesize = parseInt((this.files[0].size)/1024);
+            if(filesize > 500) {
+              $("#application_payment_receipt").val('');
+              toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
+                setTimeout(function() {
+                  $("#application_payment_receipt-upload").attr('src', '{{ asset('images/user.png') }}');
                 }, 1000);
             }
         });

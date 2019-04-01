@@ -71,7 +71,7 @@
                 </div>
                 <div class="form-group">
                   <label>Caption</label>
-                  {!! Form::text('caption', null, array('class' => 'form-control text-green', 'placeholder' => 'Caption', 'required' => '')) !!}
+                  {!! Form::text('caption', null, array('class' => 'form-control text-green', 'placeholder' => 'Caption')) !!}
                 </div>
 
                 <center>
