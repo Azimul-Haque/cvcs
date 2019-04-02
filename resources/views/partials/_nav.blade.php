@@ -90,12 +90,10 @@
                                 </li>
                             </ul>
                         </li> --}}
-                        <li class="dropdown panel simple-dropdown">
+                        {{-- <li class="dropdown panel simple-dropdown">
                             <a href="#nav_abouts" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
                                 এবাউট ▾
                             </a>
-                            <!-- sub menu single -->
-                            <!-- sub menu item  -->
                             <ul id="nav_abouts" class="dropdown-menu panel-collapse collapse" role="menu">
                                 <li>
                                     <a href="{{ route('index.about') }}" class="text-large">সিভিসিএস সম্পর্কে</a>
@@ -104,6 +102,10 @@
                                     <a href="{{ route('index.mission') }}" class="text-large">মিশন</a>
                                 </li>
                             </ul>
+                        </li> --}}
+
+                        <li>
+                            <a href="{{ route('index.about') }}">এবাউট</a>
                         </li>
                         <li>
                             <a href="{{ route('index.gallery') }}">গ্যালারি</a>

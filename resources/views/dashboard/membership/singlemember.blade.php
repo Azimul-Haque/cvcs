@@ -73,6 +73,7 @@
       <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">ব্যক্তিগত তথ্য</a></li>
       <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত</a></li>
       <li class=""><a href="#payment_tab" data-toggle="tab" aria-expanded="true">পরিশোধ সংক্রান্ত</a></li>
+      <li class=""><a href="#membership_payment_tab" data-toggle="tab" aria-expanded="true">সদস্যপদ পরিশোধ তথ্য</a></li>
       <li class="pull-right dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
         </a>
@@ -306,8 +307,11 @@
           <table class="table table-bordered">
             <thead>
               <tr>
+                <th>পরিশোধকারী</th>
+                <th>জমাদানকারী</th>
                 <th>পেমেন্ট আইডি</th>
                 <th>পেমেন্ট স্ট্যাটাস</th>
+                <th>পেমেন্ট টাইপ</th>
                 <th>পরিমাণ</th>
                 <th>ব্যাংক</th>
                 <th>ব্রাঞ্চ</th>
@@ -318,12 +322,25 @@
             <tbody>
               @foreach($member->payments as $payment)
               <tr>
+                <td>
+                <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
+                </td>
+                <td>
+                  <a href="{{ route('dashboard.singlemember', $payment->payee->unique_key) }}">{{ $payment->payee->name_bangla }}</a>
+                </td>
                 <td>{{ $payment->payment_key }}</td>
                 <td>
                   @if($payment->payment_status == 0)
-                    <span class="badge badge-success"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
+                    <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
                   @else
-                    <span class="badge badge-danger"><i class="fa fa-check"></i>অনুমোদিত</span>
+                    <span class="badge badge-success"><i class="fa fa-check"></i>অনুমোদিত</span>
+                  @endif
+                </td>
+                <td>
+                  @if($payment->payment_type == 1)
+                    <b>SINGLE</b>
+                  @elseif($payment->payment_type == 2)
+                    <b>BULK</b>
                   @endif
                 </td>
                 <td align="right">{{ $payment->amount }} ৳</td>
@@ -364,6 +381,13 @@
         </div>
       </div>
       <!-- /.tab-pane -->
+      <div class="tab-pane" id="membership_payment_tab">
+        @if($member->application_payment_receipt != null)
+            <img src="{{ asset('images/receipts/'.$member->application_payment_receipt)}}" alt="Receipt of membership payment {{ $member->name }}" class="img-responsive shadow" style="width: 100%; height: auto;" />
+        @else
+            ফাইল পাওয়া যায়নি!
+        @endif
+      </div>
     </div>
     <!-- /.tab-content -->
   </div>

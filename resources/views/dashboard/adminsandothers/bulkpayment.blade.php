@@ -18,7 +18,7 @@
 @section('content')
   @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'bulkpayer'))
   	<div class="row">
-      {!! Form::open(['route' => 'dashboard.storememberpaymentself', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
+      {!! Form::open(['route' => 'dashboard.storememberpaymentbulk', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
       <div class="col-md-6">
         <div class="box box-primary">
           <div class="box-header with-border text-blue">
@@ -27,7 +27,6 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            {!! Form::hidden('member_id', Auth::user()->member_id) !!}
             <div class="form-group">
               {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
               {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'টাকার পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
@@ -100,7 +99,10 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> সদস্য যোগ করুন</button>
+            <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> সদস্য যোগ করুন</button><br/><br/>
+
+            <div id="member_list"></div>
+
             <!-- Add Member Modal -->
             <!-- Add Member Modal -->
             <div class="modal fade" id="membersModal" role="dialog">
@@ -113,12 +115,13 @@
                   <div class="modal-body">
                     <div class="form-group">
                       <label for="member_id">সদস্য নির্বাচন করুন</label><br/>
-                      <select class="form-control" name="member_select" id="member_select" data-placeholder="সদস্য নির্বাচন করুন" required>
-                        <option value="0" disabled="" selected="">মেম্বার আইডি/নাম/মোবাইল নম্বর</option>
+                      <select class="form-control" name="member_select" id="member_select" data-placeholder="সদস্য নির্বাচন করুন">
+                        <option value="" disabled="" selected="">মেম্বার আইডি/নাম/মোবাইল নম্বর</option>
                       </select>
                     </div>
                   </div>
                   <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="add_member_btn">যোগ করুন</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                   </div>
                 </div>
@@ -126,6 +129,7 @@
             </div>
             <!-- Add Member Modal -->
             <!-- Add Member Modal -->
+            {{-- {!! Form::hidden('member_ids', null, ['id' => 'member_ids', 'required' => '']) !!} --}}
             <br/><br/>
             <div class="form-group">
               {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
@@ -214,7 +218,7 @@
               // console.log(items);
               $.each(items, function (i, item) {
                   $('#member_select').append($('<option>', { 
-                      value: item.member_id,
+                      value: item.name_bangla + "|" + item.member_id,
                       text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
                   }));
               });
@@ -224,5 +228,56 @@
       $('#member_select').select2();
     }, 1000);
 
+  </script>
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#add_member_btn').click(function() {
+        var member_select = $('#member_select').val();
+        if(member_select == null) {
+          toastr.warning('সদস্য নির্বাচন করুন!', 'WARNING');
+        } else {
+          // add member to the box
+          var member_data = member_select.split('|');
+          console.log(member_data);
+          $('#member_list').append('<div class="row" id="memberRow'+member_data[1]+'"><div class="col-md-5">'+ member_data[0] +'</div><div class="col-md-5"><input type="number" class="form-control" name="amount'+member_data[1]+'" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data[1]+', amount'+member_data[1]+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data[1]+'"><hr/></div></div>');
+          $('#membersModal').modal('toggle');
+
+          // append the amountids field
+          // var selected_members = [];
+          // $("input[name='amountids[]']").each(function (){
+          //     selected_members.push($(this).val());
+          // });
+          // $('#member_ids').val(selected_members);
+          // if($('#member_ids').val() == '') {
+          //   toastr.warning('অন্তত একজন সদস্য নির্বাচন করুন!', 'Warning');
+          // } else {
+
+          // }
+
+          // remove item from select options
+          // $("#member_select option[value='"+$('#member_select').val()+"']").remove();
+        }
+      });
+
+      
+    });
+
+    function removeMember(idofmemberrow, idofmemberamount) {
+      $(idofmemberrow).remove();
+      $(idofmemberamount).removeAttr('required');
+
+      // remove from amountids field
+      // append the amountids field
+      var selected_members = [];
+      $("input[name='amountids[]']").each(function (){
+          selected_members.push($(this).val());
+      });
+      $('#member_ids').val(selected_members);
+      if($('#member_ids').val() == '') {
+        toastr.warning('অন্তত একজন সদস্য নির্বাচন করুন!', 'Warning');
+      } else {
+
+      }
+    }
   </script>
 @stop

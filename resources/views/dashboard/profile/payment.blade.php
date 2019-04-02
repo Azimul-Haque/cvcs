@@ -27,6 +27,8 @@
       <table class="table table-bordered">
         <thead>
           <tr>
+            <th>পরিশোধকারী</th>
+            <th>জমাদানকারী</th>
             <th>পেমেন্ট আইডি</th>
             <th>পেমেন্ট স্ট্যাটাস</th>
             <th>পেমেন্ট টাইপ</th>
@@ -40,12 +42,18 @@
         <tbody>
           @foreach($payments as $payment)
           <tr>
+            <td>
+            <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
+            </td>
+            <td>
+              <a href="{{ route('dashboard.singlemember', $payment->payee->unique_key) }}">{{ $payment->payee->name_bangla }}</a>
+            </td>
             <td>{{ $payment->payment_key }}</td>
             <td>
               @if($payment->payment_status == 0)
-                <span class="badge badge-success"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
+                <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
               @else
-                <span class="badge badge-danger"><i class="fa fa-check"></i>অনুমোদিত</span>
+                <span class="badge badge-success"><i class="fa fa-check"></i>অনুমোদিত</span>
               @endif
             </td>
             <td>

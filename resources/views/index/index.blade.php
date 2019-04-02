@@ -109,7 +109,7 @@
             </div>
         </div>
     </section>
-    <section class="bg-blue-1 wow fadeIn">
+    <section class="bg-blue-1 wow fadeIn padding-four">
         <div class="container">
             <div class="row">
                 @php
@@ -131,6 +131,15 @@
                         $albumwaitduration = $albumwaitduration + 300;
                     @endphp
                 @endforeach
+            </div>
+            <div class="row">
+                <div class="col-md-12 no-margin-bottom">
+                    <center>
+                        <a href="{{ route('index.gallery') }}" class="highlight-link text-uppercase white-text">আরও দেখুন
+                            <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
+                        </a>
+                    </center>
+                </div>
             </div>
         </div>
     </section>
@@ -165,6 +174,9 @@
                                 {{ date('F d, Y', strtotime($notice->created_at)) }}
                             </span>
                             <p class="margin-ten no-margin-top width-90 xs-center-col xs-display-block"></p>
+                            <a href="{{ asset('files/'. $notice->attachment) }}" class="highlight-link text-uppercase white-text" style="position: absolute; bottom: 10px;" download="">ফাইল ডাউনলোড করুন
+                                <i class="fa fa-long-arrow-down extra-small-icon white-text"></i>
+                            </a>
                         </div>
                     </div>
                     @php
@@ -231,6 +243,15 @@
                     @endphp
                 @endforeach
             </div>
+            <div class="row">
+                <div class="col-md-12 margin-two no-margin-bottom">
+                    <center>
+                        <a href="{{ route('index.events') }}" class="highlight-link text-uppercase white-text">আরও দেখুন
+                            <i class="fa fa-long-arrow-right extra-small-icon white-text"></i>
+                        </a>
+                    </center>
+                </div>
+            </div>
         </div>
     </section>
     <!-- end section text -->
@@ -289,7 +310,7 @@
 @endsection
 
 @section('js')
-    {!!Html::script('js/wowslider/jquery_for_wow.js')!!}
+    {{-- {!!Html::script('js/wowslider/jquery_for_wow.js')!!} --}}
     {!!Html::script('js/wowslider/wowslider.js')!!}
     {!!Html::script('js/wowslider/wowslider.script.js')!!}
 @endsection

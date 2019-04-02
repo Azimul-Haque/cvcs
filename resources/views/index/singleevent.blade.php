@@ -52,7 +52,7 @@
                 <div class="col-md-3 col-sm-4 col-md-offset-1 sidebar xs-margin-top-ten">
                     <!-- widget  -->
                     <div class="widget">
-                        <h5 class="widget-title font-alt">Latest Events</h5>
+                        <h5 class="widget-title font-alt">সর্বশেষ ইভেন্টসমূহ</h5>
                         <div class="thin-separator-line bg-dark-gray no-margin-lr"></div>
                         <div class="widget-body">
                             <ul class="widget-posts">

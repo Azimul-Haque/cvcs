@@ -54,12 +54,14 @@ class IndexController extends Controller
 
     public function getAbout()
     {
+        $mission = About::where('type', 'mission')->get()->first();
         $whoweare = About::where('type', 'whoweare')->get()->first();
         $whatwedo = About::where('type', 'whatwedo')->get()->first();
         $ataglance = About::where('type', 'ataglance')->get()->first();
         $membership = About::where('type', 'membership')->get()->first();
 
         return view('index.about')
+                    ->withMission($mission)
                     ->withWhoweare($whoweare)
                     ->withWhatwedo($whatwedo)
                     ->withAtaglance($ataglance)
@@ -218,13 +220,13 @@ class IndexController extends Controller
             'nominee_one_percentage'       => 'required|max:255',
             'nominee_one_image'            => 'required|image|max:250',
 
-            'nominee_two_name'             => 'required|max:255',
-            'nominee_two_identity_type'    => 'required',
-            'nominee_two_identity_text'    => 'required|max:255',
-            'nominee_two_relation'         => 'required|max:255',
-            'nominee_two_percentage'       => 'required|max:255',
-            'nominee_two_image'            => 'required|image|max:250',
-            'application_payment_receipt'  => 'required|image|max:500',
+            'nominee_two_name'             => 'sometimes|max:255',
+            'nominee_two_identity_type'    => 'sometimes',
+            'nominee_two_identity_text'    => 'sometimes|max:255',
+            'nominee_two_relation'         => 'sometimes|max:255',
+            'nominee_two_percentage'       => 'sometimes|max:255',
+            'nominee_two_image'            => 'sometimes|image|max:250',
+            'application_payment_receipt'  => 'sometimes|image|max:500',
 
             'password'                     => 'required|min:8|same:password_confirmation'
         ));

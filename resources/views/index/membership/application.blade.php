@@ -229,13 +229,13 @@
                         
                         <div class="form-group ">
                             <label for="nominee_two_name" class="">নাম (বাংলায়) *</label>
-                            <input type="text" name="nominee_two_name" id="nominee_two_name" required="">
+                            <input type="text" name="nominee_two_name" id="nominee_two_name">
                         </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_two_identity_type" class="">দলিলের ধরণ</label>
-                                <select name="nominee_two_identity_type" id="nominee_two_identity_type" required="">
+                                <select name="nominee_two_identity_type" id="nominee_two_identity_type">
                                     <option value="" selected="" disabled="">দলিলের ধরণ নির্ধারণ করুন</option>
                                     <option value="0">জাতীয় পরিচয়পত্র</option>
                                     <option value="1">জন্ম নিবন্ধন</option>
@@ -245,7 +245,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="nominee_two_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর *</label>
-                                <input type="text" name="nominee_two_identity_text" id="nominee_two_identity_text" required="">
+                                <input type="text" name="nominee_two_identity_text" id="nominee_two_identity_text">
                             </div>
                           </div>
                         </div>
@@ -253,13 +253,13 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="nominee_two_relation" class="">সম্পর্ক *</label>
-                                <input type="text" name="nominee_two_relation" id="nominee_two_relation" required="">
+                                <input type="text" name="nominee_two_relation" id="nominee_two_relation">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="nominee_two_percentage" class="">শতকরা হার *</label>
-                                <input type="text" name="nominee_two_percentage" id="nominee_two_percentage" required="">
+                                <input type="text" name="nominee_two_percentage" id="nominee_two_percentage">
                             </div>
                           </div>
                         </div>
@@ -267,7 +267,7 @@
                           <div class="col-md-8">
                               <div class="form-group ">
                                   <label><strong>নমিনির রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
-                                  <input type="file" id="nominee_two_image" name="nominee_two_image" required="">
+                                  <input type="file" id="nominee_two_image" name="nominee_two_image">
                               </div>
                           </div>
                           <div class="col-md-4">

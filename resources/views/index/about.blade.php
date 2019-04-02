@@ -14,7 +14,7 @@
             <div class="row">
                 <!-- section title -->
                 <div class="col-md-6 col-sm-6 xs-margin-bottom-four">
-                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">আমরা কারা</span>
+                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">সংক্ষিপ্ত ইতিহাস</span>
                 </div>
                 <!-- end section title -->
                 <!-- section highlight text -->
@@ -34,10 +34,10 @@
                     <span class="title-large text-uppercase letter-spacing-1 font-weight-600 black-text"></span>
                     <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
                     <p class="white-text about-us-page-text">
-                        {{ $whoweare->text }}
+                        {!! $whoweare->text !!}
                     </p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 xs-display-none">
                     <center>
                       <img src="{{ asset('images/whoweare.png') }}" class="img-responsive" style="max-height: 250px;">
                     </center>
@@ -56,6 +56,42 @@
                 <!-- end section highlight text -->
                 <!-- section title -->
                 <div class="col-md-6 col-sm-6 xs-margin-bottom-four text-right">
+                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">আমাদের মিশন</span>
+                </div>
+                <!-- end section title -->
+            </div>
+        </div>
+    </section>
+    <section class="wow fadeInUp bg-royal-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 xs-display-none">
+                    <center>
+                      <img src="{{ asset('images/mission.png') }}" class="img-responsive" style="max-height: 250px;">
+                    </center>
+                </div>
+                <div class="col-md-8">
+                    <span class="title-large text-uppercase letter-spacing-1 font-weight-600 white-text"></span>
+                    <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
+                    <p class="white-text about-us-page-text">
+                        {!! $mission->text !!}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    {{-- <section class="wow fadeInUp">
+        <div class="container">
+            <div class="row">
+                <!-- section highlight text -->
+                <div class="col-md-6 col-sm-6 text-right xs-text-left">
+                    <span class="text-extra-large font-weight-400"></span>
+                </div>
+                <!-- end section highlight text -->
+                <!-- section title -->
+                <div class="col-md-6 col-sm-6 xs-margin-bottom-four text-right">
                     <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">আমরা যা করি</span>
                 </div>
                 <!-- end section title -->
@@ -65,7 +101,7 @@
     <section class="wow fadeInUp bg-royal-blue">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 xs-display-none">
                     <center>
                       <img src="{{ asset('images/whatwedo.png') }}" class="img-responsive" style="max-height: 250px;">
                     </center>
@@ -74,12 +110,12 @@
                     <span class="title-large text-uppercase letter-spacing-1 font-weight-600 white-text"></span>
                     <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
                     <p class="white-text about-us-page-text">
-                        {{ $whoweare->text }}
+                        {!! $whoweare->text !!}
                     </p>
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <section class="wow fadeInUp">
         <div class="container">
             <div class="row">
@@ -103,10 +139,10 @@
                     <span class="title-large text-uppercase letter-spacing-1 font-weight-600 black-text"></span>
                     <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
                     <p class="white-text about-us-page-text">
-                        {{ $membership->text }}
+                        {!! $membership->text !!}
                     </p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 xs-display-none">
                     <center>
                       <img src="{{ asset('images/membership.png') }}" class="img-responsive" style="max-height: 250px;">
                     </center>
@@ -124,7 +160,7 @@
                 <!-- end section highlight text -->
                 <!-- section title -->
                 <div class="col-md-6 col-sm-6 xs-margin-bottom-four text-right">
-                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">এক নজরে</span>
+                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">এক নজরে সিভিসিএস</span>
                 </div>
                 <!-- end section title -->
             </div>
@@ -133,7 +169,7 @@
     <section class="wow fadeInUp bg-royal-blue">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 xs-display-none">
                     <center>
                       <img src="{{ asset('images/ataglance.png') }}" class="img-responsive" style="max-height: 250px;">
                     </center>
@@ -142,7 +178,7 @@
                     <span class="title-large text-uppercase letter-spacing-1 font-weight-600 black-text"></span>
                     <div class="separator-line-thick bg-fast-pink no-margin-lr"></div>
                     <p class="white-text about-us-page-text">
-                        {{ $ataglance->text }}
+                        {!! $ataglance->text !!}
                     </p>
                 </div>
             </div>

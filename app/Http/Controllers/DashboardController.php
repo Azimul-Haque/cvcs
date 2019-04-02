@@ -38,7 +38,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPaymentPage', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment');
     }
 
     /**
@@ -201,6 +201,7 @@ class DashboardController extends Controller
         $whatwedo = About::where('type', 'whatwedo')->get()->first();
         $ataglance = About::where('type', 'ataglance')->get()->first();
         $membership = About::where('type', 'membership')->get()->first();
+        $mission = About::where('type', 'mission')->get()->first();
         $basicinfo = Basicinfo::where('id', 1)->first();
 
         return view('dashboard.abouts')
@@ -209,6 +210,7 @@ class DashboardController extends Controller
                     ->withWhatwedo($whatwedo)
                     ->withAtaglance($ataglance)
                     ->withMembership($membership)
+                    ->withMission($mission)
                     ->withBasicinfo($basicinfo);
     }
 
@@ -218,7 +220,7 @@ class DashboardController extends Controller
         ));
 
         $about = About::find($id);
-        $about->text = $request->text;
+        $about->text = nl2br($request->text);
      
         $about->save();
         
@@ -928,7 +930,7 @@ class DashboardController extends Controller
         return view('dashboard.profile.selfpayment');
     }
 
-    public function storeSelfPaymentPage(Request $request) 
+    public function storeSelfPayment(Request $request) 
     {
         $this->validate($request,array(
             'member_id'   =>   'required',
@@ -941,6 +943,7 @@ class DashboardController extends Controller
 
         $payment = new Payment;
         $payment->member_id = $request->member_id;
+        $payment->payer_id = $request->member_id;
         $payment->amount = $request->amount;
         $payment->bank = $request->bank;
         $payment->branch = $request->branch;
@@ -1004,9 +1007,35 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.memberpayment');
     }
 
+    public function storeBulkPayment(Request $request) 
+    {
+        $this->validate($request,array(
+            'amount'      =>   'required|integer',
+            'bank'        =>   'required',
+            'branch'      =>   'required',
+            'image'       =>   'sometimes|image|max:500'
+
+        ));
+
+        dd($request->all());
+
+        
+        Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
+        return redirect()->route('dashboard.memberpayment');
+    }
+
     public function getBulkPaymentPage() 
     {
         return view('dashboard.adminsandothers.bulkpayment');
+    }
+
+    public function searchMemberForBulkPaymentAPI(Request $request)
+    {
+        $response = User::select('name_bangla', 'member_id', 'mobile')
+                        ->where('activation_status', 1)
+                        ->orderBy('id', 'desc')->get();
+
+        return $response;          
     }
 
     public function getMembersPendingPayments() 
@@ -1072,12 +1101,4 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
-    public function searchMemberForBulkPaymentAPI(Request $request)
-    {
-        $response = User::select('name_bangla', 'member_id', 'mobile')
-                        ->where('activation_status', 1)
-                        ->orderBy('id', 'desc')->get();
-
-        return $response;          
-    }
 }

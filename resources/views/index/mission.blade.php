@@ -47,7 +47,7 @@
                         <i class="fa fa-angle-double-right white-text"></i> দুরারোগ্য ব্যাধিতে আক্রান্ত সহকর্মীদের চিকিৎসা সেবায় সহায়তা প্রদান; ইত্যাদি<br/>
                     </p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 xs-display-none">
                     <center>
                       <img src="{{ asset('images/mission.png') }}" class="img-responsive" style="max-height: 250px; margin-top: 90px;">
                     </center>

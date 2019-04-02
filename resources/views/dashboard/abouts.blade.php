@@ -64,7 +64,7 @@
             {!! Form::model($about, ['route' => ['dashboard.updateabouts', $about->id], 'method' => 'PUT']) !!}
               <div class="form-group">
                 <label>Text:</label>
-                {!! Form::textarea('text', null, array('class' => 'form-control text-blue textarea', 'required' => '', 'placeholder' => 'Write About CVCS')) !!}
+                {!! Form::textarea('text', str_replace('<br />', "", $about->text), array('class' => 'form-control text-blue textarea', 'required' => '', 'placeholder' => 'সিভিসিএস-এর ব্যাপারে লিখুন')) !!}
               </div>
             <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> Submit</button>
             {!! Form::close() !!}
@@ -81,7 +81,7 @@
             {!! Form::model($whatwedo, ['route' => ['dashboard.updateabouts', $whatwedo->id], 'method' => 'PUT']) !!}
               <div class="form-group">
                 <label>Text:</label>
-                {!! Form::textarea('text', null, array('class' => 'form-control text-blue textarea', 'required' => '', 'placeholder' => 'Write About CVCS')) !!}
+                {!! Form::textarea('text', str_replace('<br />', "", $whatwedo->text), array('class' => 'form-control text-blue textarea', 'required' => '', 'placeholder' => 'আমরা যা করি লিখুন')) !!}
               </div>
             <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> Submit</button>
             {!! Form::close() !!}
@@ -93,14 +93,14 @@
         <div class="box box-success">
           <div class="box-header with-border text-green">
             <i class="fa fa-fw fa-file-text-o"></i>
-            <h3 class="box-title">Who we are (আমরা কারা)</h3>
+            <h3 class="box-title">সংক্ষিপ্ত ইতিহাস</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             {!! Form::model($whoweare, ['route' => ['dashboard.updateabouts', $whoweare->id], 'method' => 'PUT']) !!}
               <div class="form-group">
                 <label>Text:</label>
-                {!! Form::textarea('text', null, array('class' => 'form-control text-green textarea', 'required' => '', 'placeholder' => 'Write About CVCS')) !!}
+                {!! Form::textarea('text', str_replace('<br />', "", $whoweare->text), array('class' => 'form-control text-green textarea', 'required' => '', 'placeholder' => 'আমরা কারা লিখুন')) !!}
               </div>
             <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> Submit</button>
             {!! Form::close() !!}
@@ -117,7 +117,7 @@
             {!! Form::model($membership, ['route' => ['dashboard.updateabouts', $membership->id], 'method' => 'PUT']) !!}
               <div class="form-group">
                 <label>Text:</label>
-                {!! Form::textarea('text', null, array('class' => 'form-control text-green textarea', 'required' => '', 'placeholder' => 'Write About CVCS')) !!}
+                {!! Form::textarea('text', str_replace('<br />', "", $membership->text), array('class' => 'form-control text-green textarea', 'required' => '', 'placeholder' => 'সদস্যপদ সম্পর্কে লিখুন')) !!}
               </div>
             <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> Submit</button>
             {!! Form::close() !!}
@@ -134,7 +134,24 @@
             {!! Form::model($ataglance, ['route' => ['dashboard.updateabouts', $ataglance->id], 'method' => 'PUT']) !!}
               <div class="form-group">
                 <label>Text:</label>
-                {!! Form::textarea('text', null, array('class' => 'form-control text-green textarea', 'required' => '', 'placeholder' => 'Write About CVCS')) !!}
+                {!! Form::textarea('text', str_replace('<br />', "", $ataglance->text), array('class' => 'form-control text-green textarea', 'required' => '', 'placeholder' => 'এক নজরে লিখুন')) !!}
+              </div>
+            <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> Submit</button>
+            {!! Form::close() !!}
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <div class="box box-success">
+          <div class="box-header with-border text-green">
+            <i class="fa fa-fw fa-file-text-o"></i>
+            <h3 class="box-title">মিশন ও ভিশন</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {!! Form::model($mission, ['route' => ['dashboard.updateabouts', $mission->id], 'method' => 'PUT']) !!}
+              <div class="form-group">
+                <label>Text:</label>
+                {!! Form::textarea('text', str_replace('<br />', "", $mission->text) , array('placeholder' => 'মিশন ও ভিশন লিখুন','class' => 'form-control text-green textarea', 'autocomplete' => 'off')) !!}
               </div>
             <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> Submit</button>
             {!! Form::close() !!}

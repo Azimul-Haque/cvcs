@@ -96,6 +96,7 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">ব্যক্তিগত তথ্য</a></li>
       <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত</a></li>
+      <li class=""><a href="#membership_payment_tab" data-toggle="tab" aria-expanded="false">সদস্যপদ পরিশোধ তথ্য</a></li>
       <li class="pull-right dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
         </a>
@@ -318,6 +319,14 @@
             </table>
           </div>
         </div>
+      </div>
+
+      <div class="tab-pane" id="membership_payment_tab">
+        @if($application->application_payment_receipt != null)
+            <img src="{{ asset('images/receipts/'.$application->application_payment_receipt)}}" alt="Receipt of membership payment {{ $application->name }}" class="img-responsive shadow" style="width: 100%; height: auto;" />
+        @else
+            ফাইল পাওয়া যায়নি!
+        @endif
       </div>
     </div>
     <!-- /.tab-content -->
