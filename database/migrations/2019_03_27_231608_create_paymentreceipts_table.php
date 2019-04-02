@@ -15,7 +15,6 @@ class CreatePaymentreceiptsTable extends Migration
         Schema::create('paymentreceipts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('payment_id')->unsigned();
-            $table->integer('payer_id')->unsigned();
             $table->string('image');
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
             $table->timestamps();
