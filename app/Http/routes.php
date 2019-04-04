@@ -147,13 +147,15 @@ Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpayme
 
 // BULK PAYMENT
 Route::get('/dashboard/member/payment/bulk', ['as'=>'dashboard.memberpaymentbulk','uses'=>'DashboardController@getBulkPaymentPage']);
-Route::get('/dashboard/member/payment/bulk/search/api', ['as'=>'dashboard.searchmemberforbulkpayment','uses'=>'DashboardController@searchMemberForBulkPaymentAPI']);
+Route::get('/dashboard/member/payment/bulk/search/api', ['as'=>'dashboard.searchmembersforbulkpayment','uses'=>'DashboardController@searchMemberForBulkPaymentAPI']);
+Route::get('/dashboard/member/payment/bulk/search/single/member/api/{member_id}', ['as'=>'dashboard.searchmemberforbulkpaymentsingle','uses'=>'DashboardController@searchMemberForBulkPaymentSingleAPI']);
 Route::post('/dashboard/member/payment/bulk', ['as'=>'dashboard.storememberpaymentbulk','uses'=>'DashboardController@storeBulkPayment']);
 
 // PAYMENTS BY ADMIN
 Route::get('/dashboard/members/payments/pending', ['as'=>'dashboard.memberspendingpayments','uses'=>'DashboardController@getMembersPendingPayments']);
 Route::get('/dashboard/members/payments/approved', ['as'=>'dashboard.membersapprovedpayments','uses'=>'DashboardController@getMembersApprovedPayments']);
 Route::patch('/dashboard/members/payments/single/{id}/approve', ['as'=>'dashboard.approvesinglepayment','uses'=>'DashboardController@approveSinglePayment']);
+Route::patch('/dashboard/members/payments/bulk/{id}/approve', ['as'=>'dashboard.approvebulkpayment','uses'=>'DashboardController@approveBulkPayment']);
 
 
 // dashboard routes

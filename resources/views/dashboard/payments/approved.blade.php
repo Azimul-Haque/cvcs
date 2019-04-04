@@ -22,6 +22,7 @@
         <tr>
           <th>পরিশোধকারী</th>
           <th>জমাদানকারী</th>
+          <th>পে স্লিপ</th>
           <th>পেমেন্ট আইডি</th>
           <th>পেমেন্ট স্ট্যাটাস</th>
           <th>পেমেন্ট টাইপ</th>
@@ -41,6 +42,7 @@
           <td>
             <a href="{{ route('dashboard.singlemember', $payment->payee->unique_key) }}">{{ $payment->payee->name_bangla }}</a>
           </td>
+          <td>{{ $payment->pay_slip }}</td>
           <td>{{ $payment->payment_key }}</td>
           <td>
             @if($payment->payment_status == 0)

@@ -29,6 +29,7 @@
           <tr>
             <th>পরিশোধকারী</th>
             <th>জমাদানকারী</th>
+            <th>পে স্লিপ</th>
             <th>পেমেন্ট আইডি</th>
             <th>পেমেন্ট স্ট্যাটাস</th>
             <th>পেমেন্ট টাইপ</th>
@@ -36,18 +37,23 @@
             <th>ব্যাংক</th>
             <th>ব্রাঞ্চ</th>
             <th>সময়কাল</th>
-            <th width="10%">Action</th>
+            <th width="15%">Action</th>
           </tr>
         </thead>
         <tbody>
           @foreach($payments as $payment)
           <tr>
             <td>
-            <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
+              @if(($payment->payment_type == 2) && ($payment->payment_status == 0))
+                একাধিক
+              @else
+                <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
+              @endif
             </td>
             <td>
               <a href="{{ route('dashboard.singlemember', $payment->payee->unique_key) }}">{{ $payment->payee->name_bangla }}</a>
             </td>
+            <td>{{ $payment->pay_slip }}</td>
             <td>{{ $payment->payment_key }}</td>
             <td>
               @if($payment->payment_status == 0)
@@ -68,6 +74,50 @@
             <td>{{ $payment->branch }}</td>
             <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
             <td>
+              @if(($payment->payment_type == 2) && ($payment->payment_status == 0))
+                <button class="btn btn-sm btn-info btn-with-count" data-toggle="modal" data-target="#seeMembersWiseModal{{ $payment->id }}" data-backdrop="static" title="সদস্য অনুযায়ী বিস্তারিত দেখুন"><i class="fa fa-eye"></i></button>
+                <!-- See Memberwise Data Modal -->
+                <!-- See Memberwise Data Modal -->
+                <div class="modal fade" id="seeMembersWiseModal{{ $payment->id }}" role="dialog">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header modal-header-info">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-paperclip"></i> সদস্য অনুযায়ী পরিশোধ</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>সদস্য</th>
+                                <th>সদস্য আইডি</th>
+                                <th>ছবি</th>
+                                <th>পরিমাণ</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach(json_decode($payment->bulk_payment_member_ids) as $member_id => $amount)
+                                <tr>
+                                  <td>{{ $members->where('member_id', $member_id)->first()->name_bangla }}</td>
+                                  <td><big><b>{{ $member_id }}</b></big></td>
+                                  <td><img src="{{ asset('images/users/'.$members->where('member_id', $member_id)->first()->image) }}" class="img-responsive" style="max-height: 70px; width: auto;"></td>
+                                  <td>{{ $amount }}/-</td>
+                                </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- See Memberwise Data Modal -->
+                <!-- See Memberwise Data Modal -->
+              @endif
               <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal{{ $payment->id }}" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-eye"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
               <!-- See Receipts Modal -->
               <!-- See Receipts Modal -->

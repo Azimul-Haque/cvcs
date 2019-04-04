@@ -36,11 +36,15 @@
               </div>
               <div class="form-group">
                 {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
-                {!! Form::text('bank', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
+                {!! Form::text('bank', null, array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
               </div>
               <div class="form-group">
                 {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
-                {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+                {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+              </div>
+              <div class="form-group">
+                {{-- {!! Form::label('pay_slip', 'ব্রাঞ্চের নাম') !!} --}}
+                {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
               </div>
               <div class="form-group">
                   <label>রিসিটের ছবি (সর্বোচ্চ ৫০০ কিলোবাইট)</label>

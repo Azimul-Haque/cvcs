@@ -127,7 +127,7 @@
                         </li>
                         <li class="dropdown panel simple-dropdown">
                             <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
-                                অন্যান্য ▾
+                                কার্যক্রমসমূহ ▾
                             </a>
                             <!-- sub menu single -->
                             <!-- sub menu item  -->
@@ -141,16 +141,16 @@
                                 <li>
                                     <a href="{{ route('index.welfare') }}" class="text-large">ওয়েলফেয়ার</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('index.faq') }}" class="text-large">FAQs</a>
-                                </li>
                             </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('index.faq') }}">FAQs</a>
                         </li>
                         @if(Auth::check())
                         <li class="dropdown panel simple-dropdown">
                             <a href="#nav_auth_user" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
                                 @php
-                                    $nav_user_name = explode(' ', Auth::user()->name);
+                                    $nav_user_name = explode(' ', Auth::user()->name_bangla);
                                     $last_name = array_pop($nav_user_name);
                                 @endphp
                                 {{ $last_name }} ▾

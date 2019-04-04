@@ -783,7 +783,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Thanks. http://cvcsbd.com';
+        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Thanks. https://cvcsbd.com';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -919,10 +919,14 @@ class DashboardController extends Controller
     public function getPaymentPage() 
     {
         $payments = Payment::where('member_id', Auth::user()->member_id)
+                           ->where('is_archieved', 0)
                            ->orderBy('id', 'desc')
                            ->paginate(10);
+        $members = User::all();
+
         return view('dashboard.profile.payment')
-                    ->withPayments($payments);
+                    ->withPayments($payments)
+                    ->withMembers($members);
     }
 
     public function getSelfPaymentPage() 
@@ -937,8 +941,8 @@ class DashboardController extends Controller
             'amount'      =>   'required|integer',
             'bank'        =>   'required',
             'branch'      =>   'required',
+            'pay_slip'    =>   'required',
             'image'       =>   'sometimes|image|max:500'
-
         ));
 
         $payment = new Payment;
@@ -947,6 +951,7 @@ class DashboardController extends Controller
         $payment->amount = $request->amount;
         $payment->bank = $request->bank;
         $payment->branch = $request->branch;
+        $payment->pay_slip = $request->pay_slip;
         $payment->payment_status = 0;
         $payment->payment_type = 1;
         // generate payment_key
@@ -981,7 +986,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Thanks. http://cvcsbd.com';
+        $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Thanks. https://cvcsbd.com';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -1013,12 +1018,96 @@ class DashboardController extends Controller
             'amount'      =>   'required|integer',
             'bank'        =>   'required',
             'branch'      =>   'required',
-            'image'       =>   'sometimes|image|max:500'
+            'pay_slip'    =>   'required',
+            'image1'      =>   'required|image|max:500',
+            'image2'      =>   'sometimes|image|max:500',
+            'image3'      =>   'sometimes|image|max:500'
 
         ));
 
-        dd($request->all());
+        // dd($request->all());
+        $payment = new Payment;
+        $payment->member_id = Auth::user()->member_id;
+        $payment->payer_id = Auth::user()->member_id;
+        $payment->amount = $request->amount;
+        $payment->bank = $request->bank;
+        $payment->branch = $request->branch;
+        $payment->pay_slip = $request->pay_slip;
+        $payment->payment_status = 0;
+        $payment->payment_type = 2; // bulk payment
+        // generate payment_key
+        $payment_key_length = 10;
+        $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+        // generate payment_key
+        $payment->payment_key = $payment_key;
 
+        // storing bulk ids and amounts
+        $amountids = $request->amountids;
+        $amount_id = [];
+        foreach ($amountids as $amountid) {
+            $amount_id[$amountid] = $request['amount'.$amountid];
+        }
+        $payment->bulk_payment_member_ids = json_encode($amount_id);
+
+        $payment->save();
+
+
+
+        // receipt upload
+        for($itrt=1; $itrt<4;$itrt++) {
+            if($request->hasFile('image'.$itrt)) {
+                $receipt      = $request->file('image'.$itrt);
+                $filename   = $payment->member_id . $itrt . '_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
+                $location   = public_path('/images/receipts/'. $filename);
+                Image::make($receipt)->resize(800, 400)->save($location);
+                $paymentreceipt = new Paymentreceipt;
+                $paymentreceipt->payment_id = $payment->id;
+                $paymentreceipt->image = $filename;
+                $paymentreceipt->save();
+            }
+        }
+
+
+        // send sms
+        $mobile_numbers = [];
+        $members = User::whereIn('member_id', $amountids)->get();
+        foreach ($members as $i => $member) {
+            $mobile_number = 0;
+            if(strlen($member->mobile) == 11) {
+                $mobile_number = '88'.$member->mobile;
+            } elseif(strlen($member->mobile) > 11) {
+                if (strpos($member->mobile, '+') !== false) {
+                    $mobile_number = substr($member->mobile,0,1);
+                }
+            }
+            if($mobile_number != 0) {
+              array_push($mobile_numbers, $mobile_number);
+            }
+        }
+        $numbers = implode(",", $mobile_numbers);
+        $url = config('sms.url');
+        $data= array(
+          'username'=>config('sms.username'),
+          'password'=>config('sms.password'),
+          'number'=>"$numbers",
+          'message'=>"Dear User, a payment is submitted against your account. We will notify you further updates. Thanks. https://cvcsbd.com"
+        );
+
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        $smssuccesscount = $p[1];
+
+        if($sendstatus == 1101) {
+            //Session::flash('info', 'gese');
+        } else {
+            //Session::flash('info', 'jayni!');
+        }
         
         Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
         return redirect()->route('dashboard.memberpayment');
@@ -1038,18 +1127,32 @@ class DashboardController extends Controller
         return $response;          
     }
 
+    public function searchMemberForBulkPaymentSingleAPI($member_id)
+    {
+        $response = User::select('name_bangla', 'member_id', 'mobile')
+                        ->where('activation_status', 1)
+                        ->where('member_id', $member_id)
+                        ->first();
+
+        return $response;          
+    }
+
     public function getMembersPendingPayments() 
     {
         $payments = Payment::where('payment_status', 0)
+                           ->where('is_archieved', 0)
                            ->orderBy('id', 'desc')
                            ->paginate(10);
+        $members = User::all();
         return view('dashboard.payments.pending')
-                    ->withPayments($payments);
+                    ->withPayments($payments)
+                    ->withMembers($members);
     }
 
     public function getMembersApprovedPayments() 
     {
         $payments = Payment::where('payment_status', 1)
+                           ->where('is_archieved', 0)
                            ->orderBy('id', 'desc')
                            ->paginate(10);
         return view('dashboard.payments.approved')
@@ -1075,7 +1178,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. http://cvcsbd.com';
+        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. https://cvcsbd.com';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -1095,6 +1198,81 @@ class DashboardController extends Controller
             Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        }
+
+        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        return redirect()->route('dashboard.membersapprovedpayments');
+    }
+
+    public function approveBulkPayment(Request $request, $id) 
+    {
+        $bulkpayment = Payment::find($id);
+
+        foreach(json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+            $payment = new Payment;
+            $payment->member_id = $member_id;
+            $payment->payer_id = $bulkpayment->payer_id;
+            $payment->amount = $amount;
+            $payment->bank = $bulkpayment->bank;
+            $payment->branch = $bulkpayment->branch;
+            $payment->pay_slip = $bulkpayment->pay_slip;
+            $payment->payment_status = 1;
+            $payment->payment_type = 2;
+            $payment->payment_key = $bulkpayment->payment_key;
+            $payment->save();
+
+            // receipt upload
+            if(count($bulkpayment->paymentreceipts) > 0) {
+                foreach($bulkpayment->paymentreceipts as $paymentreceipt) {
+                    $newpaymentreceipt = new Paymentreceipt;
+                    $newpaymentreceipt->payment_id = $payment->id;
+                    $newpaymentreceipt->image = $paymentreceipt->image;
+                    $newpaymentreceipt->save();
+                }
+            }
+        }
+
+        $bulkpayment->is_archieved = 1;
+        $bulkpayment->save();
+
+        // send sms
+        $mobile_numbers = [];
+        foreach(json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+            $member = User::where('member_id', $member_id)->first();
+            $mobile_number = 0;
+            if(strlen($member->mobile) == 11) {
+                $mobile_number = '88'.$member->mobile;
+            } elseif(strlen($member->mobile) > 11) {
+                if (strpos($member->mobile, '+') !== false) {
+                    $mobile_number = substr($member->mobile,0,1);
+                }
+            }
+            if($mobile_number != 0) {
+              array_push($mobile_numbers, $mobile_number);
+            }
+        }
+        $numbers = implode(",", $mobile_numbers);
+        $url = config('sms.url');
+        $data= array(
+          'username'=>config('sms.username'),
+          'password'=>config('sms.password'),
+          'number'=>"$numbers",
+          'message'=>"Dear User, your payment is APPROVED successfully. Please signin to see details. Thanks. https://cvcsbd.com"
+        );
+
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        $smssuccesscount = $p[1];
+
+        if($sendstatus == 1101) {
+            //Session::flash('info', 'gese');
+        } else {
+            //Session::flash('info', 'jayni!');
         }
 
         Session::flash('success', 'অনুমোদন সফল হয়েছে!');

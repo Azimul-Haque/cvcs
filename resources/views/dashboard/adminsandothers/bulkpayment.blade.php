@@ -18,7 +18,7 @@
 @section('content')
   @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'bulkpayer'))
   	<div class="row">
-      {!! Form::open(['route' => 'dashboard.storememberpaymentbulk', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
+      {!! Form::open(['route' => 'dashboard.storememberpaymentbulk', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data', 'id' => 'bulkpaymentform']) !!}
       <div class="col-md-6">
         <div class="box box-primary">
           <div class="box-header with-border text-blue">
@@ -33,11 +33,15 @@
             </div>
             <div class="form-group">
               {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
-              {!! Form::text('bank', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
+              {!! Form::text('bank', null, array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
             </div>
             <div class="form-group">
               {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
-              {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+              {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+            </div>
+            <div class="form-group">
+              {{-- {!! Form::label('pay_slip', 'ব্রাঞ্চের নাম') !!} --}}
+              {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
             </div>
             <label>রিসিটের ছবি (সর্বোচ্চ ৩টি, ৫০০ কিলোবাইট এর মধ্যে প্রতিটি)</label>
             <div class="row">
@@ -46,13 +50,13 @@
                     <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-default btn-file">
-                                Browse <input type="file" id="image" name="image" required="">
+                                Browse <input type="file" id="image1" name="image1" required="">
                             </span>
                         </span>
                         <input type="text" class="form-control text-blue" readonly>
                     </div>
                     <center>
-                      <img src="{{ asset('images/800x500.png')}}" id='img-upload' style="height: 100px; width: auto; padding: 5px;" />
+                      <img src="{{ asset('images/800x500.png')}}" id='img-upload1' style="height: 100px; width: auto; padding: 5px;" />
                     </center>
                 </div>
               </div>
@@ -61,13 +65,13 @@
                     <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-default btn-file">
-                                Browse <input type="file" id="image" name="image">
+                                Browse <input type="file" id="image2" name="image2">
                             </span>
                         </span>
                         <input type="text" class="form-control text-blue" readonly>
                     </div>
                     <center>
-                      <img src="{{ asset('images/800x500.png')}}" id='img-upload' style="height: 100px; width: auto; padding: 5px;" />
+                      <img src="{{ asset('images/800x500.png')}}" id='img-upload2' style="height: 100px; width: auto; padding: 5px;" />
                     </center>
                 </div>
               </div>
@@ -76,13 +80,13 @@
                     <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-default btn-file">
-                                Browse <input type="file" id="image" name="image">
+                                Browse <input type="file" id="image3" name="image3">
                             </span>
                         </span>
                         <input type="text" class="form-control text-blue" readonly>
                     </div>
                     <center>
-                      <img src="{{ asset('images/800x500.png')}}" id='img-upload' style="height: 100px; width: auto; padding: 5px;" />
+                      <img src="{{ asset('images/800x500.png')}}" id='img-upload3' style="height: 100px; width: auto; padding: 5px;" />
                     </center>
                 </div>
               </div>
@@ -169,6 +173,116 @@
       })
     });
   </script>
+
+  <script type="text/javascript">
+    setTimeout(function() {
+      $.ajax({
+          url: '{{ url('/dashboard/member/payment/bulk/search/api') }}',
+          type: 'GET',
+          dataType: 'json', // added data type
+          success: function(items) {
+              // console.log(items);
+              $.each(items, function (i, item) {
+                  $('#member_select').append($('<option>', { 
+                      value: item.name_bangla + "|" + item.member_id + "|" + item.mobile,
+                      text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
+                  }));
+              });
+          }
+      });
+      
+      $('#member_select').select2();
+    }, 1000);
+  </script>
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $("#bulkpaymentform").submit(function(event) {
+          var member_ids_before_submit = $("input[name='amountids[]']")
+                  .map(function(){return $(this).val();}).get();
+          if(member_ids_before_submit.length == 0) {
+            toastr.warning('অন্তত একজন সদস্য নির্বাচন করুন!', 'Warning');
+            event.preventDefault();
+          }
+          console.log(member_ids_before_submit);
+
+          var add_separate_amounts = 0;
+          $('.add_separate_amounts').each(function(){
+              add_separate_amounts += parseFloat(this.value);
+          });
+          console.log(add_separate_amounts);
+          if(add_separate_amounts != $('#amount').val()) {
+            toastr.warning('মোট টাকার পরিমাণ এবং সদস্যদের আলাদা করে দেওয়া টাকার পরিমাণ সমান হওয়া বাঞ্ছনীয়!', 'Warning');
+            event.preventDefault();
+          }
+      });
+      
+    });
+    $(document).ready( function() {
+      $('#add_member_btn').click(function() {
+        var member_select = $('#member_select').val();
+        if(member_select == null) {
+          toastr.warning('সদস্য নির্বাচন করুন!', 'WARNING');
+        } else {
+          // add member to the box
+          var member_data = member_select.split('|');
+          console.log(member_data);
+          $('#member_list').append('<div class="row" id="memberRow'+member_data[1]+'"><div class="col-md-5">'+ member_data[0] +'</div><div class="col-md-5"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data[1]+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data[1]+', amount'+member_data[1]+', '+member_data[1]+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data[1]+'"><hr/></div></div>');
+          $('#membersModal').modal('toggle');
+
+          // append the amountids field
+          // var selected_members = [];
+          // $("input[name='amountids[]']").each(function (){
+          //     selected_members.push($(this).val());
+          // });
+          // $('#member_ids').val(selected_members);
+          // if($('#member_ids').val() == '') {
+          //   toastr.warning('অন্তত একজন সদস্য নির্বাচন করুন!', 'Warning');
+          // } else {
+
+          // }
+
+          // remove item from select options
+          $("#member_select option[value='"+$('#member_select').val()+"']").remove();
+        }
+      });
+
+      
+    });
+
+    function removeMember(idofmemberrow, idofmemberamount, id) {
+      $(idofmemberrow).remove();
+      $(idofmemberamount).removeAttr('required');
+
+      // remove from amountids field, it automatically does actually from the array amountids
+
+      // append the amountids field
+      $.ajax({
+          url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+id,
+          type: 'GET',
+          dataType: 'json', // added data type
+          success: function(item) {
+              // console.log(item);
+              $('#member_select').append($('<option>', { 
+                  value: item.name_bangla + "|" + item.member_id + "|" + item.mobile,
+                  text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
+              }));
+          }
+      });
+      
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
   <script type="text/javascript">
     $(document).ready( function() {
       $(document).on('change', '.btn-file :file', function() {
@@ -186,98 +300,66 @@
               if( log ) alert(log);
           }
       });
-      function readURL(input) {
+      function readURL1(input) {
           if (input.files && input.files[0]) {
               var reader = new FileReader();
               reader.onload = function (e) {
-                  $('#img-upload').attr('src', e.target.result);
+                  $('#img-upload1').attr('src', e.target.result);
               }
               reader.readAsDataURL(input.files[0]);
           }
       }
-      $("#image").change(function(){
-          readURL(this);
+      $("#image1").change(function(){
+          readURL1(this);
           var filesize = parseInt((this.files[0].size)/1024);
           if(filesize > 500) {
-            $("#image").val('');
+            $("#image1").val('');
             toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
               setTimeout(function() {
-                $("#img-upload").attr('src', '{{ asset('images/800x500.png') }}');
+                $("#img-upload1").attr('src', '{{ asset('images/800x500.png') }}');
+              }, 1000);
+          }
+      });
+      function readURL2(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#img-upload2').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#image2").change(function(){
+          readURL2(this);
+          var filesize = parseInt((this.files[0].size)/1024);
+          if(filesize > 500) {
+            $("#image2").val('');
+            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#img-upload2").attr('src', '{{ asset('images/800x500.png') }}');
+              }, 1000);
+          }
+      });
+      function readURL3(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#img-upload3').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#image3").change(function(){
+          readURL3(this);
+          var filesize = parseInt((this.files[0].size)/1024);
+          if(filesize > 500) {
+            $("#image3").val('');
+            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#img-upload3").attr('src', '{{ asset('images/800x500.png') }}');
               }, 1000);
           }
       });
     });
-  </script>
-  <script type="text/javascript">
-    setTimeout(function() {
-      $.ajax({
-          url: '{{ url('/dashboard/member/payment/bulk/search/api') }}',
-          type: 'GET',
-          dataType: 'json', // added data type
-          success: function(items) {
-              // console.log(items);
-              $.each(items, function (i, item) {
-                  $('#member_select').append($('<option>', { 
-                      value: item.name_bangla + "|" + item.member_id,
-                      text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
-                  }));
-              });
-          }
-      });
-      
-      $('#member_select').select2();
-    }, 1000);
-
-  </script>
-  <script type="text/javascript">
-    $(document).ready( function() {
-      $('#add_member_btn').click(function() {
-        var member_select = $('#member_select').val();
-        if(member_select == null) {
-          toastr.warning('সদস্য নির্বাচন করুন!', 'WARNING');
-        } else {
-          // add member to the box
-          var member_data = member_select.split('|');
-          console.log(member_data);
-          $('#member_list').append('<div class="row" id="memberRow'+member_data[1]+'"><div class="col-md-5">'+ member_data[0] +'</div><div class="col-md-5"><input type="number" class="form-control" name="amount'+member_data[1]+'" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data[1]+', amount'+member_data[1]+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data[1]+'"><hr/></div></div>');
-          $('#membersModal').modal('toggle');
-
-          // append the amountids field
-          // var selected_members = [];
-          // $("input[name='amountids[]']").each(function (){
-          //     selected_members.push($(this).val());
-          // });
-          // $('#member_ids').val(selected_members);
-          // if($('#member_ids').val() == '') {
-          //   toastr.warning('অন্তত একজন সদস্য নির্বাচন করুন!', 'Warning');
-          // } else {
-
-          // }
-
-          // remove item from select options
-          // $("#member_select option[value='"+$('#member_select').val()+"']").remove();
-        }
-      });
-
-      
-    });
-
-    function removeMember(idofmemberrow, idofmemberamount) {
-      $(idofmemberrow).remove();
-      $(idofmemberamount).removeAttr('required');
-
-      // remove from amountids field
-      // append the amountids field
-      var selected_members = [];
-      $("input[name='amountids[]']").each(function (){
-          selected_members.push($(this).val());
-      });
-      $('#member_ids').val(selected_members);
-      if($('#member_ids').val() == '') {
-        toastr.warning('অন্তত একজন সদস্য নির্বাচন করুন!', 'Warning');
-      } else {
-
-      }
-    }
   </script>
 @stop
