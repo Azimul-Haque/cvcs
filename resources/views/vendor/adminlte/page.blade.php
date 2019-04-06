@@ -65,23 +65,23 @@
                         <li class="dropdown user user-menu">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             @if((Auth::User()->image != '') && (file_exists(public_path('images/users/'.Auth::User()->image))))
-                              <img src="{{ asset('images/users/'.Auth::User()->image)}}" class="user-image" alt="{{ Auth::User()->name }}'s Photo">
+                              <img src="{{ asset('images/users/'.Auth::User()->image)}}" class="user-image" alt="{{ Auth::User()->name_bangla }}-এর মুখছবি">
                             @else
-                              <img src="{{ asset('images/user.png')}}" class="user-image" alt="{{ Auth::User()->name }}'s Photo">
+                              <img src="{{ asset('images/user.png')}}" class="user-image" alt="{{ Auth::User()->name_bangla }}-এর মুখছবি">
                             @endif
                             
-                            {{ Auth::User()->name }}</a>
+                            {{ Auth::User()->name_bangla }}</a>
                             <ul class="dropdown-menu" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                               <!-- User image -->
                               <li class="user-header">
                                 @if((Auth::User()->image != '') && (file_exists(public_path('images/users/'.Auth::User()->image))))
-                                  <img src="{{ asset('images/users/'.Auth::User()->image)}}" class="img-circle" alt="{{ Auth::User()->name }}'s Photo">
+                                  <img src="{{ asset('images/users/'.Auth::User()->image)}}" class="img-circle" alt="{{ Auth::User()->name_bangla }}-এর মুখছবি">
                                 @else
-                                  <img src="{{ asset('images/user.png') }}" class="img-circle" alt="{{ Auth::User()->name }}'s Photo">
+                                  <img src="{{ asset('images/user.png') }}" class="img-circle" alt="{{ Auth::User()->name_bangla }}-এর মুখছবি">
                                 @endif
                                 <p>
-                                  {{ Auth::User()->name }}
-                                  <small>Member since {{ date('F, Y', strtotime(Auth::User()->created_at)) }}</small>
+                                  {{ Auth::User()->name_bangla }}
+                                  <small>সদস্যপদ প্রাপ্তিঃ {{ date('F, Y', strtotime(Auth::User()->created_at)) }}</small>
                                 </p>
                               </li>
                               <!-- Menu Body -->
@@ -102,17 +102,17 @@
                               <!-- Menu Footer-->
                               <li class="user-footer">
                                 <div class="pull-left">
-                                  <a href="{{ route('dashboard.profile') }}" class="btn btn-default btn-flat">Profile</a>
+                                  <a href="{{ route('dashboard.profile') }}" class="btn btn-default btn-flat">প্রোফাইল</a>
                                 </div>
                                 <div class="pull-right">
                                   @if(config('adminlte.logout_method') == 'GET' || !config('adminlte.logout_method') && version_compare(\Illuminate\Foundation\Application::VERSION, '5.3.0', '<'))
                                       <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" class="btn btn-default btn-flat">
-                                          <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
+                                          <i class="fa fa-fw fa-power-off"></i> লগ আউট
                                       </a>
                                   @else
                                       <a href="#"
                                          onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-default btn-flat">
-                                          <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
+                                          <i class="fa fa-fw fa-power-off"></i> লগ আউট
                                       </a>
                                       <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;" class="btn btn-default btn-flat">
                                           @if(config('adminlte.logout_method'))
