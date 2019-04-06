@@ -64,12 +64,21 @@
                         </li>
                         <li class="dropdown user user-menu">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                            <img src="{{ asset('images/user.png')}}" class="user-image" alt="User Image">
+                            @if((Auth::User()->image != '') && (file_exists(public_path('images/users/'.Auth::User()->image))))
+                              <img src="{{ asset('images/users/'.Auth::User()->image)}}" class="user-image" alt="{{ Auth::User()->name }}'s Photo">
+                            @else
+                              <img src="{{ asset('images/user.png')}}" class="user-image" alt="{{ Auth::User()->name }}'s Photo">
+                            @endif
+                            
                             {{ Auth::User()->name }}</a>
                             <ul class="dropdown-menu" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                               <!-- User image -->
                               <li class="user-header">
-                                <img src="{{ asset('images/user.png') }}" class="img-circle" alt="User Image">
+                                @if((Auth::User()->image != '') && (file_exists(public_path('images/users/'.Auth::User()->image))))
+                                  <img src="{{ asset('images/users/'.Auth::User()->image)}}" class="img-circle" alt="{{ Auth::User()->name }}'s Photo">
+                                @else
+                                  <img src="{{ asset('images/user.png') }}" class="img-circle" alt="{{ Auth::User()->name }}'s Photo">
+                                @endif
                                 <p>
                                   {{ Auth::User()->name }}
                                   <small>Member since {{ date('F, Y', strtotime(Auth::User()->created_at)) }}</small>
