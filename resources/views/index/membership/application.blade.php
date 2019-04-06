@@ -193,7 +193,7 @@
                             </div>
                           </div>
                           <div class="col-md-6">
-                            <div class="form-group ">
+                            <div class="form-group">
                                 <label for="nominee_one_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর *</label>
                                 <input type="text" name="nominee_one_identity_text" id="nominee_one_identity_text" required="">
                             </div>
@@ -201,13 +201,13 @@
                         </div>
                         <div class="row">
                           <div class="col-md-6">
-                            <div class="form-group ">
+                            <div class="form-group">
                                 <label for="nominee_one_relation" class="">সম্পর্ক *</label>
                                 <input type="text" name="nominee_one_relation" id="nominee_one_relation" required="">
                             </div>
                           </div>
                           <div class="col-md-6">
-                            <div class="form-group ">
+                            <div class="form-group">
                                 <label for="nominee_one_percentage" class="">শতকরা হার *</label>
                                 <input type="text" name="nominee_one_percentage" id="nominee_one_percentage" required="">
                             </div>
@@ -215,8 +215,8 @@
                         </div>
                         <div class="row">
                           <div class="col-md-8">
-                              <div class="form-group ">
-                                  <label><strong>নমিনির রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
+                              <div class="form-group">
+                                  <label><strong>নমিনির রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট) *</strong></label>
                                   <input type="file" id="nominee_one_image" name="nominee_one_image" required="">
                               </div>
                           </div>
@@ -227,8 +227,8 @@
 
                         <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০২)</h3>
                         
-                        <div class="form-group ">
-                            <label for="nominee_two_name" class="">নাম (বাংলায়) *</label>
+                        <div class="form-group">
+                            <label for="nominee_two_name" class="">নাম (বাংলায়)</label>
                             <input type="text" name="nominee_two_name" id="nominee_two_name">
                         </div>
                         <div class="row">
@@ -243,29 +243,29 @@
                             </div>
                           </div>
                           <div class="col-md-6">
-                            <div class="form-group ">
-                                <label for="nominee_two_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর *</label>
+                            <div class="form-group">
+                                <label for="nominee_two_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর</label>
                                 <input type="text" name="nominee_two_identity_text" id="nominee_two_identity_text">
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
-                            <div class="form-group ">
-                                <label for="nominee_two_relation" class="">সম্পর্ক *</label>
+                            <div class="form-group">
+                                <label for="nominee_two_relation" class="">সম্পর্ক</label>
                                 <input type="text" name="nominee_two_relation" id="nominee_two_relation">
                             </div>
                           </div>
                           <div class="col-md-6">
-                            <div class="form-group ">
-                                <label for="nominee_two_percentage" class="">শতকরা হার *</label>
+                            <div class="form-group">
+                                <label for="nominee_two_percentage" class="">শতকরা হার</label>
                                 <input type="text" name="nominee_two_percentage" id="nominee_two_percentage">
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-8">
-                              <div class="form-group ">
+                              <div class="form-group">
                                   <label><strong>নমিনির রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
                                   <input type="file" id="nominee_two_image" name="nominee_two_image">
                               </div>
@@ -275,11 +275,34 @@
                           </div>
                         </div>
 
-                        <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত</h3>
+                        <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত (সদস্যপদবাবদ ৫০০০/-)</h3>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              {!! Form::label('application_payment_bank', 'ব্যাংকের নাম *') !!}
+                              {!! Form::text('application_payment_bank', null, array('class' => 'form-control', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              {!! Form::label('application_payment_branch', 'ব্রাঞ্চের নাম *') !!}
+                              {!! Form::text('application_payment_branch', null, array('class' => 'form-control', 'id' => 'application_payment_branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              {!! Form::label('application_payment_pay_slip', 'ব্রাঞ্চের নাম *') !!}
+                              {!! Form::text('application_payment_pay_slip', null, array('class' => 'form-control', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
+                            </div>
+                          </div>
+                          <div class="col-md-6"></div>
+                        </div>
                         <div class="row">
                           <div class="col-md-8">
                               <div class="form-group ">
-                                  <label><strong>৫০০০ টাকা পরিশোধের রিসিট (সর্বোচ্চ ৫০০ কিলোবাইট)</strong></label>
+                                  <label><strong>৫০০০ টাকা পরিশোধের রিসিট (সর্বোচ্চ ৫০০ কিলোবাইট) *</strong></label>
                                   <input type="file" id="application_payment_receipt" name="application_payment_receipt" required="">
                               </div>
                           </div>

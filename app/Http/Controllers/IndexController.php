@@ -240,7 +240,11 @@ class IndexController extends Controller
             'nominee_two_relation'         => 'sometimes|max:255',
             'nominee_two_percentage'       => 'sometimes|max:255',
             'nominee_two_image'            => 'sometimes|image|max:250',
-            'application_payment_receipt'  => 'sometimes|image|max:500',
+
+            'application_payment_bank'     => 'required|max:255',
+            'application_payment_branch'   => 'required|max:255',
+            'application_payment_pay_slip' => 'required|max:255',
+            'application_payment_receipt'  => 'required|image|max:500',
 
             'password'                     => 'required|min:8|same:password_confirmation'
         ));
@@ -303,6 +307,9 @@ class IndexController extends Controller
             $application->nominee_two_image = $filename;
         }
         
+        $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
+        $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
+        $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));
         // application payment receipt's image upload
         if($request->hasFile('application_payment_receipt')) {
             $application_payment_receipt      = $request->file('application_payment_receipt');
@@ -370,12 +377,12 @@ class IndexController extends Controller
     // clear configs, routes and serve
     public function clear()
     {
-        Artisan::call('config:cache');
         // Artisan::call('route:cache');
         Artisan::call('optimize');
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
         Artisan::call('key:generate');
+        Artisan::call('config:cache');
         Session::flush();
         echo 'Config and Route Cached. All Cache Cleared';
     }

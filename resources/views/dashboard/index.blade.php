@@ -18,13 +18,13 @@
 		                  <span class="info-box-text">প্রক্রিয়াধীন পরিশোধ</span>
 		                  <span class="info-box-number">
 		                    ৳ 
-		                    @if(empty($thismonthpending->totalamount))
+		                    @if(empty($totalpending->totalamount))
 		                    0.00
 		                    @else
-		                    {{ $thismonthpending->totalamount }}
+		                    {{ $totalpending->totalamount }}
 		                    @endif
 		                  </span>
-		                  <span class="info-box-text">{{ date('F, Y') }}</span>
+		                  <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
 		                </div>
 		                <!-- /.info-box-content -->
 		            </div>
@@ -37,13 +37,13 @@
 		                  <span class="info-box-text">অনুমোদিত পরিশোধ</span>
 		                  <span class="info-box-number">
 		                    ৳ 
-		                    @if(empty($thismonthapproved->totalamount))
+		                    @if(empty($totalapproved->totalamount))
 		                    0.00
 		                    @else
-		                    {{ $thismonthapproved->totalamount }}
+		                    {{ $totalapproved->totalamount }}
 		                    @endif
 		                  </span>
-		                  <span class="info-box-text">{{ date('F, Y') }}</span>
+		                  <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
 		                </div>
 		                <!-- /.info-box-content -->
 		            </div>

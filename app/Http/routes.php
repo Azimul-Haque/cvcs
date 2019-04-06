@@ -138,13 +138,15 @@ Route::delete('/dashboard/application/{id}/delete/', ['as'=>'dashboard.deleteapp
 
 // MEMBERS
 Route::get('/dashboard/members', ['as'=>'dashboard.members','uses'=>'DashboardController@getMembers']);
-Route::get('/dashboard/member/single/{unique_key}', ['as'=>'dashboard.singlemember','uses'=>'DashboardController@getSignleMember']);
+Route::get('/dashboard/member/single/{unique_key}', ['as'=>'dashboard.singlemember','uses'=>'DashboardController@getSingleMember']);
 
 // ACCOUNT MANAGEMENT AND PAYMENT
 Route::get('/dashboard/profile', ['as'=>'dashboard.profile','uses'=>'DashboardController@getProfile']);
 Route::get('/dashboard/member/payment', ['as'=>'dashboard.memberpayment','uses'=>'DashboardController@getPaymentPage']);
 Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself','uses'=>'DashboardController@getSelfPaymentPage']); 
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);
+
+Route::get('/dashboard/member/transaction/summary', ['as'=>'dashboard.membertransactionsummary','uses'=>'DashboardController@getMemberTransactionSummary']);
 
 // BULK PAYMENT
 Route::get('/dashboard/member/payment/bulk', ['as'=>'dashboard.memberpaymentbulk','uses'=>'DashboardController@getBulkPaymentPage']);

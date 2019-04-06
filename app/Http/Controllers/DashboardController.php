@@ -38,7 +38,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary');
     }
 
     /**
@@ -54,23 +54,25 @@ class DashboardController extends Controller
         // $ataglance = About::where('type', 'ataglance')->get()->first();
         // $membership = About::where('type', 'membership')->get()->first();
         // $basicinfo = Basicinfo::where('id', 1)->first();
-        $thismonthpending = DB::table('payments')
-                                    ->select(DB::raw('SUM(amount) as totalamount'))
-                                    ->where('payment_status', '=', 0)
-                                    ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
-                                    ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-                                    ->first();
-        $thismonthapproved = DB::table('payments')
-                                    ->select(DB::raw('SUM(amount) as totalamount'))
-                                    ->where('payment_status', '=', 1)
-                                    ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
-                                    ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-                                    ->first();
+        $totalpending = DB::table('payments')
+                           ->select(DB::raw('SUM(amount) as totalamount'))
+                           ->where('payment_status', '=', 0)
+                           ->where('is_archieved', '=', 0)
+                           // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+                           // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                           ->first();
+        $totalapproved = DB::table('payments')
+                           ->select(DB::raw('SUM(amount) as totalamount'))
+                           ->where('payment_status', '=', 1)
+                           ->where('is_archieved', '=', 0)
+                           // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+                           // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                           ->first();
 
 
         return view('dashboard.index')
-                    ->withThismonthpending($thismonthpending)
-                    ->withThismonthapproved($thismonthapproved);
+                    ->withTotalpending($totalpending)
+                    ->withTotalapproved($totalapproved);
                     // ->withWhatwedo($whatwedo)
                     // ->withAtaglance($ataglance)
                     // ->withMembership($membership)
@@ -329,22 +331,16 @@ class DashboardController extends Controller
         $committeemember->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
 
         // image upload
-        if($committeemember->image == null) {
-            if($request->hasFile('image')) {
-                $image      = $request->file('image');
-                $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
-                $location   = public_path('/images/committee/'. $filename);
-                Image::make($image)->resize(250, 250)->save($location);
-                $committeemember->image = $filename;
+        if($request->hasFile('image')) {
+            $image_path = public_path('/images/committee/'. $committeemember->image);
+            if(File::exists($image_path)) {
+                File::delete($image_path);
             }
-        } else {
-            if($request->hasFile('image')) {
-                $image      = $request->file('image');
-                $filename   = $committeemember->image;
-                $location   = public_path('/images/committee/'. $filename);
-                Image::make($image)->resize(250, 250)->save($location);
-                $committeemember->image = $filename;
-            }
+            $image      = $request->file('image');
+            $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
+            $location   = public_path('/images/committee/'. $filename);
+            Image::make($image)->resize(250, 250)->save($location);
+            $committeemember->image = $filename;
         }
             
         $committeemember->save();
@@ -767,13 +763,41 @@ class DashboardController extends Controller
         $application = User::find($id);
         $application->activation_status = 1;
 
-        $lastmember = User::orderBy('id', 'desc')
-                          ->where('activation_status', 1)
+        $lastmember = User::where('activation_status', 1)
+                          ->orderBy('id', 'desc')
                           ->first();
-        $lastfivedigits = substr($lastmember->member_id, -5);
+        $lastfivedigits = (int) substr($lastmember->member_id, -5);
 
         $application->member_id = date('Y', strtotime($application->dob)).str_pad(($lastfivedigits+1), 5, '0', STR_PAD_LEFT);;
         $application->save();
+
+        // save the payment!
+        $payment = new Payment;
+        $payment->member_id = $application->member_id;
+        $payment->payer_id = $application->member_id;
+        $payment->amount = 5000; // hard coded
+        $payment->bank =$application->application_payment_bank;
+        $payment->branch = $application->application_payment_branch;
+        $payment->pay_slip = $application->application_payment_pay_slip;
+        $payment->payment_status = 1; // approved
+        $payment->payment_category = 0; // membership payment
+        $payment->payment_type = 1; // single payment
+        // generate payment_key
+        $payment_key_length = 10;
+        $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+        // generate payment_key
+        $payment->payment_key = $payment_key;
+        $payment->save();
+
+        // receipt upload
+        if($application->application_payment_receipt != '') {
+            $paymentreceipt = new Paymentreceipt;
+            $paymentreceipt->payment_id = $payment->id;
+            $paymentreceipt->image = $application->application_payment_receipt;
+            $paymentreceipt->save();
+        }
+        // save the payment!
 
         // send activation SMS ... aro kichu kaaj baki ache...
         // send sms
@@ -887,12 +911,15 @@ class DashboardController extends Controller
         return view('dashboard.membership.members')->withMembers($members);
     }
 
-    public function getSignleMember($unique_key)
+    public function getSingleMember($unique_key)
     {
         $member = User::where('unique_key', $unique_key)->first();
 
+        $members = User::all();
+
         return view('dashboard.membership.singlemember')
-                            ->withMember($member);
+                            ->withMember($member)
+                            ->withMembers($members);
     }
 
     public function getFormMessages() 
@@ -957,7 +984,8 @@ class DashboardController extends Controller
         $payment->branch = $request->branch;
         $payment->pay_slip = $request->pay_slip;
         $payment->payment_status = 0;
-        $payment->payment_type = 1;
+        $payment->payment_category = 1; // monthly payment
+        $payment->payment_type = 1; // single payment
         // generate payment_key
         $payment_key_length = 10;
         $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -1016,6 +1044,31 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.memberpayment');
     }
 
+    public function getMemberTransactionSummary() 
+    {
+        $membertotalpending = DB::table('payments')
+                                ->select(DB::raw('SUM(amount) as totalamount'))
+                                ->where('member_id', Auth::user()->member_id)
+                                ->where('payment_status', 0)
+                                ->where('is_archieved', 0)
+                                // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+                                // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                                ->first();
+
+        $membertotalapproved = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('member_id', Auth::user()->member_id)
+                                 ->where('payment_status', '=', 1)
+                                 ->where('is_archieved', '=', 0)
+                                 // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+                                 // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                                 ->first();
+
+        return view('dashboard.profile.transactionsummary')
+                        ->withMembertotalpending($membertotalpending)
+                        ->withMembertotalapproved($membertotalapproved);
+    }
+
     public function storeBulkPayment(Request $request) 
     {
         $this->validate($request,array(
@@ -1038,6 +1091,7 @@ class DashboardController extends Controller
         $payment->branch = $request->branch;
         $payment->pay_slip = $request->pay_slip;
         $payment->payment_status = 0;
+        $payment->payment_category = 1; // monthly payment
         $payment->payment_type = 2; // bulk payment
         // generate payment_key
         $payment_key_length = 10;
@@ -1220,8 +1274,9 @@ class DashboardController extends Controller
             $payment->bank = $bulkpayment->bank;
             $payment->branch = $bulkpayment->branch;
             $payment->pay_slip = $bulkpayment->pay_slip;
-            $payment->payment_status = 1;
-            $payment->payment_type = 2;
+            $payment->payment_status = 1; // approved
+            $payment->payment_category = 1; // monthly payment
+            $payment->payment_type = 2; // bulk payment
             $payment->payment_key = $bulkpayment->payment_key;
             $payment->save();
 

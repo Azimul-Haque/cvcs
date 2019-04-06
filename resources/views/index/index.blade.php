@@ -108,7 +108,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-sm-10 text-center center-col">
-                    <span class="margin-five no-margin-top display-block letter-spacing-2">স্থাপিত ২০১৯</span>
+                    <span class="margin-five no-margin-top display-block letter-spacing-2">স্থাপিত ২০১৮</span>
                     <h1>কাস্টমস এন্ড ভ্যাট কর্মকর্তা-কর্মচারী সমবায় সমিতি (সিভিসিএস) লিমিটেড</h1>
                     <p class="text-med width-90 center-col margin-seven no-margin-bottom about-us-page-text">
                         {{ $about->text }}

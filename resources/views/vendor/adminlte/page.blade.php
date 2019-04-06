@@ -220,6 +220,12 @@
                             <span>পরিশোধ</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('dashboard/member/transaction/summary') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.membertransactionsummary') }}">
+                            <i class="fa fa-fw fa-bar-chart"></i>
+                            <span>লেনদেন বিবরণ</span>
+                        </a>
+                    </li>
                     @endif
                     
                     @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'bulkpayer'))

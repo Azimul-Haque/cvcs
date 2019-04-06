@@ -80,9 +80,6 @@
                         <li>
                             <a href="{{ route('blogs.index') }}">Blog</a>
                         </li> -->
-                        <li>
-                            <a href="{{ route('index.contact') }}">যোগাযোগ</a>
-                        </li>
                         <li class="dropdown panel simple-dropdown">
                             <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
                                 কার্যক্রমসমূহ ▾
@@ -103,6 +100,9 @@
                         </li>
                         <li>
                             <a href="{{ route('index.faq') }}">FAQs</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('index.contact') }}">যোগাযোগ</a>
                         </li>
                         @if(Auth::check())
                         <li class="dropdown panel simple-dropdown">

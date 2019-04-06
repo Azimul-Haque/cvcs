@@ -52,7 +52,7 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">ব্যক্তিগত তথ্য</a></li>
       <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত</a></li>
-      <li class=""><a href="#membership_payment_tab" data-toggle="tab" aria-expanded="true">পরিশোধ সংক্রান্ত তথ্য</a></li>
+      <li class=""><a href="#membership_payment_tab" data-toggle="tab" aria-expanded="true">সদস্যপদ পরিশোধ তথ্য</a></li>
       <li class="pull-right dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
         </a>
@@ -284,6 +284,27 @@
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="membership_payment_tab">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ব্যাংক</th>
+                <th>ব্রাঞ্চ/ শাখা</th>
+                <th>পে-স্লিপ নম্বর</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ $member->application_payment_bank }}</td>
+                <td>{{ $member->application_payment_branch }}</td>
+                <td>{{ $member->application_payment_pay_slip }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <br/><br/>
+        <span>ব্যাংক পে-স্লিপের ছবিঃ</span>
         @if($member->application_payment_receipt != null)
             <img src="{{ asset('images/receipts/'.$member->application_payment_receipt)}}" alt="Receipt of membership payment {{ $member->name }}" class="img-responsive shadow" style="width: 100%; height: auto;" />
         @else

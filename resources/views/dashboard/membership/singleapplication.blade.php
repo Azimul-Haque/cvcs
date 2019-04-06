@@ -322,6 +322,27 @@
       </div>
 
       <div class="tab-pane" id="membership_payment_tab">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ব্যাংক</th>
+                <th>ব্রাঞ্চ/ শাখা</th>
+                <th>পে-স্লিপ নম্বর</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ $application->application_payment_bank }}</td>
+                <td>{{ $application->application_payment_branch }}</td>
+                <td>{{ $application->application_payment_pay_slip }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <br/><br/>
+        <span>ব্যাংক পে-স্লিপের ছবিঃ</span>
         @if($application->application_payment_receipt != null)
             <img src="{{ asset('images/receipts/'.$application->application_payment_receipt)}}" alt="Receipt of membership payment {{ $application->name }}" class="img-responsive shadow" style="width: 100%; height: auto;" />
         @else

@@ -54,6 +54,9 @@ class CreateUsersTable extends Migration
             $table->string('nominee_two_percentage');
             $table->string('nominee_two_image');
 
+            $table->string('application_payment_bank');
+            $table->string('application_payment_branch');
+            $table->string('application_payment_pay_slip');
             $table->string('application_payment_receipt');
 
             $table->string('password');
