@@ -74,7 +74,6 @@
 </head>
 
 <body>
-
     @extends('partials._nav')
 
     <main style="min-height: 400px;">

@@ -25,7 +25,8 @@ Route::get('/welfare', ['as'=>'index.welfare','uses'=>'IndexController@getWelfar
 Route::get('/faq', ['as'=>'index.faq','uses'=>'IndexController@getFAQ']);
 Route::get('/journey', ['as'=>'index.journey','uses'=>'IndexController@getJourney']);
 Route::get('/constitution', ['as'=>'index.constitution','uses'=>'IndexController@getConstitution']);
-Route::get('/adhoc', ['as'=>'index.adhoc','uses'=>'IndexController@getAdhoc']);
+Route::get('/committee/previous', ['as'=>'index.previouscommittee','uses'=>'IndexController@getPreviousCommittee']);
+Route::get('/committee/current', ['as'=>'index.currentcommittee','uses'=>'IndexController@getCurrentCommittee']);
 Route::get('/news', ['as'=>'index.news','uses'=>'IndexController@getNews']);
 Route::get('/notice', ['as'=>'index.notice','uses'=>'IndexController@getNotice']);
 Route::get('/events', ['as'=>'index.events','uses'=>'IndexController@getEvents']);

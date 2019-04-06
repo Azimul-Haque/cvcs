@@ -47,50 +47,8 @@
                         <li>
                             <a href="{{ route('index.index') }}">হোম</a>
                         </li>
-                        <!-- menu item -->
-                        {{-- <li class="dropdown panel simple-dropdown">
-                            <a href="#about_dropdown" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">আমাদের সম্পর্কে
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul id="about_dropdown" class="dropdown-menu panel-collapse collapse" role="menu">
-                                <li>
-                                    <a href="{{ route('index.journey') }}"><i class="icon-presentation i-plain"></i> Journey of DUIITAA</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('index.constitution') }}"><i class=" icon-book-open i-plain"></i> Constitution</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('index.faq') }}"><i class="icon-search i-plain"></i> FAQ</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li class="dropdown panel simple-dropdown">
-                            <a href="#committee_dropdown" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">Committee
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul id="committee_dropdown" class="dropdown-menu panel-collapse collapse" role="menu">
-                                <li>
-                                    <a href="{{ route('index.adhoc') }}"><i class="icon-strategy i-plain"></i> Ad Hoc Committee</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown panel simple-dropdown">
-                            <a href="#others_dropdown" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">Others
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul id="others_dropdown" class="dropdown-menu panel-collapse collapse" role="menu">
-                                <li>
-                                    <a href="{{ route('index.news') }}"><i class="icon-newspaper i-plain"></i> News</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('index.events') }}"><i class="icon-megaphone i-plain"></i> Events</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('index.gallery') }}"><i class="icon-pictures i-plain"></i> Photo Gallery</a>
-                                </li>
-                            </ul>
-                        </li> --}}
-                        {{-- <li class="dropdown panel simple-dropdown">
                             <a href="#nav_abouts" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
                                 এবাউট ▾
                             </a>
@@ -99,14 +57,14 @@
                                     <a href="{{ route('index.about') }}" class="text-large">সিভিসিএস সম্পর্কে</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('index.mission') }}" class="text-large">মিশন</a>
+                                    <a href="{{ route('index.previouscommittee') }}" class="text-large">পূর্বতন কমিটি</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('index.currentcommittee') }}" class="text-large">বর্তমান কমিটি</a>
                                 </li>
                             </ul>
-                        </li> --}}
-
-                        <li>
-                            <a href="{{ route('index.about') }}">এবাউট</a>
                         </li>
+
                         <li>
                             <a href="{{ route('index.gallery') }}">গ্যালারি</a>
                         </li>

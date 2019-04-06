@@ -17,7 +17,7 @@ use App\Formmessage;
 use App\Payment;
 use App\Paymentreceipt;
 use App\Faq;
-use App\Adhocmember;
+use App\Committee;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -258,8 +258,8 @@ class DashboardController extends Controller
 
     public function getCommittee()
     {
-        $adhocmembers = Adhocmember::orderBy('id', 'desc')->get();
-        return view('dashboard.committee')->withAdhocmembers($adhocmembers);
+        $committeemembers = Committee::orderBy('committee_type', 'desc')->get();
+        return view('dashboard.committee')->withCommitteemembers($committeemembers);
     }
 
     public function storeCommittee(Request $request)
@@ -273,31 +273,33 @@ class DashboardController extends Controller
             'twitter'                   => 'sometimes|max:255',
             'gplus'                     => 'sometimes|max:255',
             'linkedin'                  => 'sometimes|max:255',
-            'image'                     => 'sometimes|image|max:250'
+            'image'                     => 'sometimes|image|max:500',
+            'committee_type'            => 'required'
         ));
 
-        $adhocmember = new Adhocmember();
-        $adhocmember->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
-        $adhocmember->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
-        $adhocmember->phone = htmlspecialchars(preg_replace("/\s+/", " ", $request->phone));
-        $adhocmember->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
-        $adhocmember->fb = htmlspecialchars(preg_replace("/\s+/", " ", $request->fb));
-        $adhocmember->twitter = htmlspecialchars(preg_replace("/\s+/", " ", $request->twitter));
-        $adhocmember->gplus = htmlspecialchars(preg_replace("/\s+/", " ", $request->gplus));
-        $adhocmember->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
+        $committeemember = new Committee();
+        $committeemember->committee_type = $request->committee_type;
+        $committeemember->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
+        $committeemember->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
+        $committeemember->phone = htmlspecialchars(preg_replace("/\s+/", " ", $request->phone));
+        $committeemember->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $committeemember->fb = htmlspecialchars(preg_replace("/\s+/", " ", $request->fb));
+        $committeemember->twitter = htmlspecialchars(preg_replace("/\s+/", " ", $request->twitter));
+        $committeemember->gplus = htmlspecialchars(preg_replace("/\s+/", " ", $request->gplus));
+        $committeemember->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
 
         // image upload
         if($request->hasFile('image')) {
             $image      = $request->file('image');
             $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('/images/committee/adhoc/'. $filename);
+            $location   = public_path('/images/committee/'. $filename);
             Image::make($image)->resize(250, 250)->save($location);
-            $adhocmember->image = $filename;
+            $committeemember->image = $filename;
         }
 
-        $adhocmember->save();
+        $committeemember->save();
         
-        Session::flash('success', 'Saved Successfully!');
+        Session::flash('success', 'সফলভাবে সংরক্ষণ করা হয়েছে!');
         return redirect()->route('dashboard.committee');
     }
 
@@ -311,54 +313,56 @@ class DashboardController extends Controller
             'twitter'                   => 'sometimes|max:255',
             'gplus'                     => 'sometimes|max:255',
             'linkedin'                  => 'sometimes|max:255',
-            'image'                     => 'sometimes|image|max:250'
+            'image'                     => 'sometimes|image|max:250',
+            'committee_type'            => 'required'
         ));
 
-        $adhocmember = Adhocmember::find($id);
-        $adhocmember->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
-        $adhocmember->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
-        $adhocmember->phone = htmlspecialchars(preg_replace("/\s+/", " ", $request->phone));
-        $adhocmember->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
-        $adhocmember->fb = htmlspecialchars(preg_replace("/\s+/", " ", $request->fb));
-        $adhocmember->twitter = htmlspecialchars(preg_replace("/\s+/", " ", $request->twitter));
-        $adhocmember->gplus = htmlspecialchars(preg_replace("/\s+/", " ", $request->gplus));
-        $adhocmember->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
+        $committeemember = Committee::find($id);
+        $committeemember->committee_type = $request->committee_type;
+        $committeemember->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
+        $committeemember->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
+        $committeemember->phone = htmlspecialchars(preg_replace("/\s+/", " ", $request->phone));
+        $committeemember->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $committeemember->fb = htmlspecialchars(preg_replace("/\s+/", " ", $request->fb));
+        $committeemember->twitter = htmlspecialchars(preg_replace("/\s+/", " ", $request->twitter));
+        $committeemember->gplus = htmlspecialchars(preg_replace("/\s+/", " ", $request->gplus));
+        $committeemember->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
 
         // image upload
-        if($adhocmember->image == null) {
+        if($committeemember->image == null) {
             if($request->hasFile('image')) {
                 $image      = $request->file('image');
                 $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
-                $location   = public_path('/images/committee/adhoc/'. $filename);
+                $location   = public_path('/images/committee/'. $filename);
                 Image::make($image)->resize(250, 250)->save($location);
-                $adhocmember->image = $filename;
+                $committeemember->image = $filename;
             }
         } else {
             if($request->hasFile('image')) {
                 $image      = $request->file('image');
-                $filename   = $adhocmember->image;
-                $location   = public_path('/images/committee/adhoc/'. $filename);
+                $filename   = $committeemember->image;
+                $location   = public_path('/images/committee/'. $filename);
                 Image::make($image)->resize(250, 250)->save($location);
-                $adhocmember->image = $filename;
+                $committeemember->image = $filename;
             }
         }
             
-        $adhocmember->save();
+        $committeemember->save();
         
-        Session::flash('success', 'Updated Successfully!');
+        Session::flash('success', 'সফলভাবে হালনাগাদ করা হয়েছে!');
         return redirect()->route('dashboard.committee');
     }
 
     public function deleteCommittee($id)
     {
-        $adhocmember = Adhocmember::find($id);
-        $image_path = public_path('images/committee/adhoc/'. $adhocmember->image);
+        $committeemember = Committee::find($id);
+        $image_path = public_path('images/committee/'. $committeemember->image);
         if(File::exists($image_path)) {
             File::delete($image_path);
         }
-        $adhocmember->delete();
+        $committeemember->delete();
 
-        Session::flash('success', 'Deleted Successfully!');
+        Session::flash('success', 'সফলভাবে মুছে দেওয়া হয়েছে!');
         return redirect()->route('dashboard.committee');
     }
 
@@ -967,7 +971,7 @@ class DashboardController extends Controller
             $receipt      = $request->file('image');
             $filename   = $payment->member_id.'_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
             $location   = public_path('/images/receipts/'. $filename);
-            Image::make($receipt)->resize(800, 400)->save($location);
+            Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
             $paymentreceipt = new Paymentreceipt;
             $paymentreceipt->payment_id = $payment->id;
             $paymentreceipt->image = $filename;
@@ -1060,7 +1064,7 @@ class DashboardController extends Controller
                 $receipt      = $request->file('image'.$itrt);
                 $filename   = $payment->member_id . $itrt . '_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
                 $location   = public_path('/images/receipts/'. $filename);
-                Image::make($receipt)->resize(800, 400)->save($location);
+                Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
                 $paymentreceipt = new Paymentreceipt;
                 $paymentreceipt->payment_id = $payment->id;
                 $paymentreceipt->image = $filename;

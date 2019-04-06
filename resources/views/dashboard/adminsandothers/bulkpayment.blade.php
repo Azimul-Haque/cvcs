@@ -29,7 +29,7 @@
           <div class="box-body">
             <div class="form-group">
               {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'টাকার পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
             </div>
             <div class="form-group">
               {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
@@ -136,7 +136,29 @@
             {{-- {!! Form::hidden('member_ids', null, ['id' => 'member_ids', 'required' => '']) !!} --}}
             <br/><br/>
             <div class="form-group">
-              {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModal" data-backdrop="static" id="previewFormButton"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
+              <!-- Preview Modal -->
+              <!-- Preview Modal -->
+              <div class="modal fade" id="previewFormModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
+                    </div>
+                    <div class="modal-body" id="previewFormModalBody">
+                      
+                    </div>
+                    <div class="modal-footer">
+                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Preview Modal -->
+              <!-- Preview Modal -->
+              
             </div>
           </div>
           <!-- /.box-body -->
@@ -226,7 +248,7 @@
           // add member to the box
           var member_data = member_select.split('|');
           console.log(member_data);
-          $('#member_list').append('<div class="row" id="memberRow'+member_data[1]+'"><div class="col-md-5">'+ member_data[0] +'</div><div class="col-md-5"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data[1]+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data[1]+', amount'+member_data[1]+', '+member_data[1]+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data[1]+'"><hr/></div></div>');
+          $('#member_list').append('<div class="row" id="memberRow'+member_data[1]+'"><div class="col-md-5" id="member_name_preview'+member_data[1]+'">'+ member_data[0] +'</div><div class="col-md-5"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data[1]+'" id="member_amount_preview'+member_data[1]+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data[1]+', amount'+member_data[1]+', '+member_data[1]+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data[1]+'"><hr/></div></div>');
           $('#membersModal').modal('toggle');
 
           // append the amountids field
@@ -270,6 +292,67 @@
       });
       
     }
+
+    $(document).ready(function() {
+      $('#previewFormButton').click(function() {
+        var preview_html = '';
+        preview_html += '<div class="table-responsive">';
+        preview_html += ' <table class="table">';
+        preview_html += '   <thead><tr>';
+        preview_html += '     <th>জমাদানকারী</th>';
+        preview_html += '     <th>মোট টাকার পরিমাণ (৳)</th>';
+        preview_html += '     <th>ব্যাংক</th>';
+        preview_html += '     <th>ব্রাঞ্চ/শাখা</th>';
+        preview_html += '     <th>পে স্লিপ নম্বর</th>';
+        preview_html += '   </tr></thead>';
+        preview_html += '   <tbody><tr>';
+        preview_html += '     <td>{{ Auth::user()->name_bangla }}</td>';
+        preview_html += '     <td>৳ '+ $('#amount').val() +'</td>';
+        preview_html += '     <td>'+ $('#bank').val() +'</td>';
+        preview_html += '     <td>'+ $('#branch').val() +'</td>';
+        preview_html += '     <td>'+ $('#pay_slip').val() +'</td>';
+        preview_html += '   </tr></tbody>';
+        preview_html += '  </table>';
+        preview_html += '</div>';
+
+        
+
+        var selected_members_preview = $("input[name='amountids[]']").map(function(){return $(this).val();}).get();
+
+        if(selected_members_preview.length > 0) {
+          preview_html += '<div class="table-responsive">';
+          preview_html += ' <table class="table">';
+          preview_html += '   <thead><tr>';
+          preview_html += '     <th>সদস্য</th>';
+          preview_html += '     <th>টাকার পরিমাণ (৳)</th>';
+          preview_html += '   </tr></thead><tbody>';
+          
+          selected_members_preview.forEach(function(item) {
+              preview_html += '   <tr>';
+              preview_html += '     <td>' + $('#member_name_preview'+item).text() + '</td>';
+              preview_html += '     <td>৳ ' + $('#member_amount_preview'+item).val() + '</td>';
+              preview_html += '   </tr>';
+          });
+
+          preview_html += '  </tbody></table>';
+          preview_html += '</div>';
+        }
+        
+
+        if(!$('#img-upload1').attr('src').includes('images/800x500.png')) {
+          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload1').attr('src')+ '">';
+        }
+        if(!$('#img-upload2').attr('src').includes('images/800x500.png')) {
+          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload2').attr('src')+ '">';
+        }
+        if(!$('#img-upload3').attr('src').includes('images/800x500.png')) {
+          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload3').attr('src')+ '">';
+        }
+
+        document.getElementById('previewFormModalBody').innerHTML = preview_html;
+
+      })
+    })
   </script>
 
 

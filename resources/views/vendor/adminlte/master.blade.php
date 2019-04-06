@@ -38,6 +38,7 @@
         <link rel="stylesheet" href="//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css">
     @endif
     {!!Html::style('css/dashboardstylesheet.css')!!}
+    {!!Html::style('css/pace.min.css')!!}
     @yield('adminlte_css')
 
     <!--[if lt IE 9]>
@@ -55,6 +56,7 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/pace.min.js') }}"></script>
 
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
@@ -74,5 +76,10 @@
 @include('partials._messages')
 @yield('adminlte_js')
 
+<script>
+ $(document).ajaxStart(function () {
+    Pace.restart()
+ })
+</script>
 </body>
 </html>

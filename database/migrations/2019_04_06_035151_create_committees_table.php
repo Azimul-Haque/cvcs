@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdhocmembersTable extends Migration
+class CreateCommitteesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,9 @@ class CreateAdhocmembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('adhocmembers', function (Blueprint $table) {
+        Schema::create('committees', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('committee_type');
             $table->string('name');
             $table->string('email');
             $table->string('phone');
@@ -22,7 +23,7 @@ class CreateAdhocmembersTable extends Migration
             $table->string('twitter')->nullable();
             $table->string('gplus')->nullable();
             $table->string('linkedin')->nullable();
-            $table->string('image')->nullable();;
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ class CreateAdhocmembersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('adhocmembers');
+        Schema::drop('committees');
     }
 }

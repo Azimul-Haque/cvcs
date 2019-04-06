@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\User;
 use App\Blog;
 use App\Category;
-use App\Adhocmember;
+use App\Committee;
 use App\About;
 use App\Slider;
 use App\Album;
@@ -107,8 +107,22 @@ class IndexController extends Controller
 
     public function getAdhoc()
     {
-        $adhocmembers = Adhocmember::orderBy('id', 'asc')->get();
+        $adhocmembers = Committee::orderBy('id', 'asc')->get();
         return view('index.adhoc')->withAdhocmembers($adhocmembers);
+    }
+
+    public function getPreviousCommittee()
+    {
+        $committeemembers = Committee::where('committee_type', 0)
+                                     ->orderBy('id', 'asc')->get();
+        return view('index.previouscommittee')->withCommitteemembers($committeemembers);
+    }
+
+    public function getCurrentCommittee()
+    {
+        $committeemembers = Committee::where('committee_type', 1)
+                                     ->orderBy('id', 'asc')->get();
+        return view('index.currentcommittee')->withCommitteemembers($committeemembers);
     }
 
     public function getNews()
