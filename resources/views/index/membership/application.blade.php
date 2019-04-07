@@ -175,7 +175,7 @@
                           </div>
                         </div>
 
-                        <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০১)</h3>
+                        <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০১) <small>(নমিনি তথ্য নমিনি ০১ এর ক্ষেত্রে বাধ্যতামূলক)</small></h3>
                         
                         <div class="form-group ">
                             <label for="nominee_one_name" class="">নাম (বাংলায়) *</label>
@@ -225,7 +225,7 @@
                           </div>
                         </div>
 
-                        <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০২)</h3>
+                        <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০২) <small>(নমিনি তথ্য নমিনি ০২ এর ক্ষেত্রে ঐচ্ছিক)</small></h3>
                         
                         <div class="form-group">
                             <label for="nominee_two_name" class="">নাম (বাংলায়)</label>
