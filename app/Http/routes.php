@@ -70,6 +70,12 @@ Route::get('/dashboard/admins/create', ['as'=>'dashboard.createadmin','uses'=>'D
 Route::get('/dashboard/admins/search', ['as'=>'dashboard.searchmemberforadmin','uses'=>'DashboardController@searchMemberForAdminAPI']);
 Route::post('/dashboard/admins/addadmin', ['as'=>'dashboard.addadmin','uses'=>'DashboardController@addAdmin']);
 Route::patch('/dashboard/admins/removeadmin/{id}', ['as'=>'dashboard.removeadmin','uses'=>'DashboardController@removeAdmin']);
+Route::get('/dashboard/donors', ['as'=>'dashboard.donors','uses'=>'DashboardController@getDonors']);
+Route::post('/dashboard/donors/store', ['as'=>'dashboard.storedonor','uses'=>'DashboardController@storeDonor']);
+Route::put('/dashboard/donors/update/{id}', ['as'=>'dashboard.updatedonor','uses'=>'DashboardController@updateDonor']);
+Route::get('/dashboard/branches', ['as'=>'dashboard.branches','uses'=>'DashboardController@getBranches']);
+Route::post('/dashboard/branches/store', ['as'=>'dashboard.storebranch','uses'=>'DashboardController@storeBranch']);
+Route::put('/dashboard/branches/update/{id}', ['as'=>'dashboard.updatebranch','uses'=>'DashboardController@updateBranch']);
 
 Route::get('/dashboard/bulk/payers', ['as'=>'dashboard.bulkpayers','uses'=>'DashboardController@getBulkPayers']);
 Route::get('/dashboard/bulk/payers/create', ['as'=>'dashboard.createbulkpayer','uses'=>'DashboardController@getCreateBulkPayer']);
@@ -147,6 +153,7 @@ Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);
 
 Route::get('/dashboard/member/transaction/summary', ['as'=>'dashboard.membertransactionsummary','uses'=>'DashboardController@getMemberTransactionSummary']);
+Route::get('/dashboard/member/user/manual', ['as'=>'dashboard.memberusermanual','uses'=>'DashboardController@getMemberUserManual']);
 
 // BULK PAYMENT
 Route::get('/dashboard/member/payment/bulk', ['as'=>'dashboard.memberpaymentbulk','uses'=>'DashboardController@getBulkPaymentPage']);

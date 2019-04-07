@@ -166,6 +166,8 @@
                       </ul>
                     </li>
                     @endif
+                    <li class="{{ Request::is('dashboard/donors') ? 'active' : '' }}"><a href="{{ route('dashboard.donors') }}"><i class="fa fa-trophy"></i> ডোনার তালিকা</a></li>
+                    <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol"></i> ব্রাঞ্চ তালিকা</a></li>
                     <li class="header">হোমপেইজ কাস্টমাইজেশন</li>
                     <li class="{{ Request::is('dashboard/committee') ? 'active menu-open' : '' }} {{ Request::is('dashboard/abouts') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/events') ? 'active menu-open' : '' }} {{ Request::is('dashboard/notice') ? 'active menu-open' : '' }} {{ Request::is('dashboard/form/messages') ? 'active menu-open' : '' }} {{ Request::is('dashboard/slider') ? 'active menu-open' : '' }} {{ Request::is('dashboard/faq') ? 'active menu-open' : '' }} treeview">
                       <a href="#">
@@ -233,6 +235,12 @@
                         <a href="{{ route('dashboard.membertransactionsummary') }}">
                             <i class="fa fa-fw fa-bar-chart"></i>
                             <span>লেনদেন বিবরণ</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('dashboard/member/user/manual') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.memberusermanual') }}">
+                            <i class="fa fa-fw fa-umbrella"></i>
+                            <span>ব্যবহার বিধি</span>
                         </a>
                     </li>
                     @endif

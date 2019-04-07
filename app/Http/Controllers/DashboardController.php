@@ -18,6 +18,8 @@ use App\Payment;
 use App\Paymentreceipt;
 use App\Faq;
 use App\Committee;
+use App\Donor;
+use App\Branch;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -194,6 +196,98 @@ class DashboardController extends Controller
 
         Session::flash('success', 'সফলভাবে একাধিক পরিশোধকারী থেকে অব্যহতি দেওয়া হয়েছে!');
         return redirect()->route('dashboard.bulkpayers');          
+    }
+
+    public function getDonors()
+    {
+        $donors = Donor::orderBy('id', 'desc')->paginate(10);
+
+        return view('dashboard.adminsandothers.donors')
+                    ->withDonors($donors);
+    }
+
+    public function storeDonor(Request $request)
+    {
+        $this->validate($request,array(
+            'name'    => 'required|max:255',
+            'address' => 'required|max:255',
+            'email'   => 'required|max:255',
+            'phone'   => 'required|max:255'
+        ));
+
+        $donor = new Donor;
+        $donor->name = $request->name;
+        $donor->address = $request->address;
+        $donor->email = $request->email;
+        $donor->phone = $request->phone;
+        $donor->save();
+
+        Session::flash('success', 'সফলভাবে Donor (দাতা) সংরক্ষন হয়েছে!');
+        return redirect()->route('dashboard.donors');
+    }
+
+    public function updateDonor(Request $request, $id)
+    {
+        $this->validate($request,array(
+            'name'    => 'required|max:255',
+            'address' => 'required|max:255',
+            'email'   => 'required|max:255',
+            'phone'   => 'required|max:255'
+        ));
+
+        $donor = Donor::find($id);
+        $donor->name = $request->name;
+        $donor->address = $request->address;
+        $donor->email = $request->email;
+        $donor->phone = $request->phone;
+        $donor->save();
+
+        Session::flash('success', 'সফলভাবে Donor (দাতা) হালনাগাদ হয়েছে!');
+        return redirect()->route('dashboard.donors');
+    }
+
+    public function getBranches()
+    {
+        $branches = Branch::orderBy('id', 'desc')->paginate(10);
+
+        return view('dashboard.adminsandothers.branches')
+                    ->withBranches($branches);
+    }
+
+    public function storeBranch(Request $request)
+    {
+        $this->validate($request,array(
+            'name'    => 'required|max:255',
+            'address' => 'required|max:255',
+            'phone'   => 'required|max:255'
+        ));
+
+        $branch = new Branch;
+        $branch->name = $request->name;
+        $branch->address = $request->address;
+        $branch->phone = $request->phone;
+        $branch->save();
+
+        Session::flash('success', 'সফলভাবে ব্রাঞ্চ সংরক্ষন হয়েছে!');
+        return redirect()->route('dashboard.branches');
+    }
+
+    public function updateBranch(Request $request, $id)
+    {
+        $this->validate($request,array(
+            'name'    => 'required|max:255',
+            'address' => 'required|max:255',
+            'phone'   => 'required|max:255'
+        ));
+
+        $branch = Branch::find($id);
+        $branch->name = $request->name;
+        $branch->address = $request->address;
+        $branch->phone = $request->phone;
+        $branch->save();
+
+        Session::flash('success', 'সফলভাবে ব্রাঞ্চ হালনাগাদ হয়েছে!');
+        return redirect()->route('dashboard.branches');
     }
 
 
@@ -1070,6 +1164,11 @@ class DashboardController extends Controller
         return view('dashboard.profile.transactionsummary')
                         ->withMembertotalpending($membertotalpending)
                         ->withMembertotalapproved($membertotalapproved);
+    }
+
+    public function getMemberUserManual() 
+    {
+        return view('dashboard.profile.usermanual');
     }
 
     public function storeBulkPayment(Request $request) 

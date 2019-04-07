@@ -7,7 +7,7 @@
                     <img alt="" src="{{ asset('images/custom.png') }}" class="logo" style="max-height: 60px;" />
                 </a>
                 <a class="logo-dark" href="{{ route('index.index') }}">
-                    <img alt="" src="{{ asset('images/custom.png') }}" class="logo" style="max-height: 60px;" /> {{-- kaaj ta korte hobe --}}
+                    <img alt="" src="{{ asset('images/custom_dark.png') }}" class="logo" style="max-height: 60px;" /> {{-- kaaj ta korte hobe --}}
                 </a>
             </div>
             <!-- end logo -->

@@ -67,7 +67,7 @@
                   <div class="modal-footer">
                     {!! Form::model($bulkpayer, ['route' => ['dashboard.removebulkpayer', $bulkpayer->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
                         {!! Form::submit('অব্যহতি দিন', array('class' => 'btn btn-danger')) !!}
-                        <button type="button" class="btn btn-default" data-dismiss="modal">দিরে যান</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                     {!! Form::close() !!}
                   </div>
                 </div>

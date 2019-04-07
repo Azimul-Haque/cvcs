@@ -3,7 +3,7 @@
 @section('title', 'CVCS | লেনদেন বিবরণ')
 
 @section('content_header')
-    <h1><i class="fa fa-pic"></i> লেনদেন বিবরণ</h1>
+    <h1><i class="fa fa-bar-chart"></i> লেনদেন বিবরণ</h1>
 @stop
 
 @section('content')
