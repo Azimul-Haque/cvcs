@@ -12,7 +12,7 @@
     		<div class="row">
     			<div class="col-md-6">
     				<div class="info-box">
-		                <span class="info-box-icon bg-green"><span class="glyphicon glyphicon-hourglass"></span></span>
+		                <span class="info-box-icon bg-green"><span class="ion ion-clock"></span></span>
 
 		                <div class="info-box-content">
 		                  <span class="info-box-text">প্রক্রিয়াধীন পরিশোধ</span>
@@ -31,7 +31,7 @@
     			</div>
     			<div class="col-md-6">
     				<div class="info-box">
-		                <span class="info-box-icon bg-red"><span class="glyphicon glyphicon-saved"></span></span>
+		                <span class="info-box-icon bg-red"><span class="ion ion-android-checkbox-outline"></span></span>
 
 		                <div class="info-box-content">
 		                  <span class="info-box-text">অনুমোদিত পরিশোধ</span>
@@ -57,7 +57,7 @@
     	<div class="col-md-6">
     		<h4>মাসিক পরিশোধের হিসাব</h4>
     		<div class="table-responsive">
-    			<table class="table">
+    			<table class="table"> {{-- eitaake datatable e convert krote hobe --}}
     				<thead>
     					<tr>
     						<th>মাস</th>

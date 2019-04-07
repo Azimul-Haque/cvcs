@@ -68,11 +68,14 @@ class DashboardController extends Controller
                            // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
                            // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
                            ->first();
-
+        $registeredmember = User::where('activation_status', 1)->count();                
+        $successfullpayments = payment::where('payment_status', 1)->count();                
 
         return view('dashboard.index')
                     ->withTotalpending($totalpending)
-                    ->withTotalapproved($totalapproved);
+                    ->withTotalapproved($totalapproved)
+                    ->withRegisteredmember($registeredmember)
+                    ->withSuccessfullpayments($successfullpayments);
                     // ->withWhatwedo($whatwedo)
                     // ->withAtaglance($ataglance)
                     // ->withMembership($membership)
