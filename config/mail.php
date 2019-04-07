@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'cvcsbd2019@gmail.com', 'name' => 'CVCS-BD'],
+    'from' => ['address' => 'support@cvcsbd.com', 'name' => 'CVCS-BD'],
 
     /*
     |--------------------------------------------------------------------------
