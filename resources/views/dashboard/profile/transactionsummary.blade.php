@@ -81,7 +81,7 @@
     				@endphp
 
     				{{-- main calculation happens here --}}
-    				@if(date('Y-m-d H:i:s', strtotime($thismonth)) < $today)
+    				{{-- @if(date('Y-m-d H:i:s', strtotime($thismonth)) < $today) --}}
     					<tr>
     						<td>{{ date('F Y', strtotime($thismonth)) }}</td>
     						<td>
@@ -100,7 +100,7 @@
     					@php
     						$approvedcash = $approvedcash - 500;
     					@endphp
-    				@endif
+    				{{-- @endif --}}
 
     			@endfor
     		@endfor
