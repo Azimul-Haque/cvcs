@@ -18,6 +18,10 @@ class User extends Authenticatable
       return $this->hasMany('App\Payment', 'payer_id', 'member_id');
     }
 
+    public function passwordresetsms() {
+      return $this->hasMany('App\Passwordresetsms');
+    }
+
     protected $fillable = [
         'name', 'email', 'password',
     ];

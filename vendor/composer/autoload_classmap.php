@@ -21,6 +21,7 @@ return array(
     'CreateLikesTable' => $baseDir . '/database/migrations/2018_10_26_095608_create_likes_table.php',
     'CreateNoticesTable' => $baseDir . '/database/migrations/2019_03_24_224557_create_notices_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreatePasswordresetsmsTable' => $baseDir . '/database/migrations/2019_04_08_035345_create_passwordresetsms_table.php',
     'CreatePaymentreceiptsTable' => $baseDir . '/database/migrations/2019_03_27_231608_create_paymentreceipts_table.php',
     'CreatePaymentsTable' => $baseDir . '/database/migrations/2019_03_27_230252_create_payments_table.php',
     'CreateSlidersTable' => $baseDir . '/database/migrations/2019_03_30_210915_create_sliders_table.php',

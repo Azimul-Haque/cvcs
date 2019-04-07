@@ -56,7 +56,7 @@
                 </div>
             </form>
             <div class="auth-links">
-                <a href="{{ url(config('adminlte.password_reset_url', 'password/reset')) }}"
+                <a href="{{ route('index.mobilereset') }}{{-- {{ url(config('adminlte.password_reset_url', 'password/reset')) }} --}}"
                    class="text-center"
                 >পাসওয়ার্ড মনে নেই? {{-- {{ trans('adminlte::adminlte.i_forgot_my_password') }} --}}</a>
                 <br>

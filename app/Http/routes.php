@@ -57,6 +57,15 @@ Route::get('/archive/{date}',['as' => 'blog.monthwise', 'uses' => 'BlogControlle
 
 Route::auth();
 
+// sms password reset
+Route::get('/reset/password/mobile', ['as'=>'index.mobilereset','uses'=>'IndexController@getMobileReset']);
+Route::post('/reset/password/mobile/send', ['as'=>'index.sendpasswordresetsms','uses'=>'IndexController@sendPasswordResetSMS']);
+Route::get('/reset/password/mobile/verify/{mobile}/page', ['as'=>'index.mobileresetverifypage','uses'=>'IndexController@getMobileResetVerifyPage']);
+Route::post('/reset/password/mobile/verify/code', ['as'=>'index.mobileresetverifycode','uses'=>'IndexController@mobileResetVerifyCode']);
+Route::get('/reset/password/mobile/verified/{mobile}/{security_code}', ['as'=>'index.getpasswordresetpage','uses'=>'IndexController@getPasswordResetPage']);
+Route::post('/reset/password/mobile/update', ['as'=>'index.updatepasswordmobileverified','uses'=>'IndexController@updatePasswordMobileVerified']);
+// sms password reset
+
 // dashboard routes
 // dashboard routes
 Route::resource('users','UserController');

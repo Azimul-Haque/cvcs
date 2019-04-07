@@ -16,6 +16,7 @@ use App\Event;
 use App\Notice;
 use App\Faq;
 use App\Formmessage;
+use App\Passwordresetsms;
 
 use Carbon\Carbon;
 use DB;
@@ -25,6 +26,7 @@ use Image;
 use File;
 use Session;
 use Artisan;
+use Redirect;
 
 class IndexController extends Controller
 {
@@ -371,6 +373,138 @@ class IndexController extends Controller
         } else {
             return redirect()->route('index.contact')->with('warning', 'যোগফল ভুল হয়েছে! আবার চেষ্টা করুন।')->withInput();
         }
+    }
+
+    public function getMobileReset() 
+    {
+        return view('auth.sms.sendpage');
+    }
+
+    public function sendPasswordResetSMS(Request $request) 
+    {
+        $this->validate($request,array(
+            'mobile' => 'required|max:11'
+        ));
+
+        $member = User::where('mobile', $request->mobile)->first();
+        if($member) {
+            $security_token = new Passwordresetsms;
+            $security_token->user_id = $member->id;
+            $security_token->mobile = $request->mobile;
+
+            // generate securuty_code
+            $securuty_code_length = 6;
+            $pool = '0123456789';
+            $securuty_code = substr(str_shuffle(str_repeat($pool, 6)), 0, $securuty_code_length);
+            // generate securuty_code
+
+            $security_token->security_code = $securuty_code;
+            $security_token->is_used = 0;
+            $security_token->save();
+
+            // send sms
+            $mobile_number = 0;
+            if(strlen($request->mobile) == 11) {
+                $mobile_number = '88'.$request->mobile;
+            } elseif(strlen($request->mobile) > 11) {
+                if (strpos($request->mobile, '+') !== false) {
+                    $mobile_number = substr($request->mobile,0,1);
+                }
+            }
+            $url = config('sms.url');
+            $number = $mobile_number;
+            $text = $securuty_code . ' is your password reset security code. Thanks, https://cvcsbd.com';
+            $data= array(
+                'username'=>config('sms.username'),
+                'password'=>config('sms.password'),
+                'number'=>"$number",
+                'message'=>"$text"
+            );
+            // initialize send status
+            $ch = curl_init(); // Initialize cURL
+            curl_setopt($ch, CURLOPT_URL,$url);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $smsresult = curl_exec($ch);
+            $p = explode("|",$smsresult);
+            $sendstatus = $p[0];
+            // send sms
+            if($sendstatus == 1101) {
+                Session::flash('info', $request->mobile . '-নম্বরে সিকিউরিটি কোড পাঠানো হয়েছে!');
+            } else {
+                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন। ধন্যবাদ।');
+            }
+            return redirect()->route('index.mobileresetverifypage', $request->mobile);
+        } else {
+            Session::flash('warning', 'এই নম্বরের কোন সদস্য পাওয়া যায়নি!');
+            return redirect()->route('index.mobilereset');
+        }
+    }
+
+    public function getMobileResetVerifyPage($mobile) 
+    {
+        return view('auth.sms.verifypage')->withMobile($mobile);
+    }
+
+    public function mobileResetVerifyCode(Request $request) 
+    {
+        $this->validate($request,array(
+            'mobile'         => 'required|max:11',
+            'security_code'  => 'required',
+        ));
+
+        $security_token = Passwordresetsms::where('mobile', $request->mobile)
+                                          ->where('security_code', $request->security_code)
+                                          ->first();
+        if($security_token) {
+            if($security_token->is_used == 1) {
+                Session::flash('warning', 'সিকিউরিটি কোডটি ব্যবহৃত/ অকার্যকর হয়ে গেছে! আবার সিকিউরিটি কোড জেনারেট করুন।');
+                return redirect()->route('index.mobilereset');
+            } else {
+                return redirect()->route('index.getpasswordresetpage', [$security_token->mobile, $security_token->security_code]);
+            }
+        } else {
+            Session::flash('warning', 'ভুল সিকিউরিটি কোড! আবার চেষ্টা করুন।');
+            return redirect()->route('index.mobileresetverifypage', $request->mobile);
+        }
+    }
+
+    public function getPasswordResetPage($mobile, $security_code) 
+    {
+        $security_token = Passwordresetsms::where('mobile', $mobile)
+                                          ->where('security_code', $security_code)
+                                          ->where('is_used', 0)
+                                          ->first();
+        if($security_token) {
+            return view('auth.sms.passwordresetpage')->withSecuritytoken($security_token);
+        } else {
+            Session::flash('warning', 'সিকিউরিটি কোডটি ব্যবহৃত/ অকার্যকর হয়ে গেছে! আবার সিকিউরিটি কোড জেনারেট করুন।');
+            return redirect()->route('index.mobilereset');
+        }
+        
+    }
+
+    public function updatePasswordMobileVerified(Request $request) 
+    {
+        $this->validate($request,array(
+            'user_id'               => 'required',
+            'mobile'                => 'required|max:11',
+            'security_code'         => 'required',
+            'email'                 => 'required',
+            'password'              => 'required|min:8|same:password_confirmation'
+        ));
+
+        $user = User::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        $security_token = Passwordresetsms::where('mobile', $request->mobile)
+                                          ->where('security_code', $request->security_code)
+                                          ->first();
+        $security_token->is_used = 1;
+        $security_token->save();
+        Session::flash('success', 'পাসওয়ার্ড সফলভাবে হালনাগাদ করা হয়েছে! লগইন করুন।');
+        return Redirect::to(url('login'));
     }
 
 
