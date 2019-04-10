@@ -6,9 +6,17 @@
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/DateTimePicker.css') }}">
   {!!Html::style('css/parsley.css')!!}
+  <style type="text/css">
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+  </style>
 @stop
 
 @section('content')
+  <form action="{{ route('index.storeapplication') }}" method="post" enctype='multipart/form-data' data-parsley-validate="">
     <section class="wow fadeIn bg-gray">
         <div class="container">
             <div class="row">
@@ -23,7 +31,7 @@
                     <li><i class="fa fa-check-square-o"></i> মেম্বারশিপ ফি বাবদ ৫০০০ টাকার ব্যাংক ডিপোজিট রিসিটটির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
                     <li><i class="fa fa-check-square-o"></i> <b>মোবাইল নম্বর</b> ঘরে ১১ ডিজিটের সক্রিয় একটি নম্বর দিন; এ নম্বরেই যাবতীয় তথ্য SMS আকারে পাঠানো হবে</li>
                   </ul>
-                  <button class="btn highlight-button-royal-blue btn-bg no-margin-right" id="presubmission_info">ঠিক আছে</button>
+                  <button type="button" class="btn highlight-button-royal-blue btn-bg no-margin-right" id="presubmission_info">ঠিক আছে</button>
                 </div>
                 <div class="col-md-10 col-sm-10 col-xs-11 center-col login-box xs-margin-top-twelve">
                     <h3 class="text-center">
@@ -34,20 +42,20 @@
                     <h5 class="text-center">নিবন্ধন নং - ০০০৩১</h5>
                     <h2 class="text-center">মেম্বারশিপ ফরম</h2>
                     <div class="separator-line bg-yellow margin-four"></div>
-                    <form action="{{ route('index.storeapplication') }}" method="post" enctype='multipart/form-data' data-parsley-validate="">
+                   
                         {!! csrf_field() !!}
                         <h3 class="agency-title margin-two">আবেদনকারীর ব্যক্তিগত তথ্যঃ</h3>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="name_bangla" class="">আবেদনকারীর নাম (বাংলায়) *</label>
-                                <input type="text" name="name_bangla" id="name_bangla" required="" data-parsley-required-message="আবেদনকারীর নাম বাংলায় লিখুন" data-parsley-pattern="[^a-zA-Z0-9]+" data-parsley-pattern-message="*বাংলা বর্ণমালা* প্রদান করুন">
+                                <input type="text" name="name_bangla" id="name_bangla" required="" data-parsley-required-message="আবেদনকারীর নাম বাংলায় লিখুন" data-parsley-pattern="[^a-zA-Z0-9]+" data-parsley-pattern-message="*বাংলা বর্ণমালা* প্রদান করুন" placeholder="বাংলা বর্ণমালায় নাম লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="name" class="">আবেদনকারীর নাম (ইংরেজিতে) *</label>
-                                <input type="text" name="name" id="name" required="">
+                                <input type="text" name="name" id="name" required="" placeholder="ইংরেজি বর্ণমালায় নাম লিখুন">
                             </div>
                           </div>
                         </div>
@@ -55,13 +63,13 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="nid" class="">জাতীয় পরিচয়পত্র নম্বর *</label>
-                                <input type="text" name="nid" id="nid" required="">
+                                <input type="number" maxlength="17" name="nid" id="nid" required="" placeholder="ইংরেজি অংকে পরিচয়পত্র নম্বরটি লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="dob" class="">জন্মতারিখ *</label>
-                                <input type="text" name="dob" id="dob" data-field="date"  autocomplete="off"  required="">
+                                <input type="text" name="dob" id="dob" data-field="date"  autocomplete="off"  required="" placeholder="জন্মতারিখ নির্ধারণ করুন">
                                 
                             </div>
                           </div>
@@ -81,7 +89,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="spouse" class="">স্বামী/স্ত্রীর নাম *</label>
-                                <input type="text" name="spouse" id="spouse" required="">
+                                <input type="text" name="spouse" id="spouse" required="" placeholder="স্বামী/স্ত্রীর নাম ইংরেজিতে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -89,13 +97,13 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="spouse_profession" class="">স্বামী/স্ত্রীর পেশা *</label>
-                                <input type="text" name="spouse_profession" id="spouse_profession" required="">
+                                <input type="text" name="spouse_profession" id="spouse_profession" required="" placeholder="স্বামী/স্ত্রীর পেশা ইংরেজিতে লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="father" class="">পিতার নাম *</label>
-                                <input type="text" name="father" id="father" required="">
+                                <input type="text" name="father" id="father" required="" placeholder="পিতার নাম ইংরেজিতে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -103,13 +111,13 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="mother" class="">মাতার নাম *</label>
-                                <input type="text" name="mother" id="mother" required="">
+                                <input type="text" name="mother" id="mother" required="" placeholder="মাতার নাম ইংরেজিতে লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="office" class="">আবেদনকারীর দপ্তরের নাম *</label>
-                                <input type="text" name="office" id="office" required="">
+                                <input type="text" name="office" id="office" required="" placeholder="দপ্তরের নাম ইংরেজিতে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -117,35 +125,35 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="profession" class="">আবেদনকারীর পেশা *</label>
-                                <input type="text" name="profession" id="profession" required="">
+                                <input type="text" name="profession" id="profession" required="" placeholder="পেশা ইংরেজিতে লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="designation" class="">আবেদনকারীর পদবি *</label>
-                                <input type="text" name="designation" id="designation" required="">
+                                <input type="text" name="designation" id="designation" required="" placeholder="পদবি ইংরেজিতে লিখুন">
                             </div>
                           </div>
                         </div>
                         <div class="form-group ">
                             <label for="present_address" class="">বর্তমান ঠিকানা</label>
-                            <input type="text" name="present_address" id="present_address" required="">
+                            <input type="text" name="present_address" id="present_address" required="" placeholder="ইংরেজিতে লিখুন">
                         </div>
                         <div class="form-group ">
                             <label for="permanent_address" class="">স্থায়ী ঠিকানা</label>
-                            <input type="text" name="permanent_address" id="permanent_address" required="">
+                            <input type="text" name="permanent_address" id="permanent_address" required="" placeholder="ইংরেজিতে লিখুন">
                         </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="office_telephone" class="">অফিসের টেলিফোন *</label>
-                                <input type="text" name="office_telephone" id="office_telephone" required="">
+                                <input type="text" name="office_telephone" id="office_telephone" required="" placeholder="অফিসের টেলিফোন নম্বর ইংরেজিতে লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="mobile" class="">মোবাইল নম্বর (সক্রিয় নম্বর দিন, এই নম্বরে SMS যাবে) *</label>
-                                <input type="text" name="mobile" id="mobile" required="">
+                                <input type="text" name="mobile" id="mobile" required="" placeholder="ইংরেজি অংকে লিখুন (১১ ডিজিট)">
                             </div>
                           </div>
                         </div>
@@ -153,13 +161,13 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="home_telephone" class="">বাসার টেলিফোন *</label>
-                                <input type="text" name="home_telephone" id="home_telephone" required="">
+                                <input type="text" name="home_telephone" id="home_telephone" required="" placeholder="বাসার টেলিফোন নম্বর ইংরেজিতে লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="email" class="">ইমেইল এড্রেস *</label>
-                                <input type="text" name="email" id="email" required="">
+                                <input type="text" name="email" id="email" autocomplete="off" required="" placeholder="একটি ভ্যালিড ইমেইল এড্রেস লিখুন">
                             </div>
                           </div>
                         </div>
@@ -179,7 +187,7 @@
                         
                         <div class="form-group ">
                             <label for="nominee_one_name" class="">নাম (বাংলায়) *</label>
-                            <input type="text" name="nominee_one_name" id="nominee_one_name" required="">
+                            <input type="text" name="nominee_one_name" id="nominee_one_name" required="" placeholder="বাংলা বর্ণমালায় লিখুন">
                         </div>
                         <div class="row">
                           <div class="col-md-6">
@@ -195,7 +203,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_one_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর *</label>
-                                <input type="text" name="nominee_one_identity_text" id="nominee_one_identity_text" required="">
+                                <input type="number" maxlength="17" name="nominee_one_identity_text" id="nominee_one_identity_text" required="" placeholder="ইংরেজি অংকে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -203,13 +211,13 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_one_relation" class="">সম্পর্ক *</label>
-                                <input type="text" name="nominee_one_relation" id="nominee_one_relation" required="">
+                                <input type="text" name="nominee_one_relation" id="nominee_one_relation" required="" placeholder="সম্পর্ক লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_one_percentage" class="">শতকরা হার *</label>
-                                <input type="text" name="nominee_one_percentage" id="nominee_one_percentage" required="">
+                                <input type="number" min="1" max="100" minlength="1" maxlength="3" name="nominee_one_percentage" id="nominee_one_percentage" required="" placeholder="ইংরেজি অংকে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -229,7 +237,7 @@
                         
                         <div class="form-group">
                             <label for="nominee_two_name" class="">নাম (বাংলায়)</label>
-                            <input type="text" name="nominee_two_name" id="nominee_two_name">
+                            <input type="text" name="nominee_two_name" id="nominee_two_name" placeholder="বাংলা বর্ণমালায় লিখুন">
                         </div>
                         <div class="row">
                           <div class="col-md-6">
@@ -245,7 +253,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_two_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর</label>
-                                <input type="text" name="nominee_two_identity_text" id="nominee_two_identity_text">
+                                <input type="number" maxlength="17" name="nominee_two_identity_text" id="nominee_two_identity_text" placeholder="ইংরেজি অংকে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -253,13 +261,13 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_two_relation" class="">সম্পর্ক</label>
-                                <input type="text" name="nominee_two_relation" id="nominee_two_relation">
+                                <input type="text" name="nominee_two_relation" id="nominee_two_relation" placeholder="সম্পর্ক লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_two_percentage" class="">শতকরা হার</label>
-                                <input type="text" name="nominee_two_percentage" id="nominee_two_percentage">
+                                <input type="number" min="1" max="100" minlength="1" maxlength="3" name="nominee_two_percentage" id="nominee_two_percentage" placeholder="ইংরেজি অংকে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -316,25 +324,55 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="password" class="">একাউন্টের পাসওয়ার্ড</label>
-                                <input type="password" name="password" id="password" required="">
+                                <input type="password" name="password" id="password" autocomplete="off" required="" placeholder="একাউন্টের পাসওয়ার্ড দিন (কমপক্ষে ৮ দৈর্ঘ্যের)">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="password_confirmation" class="">পাসওয়ার্ডটি আবার দিন</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" required="">
+                                <label for="password_confirmation" class="" id="password_confirmation_error">পাসওয়ার্ডটি আবার দিন</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="off" required="" placeholder="পাসওয়ার্ডটি আবার দিন">
                             </div>
                           </div>
                         </div>
-                        
-                        <button class="btn highlight-button-royal-blue btn-bg margin-five no-margin-right" type="submit">আবেদন জমা দিন</button>
-                    </form>
+
+                        <button type="button" class="btn highlight-button-royal-blue btn-bg margin-five no-margin-right" data-toggle="modal" data-target="#submitApplicationModal" data-backdrop="static">আবেদন জমা দিন</button>
                 </div>
 
             </div>
         </div>
     </section>
+
     <div id="dtBox"></div>
+    <!-- Add Notice Modal -->
+    <!-- Add Notice Modal -->
+    <div class="modal fade" id="submitApplicationModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header modal-header-success">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">সদস্যপদ আবেদন দাখিল</h4>
+          </div>
+          <div class="modal-body">
+            <big>আপনি কি নিশ্চিতভাবে আবেদনটি দাখিল করতে চান?</big><br/><br/>
+            <span><b>দাখিল করার পূর্বে...</b></span><br/>
+            <ul>
+              <li><i class="fa fa-check-square-o"></i> প্রতিটি বাধ্যতামূলক (* দেওয়া) ঘর পূরন করেছেন কি না যাচাই করুন</li>
+              <li><i class="fa fa-check-square-o"></i> ছবি ও অন্যান্য ফাইলগুলো ঠিকমতো দিয়েছেন কি না লক্ষ্য করুন</li>
+              <li><i class="fa fa-check-square-o"></i> নম্বর সংক্রান্ত তথ্যগুলো (যেমনঃ মোবাইল নম্বর, পরিচয়পত্র নম্বর, শতকরা হার ইত্যাদি <b>ইংরেজি অংকে (0,1,3,4...) দিয়েছেন কি না যাচাই করুন</b>)</li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+                <button type="submit" class="btn highlight-button-royal-blue btn-bg margin-five no-margin-right" type="submit">আবেদন জমা দিন</button>
+                <button type="button" class="btn highlight-button btn-bg margin-five no-margin-right" data-dismiss="modal">ফিরে যান</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Add Notice Modal -->
+    <!-- Add Notice Modal -->
+
+
+  </form>
 @endsection
 
 @section('js')
@@ -351,106 +389,225 @@
           $("#presubmission_info").click(function() {
               $("#presubmission_div").hide(2000);
           });
+
+          function setDefaultVal(value){
+            if(value.length == 0) {
+              return 0;
+            } else {
+              return value;
+            }
+          } 
+          $('#nominee_one_percentage').keyup(function() {
+            var percentagesum1 = parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
+            if(percentagesum1 != 100) {
+              toastr.warning('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+            } else {
+              toastr.success('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+            }
+          })
+
+          $('#nominee_two_percentage').keyup(function() {
+            var percentagesum2 =  parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
+            if(percentagesum2 != 100) {
+              toastr.warning('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+            } else {
+              toastr.success('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+            }
+          })
+
+          $('#password_confirmation').keyup(function() {
+            if($('#password_confirmation').val() != $('#password').val()) {
+              $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>')
+            } else {
+              $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #008000;"><b>✓ মিলেছে</b></span>')
+            }
+          })
+      });
+
+      // disabling the number scrolling...
+      $(function(){
+        $(':input[type=number]').on('mousewheel',function(e){ $(this).blur(); });
       });
   </script>
   <script type="text/javascript">
-      $(document).ready( function() {
-        $(document).on('change', '.btn-file :file', function() {
-          var input = $(this),
-              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-          input.trigger('fileselect', [label]);
-        });
+    var _URL = window.URL || window.webkitURL;
+    $(document).ready( function() {
+      $(document).on('change', '.btn-file :file', function() {
+        var input = $(this),
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [label]);
+      });
 
-        $('.btn-file :file').on('fileselect', function(event, label) {
-            var input = $(this).parents('.input-group').find(':text'),
-                log = label;
-            if( input.length ) {
-                input.val(log);
-            } else {
-                if( log ) alert(log);
-            }
-        });
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#img-upload').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#image").change(function(){
-            readURL(this);
-            var filesize = parseInt((this.files[0].size)/1024);
+      $('.btn-file :file').on('fileselect', function(event, label) {
+          var input = $(this).parents('.input-group').find(':text'),
+              log = label;
+          if( input.length ) {
+              input.val(log);
+          } else {
+              if( log ) alert(log);
+          }
+      });
+      function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#img-upload').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#image").change(function(){
+        readURL(this);
+        var file, img;
+
+        if ((file = this.files[0])) {
+          img = new Image();
+          img.onload = function() {
+            var imagewidth = this.width;
+            var imageheight = this.height;
+            filesize = parseInt((file.size / 1024));
             if(filesize > 250) {
               $("#image").val('');
-              toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
-                setTimeout(function() {
-                  $("#img-upload").attr('src', '{{ asset('images/user.png') }}');
-                }, 1000);
+              toastr.warning('ফাইলের আকৃতি '+filesize+' কিলোবাইট. ২৫০ কিলোবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#img-upload").attr('src', '{{ asset('images/user.png') }}');
+              }, 1000);
             }
-        });
-        function readURLNominee1(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#nominee_one_image-upload').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
+            console.log(imagewidth/imageheight);
+            if(((imagewidth/imageheight) < 0.9375) || ((imagewidth/imageheight) > 1.07142)) {
+              $("#image").val('');
+              toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:৩ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#img-upload").attr('src', '{{ asset('images/user.png') }}');
+              }, 1000);
             }
+          };
+          img.onerror = function() {
+            $("#image").val('');
+            toastr.warning('অনুগ্রহ করে ছবি সিলেক্ট করুন!', 'WARNING').css('width', '400px;');
+            setTimeout(function() {
+              $("#img-upload").attr('src', '{{ asset('images/user.png') }}');
+            }, 1000);
+          };
+          img.src = _URL.createObjectURL(file);
         }
-        $("#nominee_one_image").change(function(){
-            readURLNominee1(this);
-            var filesize = parseInt((this.files[0].size)/1024);
+      });
+
+      function readURLNominee1(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#nominee_one_image-upload').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#nominee_one_image").change(function(){
+        readURLNominee1(this);
+        var file, img;
+
+        if ((file = this.files[0])) {
+          img = new Image();
+          img.onload = function() {
+            var nominee_one_image_width = this.width;
+            var nominee_one_image_height = this.height;
+            filesize = parseInt((file.size / 1024));
             if(filesize > 250) {
               $("#nominee_one_image").val('');
-              toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
-                setTimeout(function() {
-                  $("#nominee_one_image-upload").attr('src', '{{ asset('images/user.png') }}');
-                }, 1000);
+              toastr.warning('ফাইলের আকৃতি '+filesize+' কিলোবাইট. ২৫০ কিলোবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#nominee_one_image-upload").attr('src', '{{ asset('images/user.png') }}');
+              }, 1000);
             }
-        });
-        function readURLNominee2(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#nominee_two_image-upload').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
+            console.log(nominee_one_image_width/nominee_one_image_height);
+            if(((nominee_one_image_width/nominee_one_image_height) < 0.9375) || ((nominee_one_image_width/nominee_one_image_height) > 1.07142)) {
+              $("#nominee_one_image").val('');
+              toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:৩ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#nominee_one_image-upload").attr('src', '{{ asset('images/user.png') }}');
+              }, 1000);
             }
+          };
+          img.onerror = function() {
+            $("#nominee_one_image").val('');
+            toastr.warning('অনুগ্রহ করে ছবি সিলেক্ট করুন!', 'WARNING').css('width', '400px;');
+            setTimeout(function() {
+              $("#nominee_one_image-upload").attr('src', '{{ asset('images/user.png') }}');
+            }, 1000);
+          };
+          img.src = _URL.createObjectURL(file);
         }
-        $("#nominee_two_image").change(function(){
-            readURLNominee2(this);
-            var filesize = parseInt((this.files[0].size)/1024);
+      });
+
+
+      function readURLNominee2(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#nominee_two_image-upload').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#nominee_two_image").change(function(){
+        readURLNominee2(this);
+        var file, img;
+
+        if ((file = this.files[0])) {
+          img = new Image();
+          img.onload = function() {
+            var nominee_two_image_width = this.width;
+            var nominee_two_image_height = this.height;
+            filesize = parseInt((file.size / 1024));
             if(filesize > 250) {
               $("#nominee_two_image").val('');
-              toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
-                setTimeout(function() {
-                  $("#nominee_two_image-upload").attr('src', '{{ asset('images/user.png') }}');
-                }, 1000);
+              toastr.warning('ফাইলের আকৃতি '+filesize+' কিলোবাইট. ২৫০ কিলোবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#nominee_two_image-upload").attr('src', '{{ asset('images/user.png') }}');
+              }, 1000);
             }
-        });
-        function readURLApplicationPaymentReceipt(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#application_payment_receipt-upload').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
+            console.log(nominee_two_image_width/nominee_two_image_height);
+            if(((nominee_two_image_width/nominee_two_image_height) < 0.9375) || ((nominee_two_image_width/nominee_two_image_height) > 1.07142)) {
+              $("#nominee_two_image").val('');
+              toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:৩ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#nominee_two_image-upload").attr('src', '{{ asset('images/user.png') }}');
+              }, 1000);
             }
+          };
+          img.onerror = function() {
+            $("#nominee_two_image").val('');
+            toastr.warning('অনুগ্রহ করে ছবি সিলেক্ট করুন!', 'WARNING').css('width', '400px;');
+            setTimeout(function() {
+              $("#nominee_two_image-upload").attr('src', '{{ asset('images/user.png') }}');
+            }, 1000);
+          };
+          img.src = _URL.createObjectURL(file);
         }
-        $("#application_payment_receipt").change(function(){
-            readURLApplicationPaymentReceipt(this);
-            var filesize = parseInt((this.files[0].size)/1024);
-            if(filesize > 500) {
-              $("#application_payment_receipt").val('');
-              toastr.warning('File size is: '+filesize+' Kb. try uploading less than 250Kb', 'WARNING').css('width', '400px;');
-                setTimeout(function() {
-                  $("#application_payment_receipt-upload").attr('src', '{{ asset('images/user.png') }}');
-                }, 1000);
-            }
-        });
-
       });
+
+
+      function readURLApplicationPaymentReceipt(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#application_payment_receipt-upload').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#application_payment_receipt").change(function(){
+          readURLApplicationPaymentReceipt(this);
+          var filesize = parseInt((this.files[0].size)/1024);
+          if(filesize > 500) {
+            $("#application_payment_receipt").val('');
+            toastr.warning('ফাইলের আকৃতি '+filesize+' কিলোবাইট. ৫০০ কিলোবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
+              setTimeout(function() {
+                $("#application_payment_receipt-upload").attr('src', '{{ asset('images/800x500.png') }}');
+              }, 1000);
+          }
+      });
+
+    });
   </script>
 @endsection
