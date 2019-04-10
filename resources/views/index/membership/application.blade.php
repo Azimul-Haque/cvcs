@@ -417,7 +417,7 @@
               return value;
             }
           } 
-          $('#nominee_one_percentage').keyup(function() {
+          $('#nominee_one_percentage').blur(function() {
             var percentagesum1 = parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
             if(percentagesum1 != 100) {
               toastr.warning('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
@@ -435,7 +435,7 @@
             }
           })
 
-          $('#password_confirmation').blur(function() {
+          $('#password_confirmation').keyup(function() {
             if($('#password_confirmation').val() != $('#password').val()) {
               $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>')
             } else {
