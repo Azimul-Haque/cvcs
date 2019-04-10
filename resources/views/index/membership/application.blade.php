@@ -49,7 +49,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="name_bangla" class="">আবেদনকারীর নাম (বাংলায়) *</label>
-                                <input type="text" name="name_bangla" id="name_bangla" required="" data-parsley-required-message="আবেদনকারীর নাম বাংলায় লিখুন" data-parsley-pattern="[^a-zA-Z0-9]+" data-parsley-pattern-message="*বাংলা বর্ণমালা* প্রদান করুন" placeholder="বাংলা বর্ণমালায় নাম লিখুন">
+                                <input type="text" name="name_bangla" id="name_bangla" class="text_bangla" required="" data-parsley-required-message="আবেদনকারীর নাম বাংলায় লিখুন" data-parsley-pattern="[^a-zA-Z0-9]+" data-parsley-pattern-message="*বাংলা বর্ণমালা* প্রদান করুন" placeholder="বাংলা বর্ণমালায় নাম লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -78,7 +78,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="gender" class="">লিঙ্গ</label>
-                                <select name="gender" id="gender" required="">
+                                <select name="gender" id="gender" class="text_bangla" required="">
                                     <option value="" selected="" disabled="">লিঙ্গ নির্ধারণ করুন</option>
                                     <option value="নারী">নারী</option>
                                     <option value="পুরুষ">পুরুষ</option>
@@ -89,7 +89,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="spouse" class="">স্বামী/স্ত্রীর নাম *</label>
-                                <input type="text" name="spouse" id="spouse" required="" placeholder="স্বামী/স্ত্রীর নাম বাংলায় লিখুন">
+                                <input type="text" name="spouse" id="spouse" class="text_bangla" required="" placeholder="স্বামী/স্ত্রীর নাম বাংলায় লিখুন">
                             </div>
                           </div>
                         </div>
@@ -97,13 +97,13 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="spouse_profession" class="">স্বামী/স্ত্রীর পেশা *</label>
-                                <input type="text" name="spouse_profession" id="spouse_profession" required="" placeholder="স্বামী/স্ত্রীর পেশা বাংলায় লিখুন">
+                                <input type="text" name="spouse_profession" id="spouse_profession" class="text_bangla" required="" placeholder="স্বামী/স্ত্রীর পেশা বাংলায় লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="father" class="">পিতার নাম *</label>
-                                <input type="text" name="father" id="father" required="" placeholder="পিতার নাম বাংলায় লিখুন">
+                                <input type="text" name="father" id="father" required="" class="text_bangla" placeholder="পিতার নাম বাংলায় লিখুন">
                             </div>
                           </div>
                         </div>
@@ -111,13 +111,13 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="mother" class="">মাতার নাম *</label>
-                                <input type="text" name="mother" id="mother" required="" placeholder="মাতার নাম বাংলায় লিখুন">
+                                <input type="text" name="mother" id="mother" required="" class="text_bangla" placeholder="মাতার নাম বাংলায় লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="office" class="">আবেদনকারীর দপ্তরের নাম *</label>
-                                <input type="text" name="office" id="office" required="" placeholder="দপ্তরের নাম বাংলায় লিখুন">
+                                <input type="text" name="office" id="office" required="" class="text_bangla" placeholder="দপ্তরের নাম বাংলায় লিখুন">
                             </div>
                           </div>
                         </div>
@@ -125,35 +125,35 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="profession" class="">আবেদনকারীর পেশা *</label>
-                                <input type="text" name="profession" id="profession" required="" placeholder="পেশা বাংলায় লিখুন">
+                                <input type="text" name="profession" id="profession" required="" class="text_bangla" placeholder="পেশা বাংলায় লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="designation" class="">আবেদনকারীর পদবি *</label>
-                                <input type="text" name="designation" id="designation" required="" placeholder="পদবি বাংলায় লিখুন">
+                                <input type="text" name="designation" id="designation" required="" class="text_bangla" placeholder="পদবি বাংলায় লিখুন">
                             </div>
                           </div>
                         </div>
                         <div class="form-group ">
                             <label for="present_address" class="">বর্তমান ঠিকানা</label>
-                            <input type="text" name="present_address" id="present_address" required="" placeholder="বাংলায় লিখুন">
+                            <input type="text" name="present_address" id="present_address" required="" class="text_bangla" placeholder="বাংলায় লিখুন">
                         </div>
                         <div class="form-group ">
                             <label for="permanent_address" class="">স্থায়ী ঠিকানা</label>
-                            <input type="text" name="permanent_address" id="permanent_address" required="" placeholder="বাংলায় লিখুন">
+                            <input type="text" name="permanent_address" id="permanent_address" class="text_bangla" required="" placeholder="বাংলায় লিখুন">
                         </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="office_telephone" class="">অফিসের টেলিফোন (ঐচ্ছিক)</label>
-                                <input type="text" name="office_telephone" id="office_telephone" placeholder="অফিসের টেলিফোন নম্বর ইংরেজি লিখুন">
+                                <input type="number" name="office_telephone" id="office_telephone" placeholder="অফিসের টেলিফোন নম্বর ইংরেজি লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="mobile" class="">মোবাইল নম্বর (সক্রিয় নম্বর দিন, এই নম্বরে SMS যাবে) *</label>
-                                <input type="text" name="mobile" id="mobile" required="" placeholder="ইংরেজি অংকে লিখুন (১১ ডিজিট)">
+                                <input type="number" name="mobile" id="mobile" required="" placeholder="ইংরেজি অংকে লিখুন (১১ ডিজিট)">
                             </div>
                           </div>
                         </div>
@@ -161,13 +161,13 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="home_telephone" class="">বাসার টেলিফোন (ঐচ্ছিক)</label>
-                                <input type="text" name="home_telephone" id="home_telephone" placeholder="বাসার টেলিফোন নম্বর ইংরেজিতে লিখুন">
+                                <input type="number" name="home_telephone" id="home_telephone" placeholder="বাসার টেলিফোন নম্বর ইংরেজিতে লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="email" class="">ইমেইল এড্রেস *</label>
-                                <input type="text" name="email" id="email" autocomplete="off" required="" placeholder="একটি ভ্যালিড ইমেইল এড্রেস লিখুন">
+                                <input type="email" name="email" id="email" autocomplete="off" required="" placeholder="একটি ভ্যালিড ইমেইল এড্রেস লিখুন">
                             </div>
                           </div>
                         </div>
@@ -187,7 +187,7 @@
                         
                         <div class="form-group ">
                             <label for="nominee_one_name" class="">নাম (বাংলায়) *</label>
-                            <input type="text" name="nominee_one_name" id="nominee_one_name" required="" placeholder="বাংলা বর্ণমালায় লিখুন">
+                            <input type="text" name="nominee_one_name" id="nominee_one_name" required="" class="text_bangla" placeholder="বাংলা বর্ণমালায় লিখুন">
                         </div>
                         <div class="row">
                           <div class="col-md-6">
@@ -211,7 +211,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_one_relation" class="">সম্পর্ক *</label>
-                                <input type="text" name="nominee_one_relation" id="nominee_one_relation" required="" placeholder="সম্পর্ক লিখুন">
+                                <input type="text" name="nominee_one_relation" id="nominee_one_relation" class="text_bangla" required="" placeholder="সম্পর্ক লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -251,7 +251,7 @@
                                                             
                                     <div class="form-group">
                                         <label for="nominee_two_name" class="">নাম (বাংলায়)</label>
-                                        <input type="text" name="nominee_two_name" id="nominee_two_name" placeholder="বাংলা বর্ণমালায় লিখুন">
+                                        <input type="text" name="nominee_two_name" id="nominee_two_name" class="text_bangla" placeholder="বাংলা বর্ণমালায় লিখুন">
                                     </div>
                                     <div class="row">
                                       <div class="col-md-6">
@@ -275,7 +275,7 @@
                                       <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nominee_two_relation" class="">সম্পর্ক</label>
-                                            <input type="text" name="nominee_two_relation" id="nominee_two_relation" placeholder="সম্পর্ক লিখুন">
+                                            <input type="text" name="nominee_two_relation" id="nominee_two_relation" class="text_bangla" placeholder="সম্পর্ক লিখুন">
                                         </div>
                                       </div>
                                       <div class="col-md-6">
@@ -426,7 +426,7 @@
             }
           })
 
-          $('#nominee_two_percentage').keyup(function() {
+          $('#nominee_two_percentage').blur(function() {
             var percentagesum2 =  parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
             if(percentagesum2 != 100) {
               toastr.warning('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
@@ -435,7 +435,7 @@
             }
           })
 
-          $('#password_confirmation').keyup(function() {
+          $('#password_confirmation').blur(function() {
             if($('#password_confirmation').val() != $('#password').val()) {
               $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>')
             } else {
@@ -460,10 +460,22 @@
       //     $(this).toggleClass('input_empty', this.value.length === 0);
       //   }
       // });
-      // if not empty
-      $(":input[type=text]").blur(function(){
-        var regexp = /^[A-Z][\s\S]\d\s\S+$/;
-        if($(this).val().match(regexp)){
+      // character validation
+      $(".text_bangla").blur(function(){
+        var regexp = /[অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহড়ঢ়য়ৎংঃঁ১২৩৪৫৬৭৮৯০][^ABC]\D\W/g;
+        if(!$(this).val().match(regexp)){
+          $(this).addClass('input_empty');
+        }
+      });
+      $("#name").blur(function(){
+        var regexp = /^[A-Za-z0-9 _.-]+$/;
+        if(!$(this).val().match(regexp)){
+          $(this).addClass('input_empty');
+        }
+      });
+      $("#dob").blur(function(){
+        var regexp = /^[A-Za-z0-9 _.-]+$/;
+        if(!$(this).val().match(regexp)){
           $(this).addClass('input_empty');
         }
       });

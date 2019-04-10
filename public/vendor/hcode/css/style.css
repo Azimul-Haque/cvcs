@@ -1,9 +1,9 @@
 @charset "utf-8";
 /* ---------------------------------- Name:style.css Version:1.0.0 ---------------------------------- Table of contents 01. Google font 02. Reset 03. Typography 04. Icon 05. Background color 06. Custom 07. Border 08. Scroll to top 09. Slider background and overlay 10. Navigation 11. Page titles 12. Section 13. Footer 14. Owl carousel 15. Slider and parallax typography 16. Parallax 17. One page 18. Bootstrap slider 19. Portfolio - ajax 20. Portfolio - multi pages 21. Masonry portfolio - home 22. Full screen video 23. Half screen video 24. Coming soon 25. Full width image 26. Blog 27. Intro 28. Portfolio 29. Elements 30. Pages 31. Shop 32. Onepage demo 33. Multipage demo */
 /* =================================== Google font ====================================== */
- @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
- @import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
- @import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
+ @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
+ @import url(https://fonts.googleapis.com/css?family=Oswald:400,300,700);
+ @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
 /* =================================== Reset ====================================== */
  body{
      font-family: 'Open Sans', sans-serif;
