@@ -1181,7 +1181,6 @@ class DashboardController extends Controller
             'image1'      =>   'required|image|max:500',
             'image2'      =>   'sometimes|image|max:500',
             'image3'      =>   'sometimes|image|max:500'
-
         ));
 
         // dd($request->all());

@@ -6,3 +6,10 @@
     font-size: 16px !important;
     line-height: 29px !important;;
 }
+
+.input_empty {
+	border: 2px solid #DC143C;
+	padding-left:35px;
+	background: url('/images/exclamation.png') no-repeat scroll 12px 12px;
+	background-size: 16px 16px;
+}

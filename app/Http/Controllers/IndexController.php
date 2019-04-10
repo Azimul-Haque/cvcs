@@ -223,9 +223,9 @@ class IndexController extends Controller
             'office'                       => 'required|max:255',
             'present_address'              => 'required|max:255',
             'permanent_address'            => 'required|max:255',
-            'office_telephone'             => 'required|max:255',
-            'mobile'                       => 'required|max:255',
-            'home_telephone'               => 'required|max:255',
+            'office_telephone'             => 'sometimes|max:255',
+            'mobile'                       => 'required|max:11|unique:users,mobile',
+            'home_telephone'               => 'sometimes|max:255',
             'email'                        => 'required|email|unique:users,email',
             'image'                        => 'required|image|max:250',
 
@@ -246,7 +246,7 @@ class IndexController extends Controller
             'application_payment_bank'     => 'required|max:255',
             'application_payment_branch'   => 'required|max:255',
             'application_payment_pay_slip' => 'required|max:255',
-            'application_payment_receipt'  => 'required|image|max:500',
+            'application_payment_receipt'  => 'required|image|max:2048',
 
             'password'                     => 'required|min:8|same:password_confirmation'
         ));
@@ -317,7 +317,7 @@ class IndexController extends Controller
             $application_payment_receipt      = $request->file('application_payment_receipt');
             $filename   = 'application_payment_receipt_' . str_replace(' ','',$request->name).time() .'.' . $application_payment_receipt->getClientOriginalExtension();
             $location   = public_path('/images/receipts/'. $filename);
-            Image::make($application_payment_receipt)->resize(800, 400)->save($location);
+            Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
             $application->application_payment_receipt = $filename;
         }
 
