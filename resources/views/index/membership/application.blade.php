@@ -16,7 +16,7 @@
 @stop
 
 @section('content')
-  <form action="{{ route('index.storeapplication') }}" method="post" enctype='multipart/form-data' data-parsley-validate="">
+  <form action="{{ route('index.storeapplication') }}" id="application_form" method="post" enctype='multipart/form-data' data-parsley-validate="">
     <section class="wow fadeIn bg-gray">
         <div class="container">
             <div class="row">
@@ -30,6 +30,8 @@
                     <li><i class="fa fa-check-square-o"></i> দুজন নমিনির ৩০০x৩০০ সাইজের রঙিন ছবির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
                     <li><i class="fa fa-check-square-o"></i> মেম্বারশিপ ফি বাবদ ৫০০০ টাকার ব্যাংক ডিপোজিট রিসিটটির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
                     <li><i class="fa fa-check-square-o"></i> <b>মোবাইল নম্বর</b> ঘরে ১১ ডিজিটের সক্রিয় একটি নম্বর দিন; এ নম্বরেই যাবতীয় তথ্য SMS আকারে পাঠানো হবে</li>
+                    <li><i class="fa fa-check-square-o"></i> নমিনি একজন হলে শতকরা হার ঘরের মান 100 রাখুন</li>
+                    <li><i class="fa fa-check-square-o"></i> নমিনি দুইজন হলে দুই নমিনির শতকরা হারের যোগফল যেন 100 হয় সেদিকে খেয়াল রাখুন</li>
                   </ul>
                   <button type="button" class="btn highlight-button-royal-blue btn-bg no-margin-right" id="presubmission_info">ঠিক আছে</button>
                 </div>
@@ -63,7 +65,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="nid" class="">জাতীয় পরিচয়পত্র নম্বর *</label>
-                                <input type="number" maxlength="17" name="nid" id="nid" required="" placeholder="ইংরেজি অংকে পরিচয়পত্র নম্বরটি লিখুন">
+                                <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==17) return false;" name="nid" id="nid" required="" placeholder="ইংরেজি অংকে পরিচয়পত্র নম্বরটি লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -153,7 +155,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="mobile" class="">মোবাইল নম্বর (সক্রিয় নম্বর দিন, এই নম্বরে SMS যাবে) *</label>
-                                <input type="number" name="mobile" id="mobile" required="" placeholder="ইংরেজি অংকে লিখুন (১১ ডিজিট)">
+                                <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==11) return false;" name="mobile" id="mobile" required="" placeholder="ইংরেজি অংকে লিখুন (১১ ডিজিট)">
                             </div>
                           </div>
                         </div>
@@ -203,7 +205,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_one_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর *</label>
-                                <input type="number" maxlength="17" name="nominee_one_identity_text" id="nominee_one_identity_text" required="" placeholder="ইংরেজি অংকে লিখুন">
+                                <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==17) return false;" name="nominee_one_identity_text" id="nominee_one_identity_text" required="" placeholder="ইংরেজি অংকে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -216,7 +218,7 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                                <label for="nominee_one_percentage" class="">শতকরা হার *</label>
+                                <label for="nominee_one_percentage" class="">শতকরা হার (%) *</label>
                                 <input type="number" min="1" max="100" minlength="1" maxlength="3" name="nominee_one_percentage" id="nominee_one_percentage" required="" placeholder="ইংরেজি অংকে লিখুন">
                             </div>
                           </div>
@@ -267,7 +269,7 @@
                                       <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nominee_two_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর</label>
-                                            <input type="number" maxlength="17" name="nominee_two_identity_text" id="nominee_two_identity_text" placeholder="ইংরেজি অংকে লিখুন">
+                                            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==17) return false;" name="nominee_two_identity_text" id="nominee_two_identity_text" placeholder="ইংরেজি অংকে লিখুন">
                                         </div>
                                       </div>
                                     </div>
@@ -280,7 +282,7 @@
                                       </div>
                                       <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="nominee_two_percentage" class="">শতকরা হার</label>
+                                            <label for="nominee_two_percentage" class="">শতকরা হার (%)</label>
                                             <input type="number" min="1" max="100" minlength="1" maxlength="3" name="nominee_two_percentage" id="nominee_two_percentage" placeholder="ইংরেজি অংকে লিখুন">
                                         </div>
                                       </div>
@@ -303,26 +305,26 @@
 
                         
 
-                        <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত (সদস্যপদবাবদ ৫০০০/-)</h3>
+                        <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত (সদস্যপদ বাবদ ৫০০০/-)</h3>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                               {!! Form::label('application_payment_bank', 'ব্যাংকের নাম *') !!}
-                              {!! Form::text('application_payment_bank', null, array('class' => 'form-control', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
+                              {!! Form::text('application_payment_bank', null, array('class' => 'text_bangla', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি বাংলায় লিখুন')) !!}
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               {!! Form::label('application_payment_branch', 'ব্রাঞ্চের নাম *') !!}
-                              {!! Form::text('application_payment_branch', null, array('class' => 'form-control', 'id' => 'application_payment_branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+                              {!! Form::text('application_payment_branch', null, array('class' => 'text_bangla', 'id' => 'application_payment_branch', 'placeholder' => 'ব্রাঞ্চের নাম বাংলায় লিখুন', 'required' => '')) !!}
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
-                              {!! Form::label('application_payment_pay_slip', 'ব্রাঞ্চের নাম *') !!}
-                              {!! Form::text('application_payment_pay_slip', null, array('class' => 'form-control', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
+                              {!! Form::label('application_payment_pay_slip', 'পে-স্লিপ নম্বর *') !!}
+                              {!! Form::text('application_payment_pay_slip', null, array('class' => '', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
                             </div>
                           </div>
                           <div class="col-md-6"></div>
@@ -330,7 +332,7 @@
                         <div class="row">
                           <div class="col-md-8">
                               <div class="form-group ">
-                                  <label><strong>৫০০০ টাকা পরিশোধের রিসিট (সর্বোচ্চ ৫০০ কিলোবাইট) *</strong></label>
+                                  <label><strong>৫০০০ টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
                                   <input type="file" id="application_payment_receipt" name="application_payment_receipt" required="">
                               </div>
                           </div>
@@ -378,7 +380,9 @@
             <ul>
               <li><i class="fa fa-check-square-o"></i> প্রতিটি বাধ্যতামূলক (* দেওয়া) ঘর পূরন করেছেন কি না যাচাই করুন</li>
               <li><i class="fa fa-check-square-o"></i> ছবি ও অন্যান্য ফাইলগুলো ঠিকমতো দিয়েছেন কি না লক্ষ্য করুন</li>
-              <li><i class="fa fa-check-square-o"></i> নম্বর সংক্রান্ত তথ্যগুলো (যেমনঃ মোবাইল নম্বর, পরিচয়পত্র নম্বর, শতকরা হার ইত্যাদি <b>ইংরেজি অংকে (0,1,3,4...) দিয়েছেন কি না যাচাই করুন</b>)</li>
+              <li><i class="fa fa-check-square-o"></i> নম্বর সংক্রান্ত তথ্যগুলো (যেমনঃ মোবাইল নম্বর, পরিচয়পত্র নম্বর, শতকরা হার ইত্যাদি <b>ইংরেজি অংকে (0,1,3,4...)</b> দিয়েছেন কি না যাচাই করুন)</li>
+              <li><i class="fa fa-check-square-o"></i> নমিনি একজন হলে শতকরা হার ঘরের মান 100 রাখুন</li>
+              <li><i class="fa fa-check-square-o"></i> নমিনি দুইজন হলে দুই নমিনির শতকরা হারের যোগফল যেন 100 হয় সেদিকে খেয়াল রাখুন</li>
             </ul>
           </div>
           <div class="modal-footer">
@@ -400,91 +404,116 @@
   {{-- <script type="text/javascript" src="{{ asset('js/jquery-3.1.0.min.js') }}"></script> --}}
   <script type="text/javascript" src="{{ asset('js/DateTimePicker.min.js') }}"></script>
   <script type="text/javascript">
-      $(document).ready(function() {
-          $("#dtBox").DateTimePicker({
-              mode:"date",
-              dateFormat: "dd-MM-yyyy",
-              titleContentDate: 'জন্মতারিখ নির্ধারণ করুন'
-          });
-          $("#presubmission_info").click(function() {
-              $("#presubmission_div").hide(2000);
-          });
+    function setDefaultVal(value){
+      if(value.length == 0) {
+        return 0;
+      } else {
+        return value;
+      }
+    } 
+    $(document).ready(function() {
+        $("#dtBox").DateTimePicker({
+            mode:"date",
+            dateFormat: "dd-MM-yyyy",
+            titleContentDate: 'জন্মতারিখ নির্ধারণ করুন'
+        });
+        $("#presubmission_info").click(function() {
+            $("#presubmission_div").hide(2000);
+        });
 
-          function setDefaultVal(value){
-            if(value.length == 0) {
-              return 0;
-            } else {
-              return value;
-            }
-          } 
-          $('#nominee_one_percentage').blur(function() {
-            var percentagesum1 = parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
-            if(percentagesum1 != 100) {
-              toastr.warning('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
-            } else {
-              toastr.success('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
-            }
-          })
+        
+        $('#nominee_one_percentage').blur(function() {
+          var percentagesum1 = parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
+          if(percentagesum1 != 100) {
+            toastr.warning('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+          } else {
+            toastr.success('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+          }
+        })
 
-          $('#nominee_two_percentage').blur(function() {
-            var percentagesum2 =  parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
-            if(percentagesum2 != 100) {
-              toastr.warning('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
-            } else {
-              toastr.success('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
-            }
-          })
+        $('#nominee_two_percentage').blur(function() {
+          var percentagesum2 =  parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
+          if(percentagesum2 != 100) {
+            toastr.warning('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+          } else {
+            toastr.success('দুইজন নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+          }
+        })
 
-          $('#password_confirmation').keyup(function() {
-            if($('#password_confirmation').val() != $('#password').val()) {
-              $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>')
-            } else {
-              $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #008000;"><b>✓ মিলেছে</b></span>')
-            }
-          })
-      });
+        $('#password_confirmation').keyup(function() {
+          if($('#password_confirmation').val() != $('#password').val()) {
+            $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>')
+          } else {
+            $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #008000;"><b>✓ মিলেছে</b></span>')
+          }
+        })
+    });
 
-      // disabling the number scrolling...
-      $(function(){
-        $(':input[type=number]').on('mousewheel',function(e){ $(this).blur(); });
-      });
+    // disabling the number scrolling...
+    $(function(){
+      $(':input[type=number]').on('mousewheel',function(e){ $(this).blur(); });
+    });
 
-      // if empty on blur
-      $(":input[required]").blur(function(){
-        $(this).toggleClass('input_empty', this.value.length === 0);
-      });
-      // if not empty
-      // $(":input[required]").keyup(function(){
-      //   var regexp = /^[A-Za-z0-9 _.-]+$/;
-      //   if($(this).val().match(regexp)){
-      //     $(this).toggleClass('input_empty', this.value.length === 0);
-      //   }
-      // });
-      // character validation
-      $(".text_bangla").blur(function(){
-        var regexp = /[অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহড়ঢ়য়ৎংঃঁ১২৩৪৫৬৭৮৯০][^ABC]\D\W/g;
-        if(!$(this).val().match(regexp)){
-          $(this).addClass('input_empty');
-        }
-      });
-      $("#name").blur(function(){
-        var regexp = /^[A-Za-z0-9 _.-]+$/;
-        if(!$(this).val().match(regexp)){
-          $(this).addClass('input_empty');
-        }
-      });
-      $("#dob").blur(function(){
-        var regexp = /^[A-Za-z0-9 _.-]+$/;
-        if(!$(this).val().match(regexp)){
-          $(this).addClass('input_empty');
-        }
-      });
-      $(":input[type=number]").blur(function(){
-        var regexp = /^-?\d*$/;
-        if(!$(this).val().match(regexp)){
-          $(this).addClass('input_empty');
-        }
-      });
+    // if empty on blur
+    $(":input[required]").blur(function(){
+      $(this).toggleClass('input_empty', this.value.length === 0);
+    });
+    // if not empty
+    // $(":input[required]").keyup(function(){
+    //   var regexp = /^[A-Za-z0-9 _.-]+$/;
+    //   if($(this).val().match(regexp)){
+    //     $(this).toggleClass('input_empty', this.value.length === 0);
+    //   }
+    // });
+    // character validation
+    $(".text_bangla").blur(function(){
+      var regexp = /[অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহড়ঢ়য়ৎংঃঁ১২৩৪৫৬৭৮৯০][^ABC]\D\W/g;
+      if(!$(this).val().match(regexp)){
+        $(this).addClass('input_empty');
+      }
+    });
+    $("#name").blur(function(){
+      var regexp = /^[A-Za-z0-9 _.-]+$/;
+      if(!$(this).val().match(regexp)){
+        $(this).addClass('input_empty');
+      }
+    });
+    $("#dob").blur(function(){
+      var regexp = /^[A-Za-z0-9 _.-]+$/;
+      if(!$(this).val().match(regexp)){
+        $(this).addClass('input_empty');
+      }
+    });
+    $(":input[type=number]").blur(function(){
+      var regexp = /^-?\d*$/;
+      if(!$(this).val().match(regexp)){
+        $(this).addClass('input_empty');
+      }
+    });
+
+    // on submisiion check percentage total
+    $("#application_form").submit(function(event) {
+      var $form = $(this);
+
+      if ($form.find('input[required]').filter(function(){ return this.value === '' }).length > 0) {
+        toastr.warning('* চিহ্নিত ঘরগুলো পূরন করুন').css('width', '400px;');
+        event.preventDefault();
+        $('#submitApplicationModal').modal('hide');
+        $('html,body').animate({ scrollTop: $("#application_form").offset().top}, 'slow');
+      }
+
+      var percentagesum = parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
+      if(percentagesum != 100) {
+        toastr.warning('নমিনির শতকরা অংশের যোগফল ১০০ হওয়া বাঞ্ছনীয়!').css('width', '400px;');
+        event.preventDefault();
+        $('#submitApplicationModal').modal('hide');
+        $('html, body').animate({
+            scrollTop: $('#name').offset().top - 170
+        }, 500);
+      }
+
+    })
+      
   </script>
   <script type="text/javascript">
     var _URL = window.URL || window.webkitURL;

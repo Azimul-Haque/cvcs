@@ -187,7 +187,7 @@
                   <td>{{ $application->designation }}</td>
                 </tr>
                 <tr>
-                  <th>দপতের নাম</th>
+                  <th>দপ্তরের নাম</th>
                   <td>{{ $application->office }}</td>
                 </tr>
 
