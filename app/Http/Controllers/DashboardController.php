@@ -860,12 +860,26 @@ class DashboardController extends Controller
         $application = User::find($id);
         $application->activation_status = 1;
 
-        $lastmember = User::where('activation_status', 1)
-                          ->orderBy('id', 'desc')
-                          ->first();
-        $lastfivedigits = (int) substr($lastmember->member_id, -5);
+        // $lastmember = User::where('activation_status', 1)
+        //                   ->orderBy('updated_at', 'desc')
+        //                   ->first();
+        // $lastfivedigits = (int) substr($lastmember->member_id, -5);
 
-        $application->member_id = date('Y', strtotime($application->dob)).str_pad(($lastfivedigits+1), 5, '0', STR_PAD_LEFT);;
+        $members = User::where('activation_status', 1)->get();
+        $ordered_member_ids = [];
+        foreach ($members as $member) {
+            array_push($ordered_member_ids, (int) substr($member->member_id, -5));
+        }
+        rsort($ordered_member_ids); // descending order to get the last value
+
+        $application->member_id = date('Y', strtotime($application->dob)).str_pad(($ordered_member_ids[0]+1), 5, '0', STR_PAD_LEFT);
+        // check if the id already exists...
+        $ifexists = User::where('member_id', $application->member_id)->first();
+        if($ifexists) {
+            Session::flash('warning', 'দুঃখিত! আবার চেষ্টা করুন!');
+            return redirect()->route('dashboard.applications');
+        }
+        // check if the id already exists...
         $application->save();
 
         // save the payment!

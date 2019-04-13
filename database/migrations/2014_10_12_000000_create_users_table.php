@@ -14,8 +14,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('unique_key');
-            $table->string('member_id');
+            $table->string('unique_key')->unique();
+            $table->string('member_id')->unique();
             $table->string('role');
             $table->string('role_type');
             $table->integer('activation_status');
@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->string('mother');
             $table->string('profession');
             $table->string('designation');
+            $table->string('membership_designation'); // designation during the time of application...
             $table->string('office');
             $table->string('present_address');
             $table->string('permanent_address');

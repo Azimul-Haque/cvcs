@@ -76,7 +76,7 @@
   {!!Html::script('js/parsley.min.js')!!}
   <script type="text/javascript">
     $(document).ready( function() {
-      $('#amount').keyup(function() {
+      $('#amount').blur(function() {
         var value = $('#amount').val();
         if(value % 500 == 0) {
           if($(window).width() > 768) {

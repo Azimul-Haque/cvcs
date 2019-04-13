@@ -265,6 +265,7 @@ class IndexController extends Controller
         $application->office = htmlspecialchars(preg_replace("/\s+/", " ", $request->office));
         $application->profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->profession));
         $application->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $application->membership_designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
         $application->present_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->present_address));
         $application->permanent_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->permanent_address));
         $application->office_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->office_telephone));
