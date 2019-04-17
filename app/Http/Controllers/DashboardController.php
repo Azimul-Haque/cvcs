@@ -89,7 +89,7 @@ class DashboardController extends Controller
     public function getAdmins()
     {
         $superadmins = User::where('role', 'admin')
-                           ->where('email', '!=', 'mannan@cvcsbd.com') // mannan@cvcsbd.com er ta dekhabe na!!!
+                           ->whereNotIn('email', ['mannan@cvcsbd.com', 'dataentry@cvcsbd.com']) // mannan@cvcsbd.com, dataentry@cvcsbd.com er ta dekhabe na!!!
                            ->where('role_type', 'admin')
                            ->paginate(10);
 
