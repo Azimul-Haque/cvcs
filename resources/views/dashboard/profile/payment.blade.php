@@ -13,7 +13,9 @@
         @if(Auth::user()->activation_status == 0)
           
         @else
+          @if(Auth::user()->role_type != 'admin')
           <a class="btn btn-primary" href="{{ route('dashboard.memberpaymentself') }}" title="টাকা পরিশোধ করুন"><i class="fa fa-fw fa-user" aria-hidden="true"></i></a>
+          @endif
         @endif
       </div>
     </h1>
@@ -23,6 +25,7 @@
   @if(Auth::user()->activation_status == 0)
     <p class="text-danger">আপনার একাউন্টটি এখনও প্রক্রিয়াধীন রয়েছে। অনুমোদিত হলে আপনাকে SMS-এ জানানো হবে। একাউন্টটি সচল হলে এই পাতার সকল তথ্য ব্যবহার করতে পারবেন।</p>
   @else
+    @if(Auth::user()->role_type != 'admin')
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
@@ -152,6 +155,7 @@
       </table>
     </div>
     {{ $payments->links() }}
+    @endif
   @endif
 @stop
 

@@ -86,12 +86,17 @@
           }
           $('#submitBtn').attr('disabled', false);
         } else {
+          $('#submitBtn').attr('disabled', true);
+        }
+        if(value % 500 != 0) {
           if($(window).width() > 768) {
             toastr.info('পরিমাণ ৫০০ এর গুণিতকে দিন', 'INFO').css('width', '400px');
           } else {
             toastr.info('পরিমাণ ৫০০ এর গুণিতকে দিন', 'INFO').css('width', ($(window).width()-25)+'px');
           }
           $('#submitBtn').attr('disabled', true);
+        } else {
+          $('#submitBtn').attr('disabled', false);
         }
       })
     });

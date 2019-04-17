@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+    @if(Auth::user()->role_type != 'admin')
     <div class="row">
     	<div class="col-md-6">
     		<div class="row">
@@ -110,4 +111,5 @@
     	</div>
     	<div class="col-md-6"></div>
     </div>
+    @endif
 @stop
