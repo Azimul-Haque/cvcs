@@ -25,34 +25,23 @@
       <thead>
         <tr>
           <th>নাম</th>
-          <th>মেম্বার আইডি</th>
           <th>যোগাযোগ</th>
-          <th>অফিস তথ্য</th>
           <th>ছবি</th>
-          <th width="10%">Action</th>
         </tr>
       </thead>
       <tbody>
         @foreach($superadmins as $superadmin)
         <tr>
           <td>
-            <a href="{{ route('dashboard.singlemember', $superadmin->unique_key) }}" title="সদস্য তথ্য দেখুন">
-              {{ $superadmin->name_bangla }}<br/>{{ $superadmin->name }}
-            </a>
+            {{ $superadmin->name_bangla }}<br/>{{ $superadmin->name }}
           </td>
-          <td><big><b>{{ $superadmin->member_id }}</b></big></td>
           <td>{{ $superadmin->mobile }}<br/>{{ $superadmin->email }}</td>
-          <td>{{ $superadmin->office }}<br/>{{ $superadmin->profession }} ({{ $superadmin->designation }})</td>
           <td>
             @if($superadmin->image != null)
               <img src="{{ asset('images/users/'.$superadmin->image)}}" style="height: 50px; width: auto;" />
             @else
               <img src="{{ asset('images/user.png')}}" style="height: 50px; width: auto;" />
             @endif
-          </td>
-          <td>
-            <a class="btn btn-sm btn-success" href="{{ route('dashboard.singlemember', $superadmin->unique_key) }}" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
-            {{-- <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#deleteMemberModal{{ $superadmin->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
           </td>
         </tr>
         @endforeach

@@ -23,6 +23,7 @@
           <th>নাম</th>
           <th>যোগাযোগের নম্বর ও ইমেইল এড্রেস</th>
           <th>অফিস তথ্য</th>
+          <th>পরিশোধ তথ্য</th>
           <th>ছবি</th>
           <th width="10%">Action</th>
         </tr>
@@ -37,6 +38,7 @@
           </td>
           <td>{{ $application->mobile }}<br/>{{ $application->email }}</td>
           <td>{{ $application->office }}<br/>{{ $application->profession }} ({{ $application->designation }})</td>
+          <td>৳ {{ $application->application_payment_amount }}<br/>{{ $application->application_payment_bank }} ({{ $application->application_payment_branch }})</td>
           <td>
             @if($application->image != null)
               <img src="{{ asset('images/users/'.$application->image)}}" style="height: 50px; width: auto;" />

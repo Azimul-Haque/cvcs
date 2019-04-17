@@ -226,7 +226,7 @@ class IndexController extends Controller
             'office_telephone'             => 'sometimes|max:255',
             'mobile'                       => 'required|max:11|unique:users,mobile',
             'home_telephone'               => 'sometimes|max:255',
-            'email'                        => 'required|email|unique:users,email',
+            'email'                        => 'sometimes|email|unique:users,email',
             'image'                        => 'required|image|max:250',
 
             'nominee_one_name'             => 'required|max:255',
@@ -243,6 +243,7 @@ class IndexController extends Controller
             'nominee_two_percentage'       => 'sometimes|max:255',
             'nominee_two_image'            => 'sometimes|image|max:250',
 
+            'application_payment_amount'   => 'required|max:255',
             'application_payment_bank'     => 'required|max:255',
             'application_payment_branch'   => 'required|max:255',
             'application_payment_pay_slip' => 'required|max:255',
@@ -271,7 +272,12 @@ class IndexController extends Controller
         $application->office_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->office_telephone));
         $application->mobile = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile));
         $application->home_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->home_telephone));
-        $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
+        if($request->email != '') {
+            $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
+        } else {
+            $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile)) . '@cvcsbd.com';
+        }
+        
 
         // applicant's image upload
         if($request->hasFile('image')) {
@@ -310,6 +316,7 @@ class IndexController extends Controller
             $application->nominee_two_image = $filename;
         }
         
+        $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
         $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
         $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
         $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));

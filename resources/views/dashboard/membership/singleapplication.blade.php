@@ -326,28 +326,59 @@
           <table class="table">
             <thead>
               <tr>
+                <th>পরিমাণ</th>
                 <th>ব্যাংক</th>
                 <th>ব্রাঞ্চ/ শাখা</th>
                 <th>পে-স্লিপ নম্বর</th>
+                <th>
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>৳ {{ $application->application_payment_amount }}</td>
                 <td>{{ $application->application_payment_bank }}</td>
                 <td>{{ $application->application_payment_branch }}</td>
                 <td>{{ $application->application_payment_pay_slip }}</td>
+                <td>
+                  <button class="" data-toggle="modal" data-target="#membershipReceiptModal{{ $application->id }}" data-backdrop="static" title="দেখতে ক্লিক করুন">
+                    @if($application->application_payment_receipt != null)
+                        <img src="{{ asset('images/receipts/'.$application->application_payment_receipt)}}" alt="Receipt of membership payment {{ $application->name }}" class="img-responsive shadow" style="width: 100px; height: auto;" />
+                    @else
+                        ফাইল পাওয়া যায়নি!
+                    @endif
+                  </button>
+                  <!-- Receipt Modal -->
+                  <!-- Receipt Modal -->
+                  <div class="modal fade" id="membershipReceiptModal{{ $application->id }}" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">ব্যাংক পে-স্লিপের ছবি</h4>
+                        </div>
+                        <div class="modal-body">
+                          <span>ব্যাংক পে-স্লিপের ছবিঃ</span>
+                          @if($application->application_payment_receipt != null)
+                              <img src="{{ asset('images/receipts/'.$application->application_payment_receipt)}}" alt="Receipt of membership payment {{ $application->name }}" class="img-responsive shadow" style="width: 100%; height: auto;" />
+                          @else
+                              ফাইল পাওয়া যায়নি!
+                          @endif
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Receipt Modal -->
+                  <!-- Receipt Modal -->
+                </td>
               </tr>
             </tbody>
           </table>
-        </div>
-
-        <br/><br/>
-        <span>ব্যাংক পে-স্লিপের ছবিঃ</span>
-        @if($application->application_payment_receipt != null)
-            <img src="{{ asset('images/receipts/'.$application->application_payment_receipt)}}" alt="Receipt of membership payment {{ $application->name }}" class="img-responsive shadow" style="width: 100%; height: auto;" />
-        @else
-            ফাইল পাওয়া যায়নি!
-        @endif
+        </div>        
       </div>
     </div>
     <!-- /.tab-content -->

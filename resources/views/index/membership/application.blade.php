@@ -168,8 +168,8 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="email" class="">ইমেইল এড্রেস *</label>
-                                <input type="email" name="email" id="email" autocomplete="off" required="" placeholder="একটি ভ্যালিড ইমেইল এড্রেস লিখুন">
+                                <label for="email" class="">ইমেইল এড্রেস <small>(ইমেইল না থাকলে ফাঁকা রাখুন)</small></label>
+                                <input type="email" name="email" id="email" autocomplete="off" placeholder="একটি ভ্যালিড ইমেইল এড্রেস লিখুন">
                             </div>
                           </div>
                         </div>
@@ -305,7 +305,21 @@
 
                         
 
-                        <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত (সদস্যপদ বাবদ ৫০০০/-)</h3>
+                        <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত</h3>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              {!! Form::label('application_payment_amount', 'পরিমাণ *') !!}
+                              {!! Form::text('application_payment_amount', null, array('class' => '', 'id' => 'application_payment_amount', 'placeholder' => 'পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required' => '')) !!}
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              {!! Form::label('application_payment_pay_slip', 'পে-স্লিপ নম্বর *') !!}
+                              {!! Form::text('application_payment_pay_slip', null, array('class' => '', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে-স্লিপ নম্বর লিখুন', 'required' => '')) !!}
+                            </div>
+                          </div>
+                        </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
@@ -319,15 +333,6 @@
                               {!! Form::text('application_payment_branch', null, array('class' => 'text_bangla', 'id' => 'application_payment_branch', 'placeholder' => 'ব্রাঞ্চের নাম বাংলায় লিখুন', 'required' => '')) !!}
                             </div>
                           </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              {!! Form::label('application_payment_pay_slip', 'পে-স্লিপ নম্বর *') !!}
-                              {!! Form::text('application_payment_pay_slip', null, array('class' => '', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
-                            </div>
-                          </div>
-                          <div class="col-md-6"></div>
                         </div>
                         <div class="row">
                           <div class="col-md-8">
@@ -512,8 +517,44 @@
         }, 500);
       }
 
+      if($('#application_payment_amount').val() % 500 == 0) {
+
+      } else {
+        toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
+        event.preventDefault();
+        $('#submitApplicationModal').modal('hide');
+        $('html, body').animate({
+            scrollTop: $('#name').offset().top - 170
+        }, 500);
+      }
+
+      if($('#application_payment_amount').val() < 5000) {
+        toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
+        event.preventDefault();
+        $('#submitApplicationModal').modal('hide');
+        $('html, body').animate({
+            scrollTop: $('#name').offset().top - 170
+        }, 500);
+      }
+
     })
       
+  </script>
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#application_payment_amount').blur(function() {
+        var value = $('#application_payment_amount').val();
+        if(value % 500 == 0) {
+
+        } else {
+          toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
+        }
+
+        if(value < 5000) {
+          toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
+        }
+      })
+    });
   </script>
   <script type="text/javascript">
     var _URL = window.URL || window.webkitURL;

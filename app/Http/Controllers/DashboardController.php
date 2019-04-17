@@ -87,6 +87,7 @@ class DashboardController extends Controller
     public function getAdmins()
     {
         $superadmins = User::where('role', 'admin')
+                           ->where('email', '!=', 'mannan@cvcsbd.com') // mannan@cvcsbd.com er ta dekhabe na!!!
                            ->where('role_type', 'admin')
                            ->paginate(10);
 
@@ -887,7 +888,7 @@ class DashboardController extends Controller
         $payment->member_id = $application->member_id;
         $payment->payer_id = $application->member_id;
         $payment->amount = 5000; // hard coded
-        $payment->bank =$application->application_payment_bank;
+        $payment->bank = $application->application_payment_bank;
         $payment->branch = $application->application_payment_branch;
         $payment->pay_slip = $application->application_payment_pay_slip;
         $payment->payment_status = 1; // approved
@@ -908,6 +909,35 @@ class DashboardController extends Controller
             $paymentreceipt->image = $application->application_payment_receipt;
             $paymentreceipt->save();
         }
+        if($application->application_payment_amount > 5000) {
+            $payment = new Payment;
+            $payment->member_id = $application->member_id;
+            $payment->payer_id = $application->member_id;
+            $payment->amount = $application->application_payment_amount - 5000; // IMPORTANT
+            $payment->bank = $application->application_payment_bank;
+            $payment->branch = $application->application_payment_branch;
+            $payment->pay_slip = $application->application_payment_pay_slip;
+            $payment->payment_status = 1; // approved (0 means pending)
+            $payment->payment_category = 1; // monthly payment (0 means membership)
+            $payment->payment_type = 1; // single payment (2 means bulk)
+            // generate payment_key
+            $payment_key_length = 10;
+            $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+            // generate payment_key
+            $payment->payment_key = $payment_key;
+            $payment->save();
+
+            // receipt upload
+            if($application->application_payment_receipt != '') {
+                $paymentreceipt = new Paymentreceipt;
+                $paymentreceipt->payment_id = $payment->id;
+                $paymentreceipt->image = $application->application_payment_receipt;
+                $paymentreceipt->save();
+            }
+        } else {
+
+        }
         // save the payment!
 
         // send activation SMS ... aro kichu kaaj baki ache...
@@ -922,7 +952,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Thanks. https://cvcsbd.com';
+        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Thanks. https://cvcsbd.com/login';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -1017,6 +1047,7 @@ class DashboardController extends Controller
     public function getMembers()
     {
         $members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')
                        ->orderBy('id', 'desc')->paginate(10);
 
         return view('dashboard.membership.members')->withMembers($members);
