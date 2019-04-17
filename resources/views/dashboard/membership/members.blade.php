@@ -10,7 +10,7 @@
     <h1>
       সদস্যগণ
       <div class="pull-right">
-        {{-- <a class="btn btn-success" href="{{ route('index.application') }}" target="_blank"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add Member</a> --}}
+        <a class="btn btn-success" href="{{ route('dashboard.members.search') }}"><i class="fa fa-fw fa-search" aria-hidden="true"></i> সদস্য খুঁজুন</a>
       </div>
     </h1>
 @stop

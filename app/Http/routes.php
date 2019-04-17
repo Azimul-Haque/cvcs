@@ -155,6 +155,10 @@ Route::delete('/dashboard/application/{id}/delete/', ['as'=>'dashboard.deleteapp
 Route::get('/dashboard/members', ['as'=>'dashboard.members','uses'=>'DashboardController@getMembers']);
 Route::get('/dashboard/member/single/{unique_key}', ['as'=>'dashboard.singlemember','uses'=>'DashboardController@getSingleMember']);
 
+// SEARCH MEMBER
+Route::get('/dashboard/members/search', ['as'=>'dashboard.members.search','uses'=>'DashboardController@getSearchMember']);
+Route::get('/dashboard/member/search/api', ['as'=>'dashboard.membersearchapi','uses'=>'DashboardController@searchMemberAPI']);
+
 // ACCOUNT MANAGEMENT AND PAYMENT
 Route::get('/dashboard/profile', ['as'=>'dashboard.profile','uses'=>'DashboardController@getProfile']);
 Route::get('/dashboard/member/payment', ['as'=>'dashboard.memberpayment','uses'=>'DashboardController@getPaymentPage']);

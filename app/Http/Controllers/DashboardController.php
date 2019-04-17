@@ -1055,6 +1055,21 @@ class DashboardController extends Controller
         return view('dashboard.membership.members')->withMembers($members);
     }
 
+    public function getSearchMember()
+    {
+        return view('dashboard.membership.searchmember');
+    }
+
+    public function searchMemberAPI(Request $request)
+    {
+        $response = User::select('name_bangla', 'member_id', 'mobile', 'unique_key')
+                        ->where('activation_status', 1)
+                        ->where('role_type', '!=', 'admin') // avoid the super admin type
+                        ->orderBy('id', 'desc')->get();
+
+        return $response;          
+    }
+
     public function getSingleMember($unique_key)
     {
         $member = User::where('unique_key', $unique_key)->first();
