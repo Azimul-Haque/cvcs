@@ -27,7 +27,7 @@
             position:absolute;
             left:50%;
             top:50%;
-            background-image:url({{ asset('https://i.imgur.com/jae9oaO.gif') }}); /* path to your loading animation */
+            background-image:url({{ asset('images/3362406.gif') }}); /* path to your loading animation */
             background-repeat:no-repeat;
             background-position:center;
             margin:-100px 0 0 -100px;
