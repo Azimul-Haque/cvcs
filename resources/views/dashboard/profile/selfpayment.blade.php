@@ -78,11 +78,11 @@
     $(document).ready( function() {
       $('#amount').blur(function() {
         var value = $('#amount').val();
-        if(value % 500 == 0) {
+        if(value == '') {
           if($(window).width() > 768) {
-            toastr.success('পরিমাণ ৫০০ এর গুণিতক', 'SUCCESS').css('width', '400px');
+            toastr.info('পরিমাণ ৫০০ এর গুণিতক', 'INFO').css('width', '400px');
           } else {
-            toastr.success('পরিমাণ ৫০০ এর গুণিতক', 'SUCCESS').css('width', ($(window).width()-25)+'px');
+            toastr.info('পরিমাণ ৫০০ এর গুণিতক', 'INFO').css('width', ($(window).width()-25)+'px');
           }
           $('#submitBtn').attr('disabled', false);
         } else {

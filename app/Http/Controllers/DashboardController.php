@@ -70,7 +70,9 @@ class DashboardController extends Controller
                            // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
                            // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
                            ->first();
-        $registeredmember = User::where('activation_status', 1)->count();                
+        $registeredmember = User::where('activation_status', 1)
+                                ->where('role_type', '!=', 'admin')                
+                                ->count();                
         $successfullpayments = payment::where('payment_status', 1)->count();                
 
         return view('dashboard.index')
