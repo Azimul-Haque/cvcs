@@ -151,7 +151,7 @@
                             <span>ড্যাশবোর্ড</span>
                         </a>
                     </li>
-                    @if(Auth::user()->role_type == 'admin')
+                    @if(Auth::user()->role_type == 'admin' && Auth::user()->email != 'dataentry@cvcsbd.com')
                     <li class="{{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} treeview">
                       <a href="#">
                           <i class="fa fa-fw fa-key"></i>
