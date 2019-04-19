@@ -83,7 +83,7 @@
                     পে-স্লিপ নম্বরঃ {{ $payment->pay_slip }}
                     @if(count($payment->paymentreceipts) > 0)
                       @foreach($payment->paymentreceipts as $paymentreceipt)
-                        <img src="{{ asset('images/receipts/'. $paymentreceipt->image) }}" alt="Album Image" class="img-responsive" style=""><br/>
+                        <img src="{{ asset('images/receipts/'. $paymentreceipt->image) }}" alt="Receipt Image" class="img-responsive" style=""><br/>
                       @endforeach
                     @endif
                   </div>

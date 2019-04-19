@@ -19,6 +19,7 @@ use App\Paymentreceipt;
 use App\Faq;
 use App\Committee;
 use App\Donor;
+use App\Donation;
 use App\Branch;
 
 use Illuminate\Support\Facades\DB;
@@ -40,7 +41,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual');
     }
 
     /**
@@ -204,9 +205,11 @@ class DashboardController extends Controller
     public function getDonors()
     {
         $donors = Donor::orderBy('id', 'desc')->paginate(10);
+        $donations = Donation::orderBy('id', 'desc')->paginate(10);
 
         return view('dashboard.adminsandothers.donors')
-                    ->withDonors($donors);
+                    ->withDonors($donors)
+                    ->withDonations($donations);
     }
 
     public function storeDonor(Request $request)
@@ -227,6 +230,66 @@ class DashboardController extends Controller
 
         Session::flash('success', 'সফলভাবে Donor (দাতা) সংরক্ষন হয়েছে!');
         return redirect()->route('dashboard.donors');
+    }
+
+    public function storeDonation(Request $request)
+    {
+        $this->validate($request,array(
+            'donor_id'       =>   'required',
+            'submitter_id'   =>   'required',
+            'amount'         =>   'required|integer',
+            'bank'           =>   'required',
+            'branch'         =>   'required',
+            'pay_slip'       =>   'required',
+            'image'          =>   'sometimes|image|max:500'
+        ));
+
+        $donation = new Donation;
+        $donation->donor_id = $request->donor_id;
+        $donation->submitter_id = $request->submitter_id;
+        $donation->amount = $request->amount;
+        $donation->bank = $request->bank;
+        $donation->branch = $request->branch;
+        $donation->pay_slip = $request->pay_slip;
+        $donation->payment_status = 0;
+        // generate payment_key
+        $payment_key_length = 10;
+        $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+        // generate payment_key
+        $donation->payment_key = $payment_key;
+        // receipt upload
+        if($request->hasFile('image')) {
+            $receipt      = $request->file('image');
+            $filename   = $request->submitter_id.'_donation_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
+            $location   = public_path('/images/receipts/'. $filename);
+            Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+            $donation->image = $filename;
+        }
+        $donation->save();
+
+        Session::flash('success', 'ডোনেশন সফলভাবে দাখিল করা হয়েছে!');
+        return redirect()->route('dashboard.donors');
+    }
+
+    public function approveDonation(Request $request, $id) 
+    {
+        $donation = Donation::find($id);
+        $donation->payment_status = 1;
+        $donation->save();
+
+        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        return redirect()->route('dashboard.donors');
+    }
+
+    public function getDonationofDonor($id)
+    {
+        $donor = Donor::find($id);
+        $donations = Donation::where('donor_id', $id)->paginate(10);
+
+        return view('dashboard.adminsandothers.donationsofdonor')
+                    ->withDonor($donor)
+                    ->withDonations($donations);
     }
 
     public function updateDonor(Request $request, $id)
@@ -685,7 +748,7 @@ class DashboardController extends Controller
             $image      = $request->file('image');
             $filename   = 'slider_' . time() .'.' . $image->getClientOriginalExtension();
             $location   = public_path('/images/slider/'. $filename);
-            Image::make($image)->resize(900, 300)->save($location);
+            Image::make($image)->resize(1200, 400)->save($location);
             $slider->image = $filename;
         }
         
@@ -790,7 +853,7 @@ class DashboardController extends Controller
             $image      = $request->file('image');
             $filename   = 'photo_'. time() .'.' . $image->getClientOriginalExtension();
             $location   = public_path('/images/gallery/'. $filename);
-            Image::make($image)->resize(600, 375)->save($location);
+            Image::make($image)->resize(700, 438)->save($location);
             $albumphoto = new Albumphoto;
             $albumphoto->album_id = $album->id;
             $albumphoto->image = $filename;
@@ -954,7 +1017,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Thanks. https://cvcsbd.com/login';
+        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Login: https://cvcsbd.com/login';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -1076,6 +1139,12 @@ class DashboardController extends Controller
 
         $members = User::all();
 
+        // for now, user can only see his profile, so if there is a change, then kaaj kora jaabe...
+        if((Auth::user()->role == 'member') && ($member->unique_key != Auth::user()->unique_key)) {
+            Session::flash('warning', ' দুঃখিত, আপনার এই পাতাটি দেখার অনুমতি নেই!');
+            return redirect()->route('dashboard.memberpayment');
+        }
+
         return view('dashboard.membership.singlemember')
                             ->withMember($member)
                             ->withMembers($members);
@@ -1143,8 +1212,8 @@ class DashboardController extends Controller
         $payment->branch = $request->branch;
         $payment->pay_slip = $request->pay_slip;
         $payment->payment_status = 0;
-        $payment->payment_category = 1; // monthly payment
-        $payment->payment_type = 1; // single payment
+        $payment->payment_category = 1; // monthly payment, if 0 then membership payment
+        $payment->payment_type = 1; // single payment, if 2 then bulk payment
         // generate payment_key
         $payment_key_length = 10;
         $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -1177,7 +1246,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Thanks. https://cvcsbd.com';
+        $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Login: https://cvcsbd.com/login';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -1312,7 +1381,7 @@ class DashboardController extends Controller
           'username'=>config('sms.username'),
           'password'=>config('sms.password'),
           'number'=>"$numbers",
-          'message'=>"Dear User, a payment is submitted against your account. We will notify you further updates. Thanks. https://cvcsbd.com"
+          'message'=>"Dear User, a payment is submitted against your account. We will notify you further updates. Login: https://cvcsbd.com/login"
         );
 
         $ch = curl_init(); // Initialize cURL
@@ -1399,7 +1468,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. https://cvcsbd.com';
+        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Login: Login: h/loginttps://cvcsbd.com/login';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -1479,7 +1548,7 @@ class DashboardController extends Controller
           'username'=>config('sms.username'),
           'password'=>config('sms.password'),
           'number'=>"$numbers",
-          'message'=>"Dear User, your payment is APPROVED successfully. Please signin to see details. Thanks. https://cvcsbd.com"
+          'message'=>"Dear User, your payment is APPROVED successfully. Please signin to see details. Login: https://cvcsbd.com/login"
         );
 
         $ch = curl_init(); // Initialize cURL

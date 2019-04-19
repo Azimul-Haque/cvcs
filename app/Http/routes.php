@@ -79,9 +79,14 @@ Route::get('/dashboard/admins/create', ['as'=>'dashboard.createadmin','uses'=>'D
 Route::get('/dashboard/admins/search', ['as'=>'dashboard.searchmemberforadmin','uses'=>'DashboardController@searchMemberForAdminAPI']);
 Route::post('/dashboard/admins/addadmin', ['as'=>'dashboard.addadmin','uses'=>'DashboardController@addAdmin']);
 Route::patch('/dashboard/admins/removeadmin/{id}', ['as'=>'dashboard.removeadmin','uses'=>'DashboardController@removeAdmin']);
+
 Route::get('/dashboard/donors', ['as'=>'dashboard.donors','uses'=>'DashboardController@getDonors']);
 Route::post('/dashboard/donors/store', ['as'=>'dashboard.storedonor','uses'=>'DashboardController@storeDonor']);
 Route::put('/dashboard/donors/update/{id}', ['as'=>'dashboard.updatedonor','uses'=>'DashboardController@updateDonor']);
+Route::post('/dashboard/donation/store', ['as'=>'dashboard.storedonation','uses'=>'DashboardController@storeDonation']);
+Route::patch('/dashboard/donation/approve/{id}', ['as'=>'dashboard.approvedonation','uses'=>'DashboardController@approveDonation']);
+Route::get('/dashboard/donor/donation/{id}/list', ['as'=>'dashboard.donationofdonor','uses'=>'DashboardController@getDonationofDonor']);
+
 Route::get('/dashboard/branches', ['as'=>'dashboard.branches','uses'=>'DashboardController@getBranches']);
 Route::post('/dashboard/branches/store', ['as'=>'dashboard.storebranch','uses'=>'DashboardController@storeBranch']);
 Route::put('/dashboard/branches/update/{id}', ['as'=>'dashboard.updatebranch','uses'=>'DashboardController@updateBranch']);

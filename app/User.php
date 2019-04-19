@@ -22,6 +22,10 @@ class User extends Authenticatable
       return $this->hasMany('App\Passwordresetsms');
     }
 
+    public function donations() {
+      return $this->hasMany('App\Donation', 'submitter_id', 'id');
+    }
+
     protected $fillable = [
         'name', 'email', 'password',
     ];

@@ -367,6 +367,19 @@ ul.errorlist > li {
     padding: 5px;
 }
 
+.text-lightgreen {
+    color: lightgreen;
+}
+
+.tooltip-inner {
+    min-width: 100px;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
 /* print css */
 @media print {
     header, .footer, footer {

@@ -144,109 +144,112 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     {{-- @each('adminlte::partials.menu-item', $adminlte->menu(), 'item') --}}
                     @if(Auth::user()->role == 'admin')
-                    <li class="header">ড্যাশবোর্ড</li>
-                    <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                        <a href="{{ route('dashboard.index') }}">
-                            <i class="fa fa-fw fa-tachometer"></i>
-                            <span>ড্যাশবোর্ড</span>
+                      {{-- <li class="header">ড্যাশবোর্ড</li> --}}
+                      <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                          <a href="{{ route('dashboard.index') }}">
+                              <i class="fa fa-fw fa-tachometer"></i>
+                              <span>ড্যাশবোর্ড</span>
+                          </a>
+                      </li>
+                      
+                      <li class="{{ Request::is('dashboard/branches') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donors') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donor/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} treeview">
+                        <a href="#">
+                            <i class="fa fa-fw fa-key"></i>
+                            <span>অ্যাডমিন কার্যক্রম</span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
-                    </li>
-                    @if(Auth::user()->role_type == 'admin' && Auth::user()->email != 'dataentry@cvcsbd.com')
-                    <li class="{{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} treeview">
-                      <a href="#">
-                          <i class="fa fa-fw fa-key"></i>
-                          <span>অ্যাডমিন ও অন্যান্য</span>
-                          <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                          </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li class="{{ Request::is('dashboard/admins') ? 'active' : '' }} {{ Request::is('dashboard/admins/create') ? 'active' : '' }}"><a href="{{ route('dashboard.admins') }}"><i class="fa fa-user-secret"></i> অ্যাডমিনগণ</a></li>
-                        <li class="{{ Request::is('dashboard/bulk/payers') ? 'active' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active' : '' }}"><a href="{{ route('dashboard.bulkpayers') }}"><i class="fa fa-users"></i> একাধিক পরিশোধকারীগণ</a></li>
-                      </ul>
-                    </li>
-                    @endif
-                    <li class="{{ Request::is('dashboard/donors') ? 'active' : '' }}"><a href="{{ route('dashboard.donors') }}"><i class="fa fa-trophy"></i> ডোনার তালিকা</a></li>
-                    <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol"></i> ব্রাঞ্চ তালিকা</a></li>
-                    <li class="header">হোমপেইজ কাস্টমাইজেশন</li>
-                    <li class="{{ Request::is('dashboard/committee') ? 'active menu-open' : '' }} {{ Request::is('dashboard/abouts') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/events') ? 'active menu-open' : '' }} {{ Request::is('dashboard/notice') ? 'active menu-open' : '' }} {{ Request::is('dashboard/form/messages') ? 'active menu-open' : '' }} {{ Request::is('dashboard/slider') ? 'active menu-open' : '' }} {{ Request::is('dashboard/faq') ? 'active menu-open' : '' }} treeview">
-                      <a href="#">
-                          <i class="fa fa-fw fa-cogs"></i>
-                          <span>হোমপেইজ কাস্টমাইজেশন</span>
-                          <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                          </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li class="{{ Request::is('dashboard/committee') ? 'active' : '' }}"><a href="{{ route('dashboard.committee') }}"><i class="fa fa-coffee"></i> কমিটি</a></li>
-                        <li class="{{ Request::is('dashboard/slider') ? 'active' : '' }}"><a href="{{ route('dashboard.slider') }}"><i class="fa fa-list-alt"></i> স্লাইডার</a></li>
-                        <li class="{{ Request::is('dashboard/abouts') ? 'active' : '' }}"><a href="{{ route('dashboard.abouts') }}"><i class="fa fa-pencil"></i> তথ্য এবং টেক্সট</a></li>
-                        <li class="{{ Request::is('dashboard/gallery') ? 'active' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active' : '' }}"><a href="{{ route('dashboard.gallery') }}"><i class="fa fa-picture-o"></i> গ্যালারি</a></li>
-                        <li class="{{ Request::is('dashboard/events') ? 'active' : '' }}"><a href="{{ route('dashboard.events') }}"><i class="fa fa-bullhorn"></i> ইভেন্ট</a></li>
-                        <li class="{{ Request::is('dashboard/notice') ? 'active' : '' }}"><a href="{{ route('dashboard.notice') }}"><i class="fa fa-bell-o"></i> নোটিশ</a></li>
-                        <li class="{{ Request::is('dashboard/faq') ? 'active' : '' }}"><a href="{{ route('dashboard.faq') }}"><i class="fa fa-question-circle-o"></i> FAQ</a></li>
-                        <li class="{{ Request::is('dashboard/form/messages') ? 'active' : '' }}"><a href="{{ route('dashboard.formmessage') }}"><i class="fa fa-envelope-o"></i> ফরম মেসেজ</a></li>
-                      </ul>
-                    </li>
+                        <ul class="treeview-menu">
+                          @if((Auth::user()->role_type == 'admin') && (Auth::user()->email != 'dataentry@cvcsbd.com'))
+                          <li class="{{ Request::is('dashboard/admins') ? 'active' : '' }} {{ Request::is('dashboard/admins/create') ? 'active' : '' }}"><a href="{{ route('dashboard.admins') }}"><i class="fa fa-user-secret text-aqua"></i> অ্যাডমিনগণ</a></li>
+                          <li class="{{ Request::is('dashboard/bulk/payers') ? 'active' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active' : '' }}"><a href="{{ route('dashboard.bulkpayers') }}"><i class="fa fa-users text-yellow"></i> একাধিক পরিশোধকারীগণ</a></li>
+                          @endif
+                          <li class="{{ Request::is('dashboard/donors') ? 'active' : '' }} {{ Request::is('dashboard/donor/*') ? 'active' : '' }}"><a href="{{ route('dashboard.donors') }}"><i class="fa fa-trophy text-lightgreen"></i> ডোনেশন</a></li>
+                          <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol text-green"></i> ব্রাঞ্চ পেমেন্ট</a></li>
+                        </ul>
+                      </li>
+                      
+                      {{-- <li class="header">হোমপেইজ কাস্টমাইজেশন</li> --}}
+                      <li class="{{ Request::is('dashboard/committee') ? 'active menu-open' : '' }} {{ Request::is('dashboard/abouts') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/events') ? 'active menu-open' : '' }} {{ Request::is('dashboard/notice') ? 'active menu-open' : '' }} {{ Request::is('dashboard/form/messages') ? 'active menu-open' : '' }} {{ Request::is('dashboard/slider') ? 'active menu-open' : '' }} {{ Request::is('dashboard/faq') ? 'active menu-open' : '' }} treeview">
+                        <a href="#">
+                            <i class="fa fa-fw fa-cogs"></i>
+                            <span>হোমপেইজ কাস্টমাইজেশন</span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                          <li class="{{ Request::is('dashboard/committee') ? 'active' : '' }}"><a href="{{ route('dashboard.committee') }}"><i class="fa fa-coffee"></i> কমিটি</a></li>
+                          <li class="{{ Request::is('dashboard/slider') ? 'active' : '' }}"><a href="{{ route('dashboard.slider') }}"><i class="fa fa-list-alt"></i> স্লাইডার</a></li>
+                          <li class="{{ Request::is('dashboard/abouts') ? 'active' : '' }}"><a href="{{ route('dashboard.abouts') }}"><i class="fa fa-pencil"></i> তথ্য এবং টেক্সট</a></li>
+                          <li class="{{ Request::is('dashboard/gallery') ? 'active' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active' : '' }}"><a href="{{ route('dashboard.gallery') }}"><i class="fa fa-picture-o"></i> গ্যালারি</a></li>
+                          <li class="{{ Request::is('dashboard/events') ? 'active' : '' }}"><a href="{{ route('dashboard.events') }}"><i class="fa fa-bullhorn"></i> ইভেন্ট</a></li>
+                          <li class="{{ Request::is('dashboard/notice') ? 'active' : '' }}"><a href="{{ route('dashboard.notice') }}"><i class="fa fa-bell-o"></i> নোটিশ</a></li>
+                          <li class="{{ Request::is('dashboard/faq') ? 'active' : '' }}"><a href="{{ route('dashboard.faq') }}"><i class="fa fa-question-circle-o"></i> FAQ</a></li>
+                          <li class="{{ Request::is('dashboard/form/messages') ? 'active' : '' }}"><a href="{{ route('dashboard.formmessage') }}"><i class="fa fa-envelope-o"></i> ফরম মেসেজ</a></li>
+                        </ul>
+                      </li>
 
-                    <li class="header">মেম্বারশিপ ম্যানেজমেন্ট</li>
-                    <li class="{{ Request::is('dashboard/applications') ? 'active' : '' }}">
-                        <a href="{{ route('dashboard.applications') }}">
-                            <i class="fa fa-fw fa-user-plus"></i>
-                            <span>আবেদনসমূহ</span>
+                      {{-- <li class="header">মেম্বারশিপ ম্যানেজমেন্ট</li> --}}
+                      <li class="{{ Request::is('dashboard/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} treeview">
+                        <a href="#">
+                            <i class="fa fa-fw fa-handshake-o"></i>
+                            <span>মেম্বারশিপ ম্যানেজমেন্ট</span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
-                    </li>
-                    <li class="{{ Request::is('dashboard/members') ? 'active' : '' }}">
-                        <a href="{{ route('dashboard.members') }}">
-                            <i class="fa fa-fw fa-users"></i>
-                            <span>সদস্যগণ</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} treeview">
-                      <a href="#">
-                          <i class="fa fa-fw fa-handshake-o"></i>
-                          <span>পরিশোধসমূহ</span>
-                          <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                          </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li class="{{ Request::is('dashboard/members/payments/pending') ? 'active' : '' }}"><a href="{{ route('dashboard.memberspendingpayments') }}"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন পরিশোধসমূহ</a></li>
-                        <li class="{{ Request::is('dashboard/members/payments/approved') ? 'active' : '' }}"><a href="{{ route('dashboard.membersapprovedpayments') }}"><i class="fa fa-check-square-o"></i> অনুমোদিত পরিশোধসমূহ</a></li>
-                      </ul>
-                    </li>
+                        <ul class="treeview-menu">
+                          <li class="{{ Request::is('dashboard/applications') ? 'active' : '' }}"><a href="{{ route('dashboard.applications') }}"><i class="fa fa-user-plus"></i> আবেদনসমূহ</a></li>
+                          <li class="{{ Request::is('dashboard/members') ? 'active' : '' }}"><a href="{{ route('dashboard.members') }}"><i class="fa fa-users"></i><span> সদস্যগণ</span></a></li>
+                          <li class="{{ Request::is('dashboard/members/payments/pending') ? 'active' : '' }}"><a href="{{ route('dashboard.memberspendingpayments') }}"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন পরিশোধসমূহ</a></li>
+                          <li class="{{ Request::is('dashboard/members/payments/approved') ? 'active' : '' }}"><a href="{{ route('dashboard.membersapprovedpayments') }}"><i class="fa fa-check-square-o"></i> অনুমোদিত পরিশোধসমূহ</a></li>
+                        </ul>
+                      </li>
                     @endif
                     
                     @if((Auth::user()->role == 'admin') || (Auth::user()->role == 'member'))
-                    <li class="header">একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</li>
-                    <li class="{{ Request::is('dashboard/profile') ? 'active' : '' }}">
-                        <a href="{{ route('dashboard.profile') }}">
-                            <i class="fa fa-fw fa-user"></i>
-                            <span>ব্যক্তিগত প্রোফাইল</span>
+                      {{-- <li class="header">একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</li> --}}
+                      <li class="{{ Request::is('dashboard/profile') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/transaction/summary') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/user/manual') ? 'active menu-open' : '' }} treeview">
+                        <a href="#">
+                            <i class="fa fa-fw fa-wrench"></i>
+                            <span>একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
-                    </li>
-                    <li class="{{ Request::is('dashboard/member/payment') ? 'active' : '' }}">
-                        <a href="{{ route('dashboard.memberpayment') }}">
-                            <i class="fa fa-fw fa-handshake-o"></i>
-                            <span>পরিশোধ</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::is('dashboard/member/transaction/summary') ? 'active' : '' }}">
-                        <a href="{{ route('dashboard.membertransactionsummary') }}">
-                            <i class="fa fa-fw fa-bar-chart"></i>
-                            <span>লেনদেন বিবরণ</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::is('dashboard/member/user/manual') ? 'active' : '' }}">
-                        <a href="{{ route('dashboard.memberusermanual') }}">
-                            <i class="fa fa-fw fa-umbrella"></i>
-                            <span>ব্যবহার বিধি</span>
-                        </a>
-                    </li>
+                        <ul class="treeview-menu">
+                          <li class="{{ Request::is('dashboard/profile') ? 'active' : '' }}">
+                              <a href="{{ route('dashboard.profile') }}">
+                                  <i class="fa fa-fw fa-user"></i>
+                                  <span>ব্যক্তিগত প্রোফাইল</span>
+                              </a>
+                          </li>
+                          <li class="{{ Request::is('dashboard/member/payment') ? 'active' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active' : '' }}">
+                              <a href="{{ route('dashboard.memberpayment') }}">
+                                  <i class="fa fa-fw fa-handshake-o"></i>
+                                  <span>পরিশোধ</span>
+                              </a>
+                          </li>
+                          <li class="{{ Request::is('dashboard/member/transaction/summary') ? 'active' : '' }}">
+                              <a href="{{ route('dashboard.membertransactionsummary') }}">
+                                  <i class="fa fa-fw fa-bar-chart"></i>
+                                  <span>লেনদেন বিবরণ</span>
+                              </a>
+                          </li>
+                          <li class="{{ Request::is('dashboard/member/user/manual') ? 'active' : '' }}">
+                              <a href="{{ route('dashboard.memberusermanual') }}">
+                                  <i class="fa fa-fw fa-umbrella"></i>
+                                  <span>ব্যবহার বিধি</span>
+                              </a>
+                          </li>
+                        </ul>
+                      </li>
                     @endif
                     
-                    @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'bulkpayer'))
-                    <li class="header">একাধিক পরিশোধ সংক্রান্ত</li>
+                    @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'manager') || (Auth::user()->role_type == 'bulkpayer'))
+                    {{-- <li class="header">একাধিক পরিশোধ সংক্রান্ত</li> --}}
                     <li class="{{ Request::is('dashboard/member/payment/bulk') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.memberpaymentbulk') }}">
                             <i class="fa fa-fw fa-cubes"></i>

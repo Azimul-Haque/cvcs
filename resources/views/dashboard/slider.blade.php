@@ -152,7 +152,7 @@
                   $("#img-upload").attr('src', '{{ asset('images/300x100.png') }}');
                 }, 1000);
               }
-              if(imagewidth/imageheight != 3) {
+              if(((imagewidth/imageheight) < 2.9375) || ((imagewidth/imageheight) > 3.07142)) {
                 $("#image").val('');
                 toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:৩ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');
                 setTimeout(function() {
