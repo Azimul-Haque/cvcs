@@ -77,7 +77,7 @@ class DashboardController extends Controller
         $successfullpayments = Payment::where('payment_status', 1)->count();
 
         $lastsixmembers = User::where('activation_status', 1)
-                              ->where('role', 'admin')
+                              ->where('role', 'member')
                               ->orderBy('created_at', 'desc')
                               ->take(6)->get();
 
