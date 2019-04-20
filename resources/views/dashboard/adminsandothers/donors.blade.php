@@ -152,9 +152,9 @@
                     <!-- Edit Donor Modal -->
                     <!-- Edit Donor Modal -->
                     <div class="modal fade" id="editModal{{ $donor->id }}" role="dialog">
-                      <div class="modal-dialog modal-md">
+                      <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                          <div class="modal-header modal-header-primary">
+                          <div class="modal-header modal-header-success">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">সম্পাদনা</h4>
                           </div>
@@ -190,7 +190,7 @@
                               </div>
                             </div>
                             <div class="modal-footer">
-                              {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary')) !!}
+                              {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-success')) !!}
                               <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                             </div>
                           {!! Form::close() !!}

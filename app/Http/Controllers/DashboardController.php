@@ -74,13 +74,19 @@ class DashboardController extends Controller
         $registeredmember = User::where('activation_status', 1)
                                 ->where('role_type', '!=', 'admin')                
                                 ->count();                
-        $successfullpayments = payment::where('payment_status', 1)->count();                
+        $successfullpayments = Payment::where('payment_status', 1)->count();
+
+        $lastsixmembers = User::where('activation_status', 1)
+                              ->where('role', 'admin')
+                              ->orderBy('created_at', 'desc')
+                              ->take(6)->get();
 
         return view('dashboard.index')
                     ->withTotalpending($totalpending)
                     ->withTotalapproved($totalapproved)
                     ->withRegisteredmember($registeredmember)
-                    ->withSuccessfullpayments($successfullpayments);
+                    ->withSuccessfullpayments($successfullpayments)
+                    ->withLastsixmembers($lastsixmembers);
                     // ->withWhatwedo($whatwedo)
                     // ->withAtaglance($ataglance)
                     // ->withMembership($membership)

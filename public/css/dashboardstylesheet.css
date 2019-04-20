@@ -380,6 +380,13 @@ ul.errorlist > li {
     border-top-right-radius: 0px;
 }
 
+.users-list>li {
+    width: 33% !important;
+    float: left;
+    padding: 10px;
+    text-align: center;
+}
+
 /* print css */
 @media print {
     header, .footer, footer {

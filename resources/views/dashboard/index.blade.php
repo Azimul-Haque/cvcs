@@ -85,4 +85,43 @@
 	        </div>
 		</div>
     </div>
+
+    <div class="row">
+    	<div class="col-md-3"></div>
+    	<div class="col-md-3"></div>
+    	<div class="col-md-3">
+	        <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">সর্বশেষ নিবন্ধিত</h3>
+
+                  <div class="box-tools pull-right">
+                    {{-- <span class="label label-primary">৬ জন সদস্য</span> --}}
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <ul class="users-list clearfix">
+                  	@foreach($lastsixmembers as $lastsixmember)
+                  	<li>
+                  	  <img src="{{ asset('images/users/'. $lastsixmember->image) }}" alt="User Image">
+                  	  <a class="users-list-name" href="#">{{ $lastsixmember->name_bangla }}</a>
+                  	  <span class="users-list-date">{{ date('F d, Y', strtotime($lastsixmember->created_at)) }}</span>
+                  	</li>
+                  	@endforeach
+                  </ul>
+                  <!-- /.users-list -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                  <a href="{{ route('dashboard.members') }}" class="uppercase">সকল সদস্য দেখুন</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+    	</div>
+    	<div class="col-md-3"></div>
+    </div>
 @stop
