@@ -1023,7 +1023,10 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Login: https://cvcsbd.com/login';
+        $text = 'Dear ' . $application->name . ', your membership application has been approved! You can login and do stuffs. Your ID: '. $application->member_id .' and Email: '. $application->email .'. Login: https://cvcsbd.com/login';
+        // this sms costs 2 SMS
+        // this sms costs 2 SMS
+        
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
