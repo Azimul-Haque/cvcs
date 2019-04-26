@@ -164,7 +164,7 @@
                   <td>{{ $application->father }}</td>
                 </tr>
                 <tr>
-                  <th>পিতার নাম</th>
+                  <th>মাতার নাম</th>
                   <td>{{ $application->mother }}</td>
                 </tr>
               </tbody>
@@ -263,7 +263,13 @@
                   </td>
                 </tr>
                 <tr>
-                  <th>পরিচয় সংক্রান্ত দলিল</th>
+                  <th>
+                    @if($application->nominee_one_identity_type == 0)
+                      জাতীয় পরিচয়পত্র নং
+                    @else
+                      জন্ম নিবন্ধন নং
+                    @endif
+                  </th>
                   <td>{{ $application->nominee_one_relation }}</td>
                 </tr>
                 <tr>

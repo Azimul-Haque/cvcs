@@ -324,7 +324,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               {!! Form::label('application_payment_bank', 'ব্যাংকের নাম *') !!}
-                              {!! Form::text('application_payment_bank', null, array('class' => 'text_bangla', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি বাংলায় লিখুন')) !!}
+                              {!! Form::text('application_payment_bank', 'ডাচ বাংলা ব্যাংক', array('class' => 'text_bangla', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি বাংলায় লিখুন')) !!}
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -415,7 +415,10 @@
       } else {
         return value;
       }
-    } 
+    }
+    $('#name').keyup(function(){
+        this.value = this.value.toUpperCase();
+    });
     $(document).ready(function() {
         $("#dtBox").DateTimePicker({
             mode:"date",

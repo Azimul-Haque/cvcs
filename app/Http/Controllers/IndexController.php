@@ -343,6 +343,43 @@ class IndexController extends Controller
         // generate unique_key
         $application->unique_key = $unique_key;
         $application->save();
+
+        // send activation SMS ... aro kichu kaaj baki ache...
+        // send sms
+        $mobile_number = 0;
+        if(strlen($application->mobile) == 11) {
+            $mobile_number = '88'.$application->mobile;
+        } elseif(strlen($application->mobile) > 11) {
+            if (strpos($application->mobile, '+') !== false) {
+                $mobile_number = substr($application->mobile,0,1);
+            }
+        }
+        $url = config('sms.url');
+        $number = $mobile_number;
+        $text = 'Dear ' . $application->name . ', your membership application has been submitter! We will notify you when we approve. Thanks. Visit: https://cvcsbd.com';
+        // this sms costs 2 SMS
+        // this sms costs 2 SMS
+        
+        $data= array(
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            'number'=>"$number",
+            'message'=>"$text"
+        );
+        // initialize send status
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        // send sms
+        if($sendstatus == 1101) {
+            // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } else {
+            // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        }
         
         Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে আবেদনটি গৃহীত হওয়া পর্যন্ত অপেক্ষা করুন।');
 
