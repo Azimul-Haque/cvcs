@@ -356,7 +356,7 @@ class IndexController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $application->name . ', your membership application has been submitter! We will notify you when we approve. Thanks. Visit: https://cvcsbd.com';
+        $text = 'Dear ' . $application->name . ', your membership application has been submitted! We will notify you when we approve. Thanks. Visit: https://cvcsbd.com';
         // this sms costs 2 SMS
         // this sms costs 2 SMS
         
