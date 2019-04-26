@@ -144,7 +144,7 @@
                   <td>{{ $member->father }}</td>
                 </tr>
                 <tr>
-                  <th>পিতার নাম</th>
+                  <th>মাতার নাম</th>
                   <td>{{ $member->mother }}</td>
                 </tr>
               </tbody>
@@ -243,7 +243,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <th>পরিচয় সংক্রান্ত দলিল</th>
+                  <th>সম্পর্ক</th>
                   <td>{{ $member->nominee_one_relation }}</td>
                 </tr>
                 <tr>

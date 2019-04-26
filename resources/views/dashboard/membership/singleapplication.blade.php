@@ -264,11 +264,7 @@
                 </tr>
                 <tr>
                   <th>
-                    @if($application->nominee_one_identity_type == 0)
-                      জাতীয় পরিচয়পত্র নং
-                    @else
-                      জন্ম নিবন্ধন নং
-                    @endif
+                    সম্পর্ক
                   </th>
                   <td>{{ $application->nominee_one_relation }}</td>
                 </tr>
