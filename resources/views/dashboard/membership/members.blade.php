@@ -10,14 +10,42 @@
     <h1>
       সদস্যগণ
       <div class="pull-right">
-        <a class="btn btn-success" href="{{ route('dashboard.members.search') }}"><i class="fa fa-fw fa-search" aria-hidden="true"></i> সদস্য খুঁজুন</a>
+        
+        {{-- <a class="btn btn-success" href="{{ route('dashboard.members.search') }}"><i class="fa fa-fw fa-search" aria-hidden="true"></i> সদস্য খুঁজুন</a> --}}
       </div>
     </h1>
 @stop
 
 @section('content')
+  <div class="row">
+    <div class="col-md-6">
+      <input type="text" id="search" class="form-control" placeholder="&#xF002; খুঁজুন (কমপক্ষে ৫ টি সংখ্যা বা অক্ষর লিখুন)" style="font-family:Arial, FontAwesome"><br/>
+    </div>
+    <div class="col-md-6">
+      <span style="color: #008D4C;" id="total_records"></span>
+    </div>
+  </div>
+
   <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="table table-striped table-bordered" id="searchTable">
+      <thead>
+        <tr>
+          <th>নাম</th>
+          <th>মেম্বার আইডি</th>
+          <th>যোগাযোগ</th>
+          <th>অফিস তথ্য</th>
+          <th>ছবি</th>
+          <th width="10%">Action</th>
+        </tr>
+      </thead>
+     <tbody id="searchtbody">
+
+     </tbody>
+    </table>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered" id="mainTable">
       <thead>
         <tr>
           <th>নাম</th>
@@ -55,9 +83,50 @@
       </tbody>
     </table>
   </div>
-  {{ $members->links() }}
+  <div id="mainLink">
+    {{ $members->links() }}
+  </div>
 @stop
 
 @section('js')
+  <script>
+    $(document).ready(function(){
+     $('#searchTable').hide();
+     function searchMember(query = '')
+     {
+      $.ajax({
+       url:"{{ route('dashboard.membersearchapi2') }}",
+       method:'GET',
+       data:{query:query},
+       dataType:'json',
+       success:function(data)
+       {
+        $('#searchtbody').html(data.table_data);
+        $('#total_records').text(data.total_data);
+       }
+      })
+     }
 
+     $(document).on('keyup', '#search', function(){
+      var query = $(this).val();
+      if(query.length == 0) {
+        $('#searchTable').hide();
+        $('#total_records').hide();
+        $('#mainTable').show();
+        $('#mainLink').show();
+      } else {
+        if(query.length < 5) {
+
+        } else {
+          $('#mainTable').hide();
+          $('#mainLink').hide();
+          $('#searchTable').show();
+          $('#total_records').show();
+          searchMember(query);
+        }
+      }
+      
+     });
+    });
+  </script>
 @stop

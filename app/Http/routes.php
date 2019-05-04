@@ -155,6 +155,7 @@ Route::get('/dashboard/application/single/{unique_key}', ['as'=>'dashboard.singl
 Route::patch('/dashboard/application/{id}/activate', ['as'=>'dashboard.activatemember','uses'=>'DashboardController@activateMember']);
 Route::post('/dashboard/application/send/sms/', ['as'=>'dashboard.sendsmsapplicant','uses'=>'DashboardController@sendSMSApplicant']);
 Route::delete('/dashboard/application/{id}/delete/', ['as'=>'dashboard.deleteapplication','uses'=>'DashboardController@deleteApplication']);
+Route::get('/dashboard/application/search/api', ['as'=>'dashboard.applicationsearchapi','uses'=>'DashboardController@searchApplicationAPI']);
 
 // MEMBERS
 Route::get('/dashboard/members', ['as'=>'dashboard.members','uses'=>'DashboardController@getMembers']);
@@ -163,6 +164,7 @@ Route::get('/dashboard/member/single/{unique_key}', ['as'=>'dashboard.singlememb
 // SEARCH MEMBER
 Route::get('/dashboard/members/search', ['as'=>'dashboard.members.search','uses'=>'DashboardController@getSearchMember']);
 Route::get('/dashboard/member/search/api', ['as'=>'dashboard.membersearchapi','uses'=>'DashboardController@searchMemberAPI']);
+Route::get('/dashboard/member/search/api/2', ['as'=>'dashboard.membersearchapi2','uses'=>'DashboardController@searchMemberAPI2']);
 
 // ACCOUNT MANAGEMENT AND PAYMENT
 Route::get('/dashboard/profile', ['as'=>'dashboard.profile','uses'=>'DashboardController@getProfile']);

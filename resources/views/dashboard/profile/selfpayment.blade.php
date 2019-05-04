@@ -76,6 +76,11 @@
   {!!Html::script('js/parsley.min.js')!!}
   <script type="text/javascript">
     $(document).ready( function() {
+
+      $('form').submit(function() {
+        $('#submitBtn').attr('disabled', true);
+      });
+
       $('#amount').blur(function() {
         var value = $('#amount').val();
         if(value == '') {

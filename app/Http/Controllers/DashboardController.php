@@ -1118,11 +1118,74 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.singleapplication', $request->unique_key);
     }
 
+    public function searchApplicationAPI(Request $request)
+    {
+        if($request->ajax())
+        {
+          $output = '';
+          $query = $request->get('query');
+          if($query != '')
+          {
+           $data = DB::table('users')
+                    ->where('activation_status', 0)
+                    ->where('role_type', '!=', 'admin') // avoid the super admin type
+                    ->where(function($newquery) use ($query) {
+                        $newquery->where('name', 'like', '%'.$query.'%')
+                                 ->orWhere('name_bangla', 'like', '%'.$query.'%')
+                                 ->orWhere('mobile', 'like', '%'.$query.'%')
+                                 ->orWhere('email', 'like', '%'.$query.'%');
+                    })
+                    ->orderBy('id', 'desc')
+                    ->get();
+          }
+
+          $total_row = count($data);
+          if($total_row > 0)
+          {
+           foreach($data as $row)
+           {
+            $output .= '
+            <tr>
+             <td>
+                <a href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন">
+                  '. $row->name_bangla .'<br/> '. $row->name .'
+                </a>
+             </td>
+             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
+             <td>'.$row->office.'<br/>'.$row->profession.' ('. $row->designation .')</td>
+             <td>৳ '. $row->application_payment_amount .'<br/>'. $row->application_payment_bank .' ('. $row->application_payment_branch .')</td>
+            ';
+            if($row->image != null) {
+                $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
+            } else {
+                $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
+            }
+            $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singleapplication', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a></td>
+            </tr>';
+           }
+          }
+          else
+          {
+           $output = '
+           <tr>
+            <td align="center" colspan="6">পাওয়া যায়নি!</td>
+           </tr>
+           ';
+          }
+          $data = array(
+           'table_data'  => $output,
+           'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
+          );
+
+          echo json_encode($data);
+        }        
+    }
+
     public function getMembers()
     {
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
-                       ->orderBy('id', 'desc')->paginate(10);
+                       ->orderBy('id', 'desc')->paginate(20);
 
         return view('dashboard.membership.members')->withMembers($members);
     }
@@ -1140,6 +1203,70 @@ class DashboardController extends Controller
                         ->orderBy('id', 'desc')->get();
 
         return $response;          
+    }
+
+    public function searchMemberAPI2(Request $request)
+    {
+        if($request->ajax())
+        {
+          $output = '';
+          $query = $request->get('query');
+          if($query != '')
+          {
+           $data = DB::table('users')
+                    ->where('activation_status', 1)
+                    ->where('role_type', '!=', 'admin') // avoid the super admin type
+                    ->where(function($newquery) use ($query) {
+                        $newquery->where('name', 'like', '%'.$query.'%')
+                                 ->orWhere('name_bangla', 'like', '%'.$query.'%')
+                                 ->orWhere('member_id', 'like', '%'.$query.'%')
+                                 ->orWhere('mobile', 'like', '%'.$query.'%')
+                                 ->orWhere('email', 'like', '%'.$query.'%');
+                    })
+                    ->orderBy('id', 'desc')
+                    ->get();
+          }
+
+          $total_row = count($data);
+          if($total_row > 0)
+          {
+           foreach($data as $row)
+           {
+            $output .= '
+            <tr>
+             <td>
+                <a href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন">
+                  '. $row->name_bangla .'<br/> '. $row->name .'
+                </a>
+             </td>
+             <td><big><b>'.$row->member_id.'</big></b></td>
+             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
+             <td>'.$row->office.'<br/>'.$row->profession.' ('. $row->designation .')</td>
+            ';
+            if($row->image != null) {
+                $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
+            } else {
+                $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
+            }
+            $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a></td>
+            </tr>';
+           }
+          }
+          else
+          {
+           $output = '
+           <tr>
+            <td align="center" colspan="6">পাওয়া যায়নি!</td>
+           </tr>
+           ';
+          }
+          $data = array(
+           'table_data'  => $output,
+           'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
+          );
+
+          echo json_encode($data);
+        }        
     }
 
     public function getSingleMember($unique_key)

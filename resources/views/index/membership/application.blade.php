@@ -90,16 +90,16 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="spouse" class="">স্বামী/স্ত্রীর নাম *</label>
-                                <input type="text" name="spouse" id="spouse" class="text_bangla" required="" placeholder="স্বামী/স্ত্রীর নাম বাংলায় লিখুন">
+                                <label for="spouse" class="">স্বামী/স্ত্রীর নাম</label>
+                                <input type="text" name="spouse" id="spouse" class="text_bangla" placeholder="স্বামী/স্ত্রীর নাম বাংলায় লিখুন">
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="spouse_profession" class="">স্বামী/স্ত্রীর পেশা *</label>
-                                <input type="text" name="spouse_profession" id="spouse_profession" class="text_bangla" required="" placeholder="স্বামী/স্ত্রীর পেশা বাংলায় লিখুন">
+                                <label for="spouse_profession" class="">স্বামী/স্ত্রীর পেশা</label>
+                                <input type="text" name="spouse_profession" id="spouse_profession" class="text_bangla" placeholder="স্বামী/স্ত্রীর পেশা বাংলায় লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -391,7 +391,7 @@
             </ul>
           </div>
           <div class="modal-footer">
-                <button type="submit" class="btn highlight-button-royal-blue btn-bg margin-five no-margin-right" type="submit">আবেদন জমা দিন</button>
+                <button type="submit" class="btn highlight-button-royal-blue btn-bg margin-five no-margin-right" type="submit" id="submit_btn">আবেদন জমা দিন</button>
                 <button type="button" class="btn highlight-button btn-bg margin-five no-margin-right" data-dismiss="modal">ফিরে যান</button>
           </div>
         </div>
@@ -540,6 +540,9 @@
         }, 500);
       }
 
+      deferred.success(function () {
+          $("#submit_btn").prop("disabled",true);
+      });
     })
       
   </script>
