@@ -913,7 +913,7 @@ class DashboardController extends Controller
     public function getApplications()
     {
         $applications = User::where('activation_status', 0)
-                            ->orderBy('id', 'asc')->paginate(10);
+                            ->orderBy('id', 'asc')->paginate(20);
 
         return view('dashboard.membership.applications')
                             ->withApplications($applications);
