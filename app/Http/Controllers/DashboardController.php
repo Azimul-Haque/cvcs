@@ -1147,7 +1147,7 @@ class DashboardController extends Controller
             $output .= '
             <tr>
              <td>
-                <a href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন">
+                <a href="'. route('dashboard.singleapplication', $row->unique_key) .'" title="সদস্য তথ্য দেখুন">
                   '. $row->name_bangla .'<br/> '. $row->name .'
                 </a>
              </td>
