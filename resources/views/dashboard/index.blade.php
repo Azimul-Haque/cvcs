@@ -108,7 +108,7 @@
                   	@foreach($lastsixmembers as $lastsixmember)
                   	<li>
                   	  <img src="{{ asset('images/users/'. $lastsixmember->image) }}" alt="User Image">
-                  	  <a class="users-list-name" href="#">{{ $lastsixmember->name_bangla }}</a>
+                  	  <a class="users-list-name" href="{{ route('dashboard.singlemember', $lastsixmember->unique_key) }}">{{ $lastsixmember->name_bangla }}</a>
                   	  <span class="users-list-date">{{ date('F d, Y', strtotime($lastsixmember->created_at)) }}</span>
                   	</li>
                   	@endforeach
