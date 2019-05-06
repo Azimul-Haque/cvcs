@@ -67,6 +67,96 @@
 @stop
 
 @section('content')
+  <div class="row">
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-aqua">
+        <div class="inner">
+          <h3>
+            @if(empty($pendingfordashboard->totalamount))
+              0.00
+            @else
+              {{ $pendingfordashboard->totalamount }}
+            @endif
+            <sup style="font-size: 20px">৳</sup>
+          </h3>
+
+          <p>প্রক্রিয়াধীন অর্থ</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-loop"></i>
+        </div>
+        {{-- <a href="{{ route('dashboard.memberpayment') }}" class="small-box-footer">আরও দেখুন <i class="fa fa-arrow-circle-right"></i></a> --}}
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>
+            @if(empty($approvedfordashboard->totalamount))
+              0.00
+            @else
+              {{ $approvedfordashboard->totalamount }}
+            @endif
+            <sup style="font-size: 20px">৳</sup>
+          </h3>
+
+          <p>অনুমোদিত অর্থ</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-cash"></i>
+        </div>
+        {{-- <a href="{{ route('dashboard.memberpayment') }}" class="small-box-footer">আরও দেখুন <i class="fa fa-arrow-circle-right"></i></a> --}}
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>
+            @if(empty($pendingcountdashboard))
+              0
+            @else
+              {{ $pendingcountdashboard }}
+            @endif
+            <sup style="font-size: 20px">টি</sup>
+          </h3>
+
+          <p>প্রক্রিয়াধীন পরিশোধ</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-stats-bars"></i>
+        </div>
+        {{-- <a href="{{ route('dashboard.memberpayment') }}" class="small-box-footer">আরও দেখুন <i class="fa fa-arrow-circle-right"></i></a> --}}
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h3>
+            @if(empty($approvedcountdashboard))
+              0
+            @else
+              {{ $approvedcountdashboard }}
+            @endif
+            <sup style="font-size: 20px">টি</sup>
+          </h3>
+
+          <p>অনুমোদিত পরিশোধ</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-arrow-graph-up-right"></i>
+        </div>
+        {{-- <a href="{{ route('dashboard.memberpayment') }}" class="small-box-footer">আরও দেখুন <i class="fa fa-arrow-circle-right"></i></a> --}}
+      </div>
+    </div>
+    <!-- ./col -->
+  </div>
   <!-- Custom Tabs -->
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">

@@ -28,6 +28,8 @@ use Auth;
 use Image;
 use File;
 use Session, Config;
+use Hash;
+use PDF;
 
 class DashboardController extends Controller
 {
@@ -41,7 +43,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword');
     }
 
     /**
@@ -1272,6 +1274,28 @@ class DashboardController extends Controller
     public function getSingleMember($unique_key)
     {
         $member = User::where('unique_key', $unique_key)->first();
+        $pendingfordashboard = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 0)
+                                 ->where('is_archieved', 0)
+                                 ->where('member_id', $member->member_id)
+                                 ->first();
+        $approvedfordashboard = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 1)
+                                 ->where('is_archieved', 0)
+                                 ->where('member_id', $member->member_id)
+                                 ->first();
+        $pendingcountdashboard = Payment::where('payment_status', 0)
+                                        ->where('is_archieved', 0)
+                                        ->where('member_id', $member->member_id)
+                                        ->get()
+                                        ->count();
+        $approvedcountdashboard = Payment::where('payment_status', 1)
+                                         ->where('is_archieved', 0)
+                                         ->where('member_id', $member->member_id)
+                                         ->get()
+                                         ->count();
 
         $members = User::all();
 
@@ -1283,7 +1307,11 @@ class DashboardController extends Controller
 
         return view('dashboard.membership.singlemember')
                             ->withMember($member)
-                            ->withMembers($members);
+                            ->withMembers($members)
+                            ->withPendingfordashboard($pendingfordashboard)
+                            ->withApprovedfordashboard($approvedfordashboard)
+                            ->withPendingcountdashboard($pendingcountdashboard)
+                            ->withApprovedcountdashboard($approvedcountdashboard);
     }
 
     public function getFormMessages() 
@@ -1307,8 +1335,64 @@ class DashboardController extends Controller
     public function getProfile() 
     {
         $member = User::find(Auth::user()->id);
+
+        $pendingfordashboard = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 0)
+                                 ->where('is_archieved', 0)
+                                 ->where('member_id', $member->member_id)
+                                 ->first();
+        $approvedfordashboard = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 1)
+                                 ->where('is_archieved', 0)
+                                 ->where('member_id', $member->member_id)
+                                 ->first();
+        $pendingcountdashboard = Payment::where('payment_status', 0)
+                                        ->where('is_archieved', 0)
+                                        ->where('member_id', $member->member_id)
+                                        ->get()
+                                        ->count();
+        $approvedcountdashboard = Payment::where('payment_status', 1)
+                                         ->where('is_archieved', 0)
+                                         ->where('member_id', $member->member_id)
+                                         ->get()
+                                         ->count();
+
         return view('dashboard.profile.index')
-                    ->withMember($member);
+                    ->withMember($member)
+                    ->withPendingfordashboard($pendingfordashboard)
+                    ->withApprovedfordashboard($approvedfordashboard)
+                    ->withPendingcountdashboard($pendingcountdashboard)
+                    ->withApprovedcountdashboard($approvedcountdashboard);
+    }
+
+    public function getMemberChangePassword() 
+    {
+        return view('dashboard.profile.changepassword');
+    }
+
+    public function memberChangePassword(Request $request) 
+    {
+        $this->validate($request,array(
+            'oldpassword'        =>   'required',
+            'newpassword'        =>   'required|min:8',
+            'againnewpassword'   =>   'required|same:newpassword'
+        ));
+
+        $member = User::find(Auth::user()->id);
+
+        if (Hash::check($request->oldpassword, $member->password)) {
+            $member->password = Hash::make($request->newpassword);
+            $member->save();
+            Session::flash('success', 'পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!');
+            return redirect()->route('dashboard.profile');
+        } else {
+            Session::flash('warning', 'পুরোনো পাসওয়ার্ডটি সঠিক নয়!');
+            return redirect()->route('dashboard.member.getchangepassword');
+        }
+
+
     }
 
     public function getPaymentPage() 
@@ -1406,6 +1490,22 @@ class DashboardController extends Controller
         
         Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
         return redirect()->route('dashboard.memberpayment');
+    }
+
+    public function downloadMemberPaymentPDF(Request $request)
+    {
+        $this->validate($request,array(
+            'id'              =>   'required',
+            'payment_key'     =>   'required'
+        ));
+
+        $payment = Payment::where('id', $request->id)
+                          ->where('payment_key', $request->payment_key)
+                          ->first();
+
+        $pdf = PDF::loadView('dashboard.profile.pdf.paymentreportsingle', ['payment' => $payment]);
+        $fileName = 'Payment_Report_'. Auth::user()->member_id .'_'. $payment->payment_key .'.pdf';
+        return $pdf->download($fileName);
     }
 
     public function getMemberTransactionSummary() 
@@ -1527,7 +1627,6 @@ class DashboardController extends Controller
         $smsresult = curl_exec($ch);
         $p = explode("|",$smsresult);
         $sendstatus = $p[0];
-        $smssuccesscount = $p[1];
 
         if($sendstatus == 1101) {
             //Session::flash('info', 'gese');
@@ -1694,7 +1793,7 @@ class DashboardController extends Controller
         $smsresult = curl_exec($ch);
         $p = explode("|",$smsresult);
         $sendstatus = $p[0];
-        $smssuccesscount = $p[1];
+        // $smssuccesscount = $p[1];
 
         if($sendstatus == 1101) {
             //Session::flash('info', 'gese');

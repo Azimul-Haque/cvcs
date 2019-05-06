@@ -450,9 +450,9 @@
 
         $('#password_confirmation').keyup(function() {
           if($('#password_confirmation').val() != $('#password').val()) {
-            $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>')
+            $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>');
           } else {
-            $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #008000;"><b>✓ মিলেছে</b></span>')
+            $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #008000;"><b>✓ মিলেছে</b></span>');
           }
         })
     });

@@ -192,7 +192,7 @@
                       </li>
 
                       {{-- <li class="header">মেম্বারশিপ ম্যানেজমেন্ট</li> --}}
-                      <li class="{{ Request::is('dashboard/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/application/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-handshake-o"></i>
                             <span>মেম্বারশিপ ম্যানেজমেন্ট</span>
@@ -211,7 +211,7 @@
                     
                     @if((Auth::user()->role == 'admin') || (Auth::user()->role == 'member'))
                       {{-- <li class="header">একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</li> --}}
-                      <li class="{{ Request::is('dashboard/profile') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/transaction/summary') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/user/manual') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/profile') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/transaction/summary') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/change/password') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/user/manual') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-wrench"></i>
                             <span>একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</span>
@@ -236,6 +236,12 @@
                               <a href="{{ route('dashboard.membertransactionsummary') }}">
                                   <i class="fa fa-fw fa-bar-chart"></i>
                                   <span>লেনদেন বিবরণ</span>
+                              </a>
+                          </li>
+                          <li class="{{ Request::is('dashboard/member/change/password') ? 'active' : '' }}">
+                              <a href="{{ route('dashboard.member.getchangepassword') }}">
+                                  <i class="fa fa-fw fa-lock"></i>
+                                  <span>পাসওয়ার্ড পরিবর্তন</span>
                               </a>
                           </li>
                           <li class="{{ Request::is('dashboard/member/user/manual') ? 'active' : '' }}">

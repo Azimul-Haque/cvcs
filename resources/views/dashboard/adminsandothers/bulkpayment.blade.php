@@ -229,18 +229,25 @@
           if(member_ids_before_submit.length == 0) {
             toastr.warning('অন্তত একজন সদস্য নির্বাচন করুন!', 'Warning');
             event.preventDefault();
+            $('#submitBtn').attr('disabled', false);
+          } else {
+            $('#submitBtn').attr('disabled', true);
           }
-          console.log(member_ids_before_submit);
+          // console.log(member_ids_before_submit);
 
           var add_separate_amounts = 0;
           $('.add_separate_amounts').each(function(){
               add_separate_amounts += parseFloat(this.value);
           });
-          console.log(add_separate_amounts);
+          // console.log(add_separate_amounts);
           if(add_separate_amounts != $('#amount').val()) {
             toastr.warning('মোট টাকার পরিমাণ এবং সদস্যদের আলাদা করে দেওয়া টাকার পরিমাণ সমান হওয়া বাঞ্ছনীয়!', 'Warning');
             event.preventDefault();
+            $('#submitBtn').attr('disabled', false);
+          } else {
+            $('#submitBtn').attr('disabled', true);
           }
+          // $('#submitBtn').attr('disabled', true);
       });
       
     });

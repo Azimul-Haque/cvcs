@@ -171,9 +171,13 @@ Route::get('/dashboard/profile', ['as'=>'dashboard.profile','uses'=>'DashboardCo
 Route::get('/dashboard/member/payment', ['as'=>'dashboard.memberpayment','uses'=>'DashboardController@getPaymentPage']);
 Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself','uses'=>'DashboardController@getSelfPaymentPage']); 
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);
+Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.member.payment.pdf','uses'=>'DashboardController@downloadMemberPaymentPDF']);
 
 Route::get('/dashboard/member/transaction/summary', ['as'=>'dashboard.membertransactionsummary','uses'=>'DashboardController@getMemberTransactionSummary']);
 Route::get('/dashboard/member/user/manual', ['as'=>'dashboard.memberusermanual','uses'=>'DashboardController@getMemberUserManual']);
+
+Route::get('/dashboard/member/change/password', ['as'=>'dashboard.member.getchangepassword','uses'=>'DashboardController@getMemberChangePassword']);
+Route::post('/dashboard/member/change/password', ['as'=>'dashboard.member.changepassword','uses'=>'DashboardController@memberChangePassword']);
 
 // BULK PAYMENT
 Route::get('/dashboard/member/payment/bulk', ['as'=>'dashboard.memberpaymentbulk','uses'=>'DashboardController@getBulkPaymentPage']);

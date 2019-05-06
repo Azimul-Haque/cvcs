@@ -128,7 +128,7 @@
               <div class="modal fade" id="seeReceiptModal{{ $payment->id }}" role="dialog">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
-                    <div class="modal-header modal-header-success">
+                    <div class="modal-header modal-header-primary">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title"><i class="fa fa-paperclip"></i> পরিশোধ সংযুক্তি</h4>
                     </div>
@@ -148,6 +148,34 @@
               </div>
               <!-- See Receipts Modal -->
               <!-- See Receipts Modal -->
+
+              <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#downloadPDF{{ $payment->id }}" data-backdrop="static" title="রিপোর্ট ডাউনলোড করুন"><i class="fa fa-download"></i></button>
+              <!-- Download PDF Modal -->
+              <!-- Download PDF Modal -->
+              <div class="modal fade" id="downloadPDF{{ $payment->id }}" role="dialog">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><i class="fa fa-download"></i> পরিশোধ রিপোর্ট ডাউনলোড</h4>
+                    </div>
+                    {!! Form::open(['route' => 'dashboard.member.payment.pdf', 'method' => 'POST', 'class' => 'form-default']) !!}
+                    <div class="modal-body">
+                      পরিশোধ রিপোর্টটি ডাউনলোড করুন
+                      {!! Form::hidden('id', $payment->id) !!}                      
+                      {!! Form::hidden('payment_key', $payment->payment_key) !!}                      
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success"><i class="fa fa-download"></i> ডাউনলোড করুন</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                    </div>
+                    {!! Form::close() !!}
+                  </div>
+                </div>
+              </div>
+              <!-- Download PDF Modal -->
+              <!-- Download PDF Modal -->
+              
             </td>
           </tr>
           @endforeach
