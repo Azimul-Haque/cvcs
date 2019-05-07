@@ -49,7 +49,7 @@
             @endif
           </h3>
 
-          <p>সর্বমোট প্রদান</p>
+          <p>সর্বমোট অনুমোদিত প্রদান</p>
         </div>
         <div class="icon">
           <i class="ion ion-cash"></i>
