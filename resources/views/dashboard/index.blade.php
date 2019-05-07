@@ -92,7 +92,7 @@
 		        <div class="box-header ui-sortable-handle" style="">
 		          <i class="fa fa-calculator"></i>
 
-		          <h3 class="box-title">মাসভিত্তিক মোট পরিশোধ</h3>
+		          <h3 class="box-title">মাসভিত্তিক মোট পরিশোধ (অনুমোদিত)</h3>
 		          <div class="box-tools pull-right text-muted">
 		            সর্বশেষ বারো মাস {{-- {{ date('F Y') }} --}}
 		          </div>
