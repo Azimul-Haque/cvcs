@@ -11,6 +11,7 @@ return array(
     'CreateAlbumsTable' => $baseDir . '/database/migrations/2019_03_24_013136_create_albums_table.php',
     'CreateBasicinfosTable' => $baseDir . '/database/migrations/2019_03_25_033317_create_basicinfos_table.php',
     'CreateBlogsTable' => $baseDir . '/database/migrations/2018_10_25_113938_create_blogs_table.php',
+    'CreateBrachpaymentsTable' => $baseDir . '/database/migrations/2019_05_07_235333_create_brachpayments_table.php',
     'CreateBranchesTable' => $baseDir . '/database/migrations/2019_04_07_145718_create_branches_table.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2018_10_25_114844_create_categories_table.php',
     'CreateCommitteesTable' => $baseDir . '/database/migrations/2019_04_06_035151_create_committees_table.php',

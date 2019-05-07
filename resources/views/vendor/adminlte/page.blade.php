@@ -152,7 +152,7 @@
                           </a>
                       </li>
                       
-                      <li class="{{ Request::is('dashboard/branches') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donors') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donor/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/branches') ? 'active menu-open' : '' }} {{ Request::is('dashboard/branch/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donors') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donor/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-key"></i>
                             <span>অ্যাডমিন কার্যক্রম</span>
@@ -166,7 +166,7 @@
                           <li class="{{ Request::is('dashboard/bulk/payers') ? 'active' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active' : '' }}"><a href="{{ route('dashboard.bulkpayers') }}"><i class="fa fa-users text-yellow"></i> একাধিক পরিশোধকারীগণ</a></li>
                           @endif
                           <li class="{{ Request::is('dashboard/donors') ? 'active' : '' }} {{ Request::is('dashboard/donor/*') ? 'active' : '' }}"><a href="{{ route('dashboard.donors') }}"><i class="fa fa-trophy text-lightgreen"></i> ডোনেশন</a></li>
-                          <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol text-green"></i> ব্রাঞ্চ পেমেন্ট</a></li>
+                          <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }} {{ Request::is('dashboard/branch/*') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol text-green"></i> ব্রাঞ্চ পেমেন্ট</a></li>
                         </ul>
                       </li>
                       

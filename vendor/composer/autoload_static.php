@@ -340,6 +340,7 @@ class ComposerStaticInit5ba844acaeab7533148c65467b83a279
         'CreateAlbumsTable' => __DIR__ . '/../..' . '/database/migrations/2019_03_24_013136_create_albums_table.php',
         'CreateBasicinfosTable' => __DIR__ . '/../..' . '/database/migrations/2019_03_25_033317_create_basicinfos_table.php',
         'CreateBlogsTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_25_113938_create_blogs_table.php',
+        'CreateBrachpaymentsTable' => __DIR__ . '/../..' . '/database/migrations/2019_05_07_235333_create_brachpayments_table.php',
         'CreateBranchesTable' => __DIR__ . '/../..' . '/database/migrations/2019_04_07_145718_create_branches_table.php',
         'CreateCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_25_114844_create_categories_table.php',
         'CreateCommitteesTable' => __DIR__ . '/../..' . '/database/migrations/2019_04_06_035151_create_committees_table.php',

@@ -371,13 +371,6 @@
 
 
 
-
-
-
-
-
-
-
   <script type="text/javascript">
     $(document).ready( function() {
       $(document).on('change', '.btn-file :file', function() {

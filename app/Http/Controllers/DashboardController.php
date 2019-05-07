@@ -21,6 +21,7 @@ use App\Committee;
 use App\Donor;
 use App\Donation;
 use App\Branch;
+use App\Branchpayment;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -117,7 +118,7 @@ class DashboardController extends Controller
     public function getAdmins()
     {
         $superadmins = User::where('role', 'admin')
-                           ->whereNotIn('email', ['mannan@cvcsbd.com', 'dataentry@cvcsbd.com']) // mannan@cvcsbd.com, dataentry@cvcsbd.com er ta dekhabe na!!!
+                           ->whereNotIn('email', ['mannan@cvcsbd.com', 'dataentry@cvcsbd.com']) // jei email gula deoa hobe tader k dekhabe na!!!
                            ->where('role_type', 'admin')
                            ->paginate(10);
 
@@ -313,10 +314,16 @@ class DashboardController extends Controller
     {
         $donor = Donor::find($id);
         $donations = Donation::where('donor_id', $id)->paginate(10);
+        $totalapproved = DB::table('donations')
+                           ->select(DB::raw('SUM(amount) as totalamount'))
+                           ->where('payment_status', 1)
+                           ->where('donor_id', $id)
+                           ->first();
 
         return view('dashboard.adminsandothers.donationsofdonor')
                     ->withDonor($donor)
-                    ->withDonations($donations);
+                    ->withDonations($donations)
+                    ->withTotalapproved($totalapproved);
     }
 
     public function updateDonor(Request $request, $id)
@@ -342,9 +349,11 @@ class DashboardController extends Controller
     public function getBranches()
     {
         $branches = Branch::orderBy('id', 'desc')->paginate(10);
+        $branchpayments = Branchpayment::orderBy('id', 'desc')->paginate(10);
 
         return view('dashboard.adminsandothers.branches')
-                    ->withBranches($branches);
+                    ->withBranches($branches)
+                    ->withBranchpayments($branchpayments);
     }
 
     public function storeBranch(Request $request)
@@ -383,8 +392,70 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.branches');
     }
 
+    public function storeBranchPayment(Request $request)
+    {
+        $this->validate($request,array(
+            'branch_id'       =>   'required',
+            'submitter_id'    =>   'required',
+            'amount'          =>   'required|integer',
+            'bank'            =>   'required',
+            'branch_name'     =>   'required',
+            'pay_slip'        =>   'required',
+            'image'           =>   'sometimes|image|max:500'
+        ));
 
+        $branchpayment = new Branchpayment;
+        $branchpayment->branch_id = $request->branch_id;
+        $branchpayment->submitter_id = $request->submitter_id;
+        $branchpayment->amount = $request->amount;
+        $branchpayment->bank = $request->bank;
+        $branchpayment->branch_name = $request->branch_name;
+        $branchpayment->pay_slip = $request->pay_slip;
+        $branchpayment->payment_status = 0;
+        // generate payment_key
+        $payment_key_length = 10;
+        $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+        // generate payment_key
+        $branchpayment->payment_key = $payment_key;
+        // receipt upload
+        if($request->hasFile('image')) {
+            $receipt      = $request->file('image');
+            $filename   = $request->submitter_id.'_branch_payment_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
+            $location   = public_path('/images/receipts/'. $filename);
+            Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+            $branchpayment->image = $filename;
+        }
+        $branchpayment->save();
+        Session::flash('success', 'সফলভাবে ব্রাঞ্চ পরিশোধ সংরক্ষণ');
+        return redirect()->route('dashboard.branches');
+    }
 
+    public function approveBranchPayment(Request $request, $id) 
+    {
+        $branchpayment = Branchpayment::find($id);
+        $branchpayment->payment_status = 1;
+        $branchpayment->save();
+
+        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        return redirect()->route('dashboard.branches');
+    }
+
+    public function getPaymentofBranch($id)
+    {
+        $branch = branch::find($id);
+        $branchpayments = Branchpayment::where('branch_id', $id)->paginate(10);
+        $totalapproved = DB::table('branchpayments')
+                           ->select(DB::raw('SUM(amount) as totalamount'))
+                           ->where('payment_status', 1)
+                           ->where('branch_id', $id)
+                           ->first();
+
+        return view('dashboard.adminsandothers.paymentofbranch')
+                    ->withBranch($branch)
+                    ->withBranchpayments($branchpayments)
+                    ->withTotalapproved($totalapproved);
+    }
 
     public function getAbouts()
     {
@@ -1728,6 +1799,7 @@ class DashboardController extends Controller
     {
         $response = User::select('name_bangla', 'member_id', 'mobile')
                         ->where('activation_status', 1)
+                        ->where('role_type', '!=', 'admin')
                         ->orderBy('id', 'desc')->get();
 
         return $response;          
