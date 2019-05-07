@@ -13,11 +13,38 @@
         @if(Auth::user()->activation_status == 0)
 
         @else
+          <button class="btn btn-success" data-toggle="modal" data-target="#downloadPDFModal" data-backdrop="static" title="সদস্য রিপোর্ট ডাউনলোড করুন"><i class="fa fa-download"></i></button>
           <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal" data-backdrop="static" title="প্রোফাইল সম্পাদনা করুন"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></button>
           {{-- <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button> --}}
         @endif
       </div>
     </h1>
+
+    <!-- Download Report PDF Modal -->
+    <!-- Download Report PDF Modal -->
+    <div class="modal fade" id="downloadPDFModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header modal-header-success">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-download"></i> সদস্য বিস্তারিত রিপোর্ট ডাউনলোড</h4>
+          </div>
+          {!! Form::open(['route' => 'dashboard.member.complete.pdf', 'method' => 'POST', 'class' => 'form-default']) !!}
+          <div class="modal-body">
+            সদস্য বিস্তারিত রিপোর্টটি ডাউনলোড করুন
+            {!! Form::hidden('id', $member->id) !!}                      
+            {!! Form::hidden('member_id', $member->member_id) !!}
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success"><i class="fa fa-download"></i> ডাউনলোড করুন</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+          </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+    <!-- Download Report PDF Modal -->
+    <!-- Download Report PDF Modal -->
 
     <!-- Edit Info Modal -->
     <!-- Edit Info Modal -->

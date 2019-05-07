@@ -148,10 +148,11 @@
   <div class="" style="padding-top: 0px;">
     <table class="">
       <tr>
-        <td colspan="5" style="background: rgba(192,192,192, 0.7);">পরিশোধের বিবরণ</td>
+        <td colspan="6" style="background: rgba(192,192,192, 0.7);">পরিশোধের বিবরণ</td>
       </tr>
       <tr>
-        <th style="background: rgba(124,252,0, 0.5);">জমাদানকারী ও পরিশোধের ধরণ</th>
+        <th style="background: rgba(124,252,0, 0.5);">জমাদানকারী</th>
+        <th style="background: rgba(124,252,0, 0.5);">পরিশোধের ধরণ</th>
         <th style="background: rgba(124,252,0, 0.5);">পেমেন্ট স্ট্যাটাস ও টাইপ</th>
         <th style="background: rgba(124,252,0, 0.5);">পরিমাণ</th>
         <th style="background: rgba(124,252,0, 0.5);">ব্যাংক ও ব্রাঞ্চ</th>
@@ -160,7 +161,9 @@
       @foreach($member->payments as $payment)
       <tr>
         <td>
-          {{ $payment->payee->name_bangla }}<br/>
+          {{ $payment->payee->name_bangla }}
+        </td>
+        <td>
           @if($payment->payment_category == 0)
             সদস্যপদ বাবদ
           @else

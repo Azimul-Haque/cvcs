@@ -15,18 +15,18 @@
         <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>
       </div>
     </h1>
-    <!-- Download PDF Modal -->
-    <!-- Download PDF Modal -->
+    <!-- Download Report PDF Modal -->
+    <!-- Download Report PDF Modal -->
     <div class="modal fade" id="downloadPDFModal" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header modal-header-success">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><i class="fa fa-download"></i> পরিশোধ রিপোর্ট ডাউনলোড</h4>
+            <h4 class="modal-title"><i class="fa fa-download"></i> সদস্য বিস্তারিত রিপোর্ট ডাউনলোড</h4>
           </div>
           {!! Form::open(['route' => 'dashboard.member.complete.pdf', 'method' => 'POST', 'class' => 'form-default']) !!}
           <div class="modal-body">
-            পরিশোধ রিপোর্টটি ডাউনলোড করুন
+            সদস্য বিস্তারিত রিপোর্টটি ডাউনলোড করুন
             {!! Form::hidden('id', $member->id) !!}                      
             {!! Form::hidden('member_id', $member->member_id) !!}
           </div>
@@ -38,8 +38,8 @@
         </div>
       </div>
     </div>
-    <!-- Download PDF Modal -->
-    <!-- Download PDF Modal -->
+    <!-- Download Report PDF Modal -->
+    <!-- Download Report PDF Modal -->
 
     <!-- Send Message Modal -->
     <!-- Send Message Modal -->
