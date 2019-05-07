@@ -5,7 +5,7 @@
   <style>
   body {
     font-family: 'kalpurush', sans-serif;
-    background-image: url({{ public_path('images/cvcs_background.png') }});
+    background-image: url({{ public_path('images/custom2.png') }});
     background-size: cover;              
     background-repeat: no-repeat;
     background-position: center center;
