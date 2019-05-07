@@ -3,7 +3,7 @@
 @section('title', 'CVCS | ব্রাঞ্চ তালিকা')
 
 @section('css')
-
+  {!!Html::style('css/parsley.css')!!}
 @stop
 
 @section('content_header')
@@ -282,7 +282,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">নতুন ব্রাঞ্চ যোগ</h4>
         </div>
-        {!! Form::open(['route' => 'dashboard.storebranch', 'method' => 'POST', 'class' => 'form-default']) !!}
+        {!! Form::open(['route' => 'dashboard.storebranch', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '']) !!}
           <div class="modal-body">
             <div class="row">
               <div class="col-md-6">
@@ -320,6 +320,7 @@
 @stop
 
 @section('js')
+  {!!Html::script('js/parsley.min.js')!!}
   <script type="text/javascript">
     $(document).ready( function() {
       $(document).on('change', '.btn-file :file', function() {
