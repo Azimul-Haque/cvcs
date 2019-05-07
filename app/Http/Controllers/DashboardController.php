@@ -83,16 +83,34 @@ class DashboardController extends Controller
                               ->orderBy('created_at', 'desc')
                               ->take(6)->get();
 
+        $lastsevenmonthscollection = DB::table('payments')
+                                    ->select('created_at', DB::raw('SUM(amount) as totalamount'))
+                                    ->where('is_archieved', '=', 0)
+                                    ->where('payment_status', '=', 1)
+                                    ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                                    ->orderBy('created_at', 'DESC')
+                                    ->take(12)
+                                    ->get();
+        $monthsforchartc = [];
+        foreach ($lastsevenmonthscollection as $key => $months) {
+            $monthsforchartc[] = date_format(date_create($months->created_at), "M Y");
+        }
+        $monthsforchartc = json_encode(array_reverse($monthsforchartc));
+
+        $totalsforchartc = [];
+        foreach ($lastsevenmonthscollection as $key => $months) {
+            $totalsforchartc[] = $months->totalamount;
+        }
+        $totalsforchartc = json_encode(array_reverse($totalsforchartc));
+
         return view('dashboard.index')
                     ->withTotalpending($totalpending)
                     ->withTotalapproved($totalapproved)
                     ->withRegisteredmember($registeredmember)
                     ->withSuccessfullpayments($successfullpayments)
-                    ->withLastsixmembers($lastsixmembers);
-                    // ->withWhatwedo($whatwedo)
-                    // ->withAtaglance($ataglance)
-                    // ->withMembership($membership)
-                    // ->withBasicinfo($basicinfo);
+                    ->withLastsixmembers($lastsixmembers)
+                    ->withMonthsforchartc($monthsforchartc)
+                    ->withTotalsforchartc($totalsforchartc);
     }
 
     public function getAdmins()
