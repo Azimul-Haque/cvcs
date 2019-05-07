@@ -160,7 +160,7 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">সম্পাদনা</h4>
                           </div>
-                          {!! Form::model($branch, ['route' => ['dashboard.updatebranch', $branch->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
+                          {!! Form::model($branch, ['route' => ['dashboard.updatebranch', $branch->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
                             <div class="modal-body">
                               <div class="row">
                                 <div class="col-md-6">
