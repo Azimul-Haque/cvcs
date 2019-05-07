@@ -125,19 +125,46 @@
       <tr>
         <th width="25%" style="background: rgba(124,252,0, 0.5);">
           প্রক্রিয়াধীন অর্থ<br/>
-          <big>৳ {{ $pendingfordashboard->totalamount }}</big>
+          <big>
+            ৳ 
+            @if(empty($pendingfordashboard->totalamount))
+              0.00
+            @else
+              {{ $pendingfordashboard->totalamount }}
+            @endif
+          </big>
         </th>
         <th width="25%" style="background: rgba(124,252,0, 0.5);">
           অনুমোদিত অর্থ<br/>
-          <big>৳ {{ $approvedfordashboard->totalamount }}</big>
+          <big>
+            ৳ 
+            @if(empty($approvedfordashboard->totalamount))
+              0.00
+            @else
+              {{ $approvedfordashboard->totalamount }}
+            @endif
+          </big>
         </th>
         <th width="25%" style="background: rgba(124,252,0, 0.5);">
           প্রক্রিয়াধীন পরিশোধ<br/>
-          <big>{{ $pendingcountdashboard }} টি</big>
+          <big>
+            @if(empty($pendingcountdashboard))
+              0
+            @else
+              {{ $pendingcountdashboard }}
+            @endif
+            টি
+          </big>
         </th>
         <th width="25%" style="background: rgba(124,252,0, 0.5);">
           অনুমোদিত পরিশোধ<br/>
-          <big>{{ $approvedcountdashboard }} টি</big>
+            @if(empty($approvedcountdashboard))
+              0
+            @else
+              {{ $approvedcountdashboard }}
+            @endif
+            টি
+          </big>
         </th>
       </tr>
     </table>
