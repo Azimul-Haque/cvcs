@@ -30,6 +30,7 @@ use File;
 use Session, Config;
 use Hash;
 use PDF;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DashboardController extends Controller
 {
@@ -1201,13 +1202,32 @@ class DashboardController extends Controller
         }        
     }
 
-    public function getMembers()
+    public function getMembers(Request $request)
     {
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
-                       ->orderBy('id', 'desc')->paginate(20);
+                       ->orderBy('id', 'desc')->get();
 
-        return view('dashboard.membership.members')->withMembers($members);
+        $ordered_member_array = [];
+        foreach ($members as $member) {
+            $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+        }
+        ksort($ordered_member_array); // ascending order according to key
+    
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        $itemCollection = collect($ordered_member_array);
+ 
+        $perPage = 20;
+ 
+        // Slice the collection to get the items to display in current page
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        // Create our paginator and pass it to the view
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        // set url path for generted links
+        $paginatedItems->setPath($request->url());
+
+        return view('dashboard.membership.members')->withMembers($paginatedItems);
     }
 
     public function getSearchMember()
