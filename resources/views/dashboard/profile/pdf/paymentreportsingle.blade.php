@@ -109,7 +109,7 @@
   </div>
 
   <div class="" style="bottom: 0; position: fixed; width: 100%; border-bottom: 1px solid #000000;">
-    ডাউনলোডের সময়কালঃ {{ date('F d, Y, h:m:i A') }}
+    ডাউনলোডের সময়কালঃ <span style="font-family: Calibri;">{{ date('F d, Y, h:m:i A') }}</span>
   </div>
 
   {{-- <htmlpagefooter name="page-footer">

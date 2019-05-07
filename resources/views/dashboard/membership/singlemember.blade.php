@@ -10,10 +10,36 @@
     <h1>
       সদস্য তথ্য
       <div class="pull-right">
+        <button class="btn btn-success" data-toggle="modal" data-target="#downloadPDFModal" data-backdrop="static" title="সদস্য রিপোর্ট ডাউনলোড করুন"><i class="fa fa-download"></i></button>
         <button class="btn btn-warning" data-toggle="modal" data-target="#sendMessageModal" data-backdrop="static" title="বার্তা পাঠান"><i class="fa fa-fw fa-envelope" aria-hidden="true"></i></button>
         <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>
       </div>
     </h1>
+    <!-- Download PDF Modal -->
+    <!-- Download PDF Modal -->
+    <div class="modal fade" id="downloadPDFModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header modal-header-success">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-download"></i> পরিশোধ রিপোর্ট ডাউনলোড</h4>
+          </div>
+          {!! Form::open(['route' => 'dashboard.member.complete.pdf', 'method' => 'POST', 'class' => 'form-default']) !!}
+          <div class="modal-body">
+            পরিশোধ রিপোর্টটি ডাউনলোড করুন
+            {!! Form::hidden('id', $member->id) !!}                      
+            {!! Form::hidden('member_id', $member->member_id) !!}
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success"><i class="fa fa-download"></i> ডাউনলোড করুন</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+          </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+    <!-- Download PDF Modal -->
+    <!-- Download PDF Modal -->
 
     <!-- Send Message Modal -->
     <!-- Send Message Modal -->
@@ -202,11 +228,11 @@
                   <td>{{ $member->member_id }}</td>
                 </tr>
                 <tr>
-                  <th width="40%">আবেদনকারীর নাম (বাংলায়)</th>
+                  <th width="40%">নাম (বাংলায়)</th>
                   <td>{{ $member->name_bangla }}</td>
                 </tr>
                 <tr>
-                  <th>আবেদনকারীর নাম (ইংরেজিতে)</th>
+                  <th>নাম (ইংরেজিতে)</th>
                   <td>{{ $member->name}}</td>
                 </tr>
                 <tr>
@@ -249,11 +275,11 @@
                   </th>
                 </tr>
                 <tr>
-                  <th width="40%">আবেদনকারীর পেশা</th>
+                  <th width="40%">পেশা</th>
                   <td>{{ $member->profession }}</td>
                 </tr>
                 <tr>
-                  <th>আবেদনকারীর পদবি</th>
+                  <th>পদবি</th>
                   <td>{{ $member->designation }}</td>
                 </tr>
                 <tr>

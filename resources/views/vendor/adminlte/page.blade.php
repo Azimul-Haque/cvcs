@@ -192,7 +192,7 @@
                       </li>
 
                       {{-- <li class="header">মেম্বারশিপ ম্যানেজমেন্ট</li> --}}
-                      <li class="{{ Request::is('dashboard/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/application/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/application/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-handshake-o"></i>
                             <span>মেম্বারশিপ ম্যানেজমেন্ট</span>

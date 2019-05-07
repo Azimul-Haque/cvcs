@@ -172,6 +172,7 @@ Route::get('/dashboard/member/payment', ['as'=>'dashboard.memberpayment','uses'=
 Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself','uses'=>'DashboardController@getSelfPaymentPage']); 
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);
 Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.member.payment.pdf','uses'=>'DashboardController@downloadMemberPaymentPDF']);
+Route::post('/dashboard/member/complete/report/download/pdf', ['as'=>'dashboard.member.complete.pdf','uses'=>'DashboardController@downloadMemberCompletePDF']);
 
 Route::get('/dashboard/member/transaction/summary', ['as'=>'dashboard.membertransactionsummary','uses'=>'DashboardController@getMemberTransactionSummary']);
 Route::get('/dashboard/member/user/manual', ['as'=>'dashboard.memberusermanual','uses'=>'DashboardController@getMemberUserManual']);

@@ -43,7 +43,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF');
     }
 
     /**
@@ -1505,6 +1505,49 @@ class DashboardController extends Controller
 
         $pdf = PDF::loadView('dashboard.profile.pdf.paymentreportsingle', ['payment' => $payment]);
         $fileName = 'Payment_Report_'. Auth::user()->member_id .'_'. $payment->payment_key .'.pdf';
+        return $pdf->download($fileName);
+    }
+
+    public function downloadMemberCompletePDF(Request $request)
+    {
+        $this->validate($request,array(
+            'id'            =>   'required',
+            'member_id'     =>   'required'
+        ));
+        
+        $member = User::where('id', $request->id)
+                      ->where('member_id', $request->member_id)
+                      ->first();
+
+        $payments = Payment::where('member_id', $request->member_id)
+                           ->where('is_archieved', 0)
+                           ->get();
+
+        $pendingfordashboard = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 0)
+                                 ->where('is_archieved', 0)
+                                 ->where('member_id', $member->member_id)
+                                 ->first();
+        $approvedfordashboard = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 1)
+                                 ->where('is_archieved', 0)
+                                 ->where('member_id', $member->member_id)
+                                 ->first();
+        $pendingcountdashboard = Payment::where('payment_status', 0)
+                                        ->where('is_archieved', 0)
+                                        ->where('member_id', $member->member_id)
+                                        ->get()
+                                        ->count();
+        $approvedcountdashboard = Payment::where('payment_status', 1)
+                                         ->where('is_archieved', 0)
+                                         ->where('member_id', $member->member_id)
+                                         ->get()
+                                         ->count();
+
+        $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard]);
+        $fileName = 'Complete_Report_'. $member->member_id .'.pdf';
         return $pdf->download($fileName);
     }
 
