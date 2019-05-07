@@ -39,9 +39,9 @@
     <span style="font-size: 25px;">
       <u>
         @if($payment->payment_status == 0)
-          প্রক্রিয়াধীন
+          <span style="color: #5CB85C;">প্রক্রিয়াধীন</span>
         @else
-          অনুমোদিত
+          <span style="color: #D9534F;">অনুমোদিত</span>
         @endif
       </u>
     </span>
@@ -51,16 +51,14 @@
     <table class="">
       <tr style="">
         <td width="50%">
-          <b>পরিশোধকারীঃ</b> {{ $payment->user->name_bangla }}<br/>
-          <b>জমাদানকারীঃ </b> {{ $payment->payee->name_bangla }}
+          <b>পরিশোধকারীঃ</b> {{ $payment->user->name_bangla }}
         </td>
         <td>
           সদস্যপদ আইডিঃ {{ $payment->member_id }}
         </td>
       </tr>
       <tr style="">
-        <td><b>পরিশোধকারীঃ</b> {{ $payment->user->name_bangla }}</td>
-        <td><b>জমাদানকারীঃ </b> {{ $payment->payee->name_bangla }}</td>
+        <td colspan="2"><b>জমাদানকারী</b> {{ $payment->payee->name_bangla }}</td>
       </tr>
     </table>
   </div>
