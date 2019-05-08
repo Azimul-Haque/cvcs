@@ -10,23 +10,23 @@
 	{{-- 1st line --}}
     <div class="row">
     	<div class="col-md-3">
-			<div class="info-box">
-	            <span class="info-box-icon bg-green"><i class="ion ion-clock"></i></span>
+    		<div class="info-box">
+                <span class="info-box-icon bg-green"><i class="ion ion-load-a"></i></span>
 
-	            <div class="info-box-content">
-	              <span class="info-box-text">প্রক্রিয়াধীন পরিশোধ</span>
-	              <span class="info-box-number">
-	                ৳ 
-	                @if(empty($totalpending->totalamount))
-	                0.00
-	                @else
-	                {{ $totalpending->totalamount }}
-	                @endif
-	              </span>
-	              <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
-	            </div>
-	            <!-- /.info-box-content -->
-	        </div>
+                <div class="info-box-content">
+                  <span class="info-box-text">প্রক্রিয়াধীন সদস্যপদ বাবদ (ও তৎসংশ্লিষ্ট) পরিশোধ</span>
+                  <span class="info-box-number">
+                    ৳ 
+                    @if(empty($totalapplicationpending->totalamount))
+                    0.00
+                    @else
+                    {{ $totalapplicationpending->totalamount }}
+                    @endif
+                  </span>
+                  <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
 		</div>
 		<div class="col-md-3">
 			<div class="info-box">
@@ -49,17 +49,17 @@
 		</div>
 		<div class="col-md-3">
 			<div class="info-box">
-	            <span class="info-box-icon bg-blue"><span class="ion ion-ios-people-outline"></span></span>
+	            <span class="info-box-icon bg-blue"><span class="ion ion-load-d"></span></span>
 
 	            <div class="info-box-content">
-	              <span class="info-box-text">নিবন্ধিত সদস্য</span>
+	              <span class="info-box-text">প্রক্রিয়াধীন পরিশোধ</span>
 	              <span class="info-box-number"> 
-	                @if(empty($registeredmember))
+	                @if(empty($pendingfullpayments))
 	                0
 	                @else
-	                {{ $registeredmember }}
+	                {{ $pendingfullpayments }}
 	                @endif
-	                জন
+	                টি
 	              </span>
 	              <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
 	            </div>
@@ -110,26 +110,7 @@
 		</div>
 		<div class="col-md-3">
 			<div class="info-box">
-	            <span class="info-box-icon bg-red"><span class="ion ion-android-checkbox-outline"></span></span>
-
-	            <div class="info-box-content">
-	              <span class="info-box-text">অনুমোদিত পরিশোধ</span>
-	              <span class="info-box-number">
-	                ৳ 
-	                @if(empty($totalapproved->totalamount))
-	                0.00
-	                @else
-	                {{ $totalapproved->totalamount }}
-	                @endif
-	              </span>
-	              <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
-	            </div>
-	            <!-- /.info-box-content -->
-	        </div>
-		</div>
-		<div class="col-md-3">
-			<div class="info-box">
-	            <span class="info-box-icon bg-blue"><span class="ion ion-ios-people-outline"></span></span>
+	            <span class="info-box-icon bg-red"><span class="ion ion-ios-people-outline"></span></span>
 
 	            <div class="info-box-content">
 	              <span class="info-box-text">নিবন্ধিত সদস্য</span>
@@ -148,19 +129,38 @@
 		</div>
 		<div class="col-md-3">
 			<div class="info-box">
-	            <span class="info-box-icon bg-yellow"><i class="ion ion-stats-bars"></i></span>
+	            <span class="info-box-icon bg-blue"><span class="ion ion-trophy"></span></span>
 
 	            <div class="info-box-content">
-	              <span class="info-box-text">সফল পরিশোধ</span>
+	              <span class="info-box-text">সর্বমোট ডোনেশন</span>
 	              <span class="info-box-number"> 
-	                @if(empty($successfullpayments))
-	                0
+	                ৳
+	                @if(empty($totaldonation->totalamount))
+	                0.00
 	                @else
-	                {{ $successfullpayments }}
+	                {{ $totaldonation->totalamount }}
 	                @endif
-	                টি
 	              </span>
-	              <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
+	              <span class="info-box-text">ডোনার সংখ্যাঃ {{ $totaldonors }}</span>
+	            </div>
+	            <!-- /.info-box-content -->
+	        </div>
+		</div>
+		<div class="col-md-3">
+			<div class="info-box">
+	            <span class="info-box-icon bg-yellow"><i class="ion ion-usb"></i></span>
+
+	            <div class="info-box-content">
+	              <span class="info-box-text">সর্বমোট ব্রাঞ্চ পরিশোধ</span>
+	              <span class="info-box-number"> 
+	                ৳
+	                @if(empty($totalbranchpayment->totalamount))
+	                0.00
+	                @else
+	                {{ $totalbranchpayment->totalamount }}
+	                @endif
+	              </span>
+	              <span class="info-box-text">ব্রাঞ্চ সংখ্যাঃ {{ $totalbranches }}</span>
 	            </div>
 	            <!-- /.info-box-content -->
 	        </div>
@@ -186,7 +186,7 @@
 		    </div>
         </div>
     	<div class="col-md-3">
-	        {{-- <div class="box box-primary">
+	        <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">সর্বশেষ নিবন্ধিত</h3>
 
@@ -211,7 +211,7 @@
                 <div class="box-footer text-center">
                   <a href="{{ route('dashboard.members') }}" class="uppercase">সকল সদস্য দেখুন</a>
                 </div>
-            </div> --}}
+            </div>
     	</div>
     	<div class="col-md-3"></div>
     </div>

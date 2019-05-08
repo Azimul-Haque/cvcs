@@ -77,8 +77,31 @@ class DashboardController extends Controller
                            ->first();
         $registeredmember = User::where('activation_status', 1)
                                 ->where('role_type', '!=', 'admin')                
-                                ->count();                
+                                ->count();
+
+        $pendingfullpayments = Payment::where('payment_status', 0)
+                                      ->where('is_archieved', 0)
+                                      ->count();
         $successfullpayments = Payment::where('payment_status', 1)->count();
+
+        $totalapplicationpending = DB::table('users')
+                                     ->select(DB::raw('SUM(application_payment_amount) as totalamount'))
+                                     ->where('activation_status', '=', 0)
+                                     // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+                                     // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                                     ->first();
+
+        $totaldonation = DB::table('donations')
+                                ->select(DB::raw('SUM(amount) as totalamount'))
+                                ->where('payment_status', 1)
+                                ->first();
+        $totaldonors = Donor::count();
+
+        $totalbranchpayment = DB::table('branchpayments')
+                                ->select(DB::raw('SUM(amount) as totalamount'))
+                                ->where('payment_status', 1)
+                                ->first();
+        $totalbranches = Branch::count();
 
         $lastsixmembers = User::where('activation_status', 1)
                               ->where('role', 'member')
@@ -109,10 +132,16 @@ class DashboardController extends Controller
                     ->withTotalpending($totalpending)
                     ->withTotalapproved($totalapproved)
                     ->withRegisteredmember($registeredmember)
+                    ->withPendingfullpayments($pendingfullpayments)
                     ->withSuccessfullpayments($successfullpayments)
                     ->withLastsixmembers($lastsixmembers)
                     ->withMonthsforchartc($monthsforchartc)
-                    ->withTotalsforchartc($totalsforchartc);
+                    ->withTotalsforchartc($totalsforchartc)
+                    ->withTotaldonation($totaldonation)
+                    ->withTotaldonors($totaldonors)
+                    ->withTotalbranchpayment($totalbranchpayment)
+                    ->withTotalbranches($totalbranches)
+                    ->withTotalapplicationpending($totalapplicationpending);
     }
 
     public function getAdmins()
@@ -234,10 +263,15 @@ class DashboardController extends Controller
     {
         $donors = Donor::orderBy('id', 'desc')->paginate(10);
         $donations = Donation::orderBy('id', 'desc')->paginate(10);
+        $totaldonation = DB::table('donations')
+                                ->select(DB::raw('SUM(amount) as totalamount'))
+                                ->where('payment_status', 1)
+                                ->first();
 
         return view('dashboard.adminsandothers.donors')
                     ->withDonors($donors)
-                    ->withDonations($donations);
+                    ->withDonations($donations)
+                    ->withTotaldonation($totaldonation);
     }
 
     public function storeDonor(Request $request)
@@ -350,10 +384,15 @@ class DashboardController extends Controller
     {
         $branches = Branch::orderBy('id', 'desc')->paginate(10);
         $branchpayments = Branchpayment::orderBy('id', 'desc')->paginate(10);
+        $totalbranchpayment = DB::table('branchpayments')
+                                ->select(DB::raw('SUM(amount) as totalamount'))
+                                ->where('payment_status', 1)
+                                ->first();
 
         return view('dashboard.adminsandothers.branches')
                     ->withBranches($branches)
-                    ->withBranchpayments($branchpayments);
+                    ->withBranchpayments($branchpayments)
+                    ->withTotalbranchpayment($totalbranchpayment);
     }
 
     public function storeBranch(Request $request)
@@ -1656,7 +1695,7 @@ class DashboardController extends Controller
                                          ->count();
 
         $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard]);
-        $fileName = 'Complete_Report_'. $member->member_id .'.pdf';
+        $fileName = str_replace(' ', '_', $member->name).'_'. $member->member_id .'.pdf';
         return $pdf->download($fileName);
     }
 

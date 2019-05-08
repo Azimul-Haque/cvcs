@@ -124,6 +124,23 @@
       </div>
     </div>
     <div class="col-md-4">
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>
+            @if(empty($totaldonation->totalamount))
+            0.00
+            @else
+            {{ $totaldonation->totalamount }}
+            @endif
+            <sup style="font-size: 20px">৳</sup>
+          </h3>
+
+          <p>সর্বমোট অনুমোদিত পরিশোধ</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-archive"></i>
+        </div>
+      </div>
       <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">ডোনার (দাতা) তালিকা</h3>
@@ -228,7 +245,7 @@
             {!! Form::hidden('submitter_id', Auth::user()->id) !!}
             <div class="form-group">
               {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-              <select class="form-control" name="donor_id" required="">
+              <select class="form-control" name="donor_id" id="donor_id" required="">
                 <option selected="" disabled="">ডোনার (দাতা) নির্ধারণ করুন</option>
                 @foreach($donors as $donor)
                 <option value="{{ $donor->id }}">{{ $donor->name }}</option>
@@ -237,7 +254,7 @@
             </div>
             <div class="form-group">
               {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'টাকার পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'টাকার পরিমাণ লিখুন', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
             </div>
             <div class="form-group">
               {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
@@ -360,6 +377,9 @@
   </script>
   <script type="text/javascript">
     $(document).ready( function() {
+
+      $('#donor_id').select2();
+
       $(document).on('change', '.btn-file :file', function() {
         var input = $(this),
             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
