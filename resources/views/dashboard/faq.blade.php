@@ -20,8 +20,8 @@
     <table class="table table-bordered table-condensed">
       <thead>
         <tr>
-          <th width="30%">Title</th>
-          <th width="60%">Attachment</th>
+          <th width="30%">প্রশ্ন</th>
+          <th width="60%">উত্তর</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -29,7 +29,7 @@
         @foreach($faqs as $faq)
         <tr>
           <td>{{ $faq->question }}</td>
-          <td>{{ $faq->answer }}</td>
+          <td>{{ limit_text($faq->answer, 100) }}</td>
           <td>
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editFAQModal{{ $faq->id }}" data-backdrop="static" title="প্রশ্ন সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
             <!-- Edit FAQ Modal -->

@@ -155,6 +155,10 @@ Route::get('/dashboard/blogs', ['as'=>'dashboard.blogs','uses'=>'DashboardContro
 // APPLICATIONS
 Route::get('/dashboard/applications', ['as'=>'dashboard.applications','uses'=>'DashboardController@getApplications']);
 Route::get('/dashboard/application/single/{unique_key}', ['as'=>'dashboard.singleapplication','uses'=>'DashboardController@getSignleApplication']);
+
+Route::get('/dashboard/application/single/{unique_key}/edit', ['as'=>'dashboard.singleapplicationedit','uses'=>'DashboardController@getSignleApplicationEdit']);
+Route::put('/dashboard/application/single/{unique_key}/update', ['as'=>'dashboard.singleapplicationupdate','uses'=>'DashboardController@updateSignleApplication']);
+
 Route::patch('/dashboard/application/{id}/activate', ['as'=>'dashboard.activatemember','uses'=>'DashboardController@activateMember']);
 Route::post('/dashboard/application/send/sms/', ['as'=>'dashboard.sendsmsapplicant','uses'=>'DashboardController@sendSMSApplicant']);
 Route::delete('/dashboard/application/{id}/delete/', ['as'=>'dashboard.deleteapplication','uses'=>'DashboardController@deleteApplication']);

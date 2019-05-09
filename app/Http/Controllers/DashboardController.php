@@ -1061,6 +1061,179 @@ class DashboardController extends Controller
                             ->withApplication($application);
     }
 
+    public function getSignleApplicationEdit($unique_key)
+    {
+        $application = User::where('unique_key', $unique_key)->first();
+
+        return view('dashboard.membership.singleapplicationedit')
+                            ->withApplication($application);
+    }
+
+    public function updateSignleApplication(Request $request, $id)
+    {
+        $this->validate($request,array(
+            'name_bangla'                  => 'required|max:255',
+            'name'                         => 'required|max:255',
+            'nid'                          => 'required|max:255',
+            'dob'                          => 'required|max:255',
+            'gender'                       => 'required',
+            'spouse'                       => 'sometimes|max:255',
+            'spouse_profession'            => 'sometimes|max:255',
+            'father'                       => 'required|max:255',
+            'mother'                       => 'required|max:255',
+            'profession'                   => 'required|max:255',
+            'designation'                  => 'required|max:255',
+            'office'                       => 'required|max:255',
+            'present_address'              => 'required|max:255',
+            'permanent_address'            => 'required|max:255',
+            'office_telephone'             => 'sometimes|max:255',
+            'mobile'                       => 'required|max:11',
+            'home_telephone'               => 'sometimes|max:255',
+            'email'                        => 'sometimes|email',
+            'image'                        => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
+
+            'nominee_one_name'             => 'required|max:255',
+            'nominee_one_identity_type'    => 'required',
+            'nominee_one_identity_text'    => 'required|max:255',
+            'nominee_one_relation'         => 'required|max:255',
+            'nominee_one_percentage'       => 'required|max:255',
+            'nominee_one_image'            => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
+
+            'nominee_two_name'             => 'sometimes|max:255',
+            'nominee_two_identity_type'    => 'sometimes',
+            'nominee_two_identity_text'    => 'sometimes|max:255',
+            'nominee_two_relation'         => 'sometimes|max:255',
+            'nominee_two_percentage'       => 'sometimes|max:255',
+            'nominee_two_image'            => 'sometimes|image|max:250',
+
+            'application_payment_amount'   => 'required|max:255',
+            'application_payment_bank'     => 'required|max:255',
+            'application_payment_branch'   => 'required|max:255',
+            'application_payment_pay_slip' => 'required|max:255',
+            'application_payment_receipt'  => 'sometimes|image|max:2048', // jehetu up korse ekbar, ekhane na korleo cholbe
+
+            'password'                     => 'required|min:8|same:password_confirmation'
+        ));
+
+        $application = User::find($id);
+
+        if($request->mobile != $application->mobile) {
+            $findmobileuser = User::where('mobile', $request->mobile)->first();
+
+            if($findmobileuser) {
+                Session::flash('warning', 'দুঃখিত! মোবাইল নম্বরটি ব্যবহৃত হয়ে গেছে; আরেকটি দিন');
+                return redirect()->route('dashboard.singleapplicationedit', $application->unique_key);
+            }
+        }
+        if($request->email != $application->email) {
+            $findemailuser = User::where('email', $request->email)->first();
+
+            if($findemailuser) {
+                Session::flash('warning', 'দুঃখিত! ইমেইলটি ব্যবহৃত হয়ে গেছে; আরেকটি দিন');
+                return redirect()->route('dashboard.singleapplicationedit', $application->unique_key);
+            }
+        }
+
+        $application->name_bangla = htmlspecialchars(preg_replace("/\s+/", " ", $request->name_bangla));
+        $application->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
+        $application->nid = htmlspecialchars(preg_replace("/\s+/", " ", $request->nid));
+        $dob = htmlspecialchars(preg_replace("/\s+/", " ", $request->dob));
+        $application->dob = new Carbon($dob);
+        $application->gender = htmlspecialchars(preg_replace("/\s+/", " ", $request->gender));
+        $application->spouse = htmlspecialchars(preg_replace("/\s+/", " ", $request->spouse));
+        $application->spouse_profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->spouse_profession));
+        $application->father = htmlspecialchars(preg_replace("/\s+/", " ", $request->father));
+        $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
+        $application->office = htmlspecialchars(preg_replace("/\s+/", " ", $request->office));
+        $application->profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->profession));
+        $application->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $application->membership_designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $application->present_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->present_address));
+        $application->permanent_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->permanent_address));
+        $application->office_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->office_telephone));
+        $application->mobile = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile));
+        $application->home_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->home_telephone));
+        if($request->email != '') {
+            $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
+        } else {
+            $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile)) . '@cvcsbd.com';
+        }
+
+        // applicant's image upload
+        if($request->hasFile('image')) {
+            $old_img = public_path('images/users/'. $application->image);
+            if(File::exists($old_img)) {
+                File::delete($old_img);
+            }
+            $image      = $request->file('image');
+            $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
+            $location   = public_path('/images/users/'. $filename);
+            Image::make($image)->resize(200, 200)->save($location);
+            $application->image = $filename;
+        }
+
+        $application->nominee_one_name = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_name));
+        $application->nominee_one_identity_type = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_identity_type));
+        $application->nominee_one_identity_text = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_identity_text));
+        $application->nominee_one_relation = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_relation));
+        $application->nominee_one_percentage = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_percentage));
+        // nominee one's image upload
+        if($request->hasFile('nominee_one_image')) {
+            $old_nominee_one_image = public_path('images/users/'. $application->nominee_one_image);
+            if(File::exists($old_nominee_one_image)) {
+                File::delete($old_nominee_one_image);
+            }
+            $nominee_one_image      = $request->file('nominee_one_image');
+            $filename   = 'nominee_one_' . str_replace(' ','',$request->name).time() .'.' . $nominee_one_image->getClientOriginalExtension();
+            $location   = public_path('/images/users/'. $filename);
+            Image::make($nominee_one_image)->resize(200, 200)->save($location);
+            $application->nominee_one_image = $filename;
+        }
+
+        $application->nominee_two_name = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_name));
+        $application->nominee_two_identity_type = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_identity_type));
+        $application->nominee_two_identity_text = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_identity_text));
+        $application->nominee_two_relation = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_relation));
+        $application->nominee_two_percentage = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_percentage));
+        // nominee two's image upload
+        if($request->hasFile('nominee_two_image')) {
+            $old_nominee_two_image = public_path('images/users/'. $application->nominee_two_image);
+            if(File::exists($old_nominee_two_image)) {
+                File::delete($old_nominee_two_image);
+            }
+            $nominee_two_image      = $request->file('nominee_two_image');
+            $filename   = 'nominee_two_' . str_replace(' ','',$request->name).time() .'.' . $nominee_two_image->getClientOriginalExtension();
+            $location   = public_path('/images/users/'. $filename);
+            Image::make($nominee_two_image)->resize(200, 200)->save($location);
+            $application->nominee_two_image = $filename;
+        }
+        
+        $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
+        $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
+        $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
+        $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));
+        // application payment receipt's image upload
+        if($request->hasFile('application_payment_receipt')) {
+            $old_application_payment_receipt = public_path('images/receipts/'. $application->application_payment_receipt);
+            if(File::exists($old_application_payment_receipt)) {
+                File::delete($old_application_payment_receipt);
+            }
+            $application_payment_receipt      = $request->file('application_payment_receipt');
+            $filename   = 'application_payment_receipt_' . str_replace(' ','',$request->name).time() .'.' . $application_payment_receipt->getClientOriginalExtension();
+            $location   = public_path('/images/receipts/'. $filename);
+            Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+            $application->application_payment_receipt = $filename;
+        }
+
+        $application->password = Hash::make($request->password);
+
+        $application->save();
+
+        Session::flash('success', 'আবেদনটি সফলভাবে হালনাগাদ করা হয়েছে!');
+        return redirect()->route('dashboard.applications');
+
+    }
+
     public function activateMember(Request $request, $id)
     {
         $application = User::find($id);
@@ -1317,6 +1490,7 @@ class DashboardController extends Controller
 
     public function getMembers(Request $request)
     {
+        $memberscount = User::where('activation_status', 1)->count();
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
                        ->orderBy('id', 'desc')->get();
@@ -1340,7 +1514,9 @@ class DashboardController extends Controller
         // set url path for generted links
         $paginatedItems->setPath($request->url());
 
-        return view('dashboard.membership.members')->withMembers($paginatedItems);
+        return view('dashboard.membership.members')
+                            ->withMembers($paginatedItems)
+                            ->withMemberscount($memberscount);
     }
 
     public function getSearchMember()

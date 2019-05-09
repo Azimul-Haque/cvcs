@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      আবেদনসমূহ
+      আবেদনসমূহ ({{ bangla($applications->count()) }}টি)
       <div class="pull-right">
         <a class="btn btn-success" href="{{ route('index.application') }}" target="_blank"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add Member</a>
       </div>
@@ -75,6 +75,7 @@
           </td>
           <td>
             <a class="btn btn-sm btn-success" href="{{ route('dashboard.singleapplication', $application->unique_key) }}" title="আবেদনটি দেখুন"><i class="fa fa-eye"></i></a>
+            <a class="btn btn-sm btn-primary" href="{{ route('dashboard.singleapplicationedit', $application->unique_key) }}" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
             {{-- <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteMemberModal{{ $application->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
           </td>
         </tr>

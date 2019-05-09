@@ -28,7 +28,7 @@
       <tbody>
         @foreach($notices as $notice)
         <tr>
-          <td>{{ $notice->name }}</td>
+          <td>{{ limit_text($notice->name, 100) }}</td>
           <td>
             <a href="{{ asset('files/'. $notice->attachment) }}" download=""><i class="fa fa-paperclip"></i> Attachment</a>
           </td>

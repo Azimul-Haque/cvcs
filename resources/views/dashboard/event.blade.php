@@ -30,7 +30,7 @@
         @foreach($events as $event)
         <tr>
           <td>{{ $event->name }}</td>
-          <td>{{ $event->description }}</td>
+          <td>{{ limit_text($event->description, 10) }}</td>
           <td>
             @if($event->image != null)
             <img src="{{ asset('images/events/'.$event->image)}}" style="height: 50px; width: auto;" />

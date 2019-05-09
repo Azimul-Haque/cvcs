@@ -370,6 +370,9 @@ ul.errorlist > li {
 .text-lightgreen {
     color: lightgreen;
 }
+.text-white {
+    color: #FFFFFF;
+}
 
 .tooltip-inner {
     min-width: 100px;

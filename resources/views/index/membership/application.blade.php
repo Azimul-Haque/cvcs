@@ -370,8 +370,8 @@
     </section>
 
     <div id="dtBox"></div>
-    <!-- Add Notice Modal -->
-    <!-- Add Notice Modal -->
+    <!-- Before Submit Modal -->
+    <!-- Before Submit Modal -->
     <div class="modal fade" id="submitApplicationModal" role="dialog">
       <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -397,8 +397,8 @@
         </div>
       </div>
     </div>
-    <!-- Add Notice Modal -->
-    <!-- Add Notice Modal -->
+    <!-- Before Submit Modal -->
+    <!-- Before Submit Modal -->
 
 
   </form>

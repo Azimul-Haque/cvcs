@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      সদস্যগণ
+      সদস্যগণ ({{ bangla($memberscount) }} জন)
       <div class="pull-right">
         
         {{-- <a class="btn btn-success" href="{{ route('dashboard.members.search') }}"><i class="fa fa-fw fa-search" aria-hidden="true"></i> সদস্য খুঁজুন</a> --}}
