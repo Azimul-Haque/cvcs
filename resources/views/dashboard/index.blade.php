@@ -54,10 +54,10 @@
 	            <div class="info-box-content">
 	              <span class="info-box-text">প্রক্রিয়াধীন পরিশোধ সংখ্যা</span>
 	              <span class="info-box-number"> 
-	                @if(empty($pendingfullpayments))
+	                @if(empty($pendingpayments))
 	                0
 	                @else
-	                {{ $pendingfullpayments }}
+	                {{ $pendingpayments }}
 	                @endif
 	                টি
 	              </span>

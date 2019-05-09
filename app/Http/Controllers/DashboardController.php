@@ -79,8 +79,11 @@ class DashboardController extends Controller
                                 ->where('role_type', '!=', 'admin')                
                                 ->count();
 
-        $pendingfullpayments = Payment::where('payment_status', 0)
+        $pendingpayments = Payment::where('payment_status', 0)
                                       ->where('is_archieved', 0)
+                                      ->count() 
+                                      +
+                           User::where('activation_status', 0)
                                       ->count();
         $successfullpayments = Payment::where('payment_status', 1)->count();
 
@@ -132,7 +135,7 @@ class DashboardController extends Controller
                     ->withTotalpending($totalpending)
                     ->withTotalapproved($totalapproved)
                     ->withRegisteredmember($registeredmember)
-                    ->withPendingfullpayments($pendingfullpayments)
+                    ->withPendingpayments($pendingpayments)
                     ->withSuccessfullpayments($successfullpayments)
                     ->withLastsixmembers($lastsixmembers)
                     ->withMonthsforchartc($monthsforchartc)

@@ -179,7 +179,7 @@
     <!-- animation -->
     <script type="text/javascript" src="{{ asset('vendor/hcode/js/wow.min.js') }}"></script>
     <!-- page scroll -->
-    <script type="text/javascript" src="{{ asset('vendor/hcode/js/page-scroll.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('vendor/hcode/js/page-scroll.js') }}"></script> --}}
     <!-- easy piechart-->
     <script type="text/javascript" src="{{ asset('vendor/hcode/js/jquery.easypiechart.js') }}"></script>
     <!-- parallax -->
