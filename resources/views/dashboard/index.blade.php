@@ -14,7 +14,7 @@
                 <span class="info-box-icon bg-green"><i class="ion ion-load-a"></i></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">প্রক্রিয়াধীন সদস্যপদ বাবদ পরিশোধ</span>
+                  <span class="info-box-text">প্রক্রিয়াধীন সদস্যপদবাবদ পরিশোধ</span>
                   <span class="info-box-number">
                     ৳ 
                     @if(empty($totalapplicationpending->totalamount))
