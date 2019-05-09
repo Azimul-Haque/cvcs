@@ -65,7 +65,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="nid" class="">জাতীয় পরিচয়পত্র নম্বর *</label>
-                                <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==17) return false;" name="nid" id="nid" required="" placeholder="ইংরেজি অংকে পরিচয়পত্র নম্বরটি লিখুন">
+                                <input type="number" onKeyPress="if(this.value.length==17) return false;" name="nid" id="nid" required="" placeholder="ইংরেজি অংকে পরিচয়পত্র নম্বরটি লিখুন">
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -155,7 +155,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="mobile" class="">মোবাইল নম্বর (সক্রিয় নম্বর দিন, এই নম্বরে SMS যাবে) *</label>
-                                <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==11) return false;" name="mobile" id="mobile" required="" placeholder="ইংরেজি অংকে লিখুন (১১ ডিজিট)">
+                                <input type="number" onKeyPress="if(this.value.length==11) return false;" name="mobile" id="mobile" required="" placeholder="ইংরেজি অংকে লিখুন (১১ ডিজিট)">
                             </div>
                           </div>
                         </div>
@@ -205,7 +205,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_one_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর *</label>
-                                <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==17) return false;" name="nominee_one_identity_text" id="nominee_one_identity_text" required="" placeholder="ইংরেজি অংকে লিখুন">
+                                <input type="number" onKeyPress="if(this.value.length==17) return false;" name="nominee_one_identity_text" id="nominee_one_identity_text" required="" placeholder="ইংরেজি অংকে লিখুন">
                             </div>
                           </div>
                         </div>
@@ -269,7 +269,7 @@
                                       <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nominee_two_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর</label>
-                                            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==17) return false;" name="nominee_two_identity_text" id="nominee_two_identity_text" placeholder="ইংরেজি অংকে লিখুন">
+                                            <input type="number" onKeyPress="if(this.value.length==17) return false;" name="nominee_two_identity_text" id="nominee_two_identity_text" placeholder="ইংরেজি অংকে লিখুন">
                                         </div>
                                       </div>
                                     </div>
