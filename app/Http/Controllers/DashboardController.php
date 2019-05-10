@@ -1116,8 +1116,6 @@ class DashboardController extends Controller
             'application_payment_branch'   => 'required|max:255',
             'application_payment_pay_slip' => 'required|max:255',
             'application_payment_receipt'  => 'sometimes|image|max:2048', // jehetu up korse ekbar, ekhane na korleo cholbe
-
-            'password'                     => 'required|min:8|same:password_confirmation'
         ));
 
         $application = User::find($id);
@@ -1229,8 +1227,6 @@ class DashboardController extends Controller
             Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
             $application->application_payment_receipt = $filename;
         }
-
-        $application->password = Hash::make($request->password);
 
         $application->save();
 
