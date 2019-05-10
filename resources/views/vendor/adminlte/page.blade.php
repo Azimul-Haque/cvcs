@@ -192,7 +192,7 @@
                       </li>
 
                       {{-- <li class="header">মেম্বারশিপ ম্যানেজমেন্ট</li> --}}
-                      <li class="{{ Request::is('dashboard/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/application/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/application/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/update/requests') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-handshake-o"></i>
                             <span>মেম্বারশিপ ম্যানেজমেন্ট</span>
@@ -205,6 +205,7 @@
                           <li class="{{ Request::is('dashboard/members') ? 'active' : '' }}"><a href="{{ route('dashboard.members') }}"><i class="fa fa-users"></i><span> সদস্যগণ</span></a></li>
                           <li class="{{ Request::is('dashboard/members/payments/pending') ? 'active' : '' }}"><a href="{{ route('dashboard.memberspendingpayments') }}"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন পরিশোধসমূহ</a></li>
                           <li class="{{ Request::is('dashboard/members/payments/approved') ? 'active' : '' }}"><a href="{{ route('dashboard.membersapprovedpayments') }}"><i class="fa fa-check-square-o"></i> অনুমোদিত পরিশোধসমূহ</a></li>
+                          <li class="{{ Request::is('dashboard/members/update/requests') ? 'active' : '' }}"><a href="{{ route('dashboard.membersupdaterequests') }}"><i class="fa fa-pencil-square"></i> তথ্য পরিবর্তন অনুরোধসমূহ</a></li>
                         </ul>
                       </li>
                     @endif

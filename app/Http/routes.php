@@ -167,6 +167,9 @@ Route::get('/dashboard/application/search/api', ['as'=>'dashboard.applicationsea
 // MEMBERS
 Route::get('/dashboard/members', ['as'=>'dashboard.members','uses'=>'DashboardController@getMembers']);
 Route::get('/dashboard/member/single/{unique_key}', ['as'=>'dashboard.singlemember','uses'=>'DashboardController@getSingleMember']);
+Route::get('/dashboard/members/update/requests', ['as'=>'dashboard.membersupdaterequests','uses'=>'DashboardController@getMembersUpdateRequests']);
+Route::post('/dashboard/member/update/request/approve', ['as'=>'dashboard.approveupdaterequest','uses'=>'DashboardController@approveUpdateRequest']);
+Route::delete('/dashboard/member/update/request/{id}/delete', ['as'=>'dashboard.deleteupdaterequest','uses'=>'DashboardController@deleteUpdateRequest']);
 
 // SEARCH MEMBER
 Route::get('/dashboard/members/search', ['as'=>'dashboard.members.search','uses'=>'DashboardController@getSearchMember']);
@@ -175,6 +178,7 @@ Route::get('/dashboard/member/search/api/2', ['as'=>'dashboard.membersearchapi2'
 
 // ACCOUNT MANAGEMENT AND PAYMENT
 Route::get('/dashboard/profile', ['as'=>'dashboard.profile','uses'=>'DashboardController@getProfile']);
+Route::patch('/dashboard/profile/{id}/update', ['as'=>'dashboard.profileupdate','uses'=>'DashboardController@updateMemberProfile']);
 Route::get('/dashboard/member/payment', ['as'=>'dashboard.memberpayment','uses'=>'DashboardController@getPaymentPage']);
 Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself','uses'=>'DashboardController@getSelfPaymentPage']); 
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);

@@ -22,6 +22,7 @@ use App\Donor;
 use App\Donation;
 use App\Branch;
 use App\Branchpayment;
+use App\Tempmemdata;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -45,7 +46,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile');
     }
 
     /**
@@ -1230,7 +1231,7 @@ class DashboardController extends Controller
         $application->save();
 
         Session::flash('success', 'আবেদনটি সফলভাবে হালনাগাদ করা হয়েছে!');
-        return redirect()->route('dashboard.applications');
+        return redirect()->route('dashboard.singleapplication', $application->unique_key);
 
     }
 
@@ -1692,6 +1693,143 @@ class DashboardController extends Controller
                     ->withApprovedfordashboard($approvedfordashboard)
                     ->withPendingcountdashboard($pendingcountdashboard)
                     ->withApprovedcountdashboard($approvedcountdashboard);
+    }
+
+    public function updateMemberProfile(Request $request, $id) 
+    {
+        $this->validate($request,array(
+            'designation'      =>   'required',
+            'office'           =>   'required',
+            'present_address'  =>   'required',
+            'mobile'           =>   'required',
+            'email'            =>   'required',
+            'image'            =>   'sometimes|image|max:250'
+        ));
+
+        $member = User::find($id);
+
+        if($request->mobile != $member->mobile) {
+            $findmobileuser = User::where('mobile', $request->mobile)->first();
+
+            if($findmobileuser) {
+                Session::flash('warning', 'দুঃখিত! মোবাইল নম্বরটি ব্যবহৃত হয়ে গেছে; আরেকটি দিন');
+                if($member->id == Auth::user()->id) {
+                    return redirect()->route('dashboard.profile');
+                } else {
+                    return redirect()->back();
+                }
+            }
+        }
+        if($request->email != $member->email) {
+            $findemailuser = User::where('email', $request->email)->first();
+
+            if($findemailuser) {
+                Session::flash('warning', 'দুঃখিত! ইমেইলটি ব্যবহৃত হয়ে গেছে; আরেকটি দিন');
+                if($member->id == Auth::user()->id) {
+                    return redirect()->route('dashboard.profile');
+                } else {
+                    return redirect()->back();
+                }
+            }
+        }
+
+        if(Auth::user()->role != 'admin') {
+            $tempmemdata = new Tempmemdata;
+            $tempmemdata->user_id = $member->id;
+            $tempmemdata->designation = $request->designation;
+            $tempmemdata->office = $request->office;
+            $tempmemdata->present_address = $request->present_address;
+            $tempmemdata->mobile = $request->mobile;
+            $tempmemdata->email = $request->email;
+
+            // applicant's temp image upload
+            if($request->hasFile('image')) {
+                // $old_img = public_path('images/users/'. $application->image);
+                // if(File::exists($old_img)) {
+                //     File::delete($old_img);
+                // }
+                $image      = $request->file('image');
+                $filename   = 'temp_'. str_replace(' ','',$member->name).time() .'.' . $image->getClientOriginalExtension();
+                $location   = public_path('/images/users/'. $filename);
+                Image::make($image)->resize(200, 200)->save($location);
+                $tempmemdata->image = $filename;
+            }
+            $tempmemdata->save();
+
+            Session::flash('success', 'আপনার তথ্য পরিবর্তন অনুরোধ সফলভাবে করা হয়েছে। আমাদের একজন প্রতিনিধি তা অনুমোদন করবেন। ধন্যবাদ।');
+            return redirect()->route('dashboard.profile');
+        } else {
+            $member->designation = $request->designation;
+            $member->office = $request->office;
+            $member->present_address = $request->present_address;
+            $member->mobile = $request->mobile;
+            $member->email = $request->email;
+
+            // applicant's temp image upload
+            if($request->hasFile('image')) {
+                $old_img = public_path('images/users/'. $member->image);
+                if(File::exists($old_img)) {
+                    File::delete($old_img);
+                }
+                $image      = $request->file('image');
+                $filename   = str_replace(' ','',$member->name).time() .'.' . $image->getClientOriginalExtension();
+                $location   = public_path('/images/users/'. $filename);
+                Image::make($image)->resize(200, 200)->save($location);
+                $member->image = $filename;
+            }
+            $member->save();
+
+            Session::flash('success', 'সফলভাবে হালনাগাদ করা হয়েছে!');
+            return redirect()->back();
+        }
+    }
+
+    public function getMembersUpdateRequests() 
+    {
+        $tempmemdatas = Tempmemdata::orderBy('id', 'desc')->paginate(10);
+
+        return view('dashboard.membership.membersupdaterequests')
+                    ->withTempmemdatas($tempmemdatas);
+    }
+
+    public function approveUpdateRequest(Request $request) 
+    {
+        $tempmemdata = Tempmemdata::where('id', $request->tempmemdata_id)->first();
+        $member = User::where('id', $request->user_id)->first();
+
+        $member->designation = $tempmemdata->designation;
+        $member->office = $tempmemdata->office;
+        $member->present_address = $tempmemdata->present_address;
+        $member->mobile = $tempmemdata->mobile;
+        $member->email = $tempmemdata->email;
+
+        // applicant's temp image upload
+        if($tempmemdata->image != '') {
+            $old_img = public_path('images/users/'. $member->image);
+            if(File::exists($old_img)) {
+                File::delete($old_img);
+            }
+            $member->image = $tempmemdata->image;
+        }
+        $member->save();
+
+        $tempmemdata->delete();
+
+        Session::flash('success', 'সফলভাবে হালনাগাদ করা হয়েছে!');
+        return redirect()->route('dashboard.membersupdaterequests');
+    }
+
+    public function deleteUpdateRequest($id) 
+    {
+        $tempmemdata = Tempmemdata::find($id);
+        $image_path = public_path('images/users/'. $tempmemdata->image);
+        if(File::exists($image_path)) {
+            File::delete($image_path);
+        }
+        $tempmemdata->delete();
+
+        Session::flash('success', 'সফলভাবে ডিলেট করে দেওয়া হয়েছে!');
+        return redirect()->route('dashboard.membersupdaterequests');
     }
 
     public function getMemberChangePassword() 
