@@ -1049,6 +1049,10 @@ class DashboardController extends Controller
     {
         $applications = User::where('activation_status', 0)
                             ->orderBy('id', 'asc')->paginate(20);
+        $applicationscount = User::where('activation_status', 0)
+                                 ->where('role_type', '!=', 'admin')
+                                 ->orderBy('id', 'desc')->get();
+
 
         return view('dashboard.membership.applications')
                             ->withApplications($applications);

@@ -337,12 +337,12 @@
                         <div class="row">
                           <div class="col-md-8">
                               <div class="form-group ">
-                                  <label><strong>৫০০০ টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
+                                  <label><strong>টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
                                   <input type="file" id="application_payment_receipt" name="application_payment_receipt" required="">
                               </div>
                           </div>
                           <div class="col-md-4">
-                            <img src="{{ asset('images/800x500.png')}}" id='application_payment_receipt-upload' style="height: 120px; width: auto; padding: 5px;" />
+                            <img src="{{ asset('images/800x500.png')}}" id='application_payment_receipt-upload' style="width: 250px; height: auto; padding: 5px;" />
                           </div>
                         </div>
 

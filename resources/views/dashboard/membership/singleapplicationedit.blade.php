@@ -317,28 +317,12 @@
             <div class="row">
               <div class="col-md-8">
                   <div class="form-group ">
-                      <label><strong>৫০০০ টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
+                      <label><strong>টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
                       <input value="" class="form-control" type="file" id="application_payment_receipt" name="application_payment_receipt">
                   </div>
               </div>
               <div class="col-md-4">
-                <img src="{{ asset('images/receipts/'. $application->application_payment_receipt)}}" id='application_payment_receipt-upload' style="height: 120px; width: auto; padding: 5px;" />
-              </div>
-            </div>
-
-            <h3 class="agency-title margin-two">অনলাইন একাউন্ট সংক্রান্ত</h3>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group ">
-                    <label for="password" class="">একাউন্টের পাসওয়ার্ড</label>
-                    <input class="form-control" type="password" name="password" id="password" autocomplete="off" required="" placeholder="একাউন্টের পাসওয়ার্ড দিন (কমপক্ষে ৮ দৈর্ঘ্যের)">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group ">
-                    <label for="password_confirmation" class="" id="password_confirmation_error">পাসওয়ার্ডটি আবার দিন</label>
-                    <input class="form-control" type="password" name="password_confirmation" id="password_confirmation" autocomplete="off" required="" placeholder="পাসওয়ার্ডটি আবার দিন">
-                </div>
+                <img src="{{ asset('images/receipts/'. $application->application_payment_receipt)}}" id='application_payment_receipt-upload' style="width: 250px; height: auto; padding: 5px;" />
               </div>
             </div>
 

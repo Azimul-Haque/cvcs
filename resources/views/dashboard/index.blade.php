@@ -52,7 +52,7 @@
 	            <span class="info-box-icon bg-blue"><span class="ion ion-load-d"></span></span>
 
 	            <div class="info-box-content">
-	              <span class="info-box-text">প্রক্রিয়াধীন পরিশোধ সংখ্যা</span>
+	              <span class="info-box-text">প্রক্রিয়াধীন আবেদন</span>
 	              <span class="info-box-number"> 
 	                @if(empty($pendingpayments))
 	                0
@@ -94,7 +94,7 @@
 	            <span class="info-box-icon bg-green"><i class="ion ion-clock"></i></span>
 
 	            <div class="info-box-content">
-	              <span class="info-box-text">প্রক্রিয়াধীন পরিশোধ অর্থ</span>
+	              <span class="info-box-text">প্রক্রিয়াধীন পরিশোধ</span>
 	              <span class="info-box-number">
 	                ৳ 
 	                @if(empty($totalpending->totalamount))
