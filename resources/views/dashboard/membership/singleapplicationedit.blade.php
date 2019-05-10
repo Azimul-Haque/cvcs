@@ -23,7 +23,7 @@
 @section('content')
   {!! Form::model($application, ['route' => ['dashboard.singleapplicationupdate', $application->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-10 col-sm-12">
         <div class="panel panel-default">
           <div class="panel-body">
             <h3 class="agency-title margin-two">আবেদনকারীর ব্যক্তিগত তথ্যঃ</h3>
@@ -322,7 +322,7 @@
                   </div>
               </div>
               <div class="col-md-4">
-                <img src="{{ asset('images/receipts/'. $application->application_payment_receipt)}}" id='application_payment_receipt-upload' style="width: 250px; height: auto; padding: 5px;" />
+                <img src="{{ asset('images/receipts/'. $application->application_payment_receipt)}}" id='application_payment_receipt-upload' style="max-width: 250px; height: auto; padding: 5px;" class="img-responsive" />
               </div>
             </div>
 
