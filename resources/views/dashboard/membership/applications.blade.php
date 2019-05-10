@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      আবেদনসমূহ ({{ bangla($applications->count()) }}টি)
+      আবেদনসমূহ ({{ bangla($applicationscount) }}টি)
       <div class="pull-right">
         <a class="btn btn-success" href="{{ route('index.application') }}" target="_blank"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add Member</a>
       </div>

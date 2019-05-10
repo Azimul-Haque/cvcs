@@ -1050,12 +1050,12 @@ class DashboardController extends Controller
         $applications = User::where('activation_status', 0)
                             ->orderBy('id', 'asc')->paginate(20);
         $applicationscount = User::where('activation_status', 0)
-                                 ->where('role_type', '!=', 'admin')
-                                 ->orderBy('id', 'desc')->get();
+                                 ->where('role_type', '!=', 'admin')->count();
 
 
         return view('dashboard.membership.applications')
-                            ->withApplications($applications);
+                            ->withApplications($applications)
+                            ->withapplicationscount($applicationscount);
     }
 
     public function getSignleApplication($unique_key)
