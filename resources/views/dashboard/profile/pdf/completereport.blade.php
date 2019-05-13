@@ -174,17 +174,20 @@
 
   <div class="" style="padding-top: 0px;">
     <table class="">
-      <tr>
-        <td colspan="6" style="background: rgba(192,192,192, 0.7);">পরিশোধের বিবরণ</td>
-      </tr>
-      <tr>
-        <th style="background: rgba(124,252,0, 0.5);">জমাদানকারী</th>
-        <th style="background: rgba(124,252,0, 0.5);">পরিশোধের ধরণ</th>
-        <th style="background: rgba(124,252,0, 0.5);">পেমেন্ট স্ট্যাটাস ও টাইপ</th>
-        <th style="background: rgba(124,252,0, 0.5);">পরিমাণ</th>
-        <th style="background: rgba(124,252,0, 0.5);">ব্যাংক ও ব্রাঞ্চ</th>
-        <th style="background: rgba(124,252,0, 0.5);">সময়কাল</th>
-      </tr>
+      <thead>
+        <tr>
+          <td colspan="6" style="background: rgba(192,192,192, 0.7);">পরিশোধের বিবরণ</td>
+        </tr>
+        <tr>
+          <th style="background: rgba(124,252,0, 0.5);">জমাদানকারী</th>
+          <th style="background: rgba(124,252,0, 0.5);">পরিশোধের ধরণ</th>
+          <th style="background: rgba(124,252,0, 0.5);">পেমেন্ট স্ট্যাটাস ও টাইপ</th>
+          <th style="background: rgba(124,252,0, 0.5);">পরিমাণ</th>
+          <th style="background: rgba(124,252,0, 0.5);">ব্যাংক ও ব্রাঞ্চ</th>
+          <th style="background: rgba(124,252,0, 0.5);">সময়কাল</th>
+        </tr>
+      </thead>
+      <tbody>
       @foreach($member->payments as $payment)
       <tr>
         <td>
@@ -214,6 +217,58 @@
         <td>{{ date('F d, Y, h:m:i A', strtotime($payment->created_at)) }}</td>
       </tr>
       @endforeach
+      </tbody>
+    </table>
+  </div>
+
+  <div class="" style="padding-top: 20px;">
+    @php
+        $startyear = 2019;
+        $today = date("Y-m-d H:i:s");
+        $approvedcash = $approvedfordashboard->totalamount - 5000; // without the membership money;
+        $totalyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
+        if(date('Y') > $totalyear) {
+            $totalyear = date('Y');
+        }
+    @endphp
+    <table class=""> {{-- eitaake datatable e convert krote hobe --}}
+      <thead>
+        <tr>
+          <td colspan="3" style="background: rgba(192,192,192, 0.7);">মাসিক পরিশোধের বিবরণ</td>
+        </tr>
+        <tr>
+          <th>মাস</th>
+          <th>পরিশোধ</th>
+          <th>পরিমাণ</th>
+        </tr>
+      </thead>
+      <tbody>
+    @for($i=$startyear; $i <= $totalyear; $i++)
+      @for($j=1; $j <= 12; $j++) {{--  strtotime("11-12-10") --}}
+        @php
+          $thismonth = '01-'.$j.'-'.$i;
+        @endphp
+        <tr>
+          <td>{{ date('F Y', strtotime($thismonth)) }}</td>
+          <td>
+            @if($approvedcash/500 > 0)
+              <span>পরিশোধিত</span>
+            @elseif(date('Y-m-d H:i:s', strtotime($thismonth)) < $today)
+              <span style="color: red;">পরিশোধনীয়</span>
+            @endif
+          </td>
+          <td>
+            @if($approvedcash/500 > 0)
+              ৳ 500
+            @endif
+          </td>
+        </tr>
+        @php
+          $approvedcash = $approvedcash - 500;
+        @endphp
+      @endfor
+    @endfor
+      </tbody>
     </table>
   </div>
  

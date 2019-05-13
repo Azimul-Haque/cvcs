@@ -57,8 +57,17 @@
     <div class="row">
     	<div class="col-md-6">
     		<h4>মাসিক পরিশোধের হিসাব</h4>
+            @php
+                $startyear = 2019;
+                $today = date("Y-m-d H:i:s");
+                $approvedcash = $membertotalapproved->totalamount - 5000; // without the membership money;
+                $totalyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
+                if(date('Y') > $totalyear) {
+                    $totalyear = date('Y');
+                }
+            @endphp
     		<div class="table-responsive">
-    			<table class="table"> {{-- eitaake datatable e convert krote hobe --}}
+    			<table class="table" id="montly-transaction-datatable"> {{-- eitaake datatable e convert krote hobe --}}
     				<thead>
     					<tr>
     						<th>মাস</th>
@@ -67,22 +76,11 @@
     					</tr>
     				</thead>
     				<tbody>
-    					
-    				
-    		@php
-    			$startyear = 2019;
-    			$today = date("Y-m-d H:i:s");
-    			$approvedcash = $membertotalapproved->totalamount - 5000; // without the membership money;
-    		@endphp
-
-    		@for($i=$startyear; $i <= date('Y'); $i++)
+    		@for($i=$startyear; $i <= $totalyear; $i++)
     			@for($j=1; $j <= 12; $j++) {{--  strtotime("11-12-10") --}}
     				@php
     					$thismonth = '01-'.$j.'-'.$i;
     				@endphp
-
-    				{{-- main calculation happens here --}}
-    				{{-- @if(date('Y-m-d H:i:s', strtotime($thismonth)) < $today) --}}
     					<tr>
     						<td>{{ date('F Y', strtotime($thismonth)) }}</td>
     						<td>
@@ -101,8 +99,6 @@
     					@php
     						$approvedcash = $approvedcash - 500;
     					@endphp
-    				{{-- @endif --}}
-
     			@endfor
     		@endfor
     				</tbody>
@@ -112,4 +108,28 @@
     	<div class="col-md-6"></div>
     </div>
     @endif
+@stop
+
+@section('js')
+    <script type="text/javascript">
+      $(function () {
+        //$.fn.dataTable.moment('DD MMMM, YYYY hh:mm:ss tt');
+        $('#montly-transaction-datatable').DataTable({
+          'paging'      : true,
+          'pageLength'  : 12,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : true,
+          'order': [[ 0, "desc" ]],
+           columnDefs: [
+                  // { targets: [7], visible: true, searchable: false},
+                  // { targets: '_all', visible: true, searchable: true },
+                  { targets: [0], type: 'date'}
+           ]
+        });
+        $('#payment-list-datatable_wrapper').removeClass( 'form-inline' );
+      })
+    </script>
 @stop

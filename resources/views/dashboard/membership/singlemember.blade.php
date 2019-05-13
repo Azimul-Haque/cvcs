@@ -264,6 +264,7 @@
       <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">ব্যক্তিগত তথ্য</a></li>
       <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত</a></li>
       <li class=""><a href="#payment_tab" data-toggle="tab" aria-expanded="true">পরিশোধ সংক্রান্ত</a></li>
+      <li class=""><a href="#monthly_transaction_tab" data-toggle="tab" aria-expanded="true">মাসিক লেনদেন</a></li>
       <li class="pull-right dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
         </a>
@@ -624,6 +625,56 @@
           </table>
         </div>
       </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="monthly_transaction_tab">
+        @php
+            $startyear = 2019;
+            $today = date("Y-m-d H:i:s");
+            $approvedcash = $approvedfordashboard->totalamount - 5000; // without the membership money;
+            $totalyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
+            if(date('Y') > $totalyear) {
+                $totalyear = date('Y');
+            }
+        @endphp
+        <div class="table-responsive">
+          <table class="table" id="montly-transaction-datatable"> {{-- eitaake datatable e convert krote hobe --}}
+            <thead>
+              <tr>
+                <th>মাস</th>
+                <th>পরিশোধ</th>
+                <th>পরিমাণ</th>
+              </tr>
+            </thead>
+            <tbody>
+        @for($i=$startyear; $i <= $totalyear; $i++)
+          @for($j=1; $j <= 12; $j++) {{--  strtotime("11-12-10") --}}
+            @php
+              $thismonth = '01-'.$j.'-'.$i;
+            @endphp
+              <tr>
+                <td>{{ date('F Y', strtotime($thismonth)) }}</td>
+                <td>
+                  @if($approvedcash/500 > 0)
+                    <span class="badge badge-success"><i class="fa fa-check"></i>পরিশোধিত</span>
+                  @elseif(date('Y-m-d H:i:s', strtotime($thismonth)) < $today)
+                    <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> পরিশোধনীয়</span>
+                  @endif
+                </td>
+                <td>
+                  @if($approvedcash/500 > 0)
+                    ৳ 500
+                  @endif
+                </td>
+              </tr>
+              @php
+                $approvedcash = $approvedcash - 500;
+              @endphp
+          @endfor
+        @endfor
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
   <!-- nav-tabs-custom -->
@@ -700,5 +751,26 @@
     @if(session('warning'))
         $('#editProfileModal').modal('show');
     @endif
+  </script>
+  <script type="text/javascript">
+    $(function () {
+      //$.fn.dataTable.moment('DD MMMM, YYYY hh:mm:ss tt');
+      $('#montly-transaction-datatable').DataTable({
+        'paging'      : true,
+        'pageLength'  : 12,
+        'lengthChange': true,
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true,
+        'order': [[ 0, "desc" ]],
+         columnDefs: [
+                // { targets: [7], visible: true, searchable: false},
+                // { targets: '_all', visible: true, searchable: true },
+                { targets: [0], type: 'date'}
+         ]
+      });
+      $('#payment-list-datatable_wrapper').removeClass( 'form-inline' );
+    })
   </script>
 @stop
