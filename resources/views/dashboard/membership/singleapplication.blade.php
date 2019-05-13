@@ -10,7 +10,9 @@
     <h1>
       আবেদন
       <div class="pull-right">
-        <button class="btn btn-success" data-toggle="modal" data-target="#activateMemberModal" data-backdrop="static" title="অনুমোদন করুন"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+        @if(Auth::user()->email != 'dataentry@cvcsbd.com')
+          <button class="btn btn-success" data-toggle="modal" data-target="#activateMemberModal" data-backdrop="static" title="অনুমোদন করুন"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+        @endif
         <a class="btn btn-warning" data-toggle="modal" data-target="#sendMessageModal" data-backdrop="static" title="বার্তা পাঠান"><i class="fa fa-fw fa-envelope" aria-hidden="true"></i></a>
         <a class="btn btn-primary" href="{{ route('dashboard.singleapplicationedit', $application->unique_key) }}" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
         <a class="btn btn-danger" data-toggle="modal" data-target="#deleteApplicationModal" data-backdrop="static" title="আবেদন মুছে ফেলুন"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></a>
