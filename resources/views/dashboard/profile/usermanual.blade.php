@@ -2,6 +2,14 @@
 
 @section('title', 'CVCS | User Manual (ব্যবহার বিধি)')
 
+@section('css')
+  <style type="text/css">
+    h4 {
+        line-height: 1.5;
+    }
+  </style>
+@stop
+
 @section('content_header')
     <h1><i class="fa fa-umbrella"></i> User Manual (ব্যবহার বিধি)</h1>
 @stop
