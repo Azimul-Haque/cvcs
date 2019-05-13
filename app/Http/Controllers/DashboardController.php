@@ -109,7 +109,7 @@ class DashboardController extends Controller
 
         $lastsixmembers = User::where('activation_status', 1)
                               ->where('role', 'member')
-                              ->orderBy('created_at', 'desc')
+                              ->orderBy('updated_at', 'desc')
                               ->take(6)->get();
 
         $lastsevenmonthscollection = DB::table('payments')
