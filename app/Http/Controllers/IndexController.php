@@ -168,10 +168,10 @@ class IndexController extends Controller
 
     public function getMembers()
     {
-        $members = User::where('role', 'alumni')
-                       ->orderBy('passing_year')
-                       ->get();
-        return view('index.members')->withMembers($members);
+        // $members = User::where('role', 'alumni')
+        //                ->orderBy('passing_year')
+        //                ->get();
+        return view('index.members'); //->withMembers($members);
     }
 
     public function getContact()
