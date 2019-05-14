@@ -1076,7 +1076,52 @@ class DashboardController extends Controller
 
     public function updateSignleApplication(Request $request, $id)
     {
-        $this->validate($request,array(
+        $application = User::find($id);
+
+        if($application->activation_status == 0) {
+            $this->validate($request,array(
+                'name_bangla'                  => 'required|max:255',
+                'name'                         => 'required|max:255',
+                'nid'                          => 'required|max:255',
+                'dob'                          => 'required|max:255',
+                'gender'                       => 'required',
+                'spouse'                       => 'sometimes|max:255',
+                'spouse_profession'            => 'sometimes|max:255',
+                'father'                       => 'required|max:255',
+                'mother'                       => 'required|max:255',
+                'profession'                   => 'required|max:255',
+                'designation'                  => 'required|max:255',
+                'office'                       => 'required|max:255',
+                'present_address'              => 'required|max:255',
+                'permanent_address'            => 'required|max:255',
+                'office_telephone'             => 'sometimes|max:255',
+                'mobile'                       => 'required|max:11',
+                'home_telephone'               => 'sometimes|max:255',
+                'email'                        => 'sometimes|email',
+                'image'                        => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
+
+                'nominee_one_name'             => 'required|max:255',
+                'nominee_one_identity_type'    => 'required',
+                'nominee_one_identity_text'    => 'required|max:255',
+                'nominee_one_relation'         => 'required|max:255',
+                'nominee_one_percentage'       => 'required|max:255',
+                'nominee_one_image'            => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
+
+                'nominee_two_name'             => 'sometimes|max:255',
+                'nominee_two_identity_type'    => 'sometimes',
+                'nominee_two_identity_text'    => 'sometimes|max:255',
+                'nominee_two_relation'         => 'sometimes|max:255',
+                'nominee_two_percentage'       => 'sometimes|max:255',
+                'nominee_two_image'            => 'sometimes|image|max:250',
+
+                'application_payment_amount'   => 'required|max:255',
+                'application_payment_bank'     => 'required|max:255',
+                'application_payment_branch'   => 'required|max:255',
+                'application_payment_pay_slip' => 'required|max:255',
+                'application_payment_receipt'  => 'sometimes|image|max:2048', // jehetu up korse ekbar, ekhane na korleo cholbe
+            ));
+        } else {
+            $this->validate($request,array(
             'name_bangla'                  => 'required|max:255',
             'name'                         => 'required|max:255',
             'nid'                          => 'required|max:255',
@@ -1109,16 +1154,11 @@ class DashboardController extends Controller
             'nominee_two_identity_text'    => 'sometimes|max:255',
             'nominee_two_relation'         => 'sometimes|max:255',
             'nominee_two_percentage'       => 'sometimes|max:255',
-            'nominee_two_image'            => 'sometimes|image|max:250',
-
-            'application_payment_amount'   => 'required|max:255',
-            'application_payment_bank'     => 'required|max:255',
-            'application_payment_branch'   => 'required|max:255',
-            'application_payment_pay_slip' => 'required|max:255',
-            'application_payment_receipt'  => 'sometimes|image|max:2048', // jehetu up korse ekbar, ekhane na korleo cholbe
+            'nominee_two_image'            => 'sometimes|image|max:250'
         ));
+        }
+        
 
-        $application = User::find($id);
 
         if($request->mobile != $application->mobile) {
             $findmobileuser = User::where('mobile', $request->mobile)->first();
@@ -1211,23 +1251,25 @@ class DashboardController extends Controller
             $application->nominee_two_image = $filename;
         }
         
-        $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
-        $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
-        $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
-        $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));
-        // application payment receipt's image upload
-        if($request->hasFile('application_payment_receipt')) {
-            $old_application_payment_receipt = public_path('images/receipts/'. $application->application_payment_receipt);
-            if(File::exists($old_application_payment_receipt)) {
-                File::delete($old_application_payment_receipt);
-            }
-            $application_payment_receipt      = $request->file('application_payment_receipt');
-            $filename   = 'application_payment_receipt_' . str_replace(' ','',$request->name).time() .'.' . $application_payment_receipt->getClientOriginalExtension();
-            $location   = public_path('/images/receipts/'. $filename);
-            Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
-            $application->application_payment_receipt = $filename;
+        if($application->activation_status == 0) {
+           $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
+           $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
+           $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
+           $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));
+           // application payment receipt's image upload
+           if($request->hasFile('application_payment_receipt')) {
+               $old_application_payment_receipt = public_path('images/receipts/'. $application->application_payment_receipt);
+               if(File::exists($old_application_payment_receipt)) {
+                   File::delete($old_application_payment_receipt);
+               }
+               $application_payment_receipt      = $request->file('application_payment_receipt');
+               $filename   = 'application_payment_receipt_' . str_replace(' ','',$request->name).time() .'.' . $application_payment_receipt->getClientOriginalExtension();
+               $location   = public_path('/images/receipts/'. $filename);
+               Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+               $application->application_payment_receipt = $filename;
+           } 
         }
-
+        
         $application->save();
 
         if($application->activation_status == 0) {

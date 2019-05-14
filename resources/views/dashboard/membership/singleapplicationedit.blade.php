@@ -21,7 +21,7 @@
 @stop
 
 @section('content')
-  {!! Form::model($application, ['route' => ['dashboard.singleapplicationupdate', $application->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
+  {!! Form::model($application, ['route' => ['dashboard.singleapplicationupdate', $application->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '', 'id' => 'application_form']) !!}
     <div class="row">
       <div class="col-md-10 col-sm-12">
         <div class="panel panel-default">
@@ -220,7 +220,7 @@
                 <div class="panel panel-primary" id="collapse-nominee2">
                   <div role="tablist" id="headingnominee2" class="panel-heading">
                       <a data-toggle="collapse" data-parent="#collapse-nominee2" href="#collapse-nominee2-link1">
-                          <h4 class="text-white">আরও একজন নমিনি যোগ করতে, এখানে ক্লিক করুন 
+                          <h4 class="text-white">@if($application->nominee_two_name != '') নমিনি ০২ @else  আরও একজন নমিনি যোগ করতে, এখানে ক্লিক করুন @endif 
                               <span class="pull-right">
                                   <i class="fa fa-plus"></i>
                               </span>
@@ -284,47 +284,49 @@
             </div><br/>
 
             
-
-            <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত</h3>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  {!! Form::label('application_payment_amount', 'পরিমাণ *') !!}
-                  {!! Form::text('application_payment_amount', $application->application_payment_amount, array('class' => 'form-control', 'id' => 'application_payment_amount', 'placeholder' => 'পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required' => '')) !!}
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  {!! Form::label('application_payment_pay_slip', 'পে-স্লিপ নম্বর *') !!}
-                  {!! Form::text('application_payment_pay_slip', $application->application_payment_pay_slip, array('class' => 'form-control', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে-স্লিপ নম্বর লিখুন', 'required' => '')) !!}
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  {!! Form::label('application_payment_bank', 'ব্যাংকের নাম *') !!}
-                  {!! Form::text('application_payment_bank', $application->application_payment_bank, array('class' => 'text_bangla form-control', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি বাংলায় লিখুন')) !!}
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  {!! Form::label('application_payment_branch', 'ব্রাঞ্চের নাম *') !!}
-                  {!! Form::text('application_payment_branch', $application->application_payment_branch, array('class' => 'text_bangla form-control', 'id' => 'application_payment_branch', 'placeholder' => 'ব্রাঞ্চের নাম বাংলায় লিখুন', 'required' => '')) !!}
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                  <div class="form-group ">
-                      <label><strong>টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
-                      <input value="" class="form-control" type="file" id="application_payment_receipt" name="application_payment_receipt">
+            @if($application->activation_status == 0)
+              <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    {!! Form::label('application_payment_amount', 'পরিমাণ *') !!}
+                    {!! Form::text('application_payment_amount', $application->application_payment_amount, array('class' => 'form-control', 'id' => 'application_payment_amount', 'placeholder' => 'পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required' => '')) !!}
                   </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    {!! Form::label('application_payment_pay_slip', 'পে-স্লিপ নম্বর *') !!}
+                    {!! Form::text('application_payment_pay_slip', $application->application_payment_pay_slip, array('class' => 'form-control', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে-স্লিপ নম্বর লিখুন', 'required' => '')) !!}
+                  </div>
+                </div>
               </div>
-              <div class="col-md-4">
-                <img src="{{ asset('images/receipts/'. $application->application_payment_receipt)}}" id='application_payment_receipt-upload' style="max-width: 250px; height: auto; padding: 5px;" class="img-responsive" />
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    {!! Form::label('application_payment_bank', 'ব্যাংকের নাম *') !!}
+                    {!! Form::text('application_payment_bank', $application->application_payment_bank, array('class' => 'text_bangla form-control', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি বাংলায় লিখুন')) !!}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    {!! Form::label('application_payment_branch', 'ব্রাঞ্চের নাম *') !!}
+                    {!! Form::text('application_payment_branch', $application->application_payment_branch, array('class' => 'text_bangla form-control', 'id' => 'application_payment_branch', 'placeholder' => 'ব্রাঞ্চের নাম বাংলায় লিখুন', 'required' => '')) !!}
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group ">
+                        <label><strong>টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
+                        <input value="" class="form-control" type="file" id="application_payment_receipt" name="application_payment_receipt">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                  <img src="{{ asset('images/receipts/'. $application->application_payment_receipt)}}" id='application_payment_receipt-upload' style="max-width: 250px; height: auto; padding: 5px;" class="img-responsive" />
+                </div>
+              </div>
+            @endif
+            
 
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitApplicationModal" data-backdrop="static">@if($application->activation_status == 0) আবেদন @else তথ্য @endif হালনাগাদ করুন</button>
           </div>
@@ -477,6 +479,7 @@
         }, 500);
       }
 
+      @if($application->activation_status == 0)
       if($('#application_payment_amount').val() % 500 == 0) {
 
       } else {
@@ -496,7 +499,7 @@
             scrollTop: $('#name').offset().top - 170
         }, 500);
       }
-
+      @endif
       deferred.success(function () {
           $("#submit_btn").prop("disabled",true);
       });
@@ -505,6 +508,7 @@
   </script>
   <script type="text/javascript">
     $(document).ready( function() {
+      @if($application->activation_status == 0)
       $('#application_payment_amount').blur(function() {
         var value = $('#application_payment_amount').val();
         if(value % 500 == 0) {
@@ -517,6 +521,8 @@
           toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
         }
       })
+      @endif
+      
     });
   </script>
   <script type="text/javascript">
