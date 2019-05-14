@@ -36,7 +36,7 @@
                     <p class="text-med black-text letter-spacing-1 margin-ten no-margin-bottom text-uppercase font-weight-600 xs-margin-top-five">হেডঅফিস</p>
                     <div class="row">
                         <div class="col-md-6">
-                            <p>{{ $sharedbasicinfo->address }}</p>
+                            <p><i class="fa fa-map-marker black-text"></i> {{ $sharedbasicinfo->address }}</p>
                         </div>
                         <div class="col-md-6 xs-text-center">
                             <p class="black-text no-margin-bottom"><strong><i class="fa fa-phone black-text"></i></strong> {{ $sharedbasicinfo->contactno }}</p>
