@@ -74,7 +74,7 @@
 </head>
 
 <body>
-    @include('partials._nav')
+    @extends('partials._nav')
 
     <main style="min-height: 400px;">
         @yield('content')
