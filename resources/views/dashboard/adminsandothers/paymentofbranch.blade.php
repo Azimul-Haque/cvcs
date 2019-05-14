@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CVCS | ' . $branch->name . '-এর পরিশোধসমূহ')
+@section('title', 'CVCS | ' . $branch->name . '-এর বিল অব এন্ট্রি সমূহ')
 
 @section('css')
 
@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      {{ $branch->name }}-এর পরিশোধসমূহ
+      {{ $branch->name }}-এর বিল অব এন্ট্রি সমূহ
       <div class="pull-right">
         
       </div>

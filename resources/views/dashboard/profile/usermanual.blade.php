@@ -22,12 +22,12 @@
     		    <div class="box-header with-border">
     		      <h4 class="box-title">
     		        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-    		        একাধিক পরিশোধ</a>
+    		        একাধিক পরিশোধ <small>(এখানে ক্লিক করুন)</small></a>
     		      </h4>
     		    </div>
     		    <div id="collapse1" class="panel-collapse collapse ">
     		      <div class="box-body">
-    		      	<h4>১. বাল্ক পরিশোধ করার জন্য প্রথমে ডান পাশের মেনু থেকে "একাধিক পরিশোধ" মেনুতে ক্লিক করুন। পাতাটি নিচের ছবির মতো একটি পাতা প্রদর্শন করবে।</h4><br/>
+    		      	<h4>১. একাধিক পরিশোধ করার জন্য প্রথমে ডান পাশের মেনু থেকে "একাধিক পরিশোধ" মেনুতে ক্লিক করুন। পাতাটি নিচের ছবির মতো একটি পাতা প্রদর্শন করবে।</h4><br/>
     		      	<center><img src="{{ asset('images/usermanual/bulk_payment_1.png') }}" class="img-responsive shadow" style="width: 90%; height: auto;"></center><br/>
     		      	<h4>২. পাতার "পরিশোধ ফরম" অংশে গিয়ে পরিশোধের তথ্য লিখুন (নিচের ছবির মতোঃ মোট টাকা, ব্যাংক তথ্য)।</h4><br/>
     		      	<h4>৩. ফরমের নিচের অংশে সর্বোচ্চ তিনটি রিসিটের ছবি আপলোড করতে পারবেন। অন্তত একটি রিসিটের ছবি বাধ্যতামূলকভাবে আপলোড করতে হবে।</h4><br/>

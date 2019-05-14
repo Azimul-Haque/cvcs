@@ -166,7 +166,7 @@
                           <li class="{{ Request::is('dashboard/bulk/payers') ? 'active' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active' : '' }}"><a href="{{ route('dashboard.bulkpayers') }}"><i class="fa fa-users text-yellow"></i> একাধিক পরিশোধকারীগণ</a></li>
                           @endif
                           <li class="{{ Request::is('dashboard/donors') ? 'active' : '' }} {{ Request::is('dashboard/donor/*') ? 'active' : '' }}"><a href="{{ route('dashboard.donors') }}"><i class="fa fa-trophy text-lightgreen"></i> ডোনেশন</a></li>
-                          <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }} {{ Request::is('dashboard/branch/*') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol text-green"></i> ব্রাঞ্চ পেমেন্ট</a></li>
+                          <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }} {{ Request::is('dashboard/branch/*') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol text-green"></i> বিল অব এন্ট্রি</a></li>
                         </ul>
                       </li>
                       
@@ -212,7 +212,7 @@
                     
                     @if((Auth::user()->role == 'admin') || (Auth::user()->role == 'member'))
                       {{-- <li class="header">একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</li> --}}
-                      <li class="{{ Request::is('dashboard/profile') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/transaction/summary') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/change/password') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/user/manual') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/profile') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/transaction/summary') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/change/password') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-wrench"></i>
                             <span>একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</span>
@@ -245,12 +245,6 @@
                                   <span>পাসওয়ার্ড পরিবর্তন</span>
                               </a>
                           </li>
-                          <li class="{{ Request::is('dashboard/member/user/manual') ? 'active' : '' }}">
-                              <a href="{{ route('dashboard.memberusermanual') }}">
-                                  <i class="fa fa-fw fa-umbrella"></i>
-                                  <span>ব্যবহার বিধি</span>
-                              </a>
-                          </li>
                         </ul>
                       </li>
                     @endif
@@ -264,6 +258,12 @@
                         </a>
                     </li>
                     @endif
+                    <li class="{{ Request::is('dashboard/member/user/manual') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.memberusermanual') }}">
+                            <i class="fa fa-fw fa-umbrella"></i>
+                            <span>ব্যবহার বিধি</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

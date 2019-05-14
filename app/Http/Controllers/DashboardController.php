@@ -1354,7 +1354,7 @@ class DashboardController extends Controller
             }
 
             Session::flash('success', 'সদস্য সফলভাবে অনুমোদন করা হয়েছে!');
-            return redirect()->route('dashboard.members');
+            return redirect()->route('dashboard.applications');
         }
         
     }

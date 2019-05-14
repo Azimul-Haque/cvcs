@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CVCS | ব্রাঞ্চ তালিকা')
+@section('title', 'CVCS | বিল অব এন্ট্রি তালিকা')
 
 @section('css')
   {!!Html::style('css/parsley.css')!!}
@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      ব্রাঞ্চ সংক্রান্ত
+      বিল অব এন্ট্রি সংক্রান্ত
       <div class="pull-right">
         
       </div>
@@ -20,9 +20,9 @@
     <div class="col-md-8">
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">ব্রাঞ্চ পরিশোধের তালিকা</h3>
+          <h3 class="box-title">বিল অব এন্ট্রি পরিশোধের তালিকা</h3>
           <div class="box-tools pull-right">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addBranchPaymentModal" data-backdrop="static" title="নতুন ব্রাঞ্চ পরিশোধ যোগ করুন" data-placement="top"><i class="fa fa-plus"></i></button>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addBranchPaymentModal" data-backdrop="static" title="নতুন বিল অব এন্ট্রি পরিশোধ যোগ করুন" data-placement="top"><i class="fa fa-plus"></i></button>
           </div>
         </div>
 
@@ -63,7 +63,7 @@
                         <div class="modal-content">
                           <div class="modal-header modal-header-primary">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title"><i class="fa fa-paperclip"></i> পরিশোধ সংযুক্তি</h4>
+                            <h4 class="modal-title"><i class="fa fa-paperclip"></i> বিল অব এন্ট্রি সংযুক্তি</h4>
                           </div>
                           <div class="modal-body">
                             পে-স্লিপ নম্বরঃ {{ $branchpayment->pay_slip }}
@@ -90,7 +90,7 @@
                             <h4 class="modal-title"><i class="fa fa-check"></i> পরিশোধ অনুমোদন</h4>
                           </div>
                           <div class="modal-body">
-                            <big>আপনি কী নিশ্চিতভাবে এই পরিশোধটি অনুমোদন করতে চান?</big><br/>
+                            <big>আপনি কী নিশ্চিতভাবে এই বিল অব এন্ট্রি টি অনুমোদন করতে চান?</big><br/>
                             {{-- <strong>প্রতিষ্ঠান</strong> {{ $branchpayment->branch->name }}<br/> --}}
                             <strong>জমাদানকারীঃ</strong> {{ $branchpayment->submitter->name_bangla }}<br/>
                             <strong>পরিমাণঃ</strong> ৳ {{ $branchpayment->amount }}<br/>
@@ -235,7 +235,7 @@
       <div class="modal-content">
         <div class="modal-header modal-header-primary">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">নতুন ব্রাঞ্চ পরিশোধ যোগ</h4>
+          <h4 class="modal-title">নতুন বিল অব এন্ট্রি পরিশোধ যোগ</h4>
         </div>
         {!! Form::open(['route' => 'dashboard.storebranchpayment', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
           <div class="modal-body">
