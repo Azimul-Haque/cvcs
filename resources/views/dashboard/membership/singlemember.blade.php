@@ -11,7 +11,7 @@
       সদস্য তথ্য
       <div class="pull-right">
         <button class="btn btn-success" data-toggle="modal" data-target="#downloadPDFModal" data-backdrop="static" title="সদস্য রিপোর্ট ডাউনলোড করুন"><i class="fa fa-download"></i></button>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal" data-backdrop="static" title="প্রোফাইল হালনাগাদ করুন"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></button>
+        <a class="btn btn-primary" href="{{ route('dashboard.singleapplicationedit', $member->unique_key) }}" title="সদস্য তথ্য সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
         <button class="btn btn-warning" data-toggle="modal" data-target="#sendMessageModal" data-backdrop="static" title="বার্তা পাঠান"><i class="fa fa-fw fa-envelope" aria-hidden="true"></i></button>
         <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>
       </div>
@@ -91,80 +91,6 @@
           </div> --}}
     <!-- Delete Member Modal -->
     <!-- Delete Member Modal -->
-    <!-- Edit Info Modal -->
-    <!-- Edit Info Modal -->
-    <div class="modal fade" id="editProfileModal" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header modal-header-primary">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><i class="fa fa-pencil"></i> তথ্য হালনাগাদ করুন</h4>
-          </div>
-          {!! Form::model($member, ['route' => ['dashboard.profileupdate', $member->id], 'method' => 'PATCH', 'class' => 'form-default', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
-          <div class="modal-body">
-            @if($member->tempmemdatas->count() > 0)
-              <big>আপনি একবার (সময়ঃ <b>{{ date('F d, Y h:i A', strtotime($member->tempmemdatas[0]->created_at)) }}</b>) তথ্য পরিবর্তন অনুরোধ করেছেন । আমাদের একজন প্রতিনিধি তা অনুমোদন (Approve) করা পর্যন্ত অনুগ্রহ করে অপেক্ষা করুন!</big>
-            @else
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group ">
-                      {!! Form::label('designation', 'পদবি *') !!}
-                      {!! Form::text('designation', null, array('class' => 'form-control', 'placeholder' => 'পদবি লিখুন', 'required')) !!}
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group ">
-                      {!! Form::label('office', 'দপ্তর *') !!}
-                      {!! Form::text('office', null, array('class' => 'form-control', 'placeholder' => 'দপ্তরের নাম লিখুন', 'required')) !!}
-                  </div>
-                </div>
-              </div>
-              <div class="form-group ">
-                  {!! Form::label('present_address', 'বর্তমান ঠিকানা *') !!}
-                  {!! Form::text('present_address', null, array('class' => 'form-control', 'placeholder' => 'বর্তমান ঠিকানা লিখুন', 'required')) !!}
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group ">
-                      {!! Form::label('mobile', 'মোবাইল নম্বর (১১ ডিজিট) *') !!}
-                      {!! Form::text('mobile', null, array('class' => 'form-control', 'placeholder' => '১১ ডিজিটের মোবাইল নম্বর লিখুন', 'required')) !!}
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group ">
-                      {!! Form::label('email', 'ইমেইল *') !!}
-                      {!! Form::text('email', null, array('class' => 'form-control', 'placeholder' => 'ইমেইল লিখুন', 'required')) !!}
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                    <div class="form-group ">
-                        <label><strong>আবেদনকারীর রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
-                        <input value="" class="form-control" type="file" id="image" name="image">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                  <img src="{{ asset('images/users/'. $member->image)}}" id='img-upload' style="height: 120px; width: auto; padding: 5px;" />
-                </div>
-              </div>
-            @endif
-            
-          </div>
-          <div class="modal-footer">
-            @if($member->tempmemdatas->count() > 0)
-
-            @else
-              {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary')) !!}
-            @endif
-            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-          </div>
-          {!! Form::close() !!}
-        </div>
-      </div>
-    </div>
-    <!-- Edit Info Modal -->
-    <!-- Edit Info Modal -->
 @stop
 
 @section('content')

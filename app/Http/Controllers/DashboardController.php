@@ -1068,7 +1068,7 @@ class DashboardController extends Controller
 
     public function getSignleApplicationEdit($unique_key)
     {
-        $application = User::where('unique_key', $unique_key)->first();
+        $application = User::where('unique_key', $unique_key)->first(); // this is also used to edit MEMBERS!
 
         return view('dashboard.membership.singleapplicationedit')
                             ->withApplication($application);
@@ -1230,8 +1230,14 @@ class DashboardController extends Controller
 
         $application->save();
 
-        Session::flash('success', 'আবেদনটি সফলভাবে হালনাগাদ করা হয়েছে!');
-        return redirect()->route('dashboard.singleapplication', $application->unique_key);
+        if($application->activation_status == 0) {
+            Session::flash('success', 'আবেদনটি সফলভাবে হালনাগাদ করা হয়েছে!');
+            return redirect()->route('dashboard.singleapplication', $application->unique_key);
+        } else {
+            Session::flash('success', 'সদস্য তথ্য সফলভাবে হালনাগাদ করা হয়েছে!');
+            return redirect()->route('dashboard.singlemember', $application->unique_key);
+        }
+        
 
     }
 

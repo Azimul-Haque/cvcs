@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CVCS | আবেদন হালনাগাদ')
+@section('title', 'CVCS | তথ্য হালনাগাদ')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/DateTimePicker.css') }}">
@@ -16,7 +16,7 @@
 
 @section('content_header')
     <h1>
-      <b>{{ $application->name_bangla }}</b>-এর আবেদন সম্পাদনা
+      <b>{{ $application->name_bangla }}</b>-এর @if($application->activation_status == 0) আবেদন @else তথ্য @endif সম্পাদনা
     </h1>
 @stop
 
@@ -26,17 +26,17 @@
       <div class="col-md-10 col-sm-12">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h3 class="agency-title margin-two">আবেদনকারীর ব্যক্তিগত তথ্যঃ</h3>
+            <h3 class="agency-title margin-two">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif ব্যক্তিগত তথ্যঃ</h3>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group ">
-                    <label for="name_bangla" class="">আবেদনকারীর নাম (বাংলায়) *</label>
-                    <input value="{{ $application->name_bangla }}" type="text" name="name_bangla" id="name_bangla" class="text_bangla form-control" required="" data-parsley-required-message="আবেদনকারীর নাম বাংলায় লিখুন" data-parsley-pattern="[^a-zA-Z0-9]+" data-parsley-pattern-message="*বাংলা বর্ণমালা* প্রদান করুন" placeholder="বাংলা বর্ণমালায় নাম লিখুন">
+                    <label for="name_bangla" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif নাম (বাংলায়) *</label>
+                    <input value="{{ $application->name_bangla }}" type="text" name="name_bangla" id="name_bangla" class="text_bangla form-control" required="" data-parsley-required-message="@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif নাম বাংলায় লিখুন" data-parsley-pattern="[^a-zA-Z0-9]+" data-parsley-pattern-message="*বাংলা বর্ণমালা* প্রদান করুন" placeholder="বাংলা বর্ণমালায় নাম লিখুন">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group ">
-                    <label for="name" class="">আবেদনকারীর নাম (ইংরেজিতে) *</label>
+                    <label for="name" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif নাম (ইংরেজিতে) *</label>
                     <input value="{{ $application->name }}" class="form-control" type="text" name="name" id="name" required="" placeholder="ইংরেজি বর্ণমালায় নাম লিখুন">
                 </div>
               </div>
@@ -98,7 +98,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group ">
-                    <label for="office" class="">আবেদনকারীর দপ্তরের নাম *</label>
+                    <label for="office" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif দপ্তরের নাম *</label>
                     <input value="{{ $application->office }}" type="text" name="office" id="office" required="" class="text_bangla form-control" placeholder="দপ্তরের নাম বাংলায় লিখুন">
                 </div>
               </div>
@@ -106,13 +106,13 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group ">
-                    <label for="profession" class="">আবেদনকারীর পেশা *</label>
+                    <label for="profession" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif পেশা *</label>
                     <input value="{{ $application->profession }}" type="text" name="profession" id="profession" required="" class="text_bangla form-control" placeholder="পেশা বাংলায় লিখুন">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group ">
-                    <label for="designation" class="">আবেদনকারীর পদবি *</label>
+                    <label for="designation" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif পদবি *</label>
                     <input value="{{ $application->designation }}" type="text" name="designation" id="designation" required="" class="text_bangla form-control" placeholder="পদবি বাংলায় লিখুন">
                 </div>
               </div>
@@ -156,7 +156,7 @@
             <div class="row">
               <div class="col-md-8">
                   <div class="form-group ">
-                      <label><strong>আবেদনকারীর রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
+                      <label><strong>@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
                       <input value="" class="form-control" type="file" id="image" name="image">
                   </div>
               </div>
@@ -326,7 +326,7 @@
               </div>
             </div>
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitApplicationModal" data-backdrop="static">আবেদন হালনাগাদ করুন</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitApplicationModal" data-backdrop="static">@if($application->activation_status == 0) আবেদন @else তথ্য @endif হালনাগাদ করুন</button>
           </div>
         </div>
       </div>
@@ -340,10 +340,10 @@
         <div class="modal-content">
           <div class="modal-header modal-header-success">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">সদস্যপদ আবেদন দাখিল</h4>
+            <h4 class="modal-title">@if($application->activation_status == 0) সদস্যপদ আবেদন @else তথ্য @endif দাখিল</h4>
           </div>
           <div class="modal-body">
-            <big>আপনি কি নিশ্চিতভাবে আবেদনটি দাখিল করতে চান?</big><br/><br/>
+            <big>আপনি কি নিশ্চিতভাবে তথ্যসমূহ দাখিল করতে চান?</big><br/><br/>
             <span><b>দাখিল করার পূর্বে...</b></span><br/>
             <ul>
               <li><i class="fa fa-check-square-o"></i> প্রতিটি বাধ্যতামূলক (* দেওয়া) ঘর পূরন করেছেন কি না যাচাই করুন</li>
@@ -354,7 +354,7 @@
             </ul>
           </div>
           <div class="modal-footer">
-                <button type="submit" class="btn btn-success" type="submit" id="submit_btn">আবেদন হালনাগাদ করুন</button>
+                <button type="submit" class="btn btn-success" type="submit" id="submit_btn">@if($application->activation_status == 0) আবেদন @else সদস্য তথ্য @endif হালনাগাদ করুন</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
           </div>
         </div>
