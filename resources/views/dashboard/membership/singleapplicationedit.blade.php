@@ -222,12 +222,12 @@
                       <a data-toggle="collapse" data-parent="#collapse-nominee2" href="#collapse-nominee2-link1">
                           <h4 class="text-white">@if($application->nominee_two_name != '') নমিনি ০২ @else  আরও একজন নমিনি যোগ করতে, এখানে ক্লিক করুন @endif 
                               <span class="pull-right">
-                                  <i class="fa fa-plus"></i>
+                                  <i class="fa @if($application->nominee_two_name != '') fa-minus @else  fa-plus @endif"></i>
                               </span>
                           </h4>
                       </a>
                   </div>
-                  <div id="collapse-nominee2-link1" class="panel-collapse collapse @if($application->nominee_two_name != '') in @else @endif">
+                  <div id="collapse-nominee2-link1" class="panel-collapse collapse @if($application->nominee_two_name != '') in @endif">
                       <div class="panel-body">
                         <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০২) <small>(নমিনির তথ্য নমিনি ০২ এর ক্ষেত্রে ঐচ্ছিক)</small></h3>
                                                 
@@ -703,6 +703,12 @@
               }, 1000);
           }
       });
+
+    });
+
+    $('.panel-heading > a').click(function() {
+      $(this).parents('.panel-primary').find('i').toggleClass('fa-plus fa-minus');
+      $(this).parents('.panel-primary').siblings('.panel-primary').find('i').removeClass('fa-minus').addClass('fa-plus')
 
     });
   </script>
