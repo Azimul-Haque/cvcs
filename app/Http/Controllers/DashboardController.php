@@ -1553,7 +1553,7 @@ class DashboardController extends Controller
 
         $itemCollection = collect($ordered_member_array);
  
-        $perPage = 1000;
+        $perPage = 20;
  
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();

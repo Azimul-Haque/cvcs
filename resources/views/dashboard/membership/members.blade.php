@@ -25,12 +25,6 @@
       <span style="color: #008D4C;" id="total_records"></span>
     </div>
   </div>
-  
-  <textarea class="form-control" style="height: 1000px;">
-    @foreach($members as $member)
-      {{ $member->member_id }}
-    @endforeach
-  </textarea><br/>
 
   <div class="table-responsive">
     <table class="table table-striped table-bordered" id="searchTable">
@@ -50,7 +44,7 @@
     </table>
   </div>
 
-  {{-- <div class="table-responsive">
+  <div class="table-responsive">
     <table class="table table-bordered" id="mainTable">
       <thead>
         <tr>
@@ -82,14 +76,14 @@
           </td>
           <td>
             <a class="btn btn-sm btn-success" href="{{ route('dashboard.singlemember', $member->unique_key) }}" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
-            
+            {{-- <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#deleteMemberModal{{ $member->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
             <a class="btn btn-sm btn-primary" href="{{ route('dashboard.singleapplicationedit', $member->unique_key) }}" title="সদস্য তথ্য সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
-  </div> --}}
+  </div>
   <div id="mainLink">
     {{ $members->links() }}
   </div>
