@@ -1309,43 +1309,23 @@ class DashboardController extends Controller
         } else {
             $application->save();
 
-            // save the payment!
-            $payment = new Payment;
-            $payment->member_id = $application->member_id;
-            $payment->payer_id = $application->member_id;
-            $payment->amount = 5000; // hard coded
-            $payment->bank = $application->application_payment_bank;
-            $payment->branch = $application->application_payment_branch;
-            $payment->pay_slip = $application->application_payment_pay_slip;
-            $payment->payment_status = 1; // approved
-            $payment->payment_category = 0; // membership payment
-            $payment->payment_type = 1; // single payment
-            // generate payment_key
-            $payment_key_length = 10;
-            $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
-            // generate payment_key
-            $payment->payment_key = $payment_key;
-            $payment->save();
-
-            // receipt upload
-            if($application->application_payment_receipt != '') {
-                $paymentreceipt = new Paymentreceipt;
-                $paymentreceipt->payment_id = $payment->id;
-                $paymentreceipt->image = $application->application_payment_receipt;
-                $paymentreceipt->save();
-            }
-            if($application->application_payment_amount > 5000) {
+            $newmembercheck = User::where('activation_status', 1)
+                                  ->where('member_id', $application->member_id)
+                                  ->first();
+            
+            if($newmembercheck) {
+                // dd($newmembercheck);
+                // save the payment!
                 $payment = new Payment;
-                $payment->member_id = $application->member_id;
-                $payment->payer_id = $application->member_id;
-                $payment->amount = $application->application_payment_amount - 5000; // IMPORTANT
-                $payment->bank = $application->application_payment_bank;
-                $payment->branch = $application->application_payment_branch;
-                $payment->pay_slip = $application->application_payment_pay_slip;
-                $payment->payment_status = 1; // approved (0 means pending)
-                $payment->payment_category = 1; // monthly payment (0 means membership)
-                $payment->payment_type = 1; // single payment (2 means bulk)
+                $payment->member_id = $newmembercheck->member_id;
+                $payment->payer_id = $newmembercheck->member_id;
+                $payment->amount = 5000; // hard coded
+                $payment->bank = $newmembercheck->application_payment_bank;
+                $payment->branch = $newmembercheck->application_payment_branch;
+                $payment->pay_slip = $newmembercheck->application_payment_pay_slip;
+                $payment->payment_status = 1; // approved
+                $payment->payment_category = 0; // membership payment
+                $payment->payment_type = 1; // single payment
                 // generate payment_key
                 $payment_key_length = 10;
                 $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -1355,14 +1335,44 @@ class DashboardController extends Controller
                 $payment->save();
 
                 // receipt upload
-                if($application->application_payment_receipt != '') {
+                if($newmembercheck->application_payment_receipt != '') {
                     $paymentreceipt = new Paymentreceipt;
                     $paymentreceipt->payment_id = $payment->id;
-                    $paymentreceipt->image = $application->application_payment_receipt;
+                    $paymentreceipt->image = $newmembercheck->application_payment_receipt;
                     $paymentreceipt->save();
                 }
+                if($newmembercheck->application_payment_amount > 5000) {
+                    $payment = new Payment;
+                    $payment->member_id = $newmembercheck->member_id;
+                    $payment->payer_id = $newmembercheck->member_id;
+                    $payment->amount = $newmembercheck->application_payment_amount - 5000; // IMPORTANT
+                    $payment->bank = $newmembercheck->application_payment_bank;
+                    $payment->branch = $newmembercheck->application_payment_branch;
+                    $payment->pay_slip = $newmembercheck->application_payment_pay_slip;
+                    $payment->payment_status = 1; // approved (0 means pending)
+                    $payment->payment_category = 1; // monthly payment (0 means membership)
+                    $payment->payment_type = 1; // single payment (2 means bulk)
+                    // generate payment_key
+                    $payment_key_length = 10;
+                    $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+                    // generate payment_key
+                    $payment->payment_key = $payment_key;
+                    $payment->save();
+
+                    // receipt upload
+                    if($newmembercheck->application_payment_receipt != '') {
+                        $paymentreceipt = new Paymentreceipt;
+                        $paymentreceipt->payment_id = $payment->id;
+                        $paymentreceipt->image = $newmembercheck->application_payment_receipt;
+                        $paymentreceipt->save();
+                    }
+                }
+                // save the payment!
+            } else {
+                Session::flash('warning', 'দুঃখিত! আবার চেষ্টা করুন!');
+                return redirect()->back();
             }
-            // save the payment!
 
             // send activation SMS ... aro kichu kaaj baki ache...
             // send sms

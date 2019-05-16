@@ -200,7 +200,14 @@
                 @foreach($notices as $notice)
                     <div class="col-md-3 col-sm-6 sm-margin-bottom-ten xs-text-center wow fadeInLeft" data-wow-duration="{{ $noticewaitduration }}ms">
                         <div class="box-notice">
-                            <h3 class="font-weight-700 black-text margin-seven display-block">{{ $notice->name }}</h3>
+                            <h3 class="font-weight-700 black-text margin-seven display-block">
+                                @if(strlen($notice->name) > 70)
+                                    {{ limit_text($notice->name, 70) }}
+                                @else
+                                    {{ $notice->name }}
+                                @endif
+                                
+                            </h3>
                             <span class="text-large">
                                 {{ date('F d, Y', strtotime($notice->created_at)) }}
                             </span>
