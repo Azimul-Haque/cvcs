@@ -1538,7 +1538,7 @@ class DashboardController extends Controller
 
     public function getMembers(Request $request)
     {
-        $memberscount = User::where('activation_status', 1)->count();
+        $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
                        ->orderBy('id', 'desc')->get();
