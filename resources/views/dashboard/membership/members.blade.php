@@ -25,6 +25,12 @@
       <span style="color: #008D4C;" id="total_records"></span>
     </div>
   </div>
+  
+  <textarea class="form-control" style="height: 1000px;">
+    @foreach($members as $member)
+      {{ $member->member_id }}
+    @endforeach
+  </textarea><br/>
 
   <div class="table-responsive">
     <table class="table table-striped table-bordered" id="searchTable">
