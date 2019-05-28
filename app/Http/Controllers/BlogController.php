@@ -32,7 +32,7 @@ class BlogController extends Controller {
                         ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
                         ->orderBy('created_at', 'DESC')
                         ->get();
-                        //dd($archives);
+                        
         $blogs = Blog::orderBy('id', 'desc')->paginate(7);
         return view('blogs.index')
                   ->withBlogs($blogs)
