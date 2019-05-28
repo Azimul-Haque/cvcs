@@ -33,6 +33,7 @@ use Session, Config;
 use Hash;
 use PDF;
 use Illuminate\Pagination\LengthAwarePaginator;
+// use BanglaDate;
 
 class DashboardController extends Controller
 {
@@ -131,6 +132,12 @@ class DashboardController extends Controller
             $totalsforchartc[] = $months->totalamount;
         }
         $totalsforchartc = json_encode(array_reverse($totalsforchartc));
+
+        // $bangla_date = new BanglaDate(strtotime(date('d-m-Y')), 0);
+
+        // $bangla_output = $bangla_date->get_date();
+
+        // $datebangla =  $bangla_output[1] . ' ' . $bangla_output[0]  . ', ' . $bangla_output[2];
 
         return view('dashboard.index')
                     ->withTotalpending($totalpending)

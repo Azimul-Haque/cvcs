@@ -151,7 +151,7 @@
 	            <span class="info-box-icon bg-yellow"><i class="ion ion-usb"></i></span>
 
 	            <div class="info-box-content">
-	              <span class="info-box-text">সর্বমোট ব্রাঞ্চ পরিশোধ</span>
+	              <span class="info-box-text">সর্বমোট বিল অব এন্ট্রি</span>
 	              <span class="info-box-number"> 
 	                ৳
 	                @if(empty($totalbranchpayment->totalamount))
