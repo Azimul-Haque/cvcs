@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      তথ্য হালনাগাদ অনুরোধস্সমূহ ({{ bangla($tempmemdatas->count()) }}টি)
+      তথ্য হালনাগাদ অনুরোধসমূহ ({{ bangla($tempmemdatas->count()) }}টি)
       <div class="pull-right">
       
       </div>
