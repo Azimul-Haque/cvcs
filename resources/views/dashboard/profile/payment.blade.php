@@ -3,7 +3,7 @@
 @section('title', 'CVCS | পরিশোধ')
 
 @section('css')
-
+  <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 @stop
 
 @section('content_header')
@@ -149,7 +149,7 @@
               <!-- See Receipts Modal -->
               <!-- See Receipts Modal -->
 
-              <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#downloadPDF{{ $payment->id }}" data-backdrop="static" title="রিপোর্ট ডাউনলোড করুন"><i class="fa fa-download"></i></button>
+              <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#downloadPDF{{ $payment->id }}" data-backdrop="static" title="রিপোর্ট ডাউনলোড করুন" id="downloadPDFButton{{ $payment->id }}"><i class="fa fa-download"></i></button>
               <!-- Download PDF Modal -->
               <!-- Download PDF Modal -->
               <div class="modal fade" id="downloadPDF{{ $payment->id }}" role="dialog">
@@ -175,7 +175,13 @@
               </div>
               <!-- Download PDF Modal -->
               <!-- Download PDF Modal -->
-              
+              <script type="text/javascript">
+                $('#downloadPDFButton{{ $payment->id }}').click(function() {
+                  setTimeout(function () {
+                    $('#downloadPDF{{ $payment->id }}').modal('hide');
+                  }, 3500);
+                })
+              </script>
             </td>
           </tr>
           @endforeach

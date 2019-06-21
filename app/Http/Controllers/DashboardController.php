@@ -1279,7 +1279,7 @@ class DashboardController extends Controller
         
         $application->save();
 
-        if($application->activation_status == 0) {
+        if($application->activation_status == 0 || $application->activation_status == 202) {
             Session::flash('success', 'আবেদনটি সফলভাবে হালনাগাদ করা হয়েছে!');
             return redirect()->route('dashboard.singleapplication', $application->unique_key);
         } else {

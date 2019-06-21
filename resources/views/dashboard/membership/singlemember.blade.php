@@ -10,7 +10,7 @@
     <h1>
       সদস্য তথ্য
       <div class="pull-right">
-        <button class="btn btn-success" data-toggle="modal" data-target="#downloadPDFModal" data-backdrop="static" title="সদস্য রিপোর্ট ডাউনলোড করুন"><i class="fa fa-download"></i></button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#downloadPDFModal" data-backdrop="static" title="সদস্য রিপোর্ট ডাউনলোড করুন" id="downloadPDFButton"><i class="fa fa-download"></i></button>
         <a class="btn btn-primary" href="{{ route('dashboard.singleapplicationedit', $member->unique_key) }}" title="সদস্য তথ্য সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
         <button class="btn btn-warning" data-toggle="modal" data-target="#sendMessageModal" data-backdrop="static" title="বার্তা পাঠান"><i class="fa fa-fw fa-envelope" aria-hidden="true"></i></button>
         <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>
@@ -697,6 +697,13 @@
          ]
       });
       $('#payment-list-datatable_wrapper').removeClass( 'form-inline' );
+    })
+  </script>
+  <script type="text/javascript">
+    $('#downloadPDFButton').click(function() {
+      setTimeout(function () {
+        $('#downloadPDFModal').modal('hide');
+      }, 3500);
     })
   </script>
 @stop
