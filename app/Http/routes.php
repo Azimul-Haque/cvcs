@@ -209,6 +209,8 @@ Route::get('/dashboard/members/payments/approved', ['as'=>'dashboard.membersappr
 Route::patch('/dashboard/members/payments/single/{id}/approve', ['as'=>'dashboard.approvesinglepayment','uses'=>'DashboardController@approveSinglePayment']);
 Route::patch('/dashboard/members/payments/bulk/{id}/approve', ['as'=>'dashboard.approvebulkpayment','uses'=>'DashboardController@approveBulkPayment']);
 
+// NOTIFICATION PAGE
+Route::get('/dashboard/notifications', ['as'=>'dashboard.notifications','uses'=>'DashboardController@getNotifications']);
 
 // dashboard routes
 // dashboard routes

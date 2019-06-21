@@ -2477,4 +2477,9 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
+    public function getNotifications() 
+    {
+        return view('dashboard.notifications');
+    }
+
 }

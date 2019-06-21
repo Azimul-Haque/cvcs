@@ -104,7 +104,7 @@
                                 @endif                                
                               </ul>
                             </li>
-                            <li class="footer"><a href="#">সব দেখুন</a></li>
+                            <li class="footer"><a href="{{ route('dashboard.notifications') }}">সব দেখুন</a></li>
                           </ul>
                         </li>
                         <li class="dropdown user user-menu">
