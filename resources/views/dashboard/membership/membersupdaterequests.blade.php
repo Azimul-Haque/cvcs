@@ -85,20 +85,26 @@
                           <table class="table">
                             <thead>
                               <tr>
-                                <th colspan="2">পুর্বের তথ্য</th>
+                                <th>পুর্বের তথ্য</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
                                 <td>পদবিঃ {{ $tempmemdata->user->designation }}</td>
+                              </tr>
+                              <tr>
                                 <td>দপ্তরঃ {{ $tempmemdata->user->office }}</td>
                               </tr>
                               <tr>
                                 <td>মোবাইলঃ {{ $tempmemdata->user->mobile }}</td>
+                              </tr>
+                              <tr>
                                 <td>ইমেইলঃ {{ $tempmemdata->user->email }}</td>
                               </tr>
                               <tr>
                                 <td>বর্তমান ঠিকানাঃ {{ $tempmemdata->user->present_address }}</td>
+                              </tr>
+                              <tr>
                                 <td>
                                   ছবিঃ
                                   @if($tempmemdata->user->image)
@@ -117,7 +123,7 @@
                           <table class="table">
                             <thead>
                               <tr>
-                                <th colspan="2">পরিবর্তনের জন্য দাখিলকৃত তথ্য</th>
+                                <th>পরিবর্তনের জন্য দাখিলকৃত তথ্য</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -129,6 +135,8 @@
                                     <span class="text-muted">অপরিবর্তিত</span>
                                   @endif
                                 </td>
+                              </tr>
+                              <tr>
                                 <td>দপ্তরঃ
                                   @if($tempmemdata->office != $tempmemdata->user->office)
                                     {{ $tempmemdata->office }}
@@ -145,6 +153,8 @@
                                     <span class="text-muted">অপরিবর্তিত</span>
                                   @endif
                                 </td>
+                              </tr>
+                              <tr>
                                 <td>ইমেইলঃ
                                   @if($tempmemdata->email != $tempmemdata->user->email)
                                     {{ $tempmemdata->email }}
@@ -161,6 +171,8 @@
                                     <span class="text-muted">অপরিবর্তিত</span>
                                   @endif
                                 </td>
+                              </tr>
+                              <tr>
                                 <td>
                                   ছবিঃ
                                   @if($tempmemdata->image)

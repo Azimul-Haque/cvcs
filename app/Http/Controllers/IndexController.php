@@ -333,7 +333,7 @@ class IndexController extends Controller
 
         $application->role = 'member';
         $application->role_type = 'member';
-        $application->activation_status = 0;
+        $application->activation_status = 0; // 0 for pending
         $application->member_id = 0;
 
         // generate unique_key

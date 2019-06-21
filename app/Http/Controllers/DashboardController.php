@@ -1060,7 +1060,6 @@ class DashboardController extends Controller
         $applicationscount = User::where('activation_status', 0)
                                  ->where('role_type', '!=', 'admin')->count();
 
-
         return view('dashboard.membership.applications')
                             ->withApplications($applications)
                             ->withapplicationscount($applicationscount);
@@ -1287,8 +1286,99 @@ class DashboardController extends Controller
             Session::flash('success', 'সদস্য তথ্য সফলভাবে হালনাগাদ করা হয়েছে!');
             return redirect()->route('dashboard.singlemember', $application->unique_key);
         }
-        
+    }
 
+    public function getDefectiveApplications()
+    {
+        $applications = User::where('activation_status', 202)
+                            ->orderBy('id', 'asc')->paginate(20);
+        $applicationscount = User::where('activation_status', 202)
+                                 ->where('role_type', '!=', 'admin')->count();
+
+        return view('dashboard.membership.defectiveapplications')
+                            ->withApplications($applications)
+                            ->withapplicationscount($applicationscount);
+    }
+
+    public function makeDefectiveApplication(Request $request, $id)
+    {
+        $application = User::find($id);
+        $application->activation_status = 202; // 202 for defective applications
+        $application->save();
+        Session::flash('success', 'সদস্য সফলভাবে ত্রুটিপূর্ণ তালিকায় প্রেরণ করা হয়েছে!');
+        return redirect()->route('dashboard.defectiveapplications');
+    }
+
+    public function makeDefectiveToPendingApplication(Request $request, $id)
+    {
+        $application = User::find($id);
+        $application->activation_status = 0; // 0 for pending applications
+        $application->save();
+        Session::flash('success', 'সদস্য সফলভাবে আবেদনের তালিকায় প্রেরণ করা হয়েছে!');
+        return redirect()->route('dashboard.applications');
+    }
+
+    public function searchDefectiveApplicationAPI(Request $request)
+    {
+        if($request->ajax())
+        {
+          $output = '';
+          $query = $request->get('query');
+          if($query != '')
+          {
+           $data = DB::table('users')
+                    ->where('activation_status', 202) // 202 for defective applications
+                    ->where('role_type', '!=', 'admin') // avoid the super admin type
+                    ->where(function($newquery) use ($query) {
+                        $newquery->where('name', 'like', '%'.$query.'%')
+                                 ->orWhere('name_bangla', 'like', '%'.$query.'%')
+                                 ->orWhere('mobile', 'like', '%'.$query.'%')
+                                 ->orWhere('email', 'like', '%'.$query.'%');
+                    })
+                    ->orderBy('id', 'desc')
+                    ->get();
+          }
+
+          $total_row = count($data);
+          if($total_row > 0)
+          {
+           foreach($data as $row)
+           {
+            $output .= '
+            <tr>
+             <td>
+                <a href="'. route('dashboard.singleapplication', $row->unique_key) .'" title="সদস্য তথ্য দেখুন">
+                  '. $row->name_bangla .'<br/> '. $row->name .'
+                </a>
+             </td>
+             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
+             <td>'.$row->office.'<br/>'.$row->profession.' ('. $row->designation .')</td>
+             <td>৳ '. $row->application_payment_amount .'<br/>'. $row->application_payment_bank .' ('. $row->application_payment_branch .')</td>
+            ';
+            if($row->image != null) {
+                $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
+            } else {
+                $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
+            }
+            $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singleapplication', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a></td>
+            </tr>';
+           }
+          }
+          else
+          {
+           $output = '
+           <tr>
+            <td align="center" colspan="6">পাওয়া যায়নি!</td>
+           </tr>
+           ';
+          }
+          $data = array(
+           'table_data'  => $output,
+           'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
+          );
+
+          echo json_encode($data);
+        }        
     }
 
     public function activateMember(Request $request, $id)

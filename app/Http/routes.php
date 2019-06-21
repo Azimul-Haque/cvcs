@@ -164,6 +164,12 @@ Route::post('/dashboard/application/send/sms/', ['as'=>'dashboard.sendsmsapplica
 Route::delete('/dashboard/application/{id}/delete/', ['as'=>'dashboard.deleteapplication','uses'=>'DashboardController@deleteApplication']);
 Route::get('/dashboard/application/search/api', ['as'=>'dashboard.applicationsearchapi','uses'=>'DashboardController@searchApplicationAPI']);
 
+// DEFECTIVE APPLICATIONS
+Route::get('/dashboard/defective/applications', ['as'=>'dashboard.defectiveapplications','uses'=>'DashboardController@getDefectiveApplications']);
+Route::patch('/dashboard/application/{id}/makedefective', ['as'=>'dashboard.makedefective','uses'=>'DashboardController@makeDefectiveApplication']);
+Route::get('/dashboard/defective/application/search/api', ['as'=>'dashboard.defectiveapplicationsearchapi','uses'=>'DashboardController@searchDefectiveApplicationAPI']);
+Route::patch('/dashboard/application/{id}/makepending', ['as'=>'dashboard.makedefectivetopending','uses'=>'DashboardController@makeDefectiveToPendingApplication']);
+
 // MEMBERS
 Route::get('/dashboard/members', ['as'=>'dashboard.members','uses'=>'DashboardController@getMembers']);
 Route::get('/dashboard/member/single/{unique_key}', ['as'=>'dashboard.singlemember','uses'=>'DashboardController@getSingleMember']);

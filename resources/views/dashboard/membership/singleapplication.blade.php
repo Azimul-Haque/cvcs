@@ -13,6 +13,11 @@
         @if(Auth::user()->email != 'dataentry@cvcsbd.com')
           <button class="btn btn-success" data-toggle="modal" data-target="#activateMemberModal" data-backdrop="static" title="অনুমোদন করুন"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
         @endif
+        @if($application->activation_status == 0)
+          <a class="btn btn-danger" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="ত্রুটিপূর্ণ আবেদনের তালিকায় পাঠান"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i></a>
+        @elseif($application->activation_status == 202)
+          <a class="btn btn-info" data-toggle="modal" data-target="#sendToApplicationsFromDefectiveModal" data-backdrop="static" title="আবেদনের তালিকায় পাঠান"><i class="fa fa-fw fa-hourglass-o" aria-hidden="true"></i></a>
+        @endif
         <a class="btn btn-warning" data-toggle="modal" data-target="#sendMessageModal" data-backdrop="static" title="বার্তা পাঠান"><i class="fa fa-fw fa-envelope" aria-hidden="true"></i></a>
         <a class="btn btn-primary" href="{{ route('dashboard.singleapplicationedit', $application->unique_key) }}" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
         <a class="btn btn-danger" data-toggle="modal" data-target="#deleteApplicationModal" data-backdrop="static" title="আবেদন মুছে ফেলুন"><i class="fa fa-fw fa-trash" aria-hidden="true"></i></a>
@@ -28,7 +33,7 @@
             <h4 class="modal-title"><i class="fa fa-check"></i> সদস্য অনুমোদন</h4>
           </div>
           <div class="modal-body">
-            আপনি কী নিশ্চিতভাবে এই আবেদনটি অনুমোদন করতে চান?
+            আপনি কি নিশ্চিতভাবে এই আবেদনটি অনুমোদন করতে চান?
           </div>
           <div class="modal-footer">
             {!! Form::model($application, ['route' => ['dashboard.activatemember', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
@@ -41,6 +46,54 @@
     </div>
     <!-- Activate User Modal -->
     <!-- Activate User Modal -->
+
+    <!-- Send To Defective List Modal -->
+    <!-- Send To Defective List Modal -->
+    <div class="modal fade" id="sendToDefectiveListModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header modal-header-danger">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> ত্রুটিপূর্ণ আবেদন তালিকায় প্রেরণ</h4>
+          </div>
+          <div class="modal-body">
+            আপনি কি এই আবেদনটি <b>ত্রুটিপূর্ণ আবেদন তালিকায়</b> পাঠাতে চান?
+          </div>
+          <div class="modal-footer">
+            {!! Form::model($application, ['route' => ['dashboard.makedefective', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
+                {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-danger')) !!}
+                <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+            {!! Form::close() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Send To Defective List Modal -->
+    <!-- Send To Defective List Modal -->
+
+    <!-- Send To Applications From Defective List Modal -->
+    <!-- Send To Applications From Defective List Modal -->
+    <div class="modal fade" id="sendToApplicationsFromDefectiveModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header modal-header-info">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-hourglass-o"></i> আবেদন তালিকায় প্রেরণ</h4>
+          </div>
+          <div class="modal-body">
+            আপনি কি এই আবেদনটি <b>আবেদন তালিকায়</b> পাঠাতে চান?
+          </div>
+          <div class="modal-footer">
+            {!! Form::model($application, ['route' => ['dashboard.makedefectivetopending', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
+                {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-info')) !!}
+                <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+            {!! Form::close() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Send To Applications From Defective List Modal -->
+    <!-- Send To Applications From Defective List Modal -->
 
     <!-- Send Message Modal -->
     <!-- Send Message Modal -->
