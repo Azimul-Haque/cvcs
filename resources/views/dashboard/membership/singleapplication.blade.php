@@ -8,7 +8,9 @@
 
 @section('content_header')
     <h1>
-      আবেদন
+      @if($application->activation_status == 202)
+        ত্রুটিপূর্ণ
+      @endif আবেদন
       <div class="pull-right">
         @if($application->activation_status == 0)
           @if(Auth::user()->email != 'dataentry@cvcsbd.com')
