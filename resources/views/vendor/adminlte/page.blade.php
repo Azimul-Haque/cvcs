@@ -62,6 +62,7 @@
                                 <i class="fa fa-fw fa-eye" aria-hidden="true"></i>
                             </a>
                         </li>
+                        @if(Auth::user()->role == 'admin') {{-- eita apatoto, karon kichudin por eita normal user er jonnou kora hobe --}}
                         <li class="dropdown notifications-menu">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-bell-o"></i>
@@ -107,6 +108,7 @@
                             <li class="footer"><a href="{{ route('dashboard.notifications') }}">সব দেখুন</a></li>
                           </ul>
                         </li>
+                        @endif
                         <li class="dropdown user user-menu">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             @if((Auth::User()->image != '') && (file_exists(public_path('images/users/'.Auth::User()->image))))

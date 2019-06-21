@@ -34,11 +34,11 @@
           <th>অফিস তথ্য</th>
           <th>পরিশোধ তথ্য</th>
           <th>ছবি</th>
-          <th width="10%">Action</th>
+          <th width="18%">Action</th>
         </tr>
       </thead>
      <tbody id="searchtbody">
-
+        
      </tbody>
     </table>
   </div>
@@ -52,7 +52,7 @@
           <th>অফিস তথ্য</th>
           <th>পরিশোধ তথ্য</th>
           <th>ছবি</th>
-          <th width="10%">Action</th>
+          <th width="18%">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -102,7 +102,6 @@
             </div>
             <!-- Send To Defective List Modal -->
             <!-- Send To Defective List Modal -->
-            
           </td>
         </tr>
         @endforeach

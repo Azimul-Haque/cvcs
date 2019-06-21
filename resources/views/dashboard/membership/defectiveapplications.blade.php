@@ -34,7 +34,7 @@
           <th>অফিস তথ্য</th>
           <th>পরিশোধ তথ্য</th>
           <th>ছবি</th>
-          <th width="10%">Action</th>
+          <th width="18%">Action</th>
         </tr>
       </thead>
      <tbody id="searchtbody">
@@ -52,7 +52,7 @@
           <th>অফিস তথ্য</th>
           <th>পরিশোধ তথ্য</th>
           <th>ছবি</th>
-          <th width="10%">Action</th>
+          <th width="18%">Action</th>
         </tr>
       </thead>
       <tbody>
