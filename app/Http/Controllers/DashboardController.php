@@ -87,7 +87,7 @@ class DashboardController extends Controller
                                       +
                            User::where('activation_status', 0)
                                       ->count();
-                                      
+
         $successfullpayments = Payment::where('payment_status', 1)->count();
 
         $totalapplicationpending = DB::table('users')
@@ -1798,6 +1798,13 @@ class DashboardController extends Controller
             }
         }
 
+        // check if any data is changed...
+        if((Auth::user()->designation == $request->designation) && (Auth::user()->office == $request->office) && (Auth::user()->office == $request->office) && (Auth::user()->present_address == $request->present_address) && (Auth::user()->mobile == $request->mobile) && (Auth::user()->email == $request->email) && !$request->hasFile('image')) {
+            Session::flash('info', 'আপনি কোন তথ্য পরিবর্তন করেননি!');
+            return redirect()->route('dashboard.profile');
+        }
+
+        // update data accordign to role...
         if(Auth::user()->role != 'admin') {
             $tempmemdata = new Tempmemdata;
             $tempmemdata->user_id = $member->id;

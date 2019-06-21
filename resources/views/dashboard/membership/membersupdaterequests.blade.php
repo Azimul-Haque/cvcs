@@ -104,7 +104,7 @@
                                   @if($tempmemdata->user->image)
                                     <img src="{{ asset('images/users/'. $tempmemdata->user->image)}}" style="height: 120px; width: auto; padding: 5px;" />
                                   @else
-                                    <small class="text-muted">অপরিবর্তিত</small>
+                                    <span class="text-muted">অপরিবর্তিত</span>
                                   @endif
                                 </td>
                               </tr>
@@ -122,21 +122,51 @@
                             </thead>
                             <tbody>
                               <tr>
-                                <td>পদবিঃ {{ $tempmemdata->designation }}</td>
-                                <td>দপ্তরঃ {{ $tempmemdata->office }}</td>
+                                <td>পদবিঃ
+                                  @if($tempmemdata->designation != $tempmemdata->user->designation)
+                                    {{ $tempmemdata->designation }}
+                                  @else
+                                    <span class="text-muted">অপরিবর্তিত</span>
+                                  @endif
+                                </td>
+                                <td>দপ্তরঃ
+                                  @if($tempmemdata->office != $tempmemdata->user->office)
+                                    {{ $tempmemdata->office }}
+                                  @else
+                                    <span class="text-muted">অপরিবর্তিত</span>
+                                  @endif
+                                </td>
                               </tr>
                               <tr>
-                                <td>মোবাইলঃ {{ $tempmemdata->mobile }}</td>
-                                <td>ইমেইলঃ {{ $tempmemdata->email }}</td>
+                                <td>মোবাইলঃ
+                                  @if($tempmemdata->mobile != $tempmemdata->user->mobile)
+                                    {{ $tempmemdata->mobile }}
+                                  @else
+                                    <span class="text-muted">অপরিবর্তিত</span>
+                                  @endif
+                                </td>
+                                <td>ইমেইলঃ
+                                  @if($tempmemdata->email != $tempmemdata->user->email)
+                                    {{ $tempmemdata->email }}
+                                  @else
+                                    <span class="text-muted">অপরিবর্তিত</span>
+                                  @endif
+                                </td>
                               </tr>
                               <tr>
-                                <td>বর্তমান ঠিকানাঃ {{ $tempmemdata->present_address }}</td>
+                                <td>বর্তমান ঠিকানাঃ
+                                  @if($tempmemdata->present_address != $tempmemdata->user->present_address)
+                                    {{ $tempmemdata->present_address }}
+                                  @else
+                                    <span class="text-muted">অপরিবর্তিত</span>
+                                  @endif
+                                </td>
                                 <td>
                                   ছবিঃ
                                   @if($tempmemdata->image)
                                     <img src="{{ asset('images/users/'. $tempmemdata->image)}}" style="height: 120px; width: auto; padding: 5px;" />
                                   @else
-                                    <small class="text-muted">অপরিবর্তিত</small>
+                                    <span class="text-muted">অপরিবর্তিত</span>
                                   @endif
                                 </td>
                               </tr>
