@@ -86,7 +86,8 @@ class DashboardController extends Controller
                                       ->count() 
                                       +
                            User::where('activation_status', 0)
-                                      ->count();
+                               ->orWhere('activation_status', 202)
+                               ->count();
 
         $successfullpayments = Payment::where('payment_status', 1)->count();
 

@@ -62,6 +62,51 @@
                                 <i class="fa fa-fw fa-eye" aria-hidden="true"></i>
                             </a>
                         </li>
+                        <li class="dropdown notifications-menu">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <i class="fa fa-bell-o"></i>
+                            @if($notifcount > 0)
+                            <span class="label label-warning">{{ $notifcount }}</span>
+                            @endif
+                          </a>
+                          <ul class="dropdown-menu">
+                            @if($notifcount > 0)
+                              <li class="header">{{ $notifcount }} টি নোটিফিকেশন আছে</li>
+                            @else
+                              <li class="header">কোন নোটিফিকেশন নেই!</li>
+                            @endif
+                            
+                            <li>
+                              <!-- inner menu: contains the actual data -->
+                              <ul class="menu">
+                                @if($notifpendingfapplications > 0)
+                                  <li>
+                                    <a href="{{ route('dashboard.applications') }}">
+                                      <i class="fa fa-users text-aqua"></i> {{ $notifpendingfapplications }} জন নিবন্ধন আবেদন করেছেন
+                                    </a>
+                                  </li>
+                                @endif
+
+                                @if($notifpendingpayments > 0)
+                                  <li>
+                                    <a href="{{ route('dashboard.memberspendingpayments') }}">
+                                      <i class="fa fa-hourglass-start text-yellow"></i> {{ $notifpendingpayments }} টি প্রক্রিয়াধীন পরিশোধ রয়েছে
+                                    </a>
+                                  </li>
+                                @endif
+
+                                @if($notiftempmemdatas > 0)
+                                  <li>
+                                    <a href="{{ route('dashboard.membersupdaterequests') }}">
+                                      <i class="fa fa-pencil-square-o text-green"></i> {{ $notiftempmemdatas }} টি তথ্য হালনাগাদ অনুরোধ
+                                    </a>
+                                  </li>
+                                @endif                                
+                              </ul>
+                            </li>
+                            <li class="footer"><a href="#">সব দেখুন</a></li>
+                          </ul>
+                        </li>
                         <li class="dropdown user user-menu">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             @if((Auth::User()->image != '') && (file_exists(public_path('images/users/'.Auth::User()->image))))
