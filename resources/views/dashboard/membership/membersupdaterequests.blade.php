@@ -79,28 +79,71 @@
                     <h4 class="modal-title"><i class="fa fa-pencil"></i> পরিবর্তনের জন্য আবেদিত তথ্যসমূহ</h4>
                   </div>
                   <div class="modal-body">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <tr>
-                          <td>পদবিঃ {{ $tempmemdata->designation }}</td>
-                          <td>দপ্তরঃ {{ $tempmemdata->designation }}</td>
-                        </tr>
-                        <tr>
-                          <td>মোবাইলঃ {{ $tempmemdata->mobile }}</td>
-                          <td>ইমেইলঃ {{ $tempmemdata->email }}</td>
-                        </tr>
-                        <tr>
-                          <td>বর্তমান ঠিকানাঃ {{ $tempmemdata->present_address }}</td>
-                          <td>
-                            ছবিঃ
-                            @if($tempmemdata->image)
-                              <img src="{{ asset('images/users/'. $tempmemdata->image)}}" style="height: 120px; width: auto; padding: 5px;" />
-                            @else
-                              <small class="text-muted">অপরিবর্তিত</small>
-                            @endif
-                          </td>
-                        </tr>
-                      </table>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th colspan="2">পুর্বের তথ্য</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>পদবিঃ {{ $tempmemdata->user->designation }}</td>
+                                <td>দপ্তরঃ {{ $tempmemdata->user->office }}</td>
+                              </tr>
+                              <tr>
+                                <td>মোবাইলঃ {{ $tempmemdata->user->mobile }}</td>
+                                <td>ইমেইলঃ {{ $tempmemdata->user->email }}</td>
+                              </tr>
+                              <tr>
+                                <td>বর্তমান ঠিকানাঃ {{ $tempmemdata->user->present_address }}</td>
+                                <td>
+                                  ছবিঃ
+                                  @if($tempmemdata->user->image)
+                                    <img src="{{ asset('images/users/'. $tempmemdata->user->image)}}" style="height: 120px; width: auto; padding: 5px;" />
+                                  @else
+                                    <small class="text-muted">অপরিবর্তিত</small>
+                                  @endif
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th colspan="2">পরিবর্তনের জন্য দাখিলকৃত তথ্য</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>পদবিঃ {{ $tempmemdata->designation }}</td>
+                                <td>দপ্তরঃ {{ $tempmemdata->office }}</td>
+                              </tr>
+                              <tr>
+                                <td>মোবাইলঃ {{ $tempmemdata->mobile }}</td>
+                                <td>ইমেইলঃ {{ $tempmemdata->email }}</td>
+                              </tr>
+                              <tr>
+                                <td>বর্তমান ঠিকানাঃ {{ $tempmemdata->present_address }}</td>
+                                <td>
+                                  ছবিঃ
+                                  @if($tempmemdata->image)
+                                    <img src="{{ asset('images/users/'. $tempmemdata->image)}}" style="height: 120px; width: auto; padding: 5px;" />
+                                  @else
+                                    <small class="text-muted">অপরিবর্তিত</small>
+                                  @endif
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="modal-footer">

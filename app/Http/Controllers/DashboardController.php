@@ -87,6 +87,7 @@ class DashboardController extends Controller
                                       +
                            User::where('activation_status', 0)
                                       ->count();
+                                      
         $successfullpayments = Payment::where('payment_status', 1)->count();
 
         $totalapplicationpending = DB::table('users')
