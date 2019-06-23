@@ -2488,4 +2488,38 @@ class DashboardController extends Controller
         return view('dashboard.notifications');
     }
 
+    public function getSMSModule() 
+    {
+        // return view('dashboard.notifications');
+    }
+
+    public function testGPSMSAPI() 
+    {
+        $url = config('sms.gp_url');
+        $number = '01751398392';
+        $text = 'This is test';
+        
+        $data= array(
+            'username'=>config('sms.gp_username'),
+            'password'=>config('sms.gp_password'),
+            'apicode'=>"1",
+            'msisdn'=>"$number",
+            'countrycode'=>"880",
+            'cli'=>"CVCS",
+            'messagetype'=>"1",
+            'message'=>"$text",
+            'messageid'=>"test"
+        );
+        
+        // initialize send status
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $smsresult = curl_exec($ch);
+        
+        echo $smsresult;
+    }
+
 }

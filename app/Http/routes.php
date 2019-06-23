@@ -212,5 +212,9 @@ Route::patch('/dashboard/members/payments/bulk/{id}/approve', ['as'=>'dashboard.
 // NOTIFICATION PAGE
 Route::get('/dashboard/notifications', ['as'=>'dashboard.notifications','uses'=>'DashboardController@getNotifications']);
 
+// SMS MODULE
+Route::get('/dashboard/sms/module', ['as'=>'dashboard.smsmodule','uses'=>'DashboardController@getSMSModule']);
+Route::get('/dashboard/sms/module/test', ['as'=>'dashboard.testgpsmsapi','uses'=>'DashboardController@testGPSMSAPI']);
+
 // dashboard routes
 // dashboard routes
