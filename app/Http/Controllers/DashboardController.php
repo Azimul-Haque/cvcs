@@ -2503,7 +2503,7 @@ class DashboardController extends Controller
     public function testGPSMSAPI() 
     {
         $url = config('sms.gp_url');
-        $number = '01751398392';
+        $number = '01837409842';
         $text = 'This is test';
         
         $data= array(
