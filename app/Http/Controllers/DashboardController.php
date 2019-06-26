@@ -2503,7 +2503,7 @@ class DashboardController extends Controller
     public function testGPSMSAPI() 
     {
         $url = config('sms.gp_url');
-        $number = '01837409842';
+        $number = '01751398392';
         $text = 'This is test';
         
         $data= array(
@@ -2518,7 +2518,18 @@ class DashboardController extends Controller
             'messageid'=>"1"
         );
 
-        
+        // // balance check
+        // $data= array(
+        //     'username'=>config('sms.gp_username'),
+        //     'password'=>config('sms.gp_password'),
+        //     'apicode'=>"3",
+        //     'msisdn'=>"0",
+        //     'countrycode'=>"0",
+        //     'cli'=>"0",
+        //     'messagetype'=>"0",
+        //     'message'=>"0",
+        //     'messageid'=>"0"
+        // );
         
         // initialize send status
         $ch = curl_init(); // Initialize cURL
