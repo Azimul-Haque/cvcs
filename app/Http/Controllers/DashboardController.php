@@ -2523,7 +2523,7 @@ class DashboardController extends Controller
             'username'=>config('sms.gp_username'),
             'password'=>config('sms.gp_password'),
             'apicode'=>"3",
-            'msisdn'=>"0r",
+            'msisdn'=>"0",
             'countrycode'=>"0",
             'cli'=>"0",
             'messagetype'=>"0",
