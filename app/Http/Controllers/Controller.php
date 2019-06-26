@@ -32,6 +32,35 @@ class Controller extends BaseController
 
       $notiftempmemdatas = Tempmemdata::count();
 
+      // sms balance check
+      $url = config('sms.gp_url');
+      $data_notif= array(
+          'username'=>config('sms.gp_username'),
+          'password'=>config('sms.gp_password'),
+          'apicode'=>"3",
+          'msisdn'=>"0",
+          'countrycode'=>"0",
+          'cli'=>"0",
+          'messagetype'=>"0",
+          'message'=>"0",
+          'messageid'=>"0"
+      );
+      
+      // initialize send status
+      $chnotif = curl_init(); // Initialize cURL
+      curl_setopt($chnotif, CURLOPT_URL,$url);
+      curl_setopt($chnotif, CURLOPT_POSTFIELDS, http_build_query($data_notif));
+      curl_setopt($chnotif, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($chnotif, CURLOPT_SSL_VERIFYPEER, false); // this is important
+      $smsresultnotif = curl_exec($chnotif);
+      
+      $smsstatusnotif = substr($smsresultnotif, 0, 3);
+      if($smsstatusnotif == 200) {
+        $smsbalance = substr($smsresultnotif, 0, 3);
+        dd($smsbalance);
+      }
+      // sms balance check
+      
       $notifcount = 0;
       if($notifpendingfapplications > 0) {
       	$notifcount++;
