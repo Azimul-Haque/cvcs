@@ -54,9 +54,8 @@ class Controller extends BaseController
       curl_setopt($chnotif, CURLOPT_SSL_VERIFYPEER, false); // this is important
       $smsresultnotif = curl_exec($chnotif);
       
-      $smsstatusnotif = substr($smsresultnotif, 0, 3);
-      if($smsstatusnotif == 200) {
-        $smsbalance = substr($smsresultnotif, 0, 3);
+      if(substr($smsresultnotif, 0, 3) == 200) {
+        $smsbalance = substr($smsresultnotif, 4);
         dd($smsbalance);
       }
       // sms balance check
