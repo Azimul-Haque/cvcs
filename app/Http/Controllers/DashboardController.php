@@ -1513,6 +1513,8 @@ class DashboardController extends Controller
             // send sms
             if($sendstatus == 200) {
                 Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+            } elseif($sendstatus == 216) {
+                Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
                 Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
             }
@@ -2514,6 +2516,19 @@ class DashboardController extends Controller
             'messagetype'=>"1",
             'message'=>"$text",
             'messageid'=>"1"
+        );
+
+        // balance check
+        $data= array(
+            'username'=>config('sms.gp_username'),
+            'password'=>config('sms.gp_password'),
+            'apicode'=>"3",
+            'msisdn'=>"0r",
+            'countrycode'=>"0",
+            'cli'=>"0",
+            'messagetype'=>"0",
+            'message'=>"0",
+            'messageid'=>"0"
         );
         
         // initialize send status
