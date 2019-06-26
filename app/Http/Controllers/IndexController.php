@@ -348,24 +348,29 @@ class IndexController extends Controller
         // send sms
         $mobile_number = 0;
         if(strlen($application->mobile) == 11) {
-            $mobile_number = '88'.$application->mobile;
+            $mobile_number = $application->mobile;
         } elseif(strlen($application->mobile) > 11) {
             if (strpos($application->mobile, '+') !== false) {
-                $mobile_number = substr($application->mobile,0,1);
+                $mobile_number = substr($application->mobile, -11);
             }
         }
-        $url = config('sms.url');
+        $url = config('sms.gp_url');
         $number = $mobile_number;
         $text = 'Dear ' . $application->name . ', your membership application has been submitted! We will notify you when we approve. Thanks. Visit: https://cvcsbd.com';
         // this sms costs 2 SMS
-        // this sms costs 2 SMS
         
         $data= array(
-            'username'=>config('sms.username'),
-            'password'=>config('sms.password'),
-            'number'=>"$number",
-            'message'=>"$text"
+            'username'=>config('sms.gp_username'),
+            'password'=>config('sms.gp_password'),
+            'apicode'=>"1",
+            'msisdn'=>"$number",
+            'countrycode'=>"880",
+            'cli'=>"CVCS",
+            'messagetype'=>"1",
+            'message'=>"$text",
+            'messageid'=>"1"
         );
+
         // initialize send status
         $ch = curl_init(); // Initialize cURL
         curl_setopt($ch, CURLOPT_URL,$url);

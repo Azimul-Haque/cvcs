@@ -2508,7 +2508,7 @@ class DashboardController extends Controller
             'cli'=>"CVCS",
             'messagetype'=>"1",
             'message'=>"$text",
-            'messageid'=>"test"
+            'messageid'=>"1"
         );
         
         // initialize send status
@@ -2519,7 +2519,8 @@ class DashboardController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
         
-        echo $smsresult;
+        $result = substr($smsresult, 0, 3);
+        echo $result;
     }
 
 }
