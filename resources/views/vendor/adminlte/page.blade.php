@@ -104,7 +104,7 @@
                                   </li>
                                 @endif 
 
-                                @if($notifsmsbalance > 0)
+                                @if($notifsmsbalance > 0 && $notifsmsbalance < 21)
                                   <li>
                                     <a href="#">
                                       <i class="fa fa-envelope-o text-red"></i> অপর্যাপ্ত SMS ব্যালেন্সঃ ৳ {{ $notifsmsbalance }}

@@ -70,7 +70,7 @@ class Controller extends BaseController
       if($notiftempmemdatas > 0) {
         $notifcount++;
       } 
-      if($notifsmsbalance > 0) { // test
+      if($notifsmsbalance > 0 && $notifsmsbalance < 21) { // test
       	$notifcount++;
       }    
 
