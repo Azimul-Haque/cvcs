@@ -376,11 +376,12 @@ class IndexController extends Controller
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
-        $p = explode("|",$smsresult);
-        $sendstatus = $p[0];
+
+        $sendstatus = $result = substr($smsresult, 0, 3);
         // send sms
-        if($sendstatus == 1101) {
+        if($sendstatus == 200) {
             // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
         } else {
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
