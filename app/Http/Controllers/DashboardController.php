@@ -1574,7 +1574,7 @@ class DashboardController extends Controller
             'msisdn'=>"$number",
             'countrycode'=>"880",
             'cli'=>"CVCS",
-            'messagetype'=>"1",
+            'messagetype'=>"3",
             'message'=>"$text",
             'messageid'=>"3"
         );
