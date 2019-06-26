@@ -383,6 +383,8 @@ class IndexController extends Controller
         // send sms
         if($sendstatus == 200) {
             // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } elseif($sendstatus == 216) {
+            // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
