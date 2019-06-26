@@ -102,6 +102,14 @@
                                       <i class="fa fa-pencil-square-o text-green"></i> {{ $notiftempmemdatas }} টি তথ্য হালনাগাদ অনুরোধ
                                     </a>
                                   </li>
+                                @endif 
+
+                                @if($notifsmsbalance > 0)
+                                  <li>
+                                    <a href="#">
+                                      <i class="fa fa-pencil-square-o text-green"></i> {{ $notifsmsbalance }} অপর্যাপ্ত SMS ব্যালেন্সঃ ৳ {{ $notifsmsbalance }}
+                                    </a>
+                                  </li>
                                 @endif                                
                               </ul>
                             </li>

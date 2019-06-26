@@ -54,9 +54,9 @@ class Controller extends BaseController
       curl_setopt($chnotif, CURLOPT_SSL_VERIFYPEER, false); // this is important
       $smsresultnotif = curl_exec($chnotif);
       
+      $notifsmsbalance = -1;
       if(substr($smsresultnotif, 0, 3) == 200) {
-        $smsbalance = substr(substr($smsresultnotif, 4), 0, -2);
-        dd($smsbalance);
+        $notifsmsbalance = substr(substr($smsresultnotif, 4), 0, -2);
       }
       // sms balance check
       
@@ -68,6 +68,9 @@ class Controller extends BaseController
       	$notifcount++;
       }
       if($notiftempmemdatas > 0) {
+        $notifcount++;
+      } 
+      if($notifsmsbalance > 0) { // test
       	$notifcount++;
       }    
 
@@ -76,6 +79,7 @@ class Controller extends BaseController
       View::share('notifpendingpayments', $notifpendingpayments);
       View::share('notiftempmemdatas', $notiftempmemdatas);
       View::share('notifcount', $notifcount);
+      View::share('notifsmsbalance', $notifsmsbalance);
     }
 
 }
