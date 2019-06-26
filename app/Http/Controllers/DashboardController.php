@@ -2540,7 +2540,7 @@ class DashboardController extends Controller
         $smsresult = curl_exec($ch);
         
         $result = substr($smsresult, 0, 3);
-        echo $result;
+        echo $smsresult;
     }
 
 }
