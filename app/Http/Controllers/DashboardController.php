@@ -2297,10 +2297,10 @@ class DashboardController extends Controller
         foreach ($members as $i => $member) {
             $mobile_number = 0;
             if(strlen($member->mobile) == 11) {
-                $mobile_number = '88'.$member->mobile;
+                $mobile_number = $member->mobile;
             } elseif(strlen($member->mobile) > 11) {
                 if (strpos($member->mobile, '+') !== false) {
-                    $mobile_number = substr($member->mobile,0,1);
+                    $mobile_number = substr($member->mobile,-11);
                 }
             }
             if($mobile_number != 0) {
@@ -2309,25 +2309,32 @@ class DashboardController extends Controller
         }
         $numbers = implode(",", $mobile_numbers);
         $url = config('sms.gp_url');
+
         $data= array(
-          'username'=>config('sms.username'),
-          'password'=>config('sms.password'),
-          'number'=>"$numbers",
-          'message'=>"Dear User, a payment is submitted against your account. We will notify you further updates. Login: https://cvcsbd.com/login"
+            'username'=>config('sms.gp_username'),
+            'password'=>config('sms.gp_password'),
+            'apicode'=>"1",
+            'msisdn'=>"$numbers",
+            'countrycode'=>"880",
+            'cli'=>"CVCS",
+            'messagetype'=>"1",
+            'message'=>"Dear User, a payment is submitted against your account. We will notify you further updates. Login: https://cvcsbd.com/login",
+            'messageid'=>"1"
         );
 
         $ch = curl_init(); // Initialize cURL
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
-        $p = explode("|",$smsresult);
-        $sendstatus = $p[0];
 
-        if($sendstatus == 1101) {
-            //Session::flash('info', 'gese');
+        $sendstatus = $result = substr($smsresult, 0, 3);
+
+        if($sendstatus == 200) {
+            Session::flash('info', 'gese');
         } else {
-            //Session::flash('info', 'jayni!');
+            Session::flash('info', 'jayni!');
         }
         
         Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
