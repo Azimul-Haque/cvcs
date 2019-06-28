@@ -75,7 +75,7 @@ class BlogController extends Controller {
 
         $blog->save();
         //redirect
-        return redirect()->route('index.profile', Auth::user()->unique_key);
+        return redirect()->route('blogger.profile', Auth::user()->unique_key);
     }
 
     public function show($id)

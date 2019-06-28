@@ -1999,6 +1999,51 @@ class DashboardController extends Controller
 
         $tempmemdata->delete();
 
+
+        // send sms
+        $mobile_number = 0;
+        if(strlen($member->mobile) == 11) {
+            $mobile_number = $member->mobile;
+        } elseif(strlen($member->mobile) > 11) {
+            if (strpos($member->mobile, '+') !== false) {
+                $mobile_number = substr($member->mobile, -11);
+            }
+        }
+        $url = config('sms.gp_url');
+        $number = $mobile_number;
+        $text = 'Dear ' . $member->name . ', your information changing request has been approved! Thanks. Login: https://cvcsbd.com/login';
+        // this sms costs 2 SMS
+        
+        $data= array(
+            'username'=>config('sms.gp_username'),
+            'password'=>config('sms.gp_password'),
+            'apicode'=>"1",
+            'msisdn'=>"$number",
+            'countrycode'=>"880",
+            'cli'=>"CVCS",
+            'messagetype'=>"1",
+            'message'=>"$text",
+            'messageid'=>"1"
+        );
+
+        // initialize send status
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+        $smsresult = curl_exec($ch);
+
+        $sendstatus = $result = substr($smsresult, 0, 3);
+        // send sms
+        if($sendstatus == 200) {
+            Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } elseif($sendstatus == 216) {
+            Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+        } else {
+            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        }
+
         Session::flash('success', 'সফলভাবে হালনাগাদ করা হয়েছে!');
         return redirect()->route('dashboard.membersupdaterequests');
     }
