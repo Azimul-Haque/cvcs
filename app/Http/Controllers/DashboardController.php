@@ -2518,7 +2518,7 @@ class DashboardController extends Controller
             // if($mobile_number != 0) {
             //   array_push($mobile_numbers, $mobile_number);
             // }
-            $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Login: https://cvcsbd.com/login';
+            $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Login: https://cvcsbd.com/login';
             $smsdata[$member_id] = array(
                 'username'=>config('sms.gp_username'),
                 'password'=>config('sms.gp_password'),
