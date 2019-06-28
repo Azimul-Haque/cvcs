@@ -2577,6 +2577,7 @@ class DashboardController extends Controller
         $users = User::where('mobile', '01843872972')
                         ->orWhere('mobile', '01780507408')
                         ->orWhere('mobile', '01751398392')
+                        ->orWhere('mobile', '01837409842')
                         ->get();
 
         $smssuccesscount = 0;
@@ -2591,7 +2592,7 @@ class DashboardController extends Controller
 
         // sms data
         $smsdata = [];
-        for($iterator = 0; $iterator < 4; $iterator++) {
+        for($iterator = 0; $iterator < 2; $iterator++) {
             foreach ($users as $i => $user) {
                 $mobile_number = 0;
                 if(strlen($user->mobile) == 11) {
@@ -2601,7 +2602,7 @@ class DashboardController extends Controller
                         $mobile_number = substr($user->mobile, -11);
                     }
                 }
-                $text = '4587 Dear ' . $user->name . ', This is a test!';
+                $text = 'Dear ' . $user->name . ', This is a test!';
                 $smsdata[$i] = array(
                     'username'=>config('sms.gp_username'),
                     'password'=>config('sms.gp_password'),
