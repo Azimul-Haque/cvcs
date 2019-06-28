@@ -2355,7 +2355,7 @@ class DashboardController extends Controller
         curl_multi_close($mh);
         
         
-        Session::flash('success', $smssuccesscount. 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
+        Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
         return redirect()->route('dashboard.memberpayment');
     }
 
@@ -2491,47 +2491,71 @@ class DashboardController extends Controller
         $bulkpayment->is_archieved = 1;
         $bulkpayment->save();
 
+
         // send sms
-        $mobile_numbers = [];
-        foreach(json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+        // $mobile_numbers = [];
+        $smssuccesscount = 0;
+        $url = config('sms.gp_url');
+        
+        $multiCurl = array();
+        // data to be returned
+        $result = array();
+        // multi handle
+        $mh = curl_multi_init();
+        // sms data
+        $smsdata = [];
+
+        foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
             $member = User::where('member_id', $member_id)->first();
             $mobile_number = 0;
             if(strlen($member->mobile) == 11) {
-                $mobile_number = '88'.$member->mobile;
+                $mobile_number = $member->mobile;
             } elseif(strlen($member->mobile) > 11) {
                 if (strpos($member->mobile, '+') !== false) {
-                    $mobile_number = substr($member->mobile,0,1);
+                    $mobile_number = substr($member->mobile, -11);
                 }
             }
-            if($mobile_number != 0) {
-              array_push($mobile_numbers, $mobile_number);
-            }
-        }
-        $numbers = implode(",", $mobile_numbers);
-        $url = config('sms.gp_url');
-        $data= array(
-          'username'=>config('sms.username'),
-          'password'=>config('sms.password'),
-          'number'=>"$numbers",
-          'message'=>"Dear User, your payment is APPROVED successfully. Please signin to see details. Login: https://cvcsbd.com/login"
-        );
-
-        $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $smsresult = curl_exec($ch);
-        $p = explode("|",$smsresult);
-        $sendstatus = $p[0];
-        // $smssuccesscount = $p[1];
-
-        if($sendstatus == 1101) {
-            //Session::flash('info', 'gese');
-        } else {
-            //Session::flash('info', 'jayni!');
+            // if($mobile_number != 0) {
+            //   array_push($mobile_numbers, $mobile_number);
+            // }
+            $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Login: https://cvcsbd.com/login';
+            $smsdata[$i] = array(
+                'username'=>config('sms.gp_username'),
+                'password'=>config('sms.gp_password'),
+                'apicode'=>"1",
+                'msisdn'=>"$mobile_number",
+                'countrycode'=>"880",
+                'cli'=>"CVCS",
+                'messagetype'=>"1",
+                'message'=>"$text",
+                'messageid'=>"1"
+            );
+            $multiCurl[$i] = curl_init(); // Initialize cURL
+            curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
+            curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
+            curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
+            curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
+            curl_multi_add_handle($mh, $multiCurl[$i]);
         }
 
-        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        $index=null;
+        do {
+          curl_multi_exec($mh, $index);
+        } while($index > 0);
+        // get content and remove handles
+        foreach($multiCurl as $k => $ch) {
+          $result[$k] = curl_multi_getcontent($ch);
+          curl_multi_remove_handle($mh, $ch);
+          $sendstatus = substr($result[$k], 0, 3);;
+          if($sendstatus == 200) {
+              $smssuccesscount++;
+          }
+        }
+        // close
+        curl_multi_close($mh);
+
+        Session::flash('success', $smssuccesscount. ' অনুমোদন সফল হয়েছে!');
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
