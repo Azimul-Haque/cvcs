@@ -2530,7 +2530,7 @@ class DashboardController extends Controller
     public function testGPSMSAPI() 
     {
         $url = config('sms.gp_url');
-        $number = '01751398392';
+        $number = '01780507408,01751398392';
         $text = 'This is test';
         
         $data= array(
@@ -2545,18 +2545,18 @@ class DashboardController extends Controller
             'messageid'=>"1"
         );
 
-        // balance check
-        $data= array(
-            'username'=>config('sms.gp_username'),
-            'password'=>config('sms.gp_password'),
-            'apicode'=>"3",
-            'msisdn'=>"0",
-            'countrycode'=>"0",
-            'cli'=>"0",
-            'messagetype'=>"0",
-            'message'=>"0",
-            'messageid'=>"0"
-        );
+        // // balance check
+        // $data= array(
+        //     'username'=>config('sms.gp_username'),
+        //     'password'=>config('sms.gp_password'),
+        //     'apicode'=>"3",
+        //     'msisdn'=>"0",
+        //     'countrycode'=>"0",
+        //     'cli'=>"0",
+        //     'messagetype'=>"0",
+        //     'message'=>"0",
+        //     'messageid'=>"0"
+        // );
         
         // initialize send status
         $ch = curl_init(); // Initialize cURL
@@ -2567,8 +2567,8 @@ class DashboardController extends Controller
         $smsresult = curl_exec($ch);
         
         $result = substr($smsresult, 0, 3);
-        $result = file_get_contents('https://gpcmp.grameenphone.com/gpcmpapi/messageplatform/controller.home?username=CAVCSAdmin_3978&password=API_CVCSbd_123&apicode=1&msisdns=01780507408,01751398392&countrycode=880&cli=CVCS&messagetype=1&message=Test&messageid=1');
-        echo $result;
+        // $result = file_get_contents('https://gpcmp.grameenphone.com/gpcmpapi/messageplatform/controller.home?username=CAVCSAdmin_3978&password=API_CVCSbd_123&apicode=1&msisdns=01780507408,01751398392&countrycode=880&cli=CVCS&messagetype=1&message=Test&messageid=1');
+        echo $smsresult;
 
     }
 
