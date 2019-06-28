@@ -2601,7 +2601,7 @@ class DashboardController extends Controller
                         $mobile_number = substr($user->mobile, -11);
                     }
                 }
-                $text = 'Dear ' . $user->name . ', This is a test!';
+                $text = '4587 Dear ' . $user->name . ', This is a test!';
                 $smsdata[$i] = array(
                     'username'=>config('sms.gp_username'),
                     'password'=>config('sms.gp_password'),
