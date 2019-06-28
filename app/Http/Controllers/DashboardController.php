@@ -2555,7 +2555,7 @@ class DashboardController extends Controller
         // close
         curl_multi_close($mh);
 
-        Session::flash('success', $smssuccesscount. ' অনুমোদন সফল হয়েছে!');
+        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
@@ -2616,11 +2616,9 @@ class DashboardController extends Controller
 
     public function testMultiGPSMSAPI() 
     {
-        $users = User::where('mobile', '01843872972')
-                        ->orWhere('mobile', '01780507408')
+        $users = User::where('mobile', '01837409842')
                         ->orWhere('mobile', '01751398392')
-                        ->orWhere('mobile', '01837409842')
-                        ->orWhere('mobile', '23846328463')
+                        ->orWhere('mobile', '03846328463')
                         ->get();
 
         $smssuccesscount = 0;
