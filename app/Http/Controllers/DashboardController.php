@@ -2519,7 +2519,7 @@ class DashboardController extends Controller
             //   array_push($mobile_numbers, $mobile_number);
             // }
             $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Login: https://cvcsbd.com/login';
-            $smsdata[$i] = array(
+            $smsdata[$member_id] = array(
                 'username'=>config('sms.gp_username'),
                 'password'=>config('sms.gp_password'),
                 'apicode'=>"1",
@@ -2530,13 +2530,13 @@ class DashboardController extends Controller
                 'message'=>"$text",
                 'messageid'=>"1"
             );
-            $multiCurl[$i] = curl_init(); // Initialize cURL
-            curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
-            curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
-            curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
-            curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
-            curl_multi_add_handle($mh, $multiCurl[$i]);
+            $multiCurl[$member_id] = curl_init(); // Initialize cURL
+            curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
+            curl_setopt($multiCurl[$member_id], CURLOPT_HEADER, 0);
+            curl_setopt($multiCurl[$member_id], CURLOPT_POSTFIELDS, http_build_query($smsdata[$member_id]));
+            curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
+            curl_multi_add_handle($mh, $multiCurl[$member_id]);
         }
 
         $index=null;
