@@ -2641,7 +2641,7 @@ class DashboardController extends Controller
         curl_multi_close($mh);
 
 
-        echo $result;
+        print_r($result);
     }
 
 }
