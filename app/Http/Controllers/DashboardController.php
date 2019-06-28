@@ -2276,8 +2276,6 @@ class DashboardController extends Controller
 
         $payment->save();
 
-
-
         // receipt upload
         for($itrt=1; $itrt<4;$itrt++) {
             if($request->hasFile('image'.$itrt)) {
