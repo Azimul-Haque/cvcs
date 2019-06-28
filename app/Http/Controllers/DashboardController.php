@@ -2591,34 +2591,36 @@ class DashboardController extends Controller
 
         // sms data
         $smsdata = [];
-        foreach ($users as $i => $user) {
-            $mobile_number = 0;
-            if(strlen($user->mobile) == 11) {
-                $mobile_number = $user->mobile;
-            } elseif(strlen($user->mobile) > 11) {
-                if (strpos($user->mobile, '+') !== false) {
-                    $mobile_number = substr($user->mobile, -11);
+        for($iterator = 0; $iterator < 20; $iterator++) {
+            foreach ($users as $i => $user) {
+                $mobile_number = 0;
+                if(strlen($user->mobile) == 11) {
+                    $mobile_number = $user->mobile;
+                } elseif(strlen($user->mobile) > 11) {
+                    if (strpos($user->mobile, '+') !== false) {
+                        $mobile_number = substr($user->mobile, -11);
+                    }
                 }
+                $text = 'Dear ' . $user->name . ', This is a test!';
+                $smsdata[$i] = array(
+                    'username'=>config('sms.gp_username'),
+                    'password'=>config('sms.gp_password'),
+                    'apicode'=>"1",
+                    'msisdn'=>"$mobile_number",
+                    'countrycode'=>"880",
+                    'cli'=>"CVCS",
+                    'messagetype'=>"1",
+                    'message'=>"$text",
+                    'messageid'=>"1"
+                );
+                $multiCurl[$i] = curl_init(); // Initialize cURL
+                curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
+                curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
+                curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
+                curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
+                curl_multi_add_handle($mh, $multiCurl[$i]);
             }
-            $text = 'Dear ' . $user->name . ', This is a test!';
-            $smsdata[$i] = array(
-                'username'=>config('sms.gp_username'),
-                'password'=>config('sms.gp_password'),
-                'apicode'=>"1",
-                'msisdn'=>"$mobile_number",
-                'countrycode'=>"880",
-                'cli'=>"CVCS",
-                'messagetype'=>"1",
-                'message'=>"$text",
-                'messageid'=>"1"
-            );
-            $multiCurl[$i] = curl_init(); // Initialize cURL
-            curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
-            curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
-            curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
-            curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
-            curl_multi_add_handle($mh, $multiCurl[$i]);
         }
 
         $index=null;
