@@ -2591,7 +2591,7 @@ class DashboardController extends Controller
 
         // sms data
         $smsdata = [];
-        for($iterator = 0; $iterator < 20; $iterator++) {
+        for($iterator = 0; $iterator < 4; $iterator++) {
             foreach ($users as $i => $user) {
                 $mobile_number = 0;
                 if(strlen($user->mobile) == 11) {
