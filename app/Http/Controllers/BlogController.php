@@ -68,7 +68,7 @@ class BlogController extends Controller {
         if($request->hasFile('featured_image')) {
             $image      = $request->file('featured_image');
             $filename   = str_replace(['?',':', '\\', '/', '*', ' '], '_',$request->title).time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('images\blogs/'. $filename);
+            $location   = public_path('/images/blogs/'. $filename);
             Image::make($image)->crop(600, 315)->save($location);
             $blog->featured_image = $filename;
         }
