@@ -2400,7 +2400,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.gp_url');
         $number = $mobile_number;
-        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Login: Login: h/loginttps://cvcsbd.com/login';
+        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Login: https://cvcsbd.com/login';
         $data= array(
             'username'=>config('sms.gp_username'),
             'password'=>config('sms.gp_password'),
