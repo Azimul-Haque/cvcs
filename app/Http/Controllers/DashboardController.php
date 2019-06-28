@@ -2568,7 +2568,7 @@ class DashboardController extends Controller
         
         $result = substr($smsresult, 0, 3);
         $result = file_get_contents('https://gpcmp.grameenphone.com/gpcmpapi/messageplatform/controller.home?username=CAVCSAdmin_3978&password=API_CVCSbd_123&apicode=1&msisdn=01751398392&countrycode=880&cli=CVCS&messagetype=1&message=Test&messageid=1');
-        echo $smsresult;
+        echo $result;
         
     }
 
