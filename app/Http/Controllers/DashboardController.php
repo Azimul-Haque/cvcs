@@ -2573,7 +2573,7 @@ class DashboardController extends Controller
                 'cli'=>"CVCS",
                 'messagetype'=>"1",
                 'message'=>"$text",
-                'messageid'=>"1"
+                'messageid'=>"2"
             );
             $multiCurl[$member_id] = curl_init(); // Initialize cURL
             curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);

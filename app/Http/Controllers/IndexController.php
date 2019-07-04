@@ -458,13 +458,13 @@ class IndexController extends Controller
             // send sms
             $mobile_number = 0;
             if(strlen($request->mobile) == 11) {
-                $mobile_number = '88'.$request->mobile;
+                $mobile_number = $request->mobile;
             } elseif(strlen($request->mobile) > 11) {
                 if (strpos($request->mobile, '+') !== false) {
-                    $mobile_number = substr($request->mobile,0,1);
+                    $mobile_number = substr($request->mobile, -11);
                 }
             }
-            $url = config('sms.url');
+            $url = config('sms.gp_url');
             $number = $mobile_number;
             $text = $securuty_code . ' is your password reset security code. Thanks, https://cvcsbd.com';
             $data= array(
@@ -473,19 +473,33 @@ class IndexController extends Controller
                 'number'=>"$number",
                 'message'=>"$text"
             );
+            $data= array(
+                'username'=>config('sms.gp_username'),
+                'password'=>config('sms.gp_password'),
+                'apicode'=>"1",
+                'msisdn'=>"$number",
+                'countrycode'=>"880",
+                'cli'=>"CVCS",
+                'messagetype'=>"1",
+                'message'=>"$text",
+                'messageid'=>"4"
+            );
             // initialize send status
             $ch = curl_init(); // Initialize cURL
             curl_setopt($ch, CURLOPT_URL,$url);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
             $smsresult = curl_exec($ch);
-            $p = explode("|",$smsresult);
-            $sendstatus = $p[0];
+
+            $sendstatus = $result = substr($smsresult, 0, 3);
             // send sms
-            if($sendstatus == 1101) {
+            if($sendstatus == 200) {
                 Session::flash('info', $request->mobile . '-নম্বরে সিকিউরিটি কোড পাঠানো হয়েছে!');
+            } elseif($sendstatus == 216) {
+                // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
-                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন। ধন্যবাদ।');
+                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।');
             }
             return redirect()->route('index.mobileresetverifypage', $request->mobile);
         } else {
