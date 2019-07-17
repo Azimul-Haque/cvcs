@@ -75,7 +75,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 text-center wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
                     <!-- page title -->
-                    <h1 class="white-text">কাস্টমস এন্ড ভ্যাট কর্মকর্তা-কর্মচারী সমবায় সমিতি লিমিটেড</h1>
+                    <h1 class="white-text">কাস্টমস এন্ড ভ্যাট কো অপারেটিভ সোসাইটি (সিভিসিএস) লিমিটেড</h1>
                     <!-- end page title -->
                     <!-- page title tagline -->
                     <span class="white-text xs-display-none">(সিভিসিএস)</span>
