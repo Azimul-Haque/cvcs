@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-md-10 col-sm-10 col-xs-11 center-col login-box xs-margin-top-twelve">
                     <h3 class="text-center">
-                      কাস্টমস এন্ড ভ্যাট কর্মকর্তা-কর্মচারী সমবায় সমিতি লিমিটেড<br/><br/>
+                      কাস্টমস এন্ড ভ্যাট কো অপারেটিভ সোসাইটি (সিভিসিএস) লিমিটেড<br/><br/>
                       <big>সিভিসিএস</big>
                     </h3>
                     <h4 class="text-center">গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের সমবায় মন্ত্রণালয় কর্তৃক অনুমোদিত</h4>

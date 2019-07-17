@@ -55,7 +55,7 @@
     </div>
 
     <div class="row">
-    	<div class="col-md-6">
+    	<div class="col-md-12">
     		<h4>মাসিক পরিশোধের হিসাব</h4>
             @php
                 $startyear = 2019;
@@ -105,7 +105,7 @@
     			</table>
     		</div>
     	</div>
-    	<div class="col-md-6"></div>
+    	{{-- <div class="col-md-6"></div> --}}
     </div>
     @endif
 @stop
