@@ -35,7 +35,7 @@
           <tr>
             <td>
               @if($member->serial < 100)
-                {{ $member->serial }}
+                {{ bangla($member->serial) }}
               @endif
             </td>
             <td>{{ $member->name }}</td>
