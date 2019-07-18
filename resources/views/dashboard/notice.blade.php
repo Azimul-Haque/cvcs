@@ -144,7 +144,7 @@
           <h4 class="modal-title">নতুন নোটিশ যোগ করুন</h4>
         </div>
         <div class="modal-body">
-          {!! Form::open(['route' => 'dashboard.storenotice', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+          {!! Form::open(['route' => 'dashboard.storenotice', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'id' => 'addNoticeForm']) !!}
               <div class="form-group">
                 {!! Form::label('name', 'শিরোনাম') !!}
                 {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Write Notice Title', 'required')) !!}
@@ -197,6 +197,10 @@
             $("#attachment").val('');
             toastr.warning('File size is: '+filesize+' Kb. try uploading less than 10MB', 'WARNING').css('width', '400px;');
           }
+      });
+
+      $('#addNoticeForm').submit(function(){
+          $('input[type=submit]').addClass("disabled");
       });
     });
   </script>

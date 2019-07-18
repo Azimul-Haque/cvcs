@@ -690,7 +690,7 @@ class DashboardController extends Controller
     {
         $this->validate($request,array(
             'name'          =>   'required',
-            'attachment'    => 'required|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif|max:2000'
+            'attachment'    => 'required|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif|max:10000'
         ));
 
         $notice = new Notice;
@@ -714,7 +714,7 @@ class DashboardController extends Controller
     {
         $this->validate($request,array(
             'name'          =>   'required',
-            'attachment'    => 'sometimes|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif|max:2000'
+            'attachment'    => 'sometimes|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif|max:10000'
         ));
 
         $notice = Notice::find($id);
