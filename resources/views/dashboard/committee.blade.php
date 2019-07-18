@@ -20,6 +20,7 @@
       <table class="table table-bordered">
         <thead>
           <tr>
+            <th style="width: 20px;">সিরিয়াল</th>
             <th>নাম</th>
             <th>কমিটি</th>
             <th>ইমেইল ও ফোন নম্বর</th>
@@ -32,6 +33,11 @@
           @php $addmodalflag = 0; $editmodalflag = 0; @endphp
           @foreach($committeemembers as $member)
           <tr>
+            <td>
+              @if($member->serial < 100)
+                {{ $member->serial }}
+              @endif
+            </td>
             <td>{{ $member->name }}</td>
             <td>{{ $member->email }}<br/>{{ $member->phone }}</td>
             <td>
