@@ -34,9 +34,7 @@
           @foreach($committeemembers as $member)
           <tr>
             <td>
-              @if($member->serial < 100)
-                {{ bangla($member->serial) }}
-              @endif
+              {{ bangla($member->serial) }}
             </td>
             <td>{{ $member->name }}</td>
             <td>{{ $member->email }}<br/>{{ $member->phone }}</td>
