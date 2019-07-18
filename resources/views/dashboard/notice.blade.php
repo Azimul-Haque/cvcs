@@ -44,7 +44,7 @@
                     <h4 class="modal-title">নোটিশ হালনাগাদ করুন</h4>
                   </div>
                   <div class="modal-body">
-                  {!! Form::model($notice, ['route' => ['dashboard.updatenotice', $notice->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
+                  {!! Form::model($notice, ['route' => ['dashboard.updatenotice', $notice->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data', 'id' => 'editNoticeForm'.$notice->id ]) !!}
                     <div class="form-group">
                       {!! Form::label('name', 'শিরোনাম') !!}
                       {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'শিরোনাম লিখুন', 'required')) !!}
@@ -95,6 +95,11 @@
                       $("#attachment{{ $notice->id }}").val('');
                       toastr.warning('File size is: '+filesize+' Kb. try uploading less than 10MB', 'WARNING').css('width', '400px;');
                     }
+                });
+
+                $('#editNoticeForm{{ $notice->id }}').submit(function(){
+                    $('input[type=submit]').addClass("disabled");
+                    $('input[type=submit]').val("ফাইল আপলোড হচ্ছে, অপেক্ষা করুন...");
                 });
               });
             </script>
@@ -201,6 +206,7 @@
 
       $('#addNoticeForm').submit(function(){
           $('input[type=submit]').addClass("disabled");
+          $('input[type=submit]').val("ফাইল আপলোড হচ্ছে, অপেক্ষা করুন...");
       });
     });
   </script>
