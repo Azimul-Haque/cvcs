@@ -8,9 +8,9 @@
 
 @section('content_header')
     <h1>
-      Notice
+      নোটিশ
       <div class="pull-right">
-        <button class="btn btn-success" data-toggle="modal" data-target="#addNoticeModal" data-backdrop="static"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> Create Notice</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#addNoticeModal" data-backdrop="static"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> নোটিশ যোগ করুন</button>
       </div>
     </h1>
 @stop
@@ -20,7 +20,7 @@
     <table class="table table-bordered table-condensed">
       <thead>
         <tr>
-          <th>Title</th>
+          <th>শিরোনাম</th>
           <th width="30%">Attachment</th>
           <th width="15%">Action</th>
         </tr>
@@ -41,13 +41,13 @@
                 <div class="modal-content">
                   <div class="modal-header modal-header-success">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Edit Notice</h4>
+                    <h4 class="modal-title">নোটিশ হালনাগাদ করুন</h4>
                   </div>
                   <div class="modal-body">
                   {!! Form::model($notice, ['route' => ['dashboard.updatenotice', $notice->id], 'method' => 'PUT', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
                     <div class="form-group">
-                      {!! Form::label('name', 'Title') !!}
-                      {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Write Titile', 'required')) !!}
+                      {!! Form::label('name', 'শিরোনাম') !!}
+                      {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'শিরোনাম লিখুন', 'required')) !!}
                     </div>
                   
                     <div class="form-group">
@@ -63,8 +63,8 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                        {!! Form::submit('Submit', array('class' => 'btn btn-success')) !!}
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-success')) !!}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                   </div>
                   {!! Form::close() !!}
                 </div>
@@ -91,9 +91,9 @@
                 
                 $("#attachment{{ $notice->id }}").change(function(){
                     var filesize = parseInt((this.files[0].size)/1024);
-                    if(filesize > 250) {
+                    if(filesize > 10000) {
                       $("#attachment{{ $notice->id }}").val('');
-                      toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
+                      toastr.warning('File size is: '+filesize+' Kb. try uploading less than 10MB', 'WARNING').css('width', '400px;');
                     }
                 });
               });
@@ -109,15 +109,15 @@
                 <div class="modal-content">
                   <div class="modal-header modal-header-danger">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Delete Notice</h4>
+                    <h4 class="modal-title">নোটিশ ডিলেট</h4>
                   </div>
                   <div class="modal-body">
-                    Confirm Delete <b>{{ $notice->name }}</b>
+                    আপনি কি নিশ্চিতভাবে নোটিশটি ডিলেট করতে চান?</b>
                   </div>
                   <div class="modal-footer">
                     {!! Form::model($notice, ['route' => ['dashboard.deletenotice', $notice->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
-                        {!! Form::submit('Delete Notice', array('class' => 'btn btn-danger')) !!}
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        {!! Form::submit('নিশ্চিত করুন', array('class' => 'btn btn-danger')) !!}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                     {!! Form::close() !!}
                   </div>
                 </div>
@@ -141,12 +141,12 @@
       <div class="modal-content">
         <div class="modal-header modal-header-success">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Create New Notice</h4>
+          <h4 class="modal-title">নতুন নোটিশ যোগ করুন</h4>
         </div>
         <div class="modal-body">
           {!! Form::open(['route' => 'dashboard.storenotice', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
               <div class="form-group">
-                {!! Form::label('name', 'Notice Title:') !!}
+                {!! Form::label('name', 'শিরোনাম') !!}
                 {!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'Write Notice Title', 'required')) !!}
               </div>
               <div class="form-group">
@@ -162,8 +162,8 @@
               </div>
         </div>
         <div class="modal-footer">
-              {!! Form::submit('Submit', array('class' => 'btn btn-success')) !!}
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-success')) !!}
+              <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
         </div>
         {!! Form::close() !!}
       </div>
@@ -193,9 +193,9 @@
       });
       $("#attachment").change(function(){
           var filesize = parseInt((this.files[0].size)/1024);
-          if(filesize > 500) {
+          if(filesize > 10000) {
             $("#attachment").val('');
-            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 500Kb', 'WARNING').css('width', '400px;');
+            toastr.warning('File size is: '+filesize+' Kb. try uploading less than 10MB', 'WARNING').css('width', '400px;');
           }
       });
     });
