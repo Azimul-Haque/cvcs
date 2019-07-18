@@ -49,7 +49,6 @@
                             <div class="person-social no-margin-bottom">
                                 <a href="{{ $committeemember->fb }}"><i class="fa fa-facebook"></i></a>
                                 <a href="{{ $committeemember->twitter }}"><i class="fa fa-twitter"></i></a>
-                                <a href="{{ $committeemember->gplus }}"><i class="fa fa-google-plus"></i></a>
                                 <a href="{{ $committeemember->linkedin }}"><i class="fa fa-linkedin"></i></a>
                             </div>
                             <div class="thin-separator-line bg-black"></div>

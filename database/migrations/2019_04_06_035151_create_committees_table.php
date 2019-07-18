@@ -24,6 +24,7 @@ class CreateCommitteesTable extends Migration
             $table->string('gplus')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('image')->nullable();
+            $table->integer('serial')->default(0);
             $table->timestamps();
         });
     }

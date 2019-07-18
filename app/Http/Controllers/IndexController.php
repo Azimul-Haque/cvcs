@@ -109,21 +109,21 @@ class IndexController extends Controller
 
     public function getAdhoc()
     {
-        $adhocmembers = Committee::orderBy('id', 'asc')->get();
+        $adhocmembers = Committee::orderBy('serial', 'asc')->get();
         return view('index.adhoc')->withAdhocmembers($adhocmembers);
     }
 
     public function getPreviousCommittee()
     {
         $committeemembers = Committee::where('committee_type', 0)
-                                     ->orderBy('id', 'asc')->get();
+                                     ->orderBy('serial', 'asc')->get();
         return view('index.previouscommittee')->withCommitteemembers($committeemembers);
     }
 
     public function getCurrentCommittee()
     {
         $committeemembers = Committee::where('committee_type', 1)
-                                     ->orderBy('id', 'asc')->get();
+                                     ->orderBy('serial', 'asc')->get();
         return view('index.currentcommittee')->withCommitteemembers($committeemembers);
     }
 

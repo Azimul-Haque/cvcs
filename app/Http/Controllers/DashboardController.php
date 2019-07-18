@@ -573,7 +573,8 @@ class DashboardController extends Controller
 
     public function getCommittee()
     {
-        $committeemembers = Committee::orderBy('committee_type', 'desc')->get();
+        $committeemembers = Committee::orderBy('committee_type', 'desc')
+                                     ->orderBy('serial', 'asc')->get();
         return view('dashboard.committee')->withCommitteemembers($committeemembers);
     }
 
@@ -586,27 +587,27 @@ class DashboardController extends Controller
             'designation'               => 'required|max:255',
             'fb'                        => 'sometimes|max:255',
             'twitter'                   => 'sometimes|max:255',
-            'gplus'                     => 'sometimes|max:255',
             'linkedin'                  => 'sometimes|max:255',
             'image'                     => 'sometimes|image|max:500',
-            'committee_type'            => 'required'
+            'committee_type'            => 'required',
+            'serial'                    => 'required'
         ));
 
         $committeemember = new Committee();
         $committeemember->committee_type = $request->committee_type;
-        $committeemember->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
-        $committeemember->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
-        $committeemember->phone = htmlspecialchars(preg_replace("/\s+/", " ", $request->phone));
-        $committeemember->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $committeemember->name = $request->name;
+        $committeemember->email = $request->email;
+        $committeemember->phone = $request->phone;
+        $committeemember->designation = $request->designation;
         $committeemember->fb = htmlspecialchars(preg_replace("/\s+/", " ", $request->fb));
         $committeemember->twitter = htmlspecialchars(preg_replace("/\s+/", " ", $request->twitter));
-        $committeemember->gplus = htmlspecialchars(preg_replace("/\s+/", " ", $request->gplus));
         $committeemember->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
-
+        $committeemember->serial = $request->serial;
+        
         // image upload
         if($request->hasFile('image')) {
             $image      = $request->file('image');
-            $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
+            $filename   = 'member_' . time() .'.' . $image->getClientOriginalExtension();
             $location   = public_path('/images/committee/'. $filename);
             Image::make($image)->resize(250, 250)->save($location);
             $committeemember->image = $filename;
@@ -626,22 +627,22 @@ class DashboardController extends Controller
             'designation'               => 'required|max:255',
             'fb'                        => 'sometimes|max:255',
             'twitter'                   => 'sometimes|max:255',
-            'gplus'                     => 'sometimes|max:255',
             'linkedin'                  => 'sometimes|max:255',
             'image'                     => 'sometimes|image|max:250',
-            'committee_type'            => 'required'
+            'committee_type'            => 'required',
+            'serial'                    => 'required'
         ));
 
         $committeemember = Committee::find($id);
         $committeemember->committee_type = $request->committee_type;
-        $committeemember->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
-        $committeemember->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
-        $committeemember->phone = htmlspecialchars(preg_replace("/\s+/", " ", $request->phone));
-        $committeemember->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $committeemember->name = $request->name;
+        $committeemember->email = $request->email;
+        $committeemember->phone = $request->phone;
+        $committeemember->designation = $request->designation;
         $committeemember->fb = htmlspecialchars(preg_replace("/\s+/", " ", $request->fb));
         $committeemember->twitter = htmlspecialchars(preg_replace("/\s+/", " ", $request->twitter));
-        $committeemember->gplus = htmlspecialchars(preg_replace("/\s+/", " ", $request->gplus));
         $committeemember->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
+        $committeemember->serial = $request->serial;
 
         // image upload
         if($request->hasFile('image')) {
@@ -650,7 +651,7 @@ class DashboardController extends Controller
                 File::delete($image_path);
             }
             $image      = $request->file('image');
-            $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
+            $filename   = 'member_' . time() .'.' . $image->getClientOriginalExtension();
             $location   = public_path('/images/committee/'. $filename);
             Image::make($image)->resize(250, 250)->save($location);
             $committeemember->image = $filename;

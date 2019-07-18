@@ -107,14 +107,14 @@
                           <div class="row">
                             <div class="col-md-6">
                               <div class="form-group">
-                                {!! Form::label('gplus', 'G. Plus Url: (optional)') !!}
-                                {!! Form::text('gplus', null, array('class' => 'form-control', 'placeholder' => 'G. Plus Url')) !!}
+                                {!! Form::label('linkedin', 'Linkedin Url: (optional)') !!}
+                                {!! Form::text('linkedin', null, array('class' => 'form-control', 'placeholder' => 'Linkedin Url')) !!}
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="form-group">
-                                {!! Form::label('linkedin', 'Linkedin Url: (optional)') !!}
-                                {!! Form::text('linkedin', null, array('class' => 'form-control', 'placeholder' => 'Linkedin Url')) !!}
+                                {!! Form::label('serial', 'সিরিয়াল নম্বর (1/2/3 ইত্যাদি)') !!}
+                                {!! Form::text('serial', null, array('class' => 'form-control', 'placeholder' => 'সিরিয়াল নম্বর (1/2/3 ইত্যাদি)', 'required')) !!}
                               </div>
                             </div>
                           </div>
@@ -291,14 +291,14 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      {!! Form::label('gplus', 'G. Plus Url: (optional)') !!}
-                      {!! Form::text('gplus', null, array('class' => 'form-control', 'placeholder' => 'G. Plus Url')) !!}
+                      {!! Form::label('linkedin', 'Linkedin Url: (optional)') !!}
+                      {!! Form::text('linkedin', null, array('class' => 'form-control', 'placeholder' => 'Linkedin Url')) !!}
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      {!! Form::label('linkedin', 'Linkedin Url: (optional)') !!}
-                      {!! Form::text('linkedin', null, array('class' => 'form-control', 'placeholder' => 'Linkedin Url')) !!}
+                      {!! Form::label('serial', 'সিরিয়াল নম্বর (1/2/3 ইত্যাদি)') !!}
+                      {!! Form::text('serial', null, array('class' => 'form-control', 'placeholder' => 'সিরিয়াল নম্বর (1/2/3 ইত্যাদি)')) !!}
                     </div>
                   </div>
                 </div>
