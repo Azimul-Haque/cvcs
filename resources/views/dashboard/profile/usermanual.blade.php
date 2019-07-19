@@ -11,13 +11,17 @@
 @stop
 
 @section('content_header')
-    <h1><i class="fa fa-umbrella"></i> User Manual (ব্যবহার বিধি)</h1>
+    <h1><i class="fa fa-umbrella"></i> User Manual (ব্যবহার বিধি) <a class="btn btn-warning btn-sm" href="{{ asset('files/ব্যবহার-বিধি-v1.2.pdf') }}" title="ব্যবহার-বিধি ডাউনলোড করুন" download=""><i class="fa fa-download"></i></a></h1>
 @stop
 
 @section('content')
     <div class="row">
     	<div class="col-md-10">
-    		<div class="panel-group" id="accordion">
+            <object data="{{ asset('files/ব্যবহার-বিধি-v1.2.pdf') }}" type="application/pdf" width="100%" height="1000">
+              <p>ডাউনলোড করুন <a href="{{ asset('files/ব্যবহার-বিধি-v1.2.pdf') }}">ব্যবহার-বিধি</a></p>
+            </object>
+
+    		{{-- <div class="panel-group" id="accordion">
     		  <div class="box box-success">
     		    <div class="box-header with-border">
     		      <h4 class="box-title">
@@ -48,7 +52,7 @@
     		      </div>
     		    </div>
     		  </div>
-    		</div>
+    		</div> --}}
     	</div>
     </div>
 @stop
