@@ -257,7 +257,7 @@
                         </a>
                         <ul class="treeview-menu">
                           <li class="{{ Request::is('dashboard/applications') ? 'active' : '' }}"><a href="{{ route('dashboard.applications') }}"><i class="fa fa-user-plus"></i> আবেদনসমূহ</a></li>
-                          <li class="{{ Request::is('dashboard/defective/applications') ? 'active' : '' }}"><a href="{{ route('dashboard.defectiveapplications') }}"><i class="fa fa-exclamation-triangle"></i> ত্রুটিপূর্ণ আবেদনসমূহ</a></li>
+                          <li class="{{ Request::is('dashboard/defective/applications') ? 'active' : '' }}"><a href="{{ route('dashboard.defectiveapplications') }}"><i class="fa fa-exclamation-triangle"></i> অসম্পূর্ণ আবেদনসমূহ</a></li>
                           <li class="{{ Request::is('dashboard/members') ? 'active' : '' }}"><a href="{{ route('dashboard.members') }}"><i class="fa fa-users"></i><span> সদস্যগণ</span></a></li>
                           <li class="{{ Request::is('dashboard/members/payments/pending') ? 'active' : '' }}"><a href="{{ route('dashboard.memberspendingpayments') }}"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন পরিশোধসমূহ</a></li>
                           <li class="{{ Request::is('dashboard/members/payments/approved') ? 'active' : '' }}"><a href="{{ route('dashboard.membersapprovedpayments') }}"><i class="fa fa-check-square-o"></i> অনুমোদিত পরিশোধসমূহ</a></li>

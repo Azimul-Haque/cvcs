@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      ত্রুটিপূর্ণ আবেদনসমূহ ({{ bangla($applicationscount) }}টি)
+      অসম্পূর্ণ আবেদনসমূহ ({{ bangla($applicationscount) }}টি)
       <div class="pull-right">
         {{-- <a class="btn btn-success" href="{{ route('index.application') }}" target="_blank"><i class="fa fa-fw fa-plus" aria-hidden="true"></i> সদস্য যোগ করুন</a> --}}
       </div>
