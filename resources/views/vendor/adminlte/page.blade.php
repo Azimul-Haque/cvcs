@@ -245,7 +245,9 @@
                           <li class="{{ Request::is('dashboard/form/messages') ? 'active' : '' }}"><a href="{{ route('dashboard.formmessage') }}"><i class="fa fa-envelope-o"></i> ফরম মেসেজ</a></li>
                         </ul>
                       </li>
+                    @endif
 
+                    @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'manager') || (Auth::user()->role_type == 'bulkpayer'))
                       {{-- <li class="header">মেম্বারশিপ ম্যানেজমেন্ট</li> --}}
                       <li class="{{ Request::is('dashboard/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/defective/applications') ? 'active menu-open' : '' }} {{ Request::is('dashboard/application/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/pending') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/payments/approved') ? 'active menu-open' : '' }} {{ Request::is('dashboard/members/update/requests') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
@@ -259,9 +261,11 @@
                           <li class="{{ Request::is('dashboard/applications') ? 'active' : '' }}"><a href="{{ route('dashboard.applications') }}"><i class="fa fa-user-plus"></i> আবেদনসমূহ</a></li>
                           <li class="{{ Request::is('dashboard/defective/applications') ? 'active' : '' }}"><a href="{{ route('dashboard.defectiveapplications') }}"><i class="fa fa-exclamation-triangle"></i> অসম্পূর্ণ আবেদনসমূহ</a></li>
                           <li class="{{ Request::is('dashboard/members') ? 'active' : '' }}"><a href="{{ route('dashboard.members') }}"><i class="fa fa-users"></i><span> সদস্যগণ</span></a></li>
+                          @if(Auth::user()->role == 'admin')
                           <li class="{{ Request::is('dashboard/members/payments/pending') ? 'active' : '' }}"><a href="{{ route('dashboard.memberspendingpayments') }}"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন পরিশোধসমূহ</a></li>
                           <li class="{{ Request::is('dashboard/members/payments/approved') ? 'active' : '' }}"><a href="{{ route('dashboard.membersapprovedpayments') }}"><i class="fa fa-check-square-o"></i> অনুমোদিত পরিশোধসমূহ</a></li>
                           <li class="{{ Request::is('dashboard/members/update/requests') ? 'active' : '' }}"><a href="{{ route('dashboard.membersupdaterequests') }}"><i class="fa fa-pencil-square"></i> তথ্য পরিবর্তন অনুরোধসমূহ</a></li>
+                          @endif
                         </ul>
                       </li>
                     @endif

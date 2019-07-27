@@ -47,7 +47,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2');
     }
 
     /**
@@ -1428,12 +1428,7 @@ class DashboardController extends Controller
                 $payment->payment_status = 1; // approved
                 $payment->payment_category = 0; // membership payment
                 $payment->payment_type = 1; // single payment
-                // generate payment_key
-                $payment_key_length = 10;
-                $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-                $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
-                // generate payment_key
-                $payment->payment_key = $payment_key;
+                $payment->payment_key = random_string(10);
                 $payment->save();
 
                 // receipt upload
@@ -1454,12 +1449,7 @@ class DashboardController extends Controller
                     $payment->payment_status = 1; // approved (0 means pending)
                     $payment->payment_category = 1; // monthly payment (0 means membership)
                     $payment->payment_type = 1; // single payment (2 means bulk)
-                    // generate payment_key
-                    $payment_key_length = 10;
-                    $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-                    $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
-                    // generate payment_key
-                    $payment->payment_key = $payment_key;
+                    $payment->payment_key = random_string(10);
                     $payment->save();
 
                     // receipt upload
@@ -1488,7 +1478,7 @@ class DashboardController extends Controller
             }
             $url = config('sms.gp_url');
             $number = $mobile_number;
-            $text = 'Dear ' . $application->name . ', your membership application has been approved! Your ID: '. $application->member_id .' and Email: '. $application->email .'. Login: https://cvcsbd.com/login';
+            $text = 'Dear ' . $application->name . ', your membership application has been approved! Your ID: '. $application->member_id .', Email: '. $application->email .' and Password: cvcs12345. Login & change password: https://cvcsbd.com/login';
             // this sms costs 2 SMS
             // this sms costs 2 SMS
             

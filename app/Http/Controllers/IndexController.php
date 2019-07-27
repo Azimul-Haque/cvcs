@@ -247,9 +247,9 @@ class IndexController extends Controller
             'application_payment_bank'     => 'required|max:255',
             'application_payment_branch'   => 'required|max:255',
             'application_payment_pay_slip' => 'required|max:255',
-            'application_payment_receipt'  => 'required|image|max:2048',
+            'application_payment_receipt'  => 'required|image|max:2048'
 
-            'password'                     => 'required|min:8|same:password_confirmation'
+            // 'password'                     => 'required|min:8|same:password_confirmation'
         ));
 
         $application = new User();
@@ -329,7 +329,7 @@ class IndexController extends Controller
             $application->application_payment_receipt = $filename;
         }
 
-        $application->password = Hash::make($request->password);
+        $application->password = Hash::make('cvcs12345');
 
         $application->role = 'member';
         $application->role_type = 'member';

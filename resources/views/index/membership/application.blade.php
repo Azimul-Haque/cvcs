@@ -346,7 +346,7 @@
                           </div>
                         </div>
 
-                        <h3 class="agency-title margin-two">অনলাইন একাউন্ট সংক্রান্ত</h3>
+                        {{-- <h3 class="agency-title margin-two">অনলাইন একাউন্ট সংক্রান্ত</h3>
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group ">
@@ -360,7 +360,7 @@
                                 <input type="password" name="password_confirmation" id="password_confirmation" autocomplete="off" required="" placeholder="পাসওয়ার্ডটি আবার দিন">
                             </div>
                           </div>
-                        </div>
+                        </div> --}}
 
                         <button type="button" class="btn highlight-button-royal-blue btn-bg margin-five no-margin-right" data-toggle="modal" data-target="#submitApplicationModal" data-backdrop="static">আবেদন জমা দিন</button>
                 </div>
@@ -448,13 +448,13 @@
           }
         })
 
-        $('#password_confirmation').keyup(function() {
-          if($('#password_confirmation').val() != $('#password').val()) {
-            $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>');
-          } else {
-            $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #008000;"><b>✓ মিলেছে</b></span>');
-          }
-        })
+        // $('#password_confirmation').keyup(function() {
+        //   if($('#password_confirmation').val() != $('#password').val()) {
+        //     $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #DC143C;"><b>✕ মিলছে না</b></span>');
+        //   } else {
+        //     $('#password_confirmation_error').html('পাসওয়ার্ডটি আবার দিন <span style="color: #008000;"><b>✓ মিলেছে</b></span>');
+        //   }
+        // })
     });
 
     // disabling the number scrolling...
