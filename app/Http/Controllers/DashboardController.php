@@ -1307,7 +1307,7 @@ class DashboardController extends Controller
         $application = User::find($id);
         $application->activation_status = 202; // 202 for defective applications
         $application->save();
-        Session::flash('success', 'সদস্য সফলভাবে ত্রুটিপূর্ণ তালিকায় প্রেরণ করা হয়েছে!');
+        Session::flash('success', 'সদস্য সফলভাবে অসম্পূর্ণ তালিকায় প্রেরণ করা হয়েছে!');
         return redirect()->route('dashboard.defectiveapplications');
     }
 
