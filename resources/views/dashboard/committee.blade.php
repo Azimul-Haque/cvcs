@@ -22,8 +22,8 @@
           <tr>
             <th style="width: 20px;">সিরিয়াল</th>
             <th>নাম</th>
-            <th>কমিটি</th>
             <th>ইমেইল ও ফোন নম্বর</th>
+            <th>কমিটি</th>
             <th>পদবি</th>
             <th>ছবি</th>
             <th>Action</th>
