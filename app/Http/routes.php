@@ -40,6 +40,7 @@ Route::get('/member/login', ['as'=>'index.login','uses'=>'IndexController@getLog
 Route::get('/member/profile/{unique_key}', ['as'=>'index.profile','uses'=>'IndexController@getProfile']);
 Route::post('/member/application/store', ['as'=>'index.storeapplication','uses'=>'IndexController@storeApplication']);
 Route::post('/contact/form/message/store', ['as'=>'index.storeformmessage','uses'=>'IndexController@storeFormMessage']);
+Route::get('/tutorial/video', ['as'=>'index.videotutorial','uses'=>'IndexController@getVideoTutorials']);
 // index routes
 // index routes
 

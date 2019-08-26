@@ -328,7 +328,19 @@ section {
 .text-lightgreen {
     color: lightgreen;
 }
-
+.youtibecontainer {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+.youtubeiframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
 
 

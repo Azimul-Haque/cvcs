@@ -658,4 +658,9 @@ class IndexController extends Controller
 
         print_r($result);
     }
+
+    public function getVideoTutorials()
+    {
+        return view('index.videotuorials');
+    }
 }

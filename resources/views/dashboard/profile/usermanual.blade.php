@@ -53,6 +53,22 @@
     		    </div>
     		  </div>
     		</div> --}}
+            <br/><br/>
+            
+            <h1>সিভিসিএস অনলাইন প্লাটফর্মে যেভাবে 'আবেদন' ও 'লগইন' করবেন</h1>
+            <div class="youtibecontainer">
+                <iframe class="youtubeiframe" width="560" height="315" src="https://www.youtube.com/embed/EsIS_YulP4g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div><br/><br/><br/><br/>
+
+            <h1>সিভিসিএস অনলাইন প্লাটফর্মে 'একাধিক পরিশোধ' করবেন যেভাবে</h1>
+            <div class="youtibecontainer">
+                <iframe class="youtubeiframe" width="560" height="315" src="https://www.youtube.com/embed/aT6m5Ub-YO8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div><br/><br/><br/><br/>
+
+            <h1>সিভিসিএস অনলাইন প্লাটফর্মে 'একক পরিশোধ' করবেন যেভাবে</h1>
+            <div class="youtibecontainer">
+                <iframe class="youtubeiframe" width="560" height="315" src="https://www.youtube.com/embed/hpiRlo6Zxj4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div><br/><br/><br/><br/>
     	</div>
     </div>
 @stop

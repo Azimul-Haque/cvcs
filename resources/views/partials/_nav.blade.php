@@ -125,6 +125,9 @@
                                 <li>
                                     <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" class="text-large"><i class="icon-key i-plain"></i> লগআউট</a>
                                 </li>
+                                <li>
+                                    <a href="{{ url('tutorial/video') }}" class="text-large"><i class="icon-video i-plain"></i> আবেদনের টিউটোরিয়াল</a>
+                                </li>
                             </ul>
                         </li>
                         @else
@@ -138,6 +141,9 @@
                                 </li>
                                 <li>
                                     <a href="{{ url('login') }}" class="text-large"><i class="icon-key i-plain"></i> লগইন</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('tutorial/video') }}" class="text-large"><i class="icon-video i-plain"></i> ভিডিও টিউটোরিয়াল</a>
                                 </li>
                             </ul>
                         </li>
