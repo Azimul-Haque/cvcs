@@ -58,6 +58,9 @@ class Controller extends BaseController
       if(substr($smsresultnotif, 0, 3) == 200) {
         $notifsmsbalance = substr(substr($smsresultnotif, 4), 0, -2);
       }
+      $dashboardsmsbalanace = substr($smsresultnotif, 4);
+
+      dd($dashboardsmsbalanace);
       // sms balance check
       
       $notifcount = 0;
@@ -84,6 +87,7 @@ class Controller extends BaseController
       View::share('notiftempmemdatas', $notiftempmemdatas);
       View::share('notifcount', $notifcount);
       View::share('notifsmsbalance', $notifsmsbalance);
+      View::share('dashboardsmsbalanace', $dashboardsmsbalanace);
     }
 
 }
