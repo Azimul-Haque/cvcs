@@ -91,7 +91,7 @@
                                 @if($notifdefectiveapplications > 0)
                                   <li>
                                     <a href="{{ route('dashboard.applications') }}">
-                                      <i class="fa fa-users text-maroon"></i> {{ $notifdefectiveapplications }} টি অসম্পূর্ণ আবেদন আছে
+                                      <i class="fa fa-exclamation-triangle text-maroon"></i> {{ $notifdefectiveapplications }} টি অসম্পূর্ণ আবেদন আছে
                                     </a>
                                   </li>
                                 @endif
