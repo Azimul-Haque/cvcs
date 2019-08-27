@@ -191,10 +191,10 @@
                   <h3 class="box-title">সর্বশেষ নিবন্ধিত</h3>
 
                   <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    {{-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
                     <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                    </button>
+                    </button> --}}
                   </div>
                 </div>
                 <div class="box-body no-padding">
@@ -219,10 +219,10 @@
 	              <h3 class="box-title">এসএমএস ব্যালেন্স</h3>
 
 	              <div class="box-tools pull-right">
-	                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+	                {{-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 	                </button>
 	                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-	                </button>
+	                </button> --}}
 	              </div>
 	            </div>
 	            <div class="box-body">
