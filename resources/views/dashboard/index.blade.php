@@ -241,9 +241,9 @@
 	              	</h4>
 	              </center>
 	            </div>
-	            {{-- <div class="box-footer text-center">
-	              
-	            </div> --}}
+	            <div class="box-footer text-center">
+	              ভার্চুয়াল নাম্বারঃ 01708403978
+	            </div>
 	        </div>
     	</div>
     </div>
