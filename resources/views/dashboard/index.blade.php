@@ -213,7 +213,39 @@
                 </div>
             </div>
     	</div>
-    	<div class="col-md-3"></div>
+    	<div class="col-md-3">
+	        <div class="box box-warning">
+	            <div class="box-header with-border">
+	              <h3 class="box-title">এসএমএস ব্যালেন্স</h3>
+
+	              <div class="box-tools pull-right">
+	                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+	                </button>
+	                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+	                </button>
+	              </div>
+	            </div>
+	            <div class="box-body">
+	              <center>
+	              	<h4><i class="fa fa-money"></i> 
+	              		সর্বমোট এসএমএস ব্যালেন্সঃ 
+	              		@if($notifsmsbalance > 0)
+	              			৳ {{ $notifsmsbalance }}
+	              		@endif
+	              	</h4>
+	              	<h4><i class="fa fa-envelope"></i> 
+	              		সর্বমোট এসএমএসঃ 
+	              		@if($notifsmsbalance > 0)
+	              			{{ $notifsmsbalance/0.30 }} টি
+	              		@endif
+	              	</h4>
+	              </center>
+	            </div>
+	            {{-- <div class="box-footer text-center">
+	              
+	            </div> --}}
+	        </div>
+    	</div>
     </div>
 @stop
 

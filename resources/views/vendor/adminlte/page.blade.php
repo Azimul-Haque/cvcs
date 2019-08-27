@@ -80,10 +80,18 @@
                             <li>
                               <!-- inner menu: contains the actual data -->
                               <ul class="menu">
-                                @if($notifpendingfapplications > 0)
+                                @if($notifpendingapplications > 0)
                                   <li>
                                     <a href="{{ route('dashboard.applications') }}">
-                                      <i class="fa fa-users text-aqua"></i> {{ $notifpendingfapplications }} জন নিবন্ধন আবেদন করেছেন
+                                      <i class="fa fa-users text-aqua"></i> {{ $notifpendingapplications }} জন নিবন্ধন আবেদন করেছেন
+                                    </a>
+                                  </li>
+                                @endif
+
+                                @if($notifdefectiveapplications > 0)
+                                  <li>
+                                    <a href="{{ route('dashboard.applications') }}">
+                                      <i class="fa fa-users text-maroon"></i> {{ $notifdefectiveapplications }} টি অসম্পূর্ণ আবেদন আছে
                                     </a>
                                   </li>
                                 @endif

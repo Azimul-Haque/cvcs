@@ -22,9 +22,9 @@ class Controller extends BaseController
     {
       $sharedbasicinfo = Basicinfo::find(1);
 
-      $notifpendingfapplications = User::where('activation_status', 0)
-      								  ->orWhere('activation_status', 202)
-      								  ->count();
+      $notifpendingapplications = User::where('activation_status', 0)->count();
+
+      $notifdefectiveapplications = User::where('activation_status', 202)->count();
 
       $notifpendingpayments = Payment::where('payment_status', 0)
                                      ->where('is_archieved', 0)
@@ -61,7 +61,10 @@ class Controller extends BaseController
       // sms balance check
       
       $notifcount = 0;
-      if($notifpendingfapplications > 0) {
+      if($notifpendingapplications > 0) {
+        $notifcount++;
+      }
+      if($notifdefectiveapplications > 0) {
       	$notifcount++;
       }
       if($notifpendingpayments > 0) {
@@ -75,7 +78,8 @@ class Controller extends BaseController
       }    
 
       View::share('sharedbasicinfo', $sharedbasicinfo);
-      View::share('notifpendingfapplications', $notifpendingfapplications);
+      View::share('notifpendingapplications', $notifpendingapplications);
+      View::share('notifdefectiveapplications', $notifdefectiveapplications);
       View::share('notifpendingpayments', $notifpendingpayments);
       View::share('notiftempmemdatas', $notiftempmemdatas);
       View::share('notifcount', $notifcount);
