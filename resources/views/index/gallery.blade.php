@@ -31,7 +31,7 @@
       $oddoreven = 1;
     @endphp
     @foreach($albums as $album)
-    <section class="portfolio-short-description no-padding-bottom">
+    <section class="portfolio-short-description">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
