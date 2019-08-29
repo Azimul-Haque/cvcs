@@ -115,6 +115,11 @@ class DashboardController extends Controller
                               ->orderBy('updated_at', 'desc')
                               ->take(6)->get();
 
+        $lastsixmemberstest = User::where('activation_status', 1)
+                              ->where('role', 'member')
+                              ->orderBy('updated_at', 'desc')
+                              ->take(6)->get()->toJson();
+
         $lastsevenmonthscollection = DB::table('payments')
                                     ->select('created_at', DB::raw('SUM(amount) as totalamount'))
                                     ->where('is_archieved', '=', 0)
@@ -154,7 +159,8 @@ class DashboardController extends Controller
                     ->withTotaldonors($totaldonors)
                     ->withTotalbranchpayment($totalbranchpayment)
                     ->withTotalbranches($totalbranches)
-                    ->withTotalapplicationpending($totalapplicationpending);
+                    ->withTotalapplicationpending($totalapplicationpending)
+                    ->withLastsixmemberstest($lastsixmemberstest);
     }
 
     public function getAdmins()
@@ -899,7 +905,7 @@ class DashboardController extends Controller
             $image      = $request->file('image');
             $filename   = 'slider_' . time() .'.' . $image->getClientOriginalExtension();
             $location   = public_path('/images/slider/'. $filename);
-            Image::make($image)->resize(1200, 400)->save($location);
+            Image::make($image)->resize(1500, 500)->save($location);
             $slider->image = $filename;
         }
         
@@ -957,7 +963,7 @@ class DashboardController extends Controller
             $thumbnail      = $request->file('thumbnail');
             $filename   = 'thumbnail_' . time() .'.' . $thumbnail->getClientOriginalExtension();
             $location   = public_path('/images/gallery/'. $filename);
-            Image::make($thumbnail)->resize(600, 375)->save($location);
+            Image::make($thumbnail)->resize(1000, 625)->save($location);
             $album->thumbnail = $filename;
         }
         
@@ -969,7 +975,7 @@ class DashboardController extends Controller
                 $image      = $request->file('image'.$i);
                 $filename   = 'photo_'. $i . time() .'.' . $image->getClientOriginalExtension();
                 $location   = public_path('/images/gallery/'. $filename);
-                Image::make($image)->resize(600, 375)->save($location);
+                Image::make($image)->resize(1000, 625)->save($location);
                 $albumphoto = new Albumphoto;
                 $albumphoto->album_id = $album->id;
                 $albumphoto->image = $filename;
@@ -1004,7 +1010,7 @@ class DashboardController extends Controller
             $image      = $request->file('image');
             $filename   = 'photo_'. time() .'.' . $image->getClientOriginalExtension();
             $location   = public_path('/images/gallery/'. $filename);
-            Image::make($image)->resize(700, 438)->save($location);
+            Image::make($image)->resize(1000, 625)->save($location);
             $albumphoto = new Albumphoto;
             $albumphoto->album_id = $album->id;
             $albumphoto->image = $filename;

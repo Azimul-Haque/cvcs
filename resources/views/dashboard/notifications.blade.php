@@ -27,11 +27,20 @@
         </div>
         <div class="box-footer no-padding">
           <ul class="nav nav-stacked">
-            @if($notifpendingfapplications > 0)
+            @if($notifpendingapplications > 0)
               <li>
                 <a href="{{ route('dashboard.applications') }}">
                   <i class="fa fa-users text-aqua"></i> নিবন্ধন আবেদন
-                  <span class="pull-right badge bg-aqua">{{ $notifpendingfapplications }} জন</span>
+                  <span class="pull-right badge bg-aqua">{{ $notifpendingapplications }} জন</span>
+                </a>
+              </li>
+            @endif
+
+            @if($notifdefectiveapplications > 0)
+              <li>
+                <a href="{{ route('dashboard.defectiveapplications') }}">
+                  <i class="fa fa-exclamation-triangle text-maroon"></i> অসম্পূর্ণ আবেদন
+                  <span class="pull-right badge bg-aqua">{{ $notifdefectiveapplications }} টি</span>
                 </a>
               </li>
             @endif

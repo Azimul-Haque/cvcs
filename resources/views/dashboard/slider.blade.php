@@ -64,7 +64,7 @@
                 @foreach($sliders as $slider)
                 <div class="col-md-4">
                   <div class="delete-img-box">
-                      <img src="{{ asset('images/slider/'. $slider->image) }}" alt="Album Image" class="img-responsive">
+                      <img src="{{ asset('images/slider/'. $slider->image) }}" alt="Slider Image" class="img-responsive">
                       <a href="#" class="btn btn-sm btn-danger" title="ছবি মুছে ফেলুন" data-toggle="modal" data-target="#deleteSliderPhoto{{ $slider->id }}" data-backdrop="static"><i class="fa fa-trash"></i></a>
                       <!-- Delete Photo Modal -->
                       <!-- Delete Photo Modal -->
@@ -78,7 +78,7 @@
                             <div class="modal-body">
                               আপনি কি নিশ্চিতভাবে এই ছবিটি ডিলেট করতে চান?<br/><br/><br/>
                               <center>
-                                <img src="{{ asset('images/slider/'. $slider->image) }}" alt="Album Image" class="img-responsive" style="max-height: 200px; width: auto;">
+                                <img src="{{ asset('images/slider/'. $slider->image) }}" alt="Slider Image" class="img-responsive" style="max-height: 200px; width: auto;">
                                 <small class="text-red"><b><i class="fa fa-info-circle"></i> এই ছবিটি মুছে দেওয়া হবে</b></small>
                               </center>
                             </div>
@@ -152,7 +152,7 @@
                   $("#img-upload").attr('src', '{{ asset('images/300x100.png') }}');
                 }, 1000);
               }
-              if(((imagewidth/imageheight) < 2.9375) || ((imagewidth/imageheight) > 3.07142)) {
+              if(((imagewidth/imageheight) < 2.80) || ((imagewidth/imageheight) > 3.07142)) {
                 $("#image").val('');
                 toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:৩ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');
                 setTimeout(function() {
