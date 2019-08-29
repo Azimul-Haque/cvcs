@@ -975,7 +975,10 @@ class DashboardController extends Controller
                 $image      = $request->file('image'.$i);
                 $filename   = 'photo_'. $i . time() .'.' . $image->getClientOriginalExtension();
                 $location   = public_path('/images/gallery/'. $filename);
-                Image::make($image)->resize(1000, 625)->save($location);
+                Image::make($image)->resize(1000, null, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                        $constraint->upsize();
+                                    })->save($location);
                 $albumphoto = new Albumphoto;
                 $albumphoto->album_id = $album->id;
                 $albumphoto->image = $filename;
@@ -1010,7 +1013,10 @@ class DashboardController extends Controller
             $image      = $request->file('image');
             $filename   = 'photo_'. time() .'.' . $image->getClientOriginalExtension();
             $location   = public_path('/images/gallery/'. $filename);
-            Image::make($image)->resize(1000, 625)->save($location);
+            Image::make($image)->resize(1000, null, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                    $constraint->upsize();
+                                })->save($location);
             $albumphoto = new Albumphoto;
             $albumphoto->album_id = $album->id;
             $albumphoto->image = $filename;
