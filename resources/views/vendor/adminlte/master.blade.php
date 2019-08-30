@@ -15,7 +15,19 @@
     <meta name="msapplication-navbutton-color" content="#002366">
     <meta name="apple-mobile-web-app-status-bar-style" content="#002366">
     <meta name="description" content="কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি (সিভিসিএস)-এর অফিসিয়াল ওয়েবসাইট। &copy; {{ date('Y') }} Copyright Reserved. Developed By A. H. M. Azimul Haque."/>
+    
     <meta name="google-site-verification" content="M_ahWtl3h3gjjzpkH2T6nGc6JzWkbQlkOGy5J3oVEJY" />
+    <meta name="google-site-verification" content="EKx16eUcw6_GT9tSfJux_-bXDfCMh1S3e3lzRQtZDN0" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146817361-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146817361-1');
+    </script>
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
