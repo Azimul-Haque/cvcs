@@ -221,6 +221,7 @@ class IndexController extends Controller
             'profession'                   => 'required|max:255',
             'designation'                  => 'required|max:255',
             'office'                       => 'required|max:255',
+            'joining_date'                 => 'sometimes|max:255',
             'present_address'              => 'required|max:255',
             'permanent_address'            => 'required|max:255',
             'office_telephone'             => 'sometimes|max:255',
@@ -264,6 +265,10 @@ class IndexController extends Controller
         $application->father = htmlspecialchars(preg_replace("/\s+/", " ", $request->father));
         $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
         $application->office = htmlspecialchars(preg_replace("/\s+/", " ", $request->office));
+        if($request->joining_date != '') {
+            $joining_date = htmlspecialchars(preg_replace("/\s+/", " ", $request->joining_date));
+            $application->joining_date = new Carbon($joining_date);
+        }
         $application->profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->profession));
         $application->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
         $application->membership_designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));

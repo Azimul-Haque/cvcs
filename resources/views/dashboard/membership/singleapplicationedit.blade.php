@@ -51,7 +51,7 @@
               <div class="col-md-6">
                 <div class="form-group ">
                     <label for="dob" class="">জন্মতারিখ *</label>
-                    <input value="{{ date('d-m-Y', strtotime($application->dob)) }}" class="form-control" type="text" name="dob" id="dob" data-field="date"  autocomplete="off"  required="" placeholder="জন্মতারিখ নির্ধারণ করুন">
+                    <input value="{{ date('d-m-Y', strtotime($application->dob)) }}" class="form-control" type="text" name="dob" id="dob" data-field="date"  autocomplete="off" required="" placeholder="জন্মতারিখ নির্ধারণ করুন">
                     
                 </div>
               </div>
@@ -116,6 +116,14 @@
                     <input value="{{ $application->designation }}" type="text" name="designation" id="designation" required="" class="text_bangla form-control" placeholder="পদবি বাংলায় লিখুন">
                 </div>
               </div>
+            </div>
+            <div class="form-group ">
+                <label for="joining_date" class="">চাকুরীতে যোগদানের তারিখ (তথ্য না থাকলে ফাঁকা রাখুন)</label>
+                @if($application->joining_date != null)
+                  <input value="{{ date('d-m-Y', strtotime($application->joining_date)) }}" data-field="date" autocomplete="off" type="text" name="joining_date" id="joining_date" class="form-control" placeholder="চাকুরীতে যোগদানের তারিখ">
+                @else
+                  <input value="" data-field="date" autocomplete="off" type="text" name="joining_date" id="joining_date" class="form-control" placeholder="চাকুরীতে যোগদানের তারিখ">
+                @endif
             </div>
             <div class="form-group ">
                 <label for="present_address" class="">বর্তমান ঠিকানা</label>
@@ -386,7 +394,7 @@
         $("#dtBox").DateTimePicker({
             mode:"date",
             dateFormat: "dd-MM-yyyy",
-            titleContentDate: 'জন্মতারিখ নির্ধারণ করুন'
+            titleContentDate: 'তারিখ নির্ধারণ করুন'
         });
         
         $('#nominee_one_percentage').blur(function() {

@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('designation');
             $table->string('membership_designation'); // designation during the time of application...
             $table->string('office');
+            $table->string('joining_date')->nullable();
             $table->string('present_address');
             $table->string('permanent_address');
             $table->string('office_telephone');

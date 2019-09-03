@@ -71,8 +71,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="dob" class="">জন্মতারিখ *</label>
-                                <input type="text" name="dob" id="dob" data-field="date"  autocomplete="off"  required="" placeholder="জন্মতারিখ নির্ধারণ করুন">
-                                
+                                <input type="text" name="dob" id="dob" data-field="date" autocomplete="off" required="" placeholder="জন্মতারিখ নির্ধারণ করুন">
                             </div>
                           </div>
                         </div>
@@ -136,6 +135,10 @@
                                 <input type="text" name="designation" id="designation" required="" class="text_bangla" placeholder="পদবি বাংলায় লিখুন">
                             </div>
                           </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="joining_date" class="">চাকুরীতে যোগদানের তারিখ <b>(তথ্য না থাকলে ফাঁকা রাখুন)</b></label>
+                            <input type="text" name="joining_date" id="joining_date" data-field="date" autocomplete="off" placeholder="বাংলায় লিখুন">
                         </div>
                         <div class="form-group ">
                             <label for="present_address" class="">বর্তমান ঠিকানা</label>
@@ -423,7 +426,7 @@
         $("#dtBox").DateTimePicker({
             mode:"date",
             dateFormat: "dd-MM-yyyy",
-            titleContentDate: 'জন্মতারিখ নির্ধারণ করুন'
+            titleContentDate: 'তারিখ নির্ধারণ করুন'
         });
         $("#presubmission_info").click(function() {
             $("#presubmission_div").hide(2000);
