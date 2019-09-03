@@ -138,7 +138,7 @@
                         </div>
                         <div class="form-group ">
                             <label for="joining_date" class="">চাকুরীতে যোগদানের তারিখ <b>(তথ্য না থাকলে ফাঁকা রাখুন)</b></label>
-                            <input type="text" name="joining_date" id="joining_date" data-field="date" autocomplete="off" placeholder="বাংলায় লিখুন">
+                            <input type="text" name="joining_date" id="joining_date" data-field="date" autocomplete="off" placeholder="চাকুরীতে যোগদানের তারিখ">
                         </div>
                         <div class="form-group ">
                             <label for="present_address" class="">বর্তমান ঠিকানা</label>
