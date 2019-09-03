@@ -47,7 +47,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3');
     }
 
     /**
@@ -1704,6 +1704,37 @@ class DashboardController extends Controller
                             ->withMemberscount($memberscount);
     }
 
+    public function getMembersForAll(Request $request)
+    {
+        $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
+        $members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')
+                       ->orderBy('id', 'desc')->get();
+
+        $ordered_member_array = [];
+        foreach ($members as $member) {
+            $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+        }
+        ksort($ordered_member_array); // ascending order according to key
+    
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        $itemCollection = collect($ordered_member_array);
+ 
+        $perPage = 20;
+ 
+        // Slice the collection to get the items to display in current page
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        // Create our paginator and pass it to the view
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        // set url path for generted links
+        $paginatedItems->setPath($request->url());
+
+        return view('dashboard.profile.membersforall')
+                            ->withMembers($paginatedItems)
+                            ->withMemberscount($memberscount);
+    }
+
     public function getSearchMember()
     {
         return view('dashboard.membership.searchmember');
@@ -1766,6 +1797,65 @@ class DashboardController extends Controller
                 <a class="btn btn-sm btn-primary" href="'. route('dashboard.singleapplicationedit', $row->unique_key) .'" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
               </td>
             </tr>';
+           }
+          }
+          else
+          {
+           $output = '
+           <tr>
+            <td align="center" colspan="6">পাওয়া যায়নি!</td>
+           </tr>
+           ';
+          }
+          $data = array(
+           'table_data'  => $output,
+           'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
+          );
+
+          echo json_encode($data);
+        }        
+    }
+
+    public function searchMemberAPI3(Request $request)
+    {
+        if($request->ajax())
+        {
+          $output = '';
+          $query = $request->get('query');
+          if($query != '')
+          {
+           $data = DB::table('users')
+                    ->where('activation_status', 1)
+                    ->where('role_type', '!=', 'admin') // avoid the super admin type
+                    ->where(function($newquery) use ($query) {
+                        $newquery->where('name', 'like', '%'.$query.'%')
+                                 ->orWhere('name_bangla', 'like', '%'.$query.'%')
+                                 ->orWhere('member_id', 'like', '%'.$query.'%')
+                                 ->orWhere('mobile', 'like', '%'.$query.'%')
+                                 ->orWhere('email', 'like', '%'.$query.'%');
+                    })
+                    ->orderBy('id', 'desc')
+                    ->get();
+          }
+
+          $total_row = count($data);
+          if($total_row > 0)
+          {
+           foreach($data as $row)
+           {
+            $output .= '
+            <tr>
+             <td>'. $row->name_bangla .'<br/> '. $row->name .'</td>
+             <td><big><b>'.$row->member_id.'</big></b></td>
+             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
+             <td>'.$row->office.'<br/>'.$row->profession.' ('. $row->designation .')</td>
+            ';
+            if($row->image != null) {
+                $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
+            } else {
+                $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
+            }
+            $output .= '</tr>';
            }
           }
           else

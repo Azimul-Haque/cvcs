@@ -182,6 +182,7 @@ Route::delete('/dashboard/member/update/request/{id}/delete', ['as'=>'dashboard.
 Route::get('/dashboard/members/search', ['as'=>'dashboard.members.search','uses'=>'DashboardController@getSearchMember']);
 Route::get('/dashboard/member/search/api', ['as'=>'dashboard.membersearchapi','uses'=>'DashboardController@searchMemberAPI']);
 Route::get('/dashboard/member/search/api/2', ['as'=>'dashboard.membersearchapi2','uses'=>'DashboardController@searchMemberAPI2']);
+Route::get('/dashboard/member/search/api/3', ['as'=>'dashboard.membersearchapi3','uses'=>'DashboardController@searchMemberAPI3']);
 
 // ACCOUNT MANAGEMENT AND PAYMENT
 Route::get('/dashboard/profile', ['as'=>'dashboard.profile','uses'=>'DashboardController@getProfile']);
@@ -191,6 +192,7 @@ Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);
 Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.member.payment.pdf','uses'=>'DashboardController@downloadMemberPaymentPDF']);
 Route::post('/dashboard/member/complete/report/download/pdf', ['as'=>'dashboard.member.complete.pdf','uses'=>'DashboardController@downloadMemberCompletePDF']);
+Route::get('/dashboard/members/for/all', ['as'=>'dashboard.membersforall','uses'=>'DashboardController@getMembersForAll']);
 
 Route::get('/dashboard/member/transaction/summary', ['as'=>'dashboard.membertransactionsummary','uses'=>'DashboardController@getMemberTransactionSummary']);
 Route::get('/dashboard/member/user/manual', ['as'=>'dashboard.memberusermanual','uses'=>'DashboardController@getMemberUserManual']);

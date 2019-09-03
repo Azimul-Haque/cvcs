@@ -317,6 +317,17 @@
                       </li>
                     @endif
                     
+
+                    
+                    @if(Auth::user()->role_type == 'member')
+                    <li class="{{ Request::is('dashboard/members/for/all') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.membersforall') }}">
+                            <i class="fa fa-fw fa-users"></i>
+                            <span>সদস্যগণ</span>
+                        </a>
+                    </li>
+                    @endif
+
                     @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'manager') || (Auth::user()->role_type == 'bulkpayer'))
                     {{-- <li class="header">একাধিক পরিশোধ সংক্রান্ত</li> --}}
                     <li class="{{ Request::is('dashboard/member/payment/bulk') ? 'active' : '' }}">
