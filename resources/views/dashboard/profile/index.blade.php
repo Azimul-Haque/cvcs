@@ -318,6 +318,17 @@
                   <th>দপ্তরের নাম</th>
                   <td>{{ $member->office }}</td>
                 </tr>
+                <tr>
+                  <th>চাকুরীতে যোগদানের তারিখ</th>
+                  <td>
+                    @if($member->joining_date != null)
+                      {{ date('F d, Y', strtotime($member->joining_date)) }}
+                    @else
+                      N/A
+                    @endif
+                    
+                  </td>
+                </tr>
 
                 <tr>
                   <th colspan="2">

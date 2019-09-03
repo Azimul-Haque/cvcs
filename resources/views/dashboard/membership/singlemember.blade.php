@@ -289,7 +289,7 @@
                   <td>{{ $member->office }}</td>
                 </tr>
                 <tr>
-                  <th>চাকুরীতে যোগদানের তারিখখ</th>
+                  <th>চাকুরীতে যোগদানের তারিখ</th>
                   <td>
                     @if($member->joining_date != null)
                       {{ date('F d, Y', strtotime($member->joining_date)) }}
