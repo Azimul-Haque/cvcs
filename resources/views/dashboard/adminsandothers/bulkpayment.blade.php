@@ -26,7 +26,7 @@
             <h3 class="box-title"><b>{{ Auth::user()->branch->name }}</b>-এর সদস্য তালিকা</h3>
           </div>
           <!-- /.box-header -->
-          <div class="box-body table-responsive" style="max-height: 200px; overflow: auto;">
+          <div class="box-body table-responsive" style="height: 600px; overflow: auto;">
             <table class="table table-condensed">
               <thead>
                 <tr>
@@ -40,7 +40,7 @@
               </thead>
               <tbody>
                 @foreach($members as $member)
-                <tr>
+                <tr id="member_table_td_{{ $member->member_id }}">
                   <td>{{ $member->name_bangla }}<br/>{{ $member->name }}</td>
                   <td>{{ $member->member_id }}</td>
                   <td><small>{{ $member->mobile }}<br/>{{ $member->email }}</small></td>
@@ -53,7 +53,7 @@
                     @endif
                   </td>
                   <td>
-                    <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember()"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member->member_id }})"><i class="fa fa-plus"></i></button>
                   </td>
                 </tr>
                 @endforeach
@@ -132,7 +132,7 @@
           <!-- /.box-body -->
         </div>
       </div><br/>
-      <div class="col-md-6">
+      <div class="col-md-7">
         <div class="box box-warning">
           <div class="box-header with-border text-blue">
             <i class="fa fa-fw fa-file-text-o"></i>
@@ -264,8 +264,7 @@
       
       $('#member_select').select2();
     }, 1000);
-  </script>
-  <script type="text/javascript">
+
     $(document).ready( function() {
       $("#bulkpaymentform").submit(function(event) {
           var member_ids_before_submit = $("input[name='amountids[]']")
@@ -291,10 +290,23 @@
           } else {
             $('#submitBtn').attr('disabled', true);
           }
-          // $('#submitBtn').attr('disabled', true);
       });
       
     });
+    function addMember(member_id) {
+      $.ajax({
+          url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+member_id,
+          type: 'GET',
+          dataType: 'json', // added data type
+          success: function(item) {
+              console.log(item);
+              $('#member_list').append('<div class="row" id="memberRow'+item.member_id+'"><div class="col-md-5" id="member_name_preview'+item.member_id+'">'+ item.name_bangla +'</div><div class="col-md-5"><input type="number" class="form-control add_separate_amounts" name="amount'+item.member_id+'" id="member_amount_preview'+item.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+item.member_id+', amount'+item.member_id+', '+item.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+item.member_id+'"><hr/></div></div>');
+
+              // remove item from members table
+              $("#member_table_td_" + member_id).remove();
+          }
+      });
+    }
     $(document).ready( function() {
       $('#add_member_btn').click(function() {
         var member_select = $('#member_select').val();
@@ -327,7 +339,7 @@
       
     });
 
-    function removeMember(idofmemberrow, idofmemberamount, id) {
+    function removeMember(idofmemberrow, idofmemberamount, member_id) {
       $(idofmemberrow).remove();
       $(idofmemberamount).removeAttr('required');
 
@@ -335,7 +347,7 @@
 
       // append the amountids field
       $.ajax({
-          url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+id,
+          url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+member_id,
           type: 'GET',
           dataType: 'json', // added data type
           success: function(item) {
