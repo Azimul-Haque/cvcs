@@ -246,7 +246,7 @@
                 </tr>
                 <tr>
                   <th>দপ্তরের নাম</th>
-                  <td>{{ $application->office }}</td>
+                  <td>{{ $application->branch->name }}</td>
                 </tr>
                 <tr>
                   <th>চাকুরীতে যোগদানের তারিখ</th>
