@@ -30,6 +30,10 @@ class User extends Authenticatable
       return $this->hasMany('App\Tempmemdata', 'user_id', 'id');
     }
 
+    public function position() {
+      return $this->belongsTo('App\Position');
+    }
+
     public function branch() {
       return $this->belongsTo('App\Branch');
     }

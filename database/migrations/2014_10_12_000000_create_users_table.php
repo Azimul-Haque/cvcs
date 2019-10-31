@@ -62,6 +62,7 @@ class CreateUsersTable extends Migration
             $table->string('application_payment_pay_slip');
             $table->string('application_payment_receipt');
 
+            $table->integer('position_id')->unsigned();
             $table->integer('office_id')->unsigned();
 
             $table->string('password');
