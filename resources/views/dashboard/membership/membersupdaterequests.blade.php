@@ -59,7 +59,7 @@
           <td>
             {{ $tempmemdata->user->name_bangla }}<br/>{{ $tempmemdata->user->name }}
           </td>
-          <td>{{ $tempmemdata->user->branch->name }}<br/>{{ $tempmemdata->user->profession }} ({{ $tempmemdata->user->designation }})</td>
+          <td>{{ $tempmemdata->user->branch->name }}<br/>{{ $tempmemdata->user->profession }} ({{ $tempmemdata->user->position->name }})</td>
           <td>
             @if($tempmemdata->user->image != null)
               <img src="{{ asset('images/users/'.$tempmemdata->user->image)}}" style="height: 50px; width: auto;" />
@@ -90,7 +90,7 @@
                             </thead>
                             <tbody>
                               <tr>
-                                <td>পদবিঃ {{ $tempmemdata->user->designation }}</td>
+                                <td>পদবিঃ {{ $tempmemdata->user->position->name }}</td>
                               </tr>
                               <tr>
                                 <td>দপ্তরঃ {{ $tempmemdata->user->branch->name }}</td>
@@ -129,8 +129,8 @@
                             <tbody>
                               <tr>
                                 <td>পদবিঃ
-                                  @if($tempmemdata->designation != $tempmemdata->user->designation)
-                                    {{ $tempmemdata->designation }}
+                                  @if($tempmemdata->position->name != $tempmemdata->user->position->name)
+                                    {{ $tempmemdata->position->name }}
                                   @else
                                     <span class="text-muted">অপরিবর্তিত</span>
                                   @endif

@@ -63,8 +63,13 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group ">
-                      {!! Form::label('designation', 'পদবি *') !!}
-                      {!! Form::text('designation', null, array('class' => 'form-control', 'placeholder' => 'পদবি লিখুন', 'required')) !!}
+                      {!! Form::label('position_id', 'পদবি *') !!}
+                      <select name="position_id" id="position_id" class="form-control" required="">
+                          <option value="" selected="" disabled="">পদবি নির্ধারণ করুন</option>
+                          @foreach($positions as $position)
+                            <option value="{{ $position->id }}"  @if($position->id == $member->position_id) selected="" @endif>{{ $position->name }}</option>
+                          @endforeach
+                      </select>
                   </div>
                 </div>
                 <div class="col-md-6">

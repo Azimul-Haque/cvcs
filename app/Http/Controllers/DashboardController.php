@@ -1961,6 +1961,7 @@ class DashboardController extends Controller
 
     public function getProfile() 
     {
+        $positions = Position::where('id', '>', 0)->get();
         $branches = Branch::where('id', '>', 0)->get();
         $member = User::find(Auth::user()->id);
 
@@ -1988,6 +1989,7 @@ class DashboardController extends Controller
                                          ->count();
 
         return view('dashboard.profile.index')
+                    ->withPositions($positions)
                     ->withBranches($branches)
                     ->withMember($member)
                     ->withPendingfordashboard($pendingfordashboard)
@@ -1999,7 +2001,7 @@ class DashboardController extends Controller
     public function updateMemberProfile(Request $request, $id) 
     {
         $this->validate($request,array(
-            'designation'      =>   'required',
+            'position_id'      =>   'required',
             'branch_id'        =>   'required',
             'present_address'  =>   'required',
             'mobile'           =>   'required',
@@ -2035,7 +2037,7 @@ class DashboardController extends Controller
         }
 
         // check if any data is changed...
-        if((Auth::user()->designation == $request->designation) && (Auth::user()->branch_id == $request->branch_id) && (Auth::user()->present_address == $request->present_address) && (Auth::user()->mobile == $request->mobile) && (Auth::user()->email == $request->email) && !$request->hasFile('image')) {
+        if((Auth::user()->position_id == $request->position_id) && (Auth::user()->branch_id == $request->branch_id) && (Auth::user()->present_address == $request->present_address) && (Auth::user()->mobile == $request->mobile) && (Auth::user()->email == $request->email) && !$request->hasFile('image')) {
             Session::flash('info', 'আপনি কোন তথ্য পরিবর্তন করেননি!');
             return redirect()->route('dashboard.profile');
         }
@@ -2044,7 +2046,7 @@ class DashboardController extends Controller
         if(Auth::user()->role != 'admin') {
             $tempmemdata = new Tempmemdata;
             $tempmemdata->user_id = $member->id;
-            $tempmemdata->designation = $request->designation;
+            $tempmemdata->position_id = $request->position_id;
             $tempmemdata->branch_id = $request->branch_id;
             $tempmemdata->present_address = $request->present_address;
             $tempmemdata->mobile = $request->mobile;
@@ -2067,7 +2069,7 @@ class DashboardController extends Controller
             Session::flash('success', 'আপনার তথ্য পরিবর্তন অনুরোধ সফলভাবে করা হয়েছে। আমাদের একজন প্রতিনিধি তা অনুমোদন করবেন। ধন্যবাদ।');
             return redirect()->route('dashboard.profile');
         } else {
-            $member->designation = $request->designation;
+            $member->position_id = $request->position_id;
             $member->branch_id = $request->branch_id;
             $member->present_address = $request->present_address;
             $member->mobile = $request->mobile;
@@ -2105,7 +2107,7 @@ class DashboardController extends Controller
         $tempmemdata = Tempmemdata::where('id', $request->tempmemdata_id)->first();
         $member = User::where('id', $request->user_id)->first();
 
-        $member->designation = $tempmemdata->designation;
+        $member->position_id = $tempmemdata->position_id;
         $member->branch_id = $tempmemdata->branch_id;
         $member->present_address = $tempmemdata->present_address;
         $member->mobile = $tempmemdata->mobile;

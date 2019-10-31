@@ -50,7 +50,7 @@
           জাতীয় পরিচয়পত্র নং- {{ $member->nid }}<br/>
           জন্ম তারিখঃ {{ date('F d, Y, h:m:i A', strtotime($member->dob)) }}<br/><br/>
           দপ্তরের নামঃ {{ $member->branch->name }}<br/>
-          পদবিঃ {{ $member->designation }}<br/>
+          পদবিঃ {{ $member->position->name }}<br/>
           যোগদানের তারিখঃ
             @if($member->joining_date != null)
               {{ date('F d, Y', strtotime($member->joining_date)) }}
