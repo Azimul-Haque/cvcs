@@ -417,7 +417,7 @@ class DashboardController extends Controller
 
     public function getOffices()
     {
-        $offices = Office::orderBy('id', 'asc')->paginate(15);
+        $offices = Office::orderBy('id', 'asc')->where('id', '>', 0)->paginate(15);
 
         return view('dashboard.adminsandothers.offices')
                     ->withOffices($offices);
@@ -441,7 +441,7 @@ class DashboardController extends Controller
         // return redirect()->route('dashboard.branches');
 
         Session::flash('success', 'কাজ চলছে!');
-        return redirect()->route('dashboard.branches');
+        return redirect()->back();
     }
 
     public function storeBranch(Request $request)

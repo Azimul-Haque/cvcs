@@ -62,6 +62,8 @@ class CreateUsersTable extends Migration
             $table->string('application_payment_pay_slip');
             $table->string('application_payment_receipt');
 
+            $table->integer('office_id')->unsigned();
+
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
