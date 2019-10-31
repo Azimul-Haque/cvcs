@@ -79,7 +79,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="gender" class="">লিঙ্গ</label>
-                                <select name="gender" id="gender" class="text_bangla" required="">
+                                <select name="gender" id="gender" class="form-control" required="">
                                     <option value="" selected="" disabled="">লিঙ্গ নির্ধারণ করুন</option>
                                     <option value="নারী">নারী</option>
                                     <option value="পুরুষ">পুরুষ</option>
@@ -117,8 +117,13 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="office" class="">আবেদনকারীর দপ্তরের নাম *</label>
-                                <input type="text" name="office" id="office" required="" class="text_bangla" placeholder="দপ্তরের নাম বাংলায় লিখুন">
+                                <label for="branch_id" class="">আবেদনকারীর দপ্তরের নাম *</label>
+                                <select name="gender" id="branch_id" class="form-control" required="">
+                                    <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                                    @foreach($branches as $branch)
+                                      <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                           </div>
                         </div>
@@ -198,7 +203,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_one_identity_type" class="">দলিলের ধরণ</label>
-                                <select name="nominee_one_identity_type" id="nominee_one_identity_type" required="">
+                                <select name="nominee_one_identity_type" id="nominee_one_identity_type" class="form-control" required="">
                                     <option value="" selected="" disabled="">দলিলের ধরণ নির্ধারণ করুন</option>
                                     <option value="0">জাতীয় পরিচয়পত্র</option>
                                     <option value="1">জন্ম নিবন্ধন</option>
@@ -262,7 +267,7 @@
                                       <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nominee_two_identity_type" class="">দলিলের ধরণ</label>
-                                            <select name="nominee_two_identity_type" id="nominee_two_identity_type">
+                                            <select name="nominee_two_identity_type" class="form-control" id="nominee_two_identity_type">
                                                 <option value="" selected="" disabled="">দলিলের ধরণ নির্ধারণ করুন</option>
                                                 <option value="0">জাতীয় পরিচয়পত্র</option>
                                                 <option value="1">জন্ম নিবন্ধন</option>

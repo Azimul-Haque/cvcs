@@ -17,6 +17,7 @@ use App\Notice;
 use App\Faq;
 use App\Formmessage;
 use App\Passwordresetsms;
+use App\Branch;
 
 use Carbon\Carbon;
 use DB;
@@ -181,7 +182,9 @@ class IndexController extends Controller
 
     public function getApplication()
     {
-        return view('index.membership.application');
+        $branches = Branch::where('id', '>', 0)->get();
+
+        return view('index.membership.application')->withBranches($branches);
     }
 
     public function getLogin()
