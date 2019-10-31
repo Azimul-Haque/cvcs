@@ -101,7 +101,7 @@
                     <label for="branch_id" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif দপ্তরের নাম *</label>
                     <div class="row">
                       <div class="col-md-6">
-                        <input value="{{ $application->office }}" type="text" name="office" id="office" required="" class="text_bangla form-control" placeholder="দপ্তরের নাম বাংলায় লিখুন">
+                        <input value="{{ $application->office }}" type="text" name="office" id="office" class="form-control" placeholder="দপ্তরের নাম বাংলায় লিখুন">
                       </div>
                       <div class="col-md-6">
                         <select name="branch_id" id="branch_id" class="form-control" required="">
@@ -124,8 +124,20 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group ">
-                    <label for="designation" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif পদবি *</label>
-                    <input value="{{ $application->designation }}" type="text" name="designation" id="designation" required="" class="text_bangla form-control" placeholder="পদবি বাংলায় লিখুন">
+                    <label for="position_id" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif পদবি *</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input value="{{ $application->designation }}" type="text" name="designation" id="designation" class="text_bangla form-control" placeholder="পদবি বাংলায় লিখুন">
+                      </div>
+                      <div class="col-md-6">
+                        <select name="position_id" id="position_id" class="form-control" required="">
+                            <option value="" selected="" disabled="">পদবি নির্ধারণ করুন</option>
+                            @foreach($positions as $position)
+                              <option value="{{ $position->id }}"  @if($position->id == $application->position_id) selected="" @endif>{{ $position->name }}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>

@@ -242,7 +242,7 @@
                 </tr>
                 <tr>
                   <th>আবেদনকারীর পদবি</th>
-                  <td>{{ $application->designation }}</td>
+                  <td>{{ $application->position->name }}</td>
                 </tr>
                 <tr>
                   <th>দপ্তরের নাম</th>

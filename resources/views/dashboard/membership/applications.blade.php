@@ -69,7 +69,7 @@
               </a>
             </td>
             <td>{{ $application->mobile }}<br/>{{ $application->email }}</td>
-            <td>{{ $application->branch->name }}<br/>{{ $application->profession }} ({{ $application->designation }})</td>
+            <td>{{ $application->branch->name }}<br/>{{ $application->profession }} ({{ $application->position->name }})</td>
             <td>৳ {{ $application->application_payment_amount }}<br/>{{ $application->application_payment_bank }} ({{ $application->application_payment_branch }})</td>
             <td>
               @if($application->image != null)

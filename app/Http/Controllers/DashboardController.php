@@ -1106,12 +1106,14 @@ class DashboardController extends Controller
 
     public function getSignleApplicationEdit($unique_key)
     {
+        $positions = Position::where('id', '>', 0)->get();
         $branches = Branch::where('id', '>', 0)->get();
         $application = User::where('unique_key', $unique_key)->first(); // this is also used to edit MEMBERS!
 
         return view('dashboard.membership.singleapplicationedit')
                             ->withApplication($application)
-                            ->withBranches($branches);
+                            ->withBranches($branches)
+                            ->withPositions($positions);
     }
 
     public function updateSignleApplication(Request $request, $id)
@@ -1130,7 +1132,7 @@ class DashboardController extends Controller
                 'father'                       => 'required|max:255',
                 'mother'                       => 'required|max:255',
                 'profession'                   => 'required|max:255',
-                'designation'                  => 'required|max:255',
+                'position_id'                  => 'required',
                 'branch_id'                    => 'required',
                 'joining_date'                 => 'sometimes|max:255',
                 'present_address'              => 'required|max:255',
@@ -1173,7 +1175,7 @@ class DashboardController extends Controller
             'father'                       => 'required|max:255',
             'mother'                       => 'required|max:255',
             'profession'                   => 'required|max:255',
-            'designation'                  => 'required|max:255',
+            'position_id'                  => 'required|max:255',
             'branch_id'                    => 'required',
             'joining_date'                 => 'sometimes|max:255',
             'present_address'              => 'required|max:255',
@@ -1236,7 +1238,7 @@ class DashboardController extends Controller
             $application->joining_date = new Carbon($joining_date);
         }
         $application->profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->profession));
-        $application->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $application->position_id = $request->position_id;
         $application->membership_designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
         $application->present_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->present_address));
         $application->permanent_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->permanent_address));

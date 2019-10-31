@@ -318,7 +318,7 @@
                 </tr>
                 <tr>
                   <th>আবেদনকারীর পদবি</th>
-                  <td>{{ $member->designation }}</td>
+                  <td>{{ $member->position->name }}</td>
                 </tr>
                 <tr>
                   <th>দপ্তরের নাম</th>
