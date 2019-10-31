@@ -23,6 +23,7 @@ use App\Donation;
 use App\Branch;
 use App\Branchpayment;
 use App\Tempmemdata;
+use App\Office;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -414,6 +415,35 @@ class DashboardController extends Controller
                     ->withTotalbranchpayment($totalbranchpayment);
     }
 
+    public function getOffices()
+    {
+        $offices = Office::orderBy('id', 'asc')->paginate(15);
+
+        return view('dashboard.adminsandothers.offices')
+                    ->withOffices($offices);
+    }
+
+    public function updateOffice(Request $request, $id)
+    {
+        // $this->validate($request,array(
+        //     'name'    => 'required|max:255',
+        //     'address' => 'required|max:255',
+        //     'phone'   => 'required|max:255'
+        // ));
+
+        // $branch = Branch::find($id);
+        // $branch->name = $request->name;
+        // $branch->address = $request->address;
+        // $branch->phone = $request->phone;
+        // $branch->save();
+
+        // Session::flash('success', 'সফলভাবে ব্রাঞ্চ হালনাগাদ হয়েছে!');
+        // return redirect()->route('dashboard.branches');
+
+        Session::flash('success', 'কাজ চলছে!');
+        return redirect()->route('dashboard.branches');
+    }
+
     public function storeBranch(Request $request)
     {
         $this->validate($request,array(
@@ -431,7 +461,7 @@ class DashboardController extends Controller
         Session::flash('success', 'সফলভাবে ব্রাঞ্চ সংরক্ষন হয়েছে!');
         return redirect()->route('dashboard.branches');
     }
-
+    
     public function updateBranch(Request $request, $id)
     {
         $this->validate($request,array(

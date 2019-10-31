@@ -95,6 +95,10 @@ Route::post('/dashboard/branch/payment/store', ['as'=>'dashboard.storebranchpaym
 Route::patch('/dashboard/branch/payment/approve/{id}', ['as'=>'dashboard.approvebranchpayment','uses'=>'DashboardController@approveBranchPayment']);
 Route::get('/dashboard/branch/payment/{id}/list', ['as'=>'dashboard.paymentofbranch','uses'=>'DashboardController@getPaymentofBranch']);
 
+Route::get('/dashboard/offices', ['as'=>'dashboard.offices','uses'=>'DashboardController@getOffices']);
+Route::put('/dashboard/offices/update/{id}', ['as'=>'dashboard.office.update','uses'=>'DashboardController@updateOffice']);
+
+
 Route::get('/dashboard/bulk/payers', ['as'=>'dashboard.bulkpayers','uses'=>'DashboardController@getBulkPayers']);
 Route::get('/dashboard/bulk/payers/create', ['as'=>'dashboard.createbulkpayer','uses'=>'DashboardController@getCreateBulkPayer']);
 Route::get('/dashboard/bulk/payers/search', ['as'=>'dashboard.searchmemberforbulkpayer','uses'=>'DashboardController@searchMemberForBulkPayerAPI']);

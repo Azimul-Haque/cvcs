@@ -9,14 +9,14 @@
 @section('content_header')
     <h1>
       @if($application->activation_status == 202)
-        ত্রুটিপূর্ণ
+        অসম্পূর্ণ
       @endif আবেদন
       <div class="pull-right">
         @if($application->activation_status == 0)
           @if(Auth::user()->email != 'dataentry@cvcsbd.com')
             <button class="btn btn-success" data-toggle="modal" data-target="#activateMemberModal" data-backdrop="static" title="অনুমোদন করুন"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
           @endif
-          <a class="btn btn-danger" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="ত্রুটিপূর্ণ আবেদনের তালিকায় পাঠান"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i></a>
+          <a class="btn btn-danger" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="অসম্পূর্ণ আবেদনের তালিকায় পাঠান"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i></a>
         @elseif($application->activation_status == 202)
           <a class="btn btn-info" data-toggle="modal" data-target="#sendToApplicationsFromDefectiveModal" data-backdrop="static" title="আবেদনের তালিকায় পাঠান"><i class="fa fa-fw fa-hourglass-o" aria-hidden="true"></i></a>
         @endif
@@ -56,10 +56,10 @@
         <div class="modal-content">
           <div class="modal-header modal-header-danger">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> ত্রুটিপূর্ণ আবেদন তালিকায় প্রেরণ</h4>
+            <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> অসম্পূর্ণ আবেদন তালিকায় প্রেরণ</h4>
           </div>
           <div class="modal-body">
-            আপনি কি এই আবেদনটি <b>ত্রুটিপূর্ণ আবেদন তালিকায়</b> পাঠাতে চান?
+            আপনি কি এই আবেদনটি <b>অসম্পূর্ণ আবেদন তালিকায়</b> পাঠাতে চান?
           </div>
           <div class="modal-footer">
             {!! Form::model($application, ['route' => ['dashboard.makedefective', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}

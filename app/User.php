@@ -30,6 +30,10 @@ class User extends Authenticatable
       return $this->hasMany('App\Tempmemdata', 'user_id', 'id');
     }
 
+    public function offices() {
+      return $this->belongsTo('App\Office');
+    }
+
     protected $fillable = [
         'name', 'email', 'password',
     ];

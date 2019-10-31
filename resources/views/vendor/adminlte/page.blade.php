@@ -22,7 +22,7 @@
             <nav class="navbar navbar-static-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="navbar-brand">
+                        <a href="{{ url(config('adminlte.dashboard_url', 'dashboard')) }}" class="navbar-brand">
                             {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
                         </a>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
@@ -39,11 +39,17 @@
                     <!-- /.navbar-collapse -->
             @else
             <!-- Logo -->
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="logo">
+            <a href="{{ url(config('adminlte.dashboard_url', 'dashboard')) }}" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini">{!! config('adminlte.logo_mini', '<b>A</b>LT') !!}</span>
+                <span class="logo-mini">
+                  <img src="{{ asset('images/custom.png') }}" style="height: 30px; width: auto;">
+                  {{-- {!! config('adminlte.logo_mini', '<b>A</b>LT') !!} --}}
+                </span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</span>
+                <span class="logo-lg">
+                  <img src="{{ asset('images/custom.png') }}" style="height: 30px; width: auto;"> 
+                  {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
+                </span>
             </a>
 
             <!-- Header Navbar -->
@@ -215,7 +221,7 @@
                           </a>
                       </li>
                       
-                      <li class="{{ Request::is('dashboard/branches') ? 'active menu-open' : '' }} {{ Request::is('dashboard/branch/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donors') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donor/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/branches') ? 'active menu-open' : '' }} {{ Request::is('dashboard/branch/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donors') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donor/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/offices') ? 'active menu-open' : '' }} {{ Request::is('dashboard/office/*') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-key"></i>
                             <span>অ্যাডমিন কার্যক্রম</span>
@@ -230,6 +236,7 @@
                           @endif
                           <li class="{{ Request::is('dashboard/donors') ? 'active' : '' }} {{ Request::is('dashboard/donor/*') ? 'active' : '' }}"><a href="{{ route('dashboard.donors') }}"><i class="fa fa-trophy text-lightgreen"></i> ডোনেশন</a></li>
                           <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }} {{ Request::is('dashboard/branch/*') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol text-green"></i> বিল অব এন্ট্রি</a></li>
+                          <li class="{{ Request::is('dashboard/offices') ? 'active' : '' }} {{ Request::is('dashboard/office/*') ? 'active' : '' }}"><a href="{{ route('dashboard.offices') }}"><i class="fa fa-home text-aqua"></i> দপ্তর সমূহ</a></li>
                         </ul>
                       </li>
                       
