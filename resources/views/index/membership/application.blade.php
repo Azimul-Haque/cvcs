@@ -118,7 +118,7 @@
                           <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="branch_id" class="">আবেদনকারীর দপ্তরের নাম *</label>
-                                <select name="gender" id="branch_id" class="form-control" required="">
+                                <select name="branch_id" id="branch_id" class="form-control" required="">
                                     <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
                                     @foreach($branches as $branch)
                                       <option value="{{ $branch->id }}">{{ $branch->name }}</option>

@@ -223,7 +223,7 @@ class IndexController extends Controller
             'mother'                       => 'required|max:255',
             'profession'                   => 'required|max:255',
             'designation'                  => 'required|max:255',
-            'office'                       => 'required|max:255',
+            'branch_id'                    => 'required',
             'joining_date'                 => 'sometimes|max:255',
             'present_address'              => 'required|max:255',
             'permanent_address'            => 'required|max:255',
@@ -267,7 +267,7 @@ class IndexController extends Controller
         $application->spouse_profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->spouse_profession));
         $application->father = htmlspecialchars(preg_replace("/\s+/", " ", $request->father));
         $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
-        $application->office = htmlspecialchars(preg_replace("/\s+/", " ", $request->office));
+        $application->branch_id = $request->branch_id;
         if($request->joining_date != '') {
             $joining_date = htmlspecialchars(preg_replace("/\s+/", " ", $request->joining_date));
             $application->joining_date = new Carbon($joining_date);
