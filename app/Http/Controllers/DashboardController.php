@@ -1238,6 +1238,7 @@ class DashboardController extends Controller
             $application->joining_date = new Carbon($joining_date);
         }
         $application->profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->profession));
+        // $application->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
         $application->position_id = $request->position_id;
         $application->membership_designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
         $application->present_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->present_address));
