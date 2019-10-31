@@ -26,7 +26,7 @@
             <h3 class="box-title"><b>{{ Auth::user()->branch->name }}</b>-এর সদস্য তালিকা</h3>
           </div>
           <!-- /.box-header -->
-          <div class="box-body table-responsive" style="height: 600px; overflow: auto;">
+          <div class="box-body table-responsive" style="height: 600px; overflow: auto; padding: 0px;">
             <table class="table table-condensed">
               <thead>
                 <tr>
@@ -71,7 +71,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> সদস্য যোগ করুন</button><br/><br/>
+            {{-- <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> সদস্য যোগ করুন</button><br/><br/> --}}
 
             <div id="member_list"></div>
 
@@ -102,39 +102,14 @@
             <!-- Add Member Modal -->
             <!-- Add Member Modal -->
             {{-- {!! Form::hidden('member_ids', null, ['id' => 'member_ids', 'required' => '']) !!} --}}
-            <br/><br/>
-            <div class="form-group">
-              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModal" data-backdrop="static" id="previewFormButton"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
-              <!-- Preview Modal -->
-              <!-- Preview Modal -->
-              <div class="modal fade" id="previewFormModal" role="dialog">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
-                    </div>
-                    <div class="modal-body" id="previewFormModalBody">
-                      
-                    </div>
-                    <div class="modal-footer">
-                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
-                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Preview Modal -->
-              <!-- Preview Modal -->
-              
-            </div>
+            
           </div>
           <!-- /.box-body -->
         </div>
       </div><br/>
       <div class="col-md-7">
         <div class="box box-warning">
-          <div class="box-header with-border text-blue">
+          <div class="box-header with-border text-orange">
             <i class="fa fa-fw fa-file-text-o"></i>
             <h3 class="box-title">পরিশোধ ফরম</h3>
           </div>
@@ -203,6 +178,31 @@
                     </center>
                 </div>
               </div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModal" data-backdrop="static" id="previewFormButton"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
+              <!-- Preview Modal -->
+              <!-- Preview Modal -->
+              <div class="modal fade" id="previewFormModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
+                    </div>
+                    <div class="modal-body" id="previewFormModalBody">
+                      
+                    </div>
+                    <div class="modal-footer">
+                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Preview Modal -->
+              <!-- Preview Modal -->
+              
             </div>
           </div>
           <!-- /.box-body -->
