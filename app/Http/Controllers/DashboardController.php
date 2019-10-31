@@ -1097,10 +1097,12 @@ class DashboardController extends Controller
 
     public function getSignleApplicationEdit($unique_key)
     {
+        $branches = Branch::where('id', '>', 0)->get();
         $application = User::where('unique_key', $unique_key)->first(); // this is also used to edit MEMBERS!
 
         return view('dashboard.membership.singleapplicationedit')
-                            ->withApplication($application);
+                            ->withApplication($application)
+                            ->withBranches($branches);
     }
 
     public function updateSignleApplication(Request $request, $id)

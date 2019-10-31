@@ -98,8 +98,20 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group ">
-                    <label for="office" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif দপ্তরের নাম *</label>
-                    <input value="{{ $application->office }}" type="text" name="office" id="office" required="" class="text_bangla form-control" placeholder="দপ্তরের নাম বাংলায় লিখুন">
+                    <label for="branch_id" class="">@if($application->activation_status == 0) আবেদনকারীর @else সদস্যের @endif দপ্তরের নাম *</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input value="{{ $application->office }}" type="text" name="office" id="office" required="" class="text_bangla form-control" placeholder="দপ্তরের নাম বাংলায় লিখুন">
+                      </div>
+                      <div class="col-md-6">
+                        <select name="branch_id" id="branch_id" class="form-control" required="">
+                            <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                            @foreach($branches as $branch)
+                              <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>
