@@ -25,6 +25,7 @@
         <tr>
           <th width="5%">#</th>
           <th>নাম</th>
+          <th>ঠিকানা</th>
           <th width="10%">Action</th>
         </tr>
       </thead>
@@ -33,6 +34,7 @@
         <tr>
           <td>{{ $branche->id }}</td>
           <td>{{ $branche->name }}</td>
+          <td>{{ $branche->address }}</td>
           <td>
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $branche->id }}" data-backdrop="static" title="দপ্তর সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
             <!-- Remove BulK Payer Modal -->
