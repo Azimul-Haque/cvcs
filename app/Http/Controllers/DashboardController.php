@@ -2056,7 +2056,7 @@ class DashboardController extends Controller
             return redirect()->route('dashboard.profile');
         } else {
             $member->designation = $request->designation;
-            $member->office = $request->office;
+            $member->branch_id = $request->branch_id;
             $member->present_address = $request->present_address;
             $member->mobile = $request->mobile;
             $member->email = $request->email;
@@ -2094,7 +2094,7 @@ class DashboardController extends Controller
         $member = User::where('id', $request->user_id)->first();
 
         $member->designation = $tempmemdata->designation;
-        $member->office = $tempmemdata->office;
+        $member->branch_id = $tempmemdata->branch_id;
         $member->present_address = $tempmemdata->present_address;
         $member->mobile = $tempmemdata->mobile;
         $member->email = $tempmemdata->email;

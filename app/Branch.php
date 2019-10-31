@@ -14,5 +14,9 @@ class Branch extends Model
       return $this->hasMany('App\User');
     }
 
+    public function tempmemdatas() {
+      return $this->hasMany('App\Tempmemdata');
+    }
+
     public $timestamps = false;
 }
