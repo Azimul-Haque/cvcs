@@ -221,7 +221,7 @@
                           </a>
                       </li>
                       
-                      <li class="{{ Request::is('dashboard/branches') ? 'active menu-open' : '' }} {{ Request::is('dashboard/branch/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donors') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donor/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/offices') ? 'active menu-open' : '' }} {{ Request::is('dashboard/office/*') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/branches/payments') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donors') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donor/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/branches') ? 'active menu-open' : '' }} {{ Request::is('dashboard/branch/*') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-key"></i>
                             <span>অ্যাডমিন কার্যক্রম</span>
@@ -235,8 +235,8 @@
                           <li class="{{ Request::is('dashboard/bulk/payers') ? 'active' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active' : '' }}"><a href="{{ route('dashboard.bulkpayers') }}"><i class="fa fa-users text-yellow"></i> একাধিক পরিশোধকারীগণ</a></li>
                           @endif
                           <li class="{{ Request::is('dashboard/donors') ? 'active' : '' }} {{ Request::is('dashboard/donor/*') ? 'active' : '' }}"><a href="{{ route('dashboard.donors') }}"><i class="fa fa-trophy text-lightgreen"></i> ডোনেশন</a></li>
-                          <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }} {{ Request::is('dashboard/branch/*') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-list-ol text-green"></i> বিল অব এন্ট্রি</a></li>
-                          <li class="{{ Request::is('dashboard/offices') ? 'active' : '' }} {{ Request::is('dashboard/office/*') ? 'active' : '' }}"><a href="{{ route('dashboard.offices') }}"><i class="fa fa-home text-aqua"></i> দপ্তর সমূহ</a></li>
+                          <li class="{{ Request::is('dashboard/branches/payments') ? 'active' : '' }}"><a href="{{ route('dashboard.branches.payments') }}"><i class="fa fa-list-ol text-green"></i> বিল অব এন্ট্রি</a></li>
+                          <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }} {{ Request::is('dashboard/branch/*') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-home text-aqua"></i> দপ্তর সমূহ</a></li>
                         </ul>
                       </li>
                       

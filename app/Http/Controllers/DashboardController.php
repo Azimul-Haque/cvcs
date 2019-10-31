@@ -23,7 +23,6 @@ use App\Donation;
 use App\Branch;
 use App\Branchpayment;
 use App\Tempmemdata;
-use App\Office;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -400,7 +399,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.donors');
     }
 
-    public function getBranches()
+    public function getBranchPayments()
     {
         $branches = Branch::orderBy('id', 'desc')->paginate(10);
         $branchpayments = Branchpayment::orderBy('id', 'desc')->paginate(10);
@@ -409,39 +408,18 @@ class DashboardController extends Controller
                                 ->where('payment_status', 1)
                                 ->first();
 
-        return view('dashboard.adminsandothers.branches')
+        return view('dashboard.adminsandothers.branchepayments')
                     ->withBranches($branches)
                     ->withBranchpayments($branchpayments)
                     ->withTotalbranchpayment($totalbranchpayment);
     }
 
-    public function getOffices()
+    public function getBranches()
     {
-        $offices = Office::orderBy('id', 'asc')->where('id', '>', 0)->paginate(15);
+        $branches = Branch::orderBy('id', 'asc')->where('id', '>', 0)->paginate(15);
 
-        return view('dashboard.adminsandothers.offices')
-                    ->withOffices($offices);
-    }
-
-    public function updateOffice(Request $request, $id)
-    {
-        // $this->validate($request,array(
-        //     'name'    => 'required|max:255',
-        //     'address' => 'required|max:255',
-        //     'phone'   => 'required|max:255'
-        // ));
-
-        // $branch = Branch::find($id);
-        // $branch->name = $request->name;
-        // $branch->address = $request->address;
-        // $branch->phone = $request->phone;
-        // $branch->save();
-
-        // Session::flash('success', 'সফলভাবে ব্রাঞ্চ হালনাগাদ হয়েছে!');
-        // return redirect()->route('dashboard.branches');
-
-        Session::flash('success', 'কাজ চলছে!');
-        return redirect()->back();
+        return view('dashboard.adminsandothers.branches')
+                    ->withBranches($branches);
     }
 
     public function storeBranch(Request $request)
@@ -516,7 +494,7 @@ class DashboardController extends Controller
         }
         $branchpayment->save();
         Session::flash('success', 'সফলভাবে ব্রাঞ্চ পরিশোধ সংরক্ষণ');
-        return redirect()->route('dashboard.branches');
+        return redirect()->route('dashboard.branches.payments');
     }
 
     public function approveBranchPayment(Request $request, $id) 
@@ -526,7 +504,7 @@ class DashboardController extends Controller
         $branchpayment->save();
 
         Session::flash('success', 'অনুমোদন সফল হয়েছে!');
-        return redirect()->route('dashboard.branches');
+        return redirect()->route('dashboard.branches.payments');
     }
 
     public function getPaymentofBranch($id)

@@ -9,4 +9,10 @@ class Branch extends Model
     public function branchpayments() {
       return $this->hasMany('App\Branchpayment', 'branch_id', 'id');
     }
+
+    public function users() {
+      return $this->hasMany('App\User');
+    }
+
+    public $timestamps = false;
 }
