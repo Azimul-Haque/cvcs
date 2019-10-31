@@ -23,6 +23,7 @@ use App\Donation;
 use App\Branch;
 use App\Branchpayment;
 use App\Tempmemdata;
+use App\Position;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -521,6 +522,14 @@ class DashboardController extends Controller
                     ->withBranch($branch)
                     ->withBranchpayments($branchpayments)
                     ->withTotalapproved($totalapproved);
+    }
+
+    public function getDesignations()
+    {
+        $positions = Position::orderBy('id', 'asc')->where('id', '>', 0)->paginate(15);
+
+        return view('dashboard.adminsandothers.positions')
+                    ->withPositions($positions);
     }
 
     public function getAbouts()

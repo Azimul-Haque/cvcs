@@ -18,6 +18,7 @@ use App\Faq;
 use App\Formmessage;
 use App\Passwordresetsms;
 use App\Branch;
+use App\Position;
 
 use Carbon\Carbon;
 use DB;
@@ -183,8 +184,11 @@ class IndexController extends Controller
     public function getApplication()
     {
         $branches = Branch::where('id', '>', 0)->get();
+        $positions = Position::where('id', '>', 0)->get();
 
-        return view('index.membership.application')->withBranches($branches);
+        return view('index.membership.application')
+                            ->withBranches($branches)
+                            ->withPositions($positions);
     }
 
     public function getLogin()
@@ -222,7 +226,7 @@ class IndexController extends Controller
             'father'                       => 'required|max:255',
             'mother'                       => 'required|max:255',
             'profession'                   => 'required|max:255',
-            'designation'                  => 'required|max:255',
+            'position_id'                  => 'required',
             'branch_id'                    => 'required',
             'joining_date'                 => 'sometimes|max:255',
             'present_address'              => 'required|max:255',
@@ -273,7 +277,7 @@ class IndexController extends Controller
             $application->joining_date = new Carbon($joining_date);
         }
         $application->profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->profession));
-        $application->designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
+        $application->position_id = $request->position_id;
         $application->membership_designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
         $application->present_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->present_address));
         $application->permanent_address = htmlspecialchars(preg_replace("/\s+/", " ", $request->permanent_address));

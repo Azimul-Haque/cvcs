@@ -136,8 +136,13 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="designation" class="">আবেদনকারীর পদবি *</label>
-                                <input type="text" name="designation" id="designation" required="" class="text_bangla" placeholder="পদবি বাংলায় লিখুন">
+                                <label for="position_id" class="">আবেদনকারীর পদবি *</label>
+                                <select name="position_id" id="position_id" class="form-control" required="">
+                                    <option value="" selected="" disabled="">পদবি নির্ধারণ করুন</option>
+                                    @foreach($positions as $position)
+                                      <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                           </div>
                         </div>

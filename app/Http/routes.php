@@ -96,6 +96,8 @@ Route::post('/dashboard/branch/payment/store', ['as'=>'dashboard.storebranchpaym
 Route::patch('/dashboard/branch/payment/approve/{id}', ['as'=>'dashboard.approvebranchpayment','uses'=>'DashboardController@approveBranchPayment']);
 Route::get('/dashboard/branch/payment/{id}/list', ['as'=>'dashboard.paymentofbranch','uses'=>'DashboardController@getPaymentofBranch']);
 
+Route::get('/dashboard/designations', ['as'=>'dashboard.designations','uses'=>'DashboardController@getDesignations']);
+
 
 
 Route::get('/dashboard/bulk/payers', ['as'=>'dashboard.bulkpayers','uses'=>'DashboardController@getBulkPayers']);
