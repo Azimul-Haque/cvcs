@@ -49,7 +49,7 @@
         <div class="modal-content">
           <div class="modal-header modal-header-warning">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"><i class="fa fa-envelope"></i> জনাব {{ $member->name_bangla }}-কে বার্তা পাঠান</h4>
+            <h4 class="modal-title"><i class="fa fa-envelope"></i> জনাব/ জনাবা {{ $member->name_bangla }}-কে বার্তা পাঠান</h4>
           </div>
           {!! Form::open(['route' => 'dashboard.sendsmsapplicant', 'method' => 'POST', 'class' => 'form-default']) !!}
           <div class="modal-body">
@@ -613,12 +613,13 @@
             </table>
           </div>
         @else
+          {{-- jodi date Jan 31, 2019 er beshi hoy --}}
           @php
               $startyear = date('Y', strtotime($member->joining_date));
               $startmonth = date('m', strtotime($member->joining_date));
               $today = date("Y-m-d H:i:s");
               $approvedcash = $approvedfordashboard->totalamount - 5000; // without the membership money;
-              $endyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
+              $endyear = $startyear + ceil($approvedcash/(500 * 12)); // get total year
               if(date('Y') > $endyear) {
                   $endyear = date('Y');
               }

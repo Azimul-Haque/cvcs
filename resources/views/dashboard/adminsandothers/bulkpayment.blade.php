@@ -33,7 +33,7 @@
             </div>
             <div class="form-group">
               {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
-              {!! Form::text('bank', null, array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
+              {!! Form::text('bank', 'ডাচ বাংলা ব্যাংক', array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
             </div>
             <div class="form-group">
               {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
