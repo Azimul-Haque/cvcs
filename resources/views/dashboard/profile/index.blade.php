@@ -69,8 +69,14 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group ">
-                      {!! Form::label('office', 'দপ্তর *') !!}
-                      {!! Form::text('office', null, array('class' => 'form-control', 'placeholder' => 'দপ্তরের নাম লিখুন', 'required')) !!}
+                      {!! Form::label('branch_id', 'দপ্তর *') !!}
+                      {{-- {!! Form::text('office', null, array('class' => 'form-control', 'placeholder' => 'দপ্তরের নাম লিখুন', 'required')) !!} --}}
+                      <select name="branch_id" id="branch_id" class="form-control" required="">
+                          <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                          @foreach($branches as $branch)
+                            <option value="{{ $branch->id }}" @if($branch->id == $member->branch_id) selected="" @endif>{{ $branch->name }}</option>
+                          @endforeach
+                      </select>
                   </div>
                 </div>
               </div>
@@ -95,7 +101,7 @@
               <div class="row">
                 <div class="col-md-8">
                     <div class="form-group ">
-                        <label><strong>আবেদনকারীর রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
+                        <label><strong>সদস্যের রঙিন ছবি (৩০০x৩০০ এবং সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
                         <input value="" class="form-control" type="file" id="image" name="image">
                     </div>
                 </div>

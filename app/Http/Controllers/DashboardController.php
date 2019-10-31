@@ -1122,7 +1122,7 @@ class DashboardController extends Controller
                 'mother'                       => 'required|max:255',
                 'profession'                   => 'required|max:255',
                 'designation'                  => 'required|max:255',
-                'office'                       => 'required|max:255',
+                'branch_id'                    => 'required',
                 'joining_date'                 => 'sometimes|max:255',
                 'present_address'              => 'required|max:255',
                 'permanent_address'            => 'required|max:255',
@@ -1165,7 +1165,7 @@ class DashboardController extends Controller
             'mother'                       => 'required|max:255',
             'profession'                   => 'required|max:255',
             'designation'                  => 'required|max:255',
-            'office'                       => 'required|max:255',
+            'branch_id'                    => 'required',
             'joining_date'                 => 'sometimes|max:255',
             'present_address'              => 'required|max:255',
             'permanent_address'            => 'required|max:255',
@@ -1220,7 +1220,8 @@ class DashboardController extends Controller
         $application->spouse_profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->spouse_profession));
         $application->father = htmlspecialchars(preg_replace("/\s+/", " ", $request->father));
         $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
-        $application->office = htmlspecialchars(preg_replace("/\s+/", " ", $request->office));
+        // $application->office = htmlspecialchars(preg_replace("/\s+/", " ", $request->office));
+        $application->branch_id = $request->branch_id;
         if($request->joining_date != '') {
             $joining_date = htmlspecialchars(preg_replace("/\s+/", " ", $request->joining_date));
             $application->joining_date = new Carbon($joining_date);
@@ -1948,6 +1949,7 @@ class DashboardController extends Controller
 
     public function getProfile() 
     {
+        $branches = Branch::where('id', '>', 0)->get();
         $member = User::find(Auth::user()->id);
 
         $pendingfordashboard = DB::table('payments')
@@ -1974,6 +1976,7 @@ class DashboardController extends Controller
                                          ->count();
 
         return view('dashboard.profile.index')
+                    ->withBranches($branches)
                     ->withMember($member)
                     ->withPendingfordashboard($pendingfordashboard)
                     ->withApprovedfordashboard($approvedfordashboard)
@@ -1985,7 +1988,7 @@ class DashboardController extends Controller
     {
         $this->validate($request,array(
             'designation'      =>   'required',
-            'office'           =>   'required',
+            'branch_id'        =>   'required',
             'present_address'  =>   'required',
             'mobile'           =>   'required',
             'email'            =>   'required',
@@ -2020,7 +2023,7 @@ class DashboardController extends Controller
         }
 
         // check if any data is changed...
-        if((Auth::user()->designation == $request->designation) && (Auth::user()->office == $request->office) && (Auth::user()->office == $request->office) && (Auth::user()->present_address == $request->present_address) && (Auth::user()->mobile == $request->mobile) && (Auth::user()->email == $request->email) && !$request->hasFile('image')) {
+        if((Auth::user()->designation == $request->designation) && (Auth::user()->branch_id == $request->branch_id) && (Auth::user()->present_address == $request->present_address) && (Auth::user()->mobile == $request->mobile) && (Auth::user()->email == $request->email) && !$request->hasFile('image')) {
             Session::flash('info', 'আপনি কোন তথ্য পরিবর্তন করেননি!');
             return redirect()->route('dashboard.profile');
         }
@@ -2030,7 +2033,7 @@ class DashboardController extends Controller
             $tempmemdata = new Tempmemdata;
             $tempmemdata->user_id = $member->id;
             $tempmemdata->designation = $request->designation;
-            $tempmemdata->office = $request->office;
+            $tempmemdata->branch_id = $request->branch_id;
             $tempmemdata->present_address = $request->present_address;
             $tempmemdata->mobile = $request->mobile;
             $tempmemdata->email = $request->email;

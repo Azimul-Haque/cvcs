@@ -49,7 +49,7 @@
           সদস্যপদ আইডিঃ {{ $member->member_id }}<br/>
           জাতীয় পরিচয়পত্র নং- {{ $member->nid }}<br/>
           জন্ম তারিখঃ {{ date('F d, Y, h:m:i A', strtotime($member->dob)) }}<br/><br/>
-          দপ্তরের নামঃ {{ $member->office }}<br/>
+          দপ্তরের নামঃ {{ $member->branch->name }}<br/>
           পদবিঃ {{ $member->designation }}<br/>
           যোগদানের তারিখঃ
             @if($member->joining_date != null)
