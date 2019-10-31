@@ -10,7 +10,7 @@
     <h1>
       পদবী সমূহ
       <div class="pull-right">
-        @if(Auth::user()->role_type == 'admin')
+        @if(Auth::user()->role == 'admin')
         <a class="btn btn-success" href="#!" title="পদবী যোগ করুন (কাজ চলছে...)"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></a> {{-- {{ route('dashboard.createbulkpayer') }} --}}
         @endif
       </div>
@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-  @if(Auth::user()->role_type == 'admin')
+  @if(Auth::user()->role == 'admin')
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>

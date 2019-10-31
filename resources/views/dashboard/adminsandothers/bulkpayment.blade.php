@@ -19,8 +19,121 @@
   @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'bulkpayer'))
   	<div class="row">
       {!! Form::open(['route' => 'dashboard.storememberpaymentbulk', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data', 'id' => 'bulkpaymentform']) !!}
-      <div class="col-md-6">
+      <div class="col-md-7">
         <div class="box box-primary">
+          <div class="box-header with-border text-blue">
+            <i class="fa fa-fw fa-users"></i>
+            <h3 class="box-title"><b>{{ Auth::user()->branch->name }}</b>-এর সদস্য তালিকা</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body table-responsive" style="max-height: 200px; overflow: auto;">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>নাম</th>
+                  <th>মেম্বার আইডি</th>
+                  <th>যোগাযোগ</th>
+                  <th>অফিস তথ্য</th>
+                  <th>ছবি</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($members as $member)
+                <tr>
+                  <td>{{ $member->name_bangla }}<br/>{{ $member->name }}</td>
+                  <td>{{ $member->member_id }}</td>
+                  <td><small>{{ $member->mobile }}<br/>{{ $member->email }}</small></td>
+                  <td><small>{{ $member->branch->name }}<br/>{{ $member->position->name }}</small></td>
+                  <td>
+                    @if(file_exists(public_path('images/users/'.$member->image)))
+                      <img src="{{ asset('images/users/'.$member->image)}}" style="height: 40px; width: auto;" />
+                    @else
+                      <img src="{{ asset('images/user.png')}}" style="height: 40px; width: auto;" />
+                    @endif
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember()"><i class="fa fa-plus"></i></button>
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="box box-success">
+          <div class="box-header with-border text-green">
+            <i class="fa fa-fw fa-user-plus"></i>
+            <h3 class="box-title">যোগকৃত সদস্য তালিকা</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> সদস্য যোগ করুন</button><br/><br/>
+
+            <div id="member_list"></div>
+
+            <!-- Add Member Modal -->
+            <!-- Add Member Modal -->
+            <div class="modal fade" id="membersModal" role="dialog">
+              <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                  <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">সদস্য নির্বাচন করুন</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="member_id">সদস্য নির্বাচন করুন</label><br/>
+                      <select class="form-control" name="member_select" id="member_select" data-placeholder="সদস্য নির্বাচন করুন">
+                        <option value="" disabled="" selected="">মেম্বার আইডি/নাম/মোবাইল নম্বর</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="add_member_btn">যোগ করুন</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Add Member Modal -->
+            <!-- Add Member Modal -->
+            {{-- {!! Form::hidden('member_ids', null, ['id' => 'member_ids', 'required' => '']) !!} --}}
+            <br/><br/>
+            <div class="form-group">
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModal" data-backdrop="static" id="previewFormButton"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
+              <!-- Preview Modal -->
+              <!-- Preview Modal -->
+              <div class="modal fade" id="previewFormModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
+                    </div>
+                    <div class="modal-body" id="previewFormModalBody">
+                      
+                    </div>
+                    <div class="modal-footer">
+                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Preview Modal -->
+              <!-- Preview Modal -->
+              
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div><br/>
+      <div class="col-md-6">
+        <div class="box box-warning">
           <div class="box-header with-border text-blue">
             <i class="fa fa-fw fa-file-text-o"></i>
             <h3 class="box-title">পরিশোধ ফরম</h3>
@@ -90,75 +203,6 @@
                     </center>
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="box box-success">
-          <div class="box-header with-border text-green">
-            <i class="fa fa-fw fa-users"></i>
-            <h3 class="box-title">সদস্য তালিকা</h3>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> সদস্য যোগ করুন</button><br/><br/>
-
-            <div id="member_list"></div>
-
-            <!-- Add Member Modal -->
-            <!-- Add Member Modal -->
-            <div class="modal fade" id="membersModal" role="dialog">
-              <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                  <div class="modal-header modal-header-success">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">সদস্য নির্বাচন করুন</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group">
-                      <label for="member_id">সদস্য নির্বাচন করুন</label><br/>
-                      <select class="form-control" name="member_select" id="member_select" data-placeholder="সদস্য নির্বাচন করুন">
-                        <option value="" disabled="" selected="">মেম্বার আইডি/নাম/মোবাইল নম্বর</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="add_member_btn">যোগ করুন</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Add Member Modal -->
-            <!-- Add Member Modal -->
-            {{-- {!! Form::hidden('member_ids', null, ['id' => 'member_ids', 'required' => '']) !!} --}}
-            <br/><br/>
-            <div class="form-group">
-              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModal" data-backdrop="static" id="previewFormButton"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
-              <!-- Preview Modal -->
-              <!-- Preview Modal -->
-              <div class="modal fade" id="previewFormModal" role="dialog">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
-                    </div>
-                    <div class="modal-body" id="previewFormModalBody">
-                      
-                    </div>
-                    <div class="modal-footer">
-                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
-                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Preview Modal -->
-              <!-- Preview Modal -->
-              
             </div>
           </div>
           <!-- /.box-body -->
