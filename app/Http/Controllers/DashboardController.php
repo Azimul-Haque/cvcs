@@ -2552,11 +2552,11 @@ class DashboardController extends Controller
 
     public function searchMemberForBulkPaymentSingleAPI($member_id)
     {
-        $response = User::select('name_bangla', 'member_id', 'mobile')
+        $response = User::select('name_bangla', 'member_id', 'mobile', 'position_id')
                         ->where('activation_status', 1)
                         ->where('member_id', $member_id)
+                        ->with('position')
                         ->first();
-
         return $response;          
     }
 

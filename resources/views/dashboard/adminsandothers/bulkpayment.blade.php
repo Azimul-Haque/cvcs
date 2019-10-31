@@ -299,11 +299,11 @@
           type: 'GET',
           dataType: 'json', // added data type
           success: function(item) {
-              console.log(item);
-              $('#member_list').append('<div class="row" id="memberRow'+item.member_id+'"><div class="col-md-5" id="member_name_preview'+item.member_id+'">'+ item.name_bangla +'</div><div class="col-md-5"><input type="number" class="form-control add_separate_amounts" name="amount'+item.member_id+'" id="member_amount_preview'+item.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+item.member_id+', amount'+item.member_id+', '+item.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+item.member_id+'"><hr/></div></div>');
+              // console.log(item.position.name);
+              $('#member_list').append('<div class="row" id="memberRow'+item.member_id+'"><div class="col-md-6" id="member_name_preview'+item.member_id+'">'+ item.name_bangla +', <small>'+ item.position.name +'</small><br/><small>ID: '+ item.member_id +', ☎ '+ item.mobile +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+item.member_id+'" id="member_amount_preview'+item.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+item.member_id+', amount'+item.member_id+', '+item.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+item.member_id+'"><hr/></div></div>');
 
               // remove item from members table
-              $("#member_table_td_" + member_id).remove();
+              // $("#member_table_td_" + member_id).remove();
           }
       });
     }
