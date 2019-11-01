@@ -53,7 +53,7 @@
                     @endif
                   </td>
                   <td>
-                    <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member->member_id }}, {{ $member }})"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member }})"><i class="fa fa-plus"></i></button>
                   </td>
                 </tr>
                 @endforeach
@@ -293,7 +293,7 @@
       });
       
     });
-    function addMember(member_id, member_data) {
+    function addMember(member_data) {
       // console.log(member_data.mobile);
       $('#member_list').append('<div class="row" id="memberRow'+member_data.member_id+'"><div class="col-md-6" id="member_name_preview'+member_data.member_id+'">'+ member_data.name_bangla +', <small>'+ member_data.position.name +'</small><br/><small>ID: '+ member_data.member_id +', ☎ '+ member_data.mobile +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data.member_id+'" id="member_amount_preview'+member_data.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data.member_id+', amount'+member_data.member_id+', '+member_data.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data.member_id+'"><hr/></div></div>');
       // $.ajax({
