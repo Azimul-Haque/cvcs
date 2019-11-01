@@ -66,7 +66,7 @@
           </td>
           <td align="right">৳ {{ $payment->amount }}</td>
           <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
-          <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
+          <td>{{ date('F d, Y h:i A', strtotime($payment->created_at)) }}</td>
           <td>
             @if($payment->payment_type == 2)
               <button class="btn btn-sm btn-info btn-with-count" data-toggle="modal" data-target="#seeMembersWiseModal{{ $payment->id }}" data-backdrop="static" title="সদস্য অনুযায়ী বিস্তারিত দেখুন"><i class="fa fa-eye"></i></button>
@@ -156,7 +156,7 @@
                       <strong>ব্যাংকঃ</strong> {{ $payment->bank }}<br/>
                       <strong>ব্রাঞ্চঃ</strong> {{ $payment->branch }}<br/>
                       <strong>পে স্লিপ</strong> {{ $payment->pay_slip }}<br/>
-                      <strong>সময়কালঃ</strong> {{ date('F d, Y H:i A', strtotime($payment->created_at)) }}<br/><br/>
+                      <strong>সময়কালঃ</strong> {{ date('F d, Y h:i A', strtotime($payment->created_at)) }}<br/><br/>
                       @if($payment->payment_type == 2)
                         <big>সদস্য অনুযায়ী পরিশোধের হিসাবঃ</big>
                         <div class="table-responsive">

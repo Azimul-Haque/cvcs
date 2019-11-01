@@ -67,7 +67,7 @@
           </td>
           <td align="right">৳ {{ $payment->amount }}</td>
           <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
-          <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
+          <td>{{ date('F d, Y h:i A', strtotime($payment->created_at)) }}</td>
           <td>
             <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal{{ $payment->id }}" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-paperclip"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
             <!-- See Receipts Modal -->

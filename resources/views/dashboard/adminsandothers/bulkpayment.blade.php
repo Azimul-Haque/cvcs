@@ -53,7 +53,7 @@
                     @endif
                   </td>
                   <td>
-                    <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member->member_id }})"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member->member_id }}, {{ $member }})"><i class="fa fa-plus"></i></button>
                   </td>
                 </tr>
                 @endforeach
@@ -293,19 +293,19 @@
       });
       
     });
-    function addMember(member_id) {
-      $.ajax({
-          url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+member_id,
-          type: 'GET',
-          dataType: 'json', // added data type
-          success: function(item) {
-              // console.log(item.position.name);
-              $('#member_list').append('<div class="row" id="memberRow'+item.member_id+'"><div class="col-md-6" id="member_name_preview'+item.member_id+'">'+ item.name_bangla +', <small>'+ item.position.name +'</small><br/><small>ID: '+ item.member_id +', ☎ '+ item.mobile +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+item.member_id+'" id="member_amount_preview'+item.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+item.member_id+', amount'+item.member_id+', '+item.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+item.member_id+'"><hr/></div></div>');
-
-              // remove item from members table
-              // $("#member_table_td_" + member_id).remove();
-          }
-      });
+    function addMember(member_id, member_data) {
+      // console.log(member_data.mobile);
+      $('#member_list').append('<div class="row" id="memberRow'+member_data.member_id+'"><div class="col-md-6" id="member_name_preview'+member_data.member_id+'">'+ member_data.name_bangla +', <small>'+ member_data.position.name +'</small><br/><small>ID: '+ member_data.member_id +', ☎ '+ member_data.mobile +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data.member_id+'" id="member_amount_preview'+member_data.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data.member_id+', amount'+member_data.member_id+', '+member_data.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data.member_id+'"><hr/></div></div>');
+      // $.ajax({
+      //     url: '/dashboard/member/payment/bulk/search/single/member/api/'+'/'+member_id,
+      //     type: 'GET',
+      //     dataType: 'json', // added data type
+      //     success: function(item) {
+      //         // console.log(item.position.name);
+      //         // remove item from members table
+      //         // $("#member_table_td_" + member_id).remove();
+      //     }
+      // });
     }
     $(document).ready( function() {
       $('#add_member_btn').click(function() {
@@ -346,18 +346,18 @@
       // remove from amountids field, it automatically does actually from the array amountids
 
       // append the amountids field
-      $.ajax({
-          url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+member_id,
-          type: 'GET',
-          dataType: 'json', // added data type
-          success: function(item) {
-              // console.log(item);
-              $('#member_select').append($('<option>', { 
-                  value: item.name_bangla + "|" + item.member_id + "|" + item.mobile,
-                  text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
-              }));
-          }
-      });
+      // $.ajax({
+      //     url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+member_id,
+      //     type: 'GET',
+      //     dataType: 'json', // added data type
+      //     success: function(item) {
+      //         // console.log(item);
+      //         $('#member_select').append($('<option>', { 
+      //             value: item.name_bangla + "|" + item.member_id + "|" + item.mobile,
+      //             text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
+      //         }));
+      //     }
+      // });
       
     }
 
