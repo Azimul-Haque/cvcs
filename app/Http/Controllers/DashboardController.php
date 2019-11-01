@@ -1628,7 +1628,7 @@ class DashboardController extends Controller
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
 
-        return redirect()->route('dashboard.singleapplication', $request->unique_key);
+        return redirect()->back();
     }
 
     public function searchApplicationAPI(Request $request)
