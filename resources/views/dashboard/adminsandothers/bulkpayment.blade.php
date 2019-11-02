@@ -26,7 +26,7 @@
             <h3 class="box-title"><b>{{ Auth::user()->branch->name }}</b>-এর সদস্য তালিকা</h3>
           </div>
           <!-- /.box-header -->
-          <div class="box-body table-responsive" style="height: 640px; overflow: auto; padding: 0px;">
+          <div class="box-body table-responsive" style="height: 600px; overflow: auto; padding: 0px;">
             <table class="table table-condensed" id="datatable-memberlist">
               <thead>
                 <tr>
@@ -515,14 +515,14 @@
 
     $(function () {
       $('#datatable-memberlist').DataTable({
-        'paging'      : true,
-        'pageLength'  : 100,
+        'paging'      : false,
+        'pageLength'  : {{ $members->count() }},
         'lengthChange': false,
         'searching'   : true,
         'ordering'    : true,
-        'info'        : true,
+        'info'        : false,
         'autoWidth'   : true,
-        'order': [[ 0, "desc" ]],
+        'order': [[ 1, "asc" ]],
          columnDefs: [
               { targets: [1], type: 'number'}
          ]
