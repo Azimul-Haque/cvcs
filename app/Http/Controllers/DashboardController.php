@@ -2542,9 +2542,10 @@ class DashboardController extends Controller
 
     public function searchMemberForBulkPaymentAPI(Request $request)
     {
-        $response = User::select('name_bangla', 'member_id', 'mobile')
+        $response = User::select('name_bangla', 'member_id', 'mobile', 'position_id')
                         ->where('activation_status', 1)
                         ->where('role_type', '!=', 'admin')
+                        ->with('position')
                         ->orderBy('id', 'desc')->get();
 
         return $response;          

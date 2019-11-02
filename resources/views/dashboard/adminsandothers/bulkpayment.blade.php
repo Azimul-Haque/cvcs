@@ -58,23 +58,11 @@
                 </tr>
                 @endforeach
               </tbody>
-            </table>
-          </div>
-          <!-- /.box-body -->
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="box box-success">
-          <div class="box-header with-border text-green">
-            <i class="fa fa-fw fa-user-plus"></i>
-            <h3 class="box-title">যোগকৃত সদস্য তালিকা</h3>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            {{-- <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> সদস্য যোগ করুন</button><br/><br/> --}}
+            </table><br/><br/>
 
-            <div id="member_list"></div>
-
+            <center>
+              <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> {{ Auth::user()->branch->name }} বহির্ভূত সদস্য যোগ করতে ক্লিক করুন</button>
+            </center>
             <!-- Add Member Modal -->
             <!-- Add Member Modal -->
             <div class="modal fade" id="membersModal" role="dialog">
@@ -101,6 +89,20 @@
             </div>
             <!-- Add Member Modal -->
             <!-- Add Member Modal -->
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="box box-success">
+          <div class="box-header with-border text-green">
+            <i class="fa fa-fw fa-user-plus"></i>
+            <h3 class="box-title">যোগকৃত সদস্য তালিকা</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div id="member_list"></div>
+            
             {{-- {!! Form::hidden('member_ids', null, ['id' => 'member_ids', 'required' => '']) !!} --}}
             
           </div>
@@ -255,8 +257,8 @@
               // console.log(items);
               $.each(items, function (i, item) {
                   $('#member_select').append($('<option>', { 
-                      value: item.name_bangla + "|" + item.member_id + "|" + item.mobile,
-                      text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
+                      value: item.name_bangla + "|" + item.member_id + "|" + item.mobile + "|" + item.position.name,
+                      text : item.name_bangla + " ("+ item.position.name +")" + "-" + item.member_id + "-(☎ " + item.mobile +")"
                   }));
               });
           }
@@ -295,7 +297,7 @@
     });
     function addMember(member_data) {
       // console.log(member_data.mobile);
-      $('#member_list').append('<div class="row" id="memberRow'+member_data.member_id+'"><div class="col-md-6" id="member_name_preview'+member_data.member_id+'">'+ member_data.name_bangla +', <small>'+ member_data.position.name +'</small><br/><small>ID: '+ member_data.member_id +', ☎ '+ member_data.mobile +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data.member_id+'" id="member_amount_preview'+member_data.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data.member_id+', amount'+member_data.member_id+', '+member_data.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data.member_id+'"><hr/></div></div>');
+      $('#member_list').append('<div class="row" id="memberRow'+member_data.member_id+'"><div class="col-md-6" id="member_name_preview'+member_data.member_id+'">'+ member_data.name_bangla +', <small>'+ member_data.position.name +'</small><br/><small>ID: '+ member_data.member_id +', ☎ '+ member_data.mobile +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data.member_id+'" id="member_amount_preview'+member_data.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMemberCurrent(memberRow'+member_data.member_id+', amount'+member_data.member_id+', '+member_data.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data.member_id+'"><hr/></div></div>');
       // $.ajax({
       //     url: '/dashboard/member/payment/bulk/search/single/member/api/'+'/'+member_id,
       //     type: 'GET',
@@ -316,7 +318,7 @@
           // add member to the box
           var member_data = member_select.split('|');
           console.log(member_data);
-          $('#member_list').append('<div class="row" id="memberRow'+member_data[1]+'"><div class="col-md-5" id="member_name_preview'+member_data[1]+'">'+ member_data[0] +'</div><div class="col-md-5"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data[1]+'" id="member_amount_preview'+member_data[1]+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data[1]+', amount'+member_data[1]+', '+member_data[1]+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data[1]+'"><hr/></div></div>');
+          $('#member_list').append('<div class="row" id="memberRow'+member_data[1]+'"><div class="col-md-6" id="member_name_preview'+member_data[1]+'">'+ member_data[0] +', <small>'+ member_data[3] +'</small><br/><small>ID: '+ member_data[0] +', ☎ '+ member_data[2] +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data[1]+'" id="member_amount_preview'+member_data[1]+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMember(memberRow'+member_data[1]+', amount'+member_data[1]+', '+member_data[1]+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data[1]+'"><hr/></div></div>');
           $('#membersModal').modal('toggle');
 
           // append the amountids field
@@ -346,19 +348,23 @@
       // remove from amountids field, it automatically does actually from the array amountids
 
       // append the amountids field
-      // $.ajax({
-      //     url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+member_id,
-      //     type: 'GET',
-      //     dataType: 'json', // added data type
-      //     success: function(item) {
-      //         // console.log(item);
-      //         $('#member_select').append($('<option>', { 
-      //             value: item.name_bangla + "|" + item.member_id + "|" + item.mobile,
-      //             text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
-      //         }));
-      //     }
-      // });
-      
+      $.ajax({
+          url: '{{ url('/dashboard/member/payment/bulk/search/single/member/api/') }}'+'/'+member_id,
+          type: 'GET',
+          dataType: 'json', // added data type
+          success: function(item) {
+              // console.log(item);
+              $('#member_select').append($('<option>', { 
+                  value: item.name_bangla + "|" + item.member_id + "|" + item.mobile,
+                  text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
+              }));
+          }
+      });
+    }
+
+    function removeMemberCurrent(idofmemberrow, idofmemberamount, member_id) {
+      $(idofmemberrow).remove();
+      $(idofmemberamount).removeAttr('required');
     }
 
     $(document).ready(function() {
