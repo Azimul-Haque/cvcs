@@ -48,7 +48,7 @@
           সদস্যঃ <big>{{ $member->name_bangla }} (<span style="font-family: Calibri;">{{ $member->name }}</span>)</big><br/>
           সদস্যপদ আইডিঃ {{ $member->member_id }}<br/>
           জাতীয় পরিচয়পত্র নং- {{ $member->nid }}<br/>
-          জন্ম তারিখঃ {{ date('F d, Y, h:m:i A', strtotime($member->dob)) }}<br/><br/>
+          জন্ম তারিখঃ {{ date('F d, Y', strtotime($member->dob)) }}<br/><br/>
           দপ্তরের নামঃ {{ $member->branch->name }}<br/>
           পদবিঃ {{ $member->position->name }}<br/>
           যোগদানের তারিখঃ
