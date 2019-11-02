@@ -41,7 +41,7 @@
           </td>
           <td><big><b>{{ $bulkpayer->member_id }}</b></big></td>
           <td>{{ $bulkpayer->mobile }}<br/>{{ $bulkpayer->email }}</td>
-          <td>{{ $bulkpayer->branch->name }}<br/>{{ $bulkpayer->profession }} ({{ $bulkpayer->designation }})</td>
+          <td>{{ $bulkpayer->branch->name }}<br/>{{ $bulkpayer->profession }} ({{ $bulkpayer->position->name }})</td>
           <td>
             @if($bulkpayer->image != null)
               <img src="{{ asset('images/users/'.$bulkpayer->image)}}" style="height: 50px; width: auto;" />
