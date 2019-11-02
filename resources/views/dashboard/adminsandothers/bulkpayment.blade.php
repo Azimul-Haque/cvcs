@@ -4,6 +4,15 @@
 
 @section('css')
   {!!Html::style('css/parsley.css')!!}
+  <style type="text/css">
+    .dataTables_filter {
+      margin-top: 10px !important;
+      margin-right: 10px !important;
+    }
+    .input-sm {
+      width: 180px !important;
+    }
+  </style>
 @stop
 
 @section('content_header')
