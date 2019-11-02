@@ -39,20 +39,18 @@
             <table class="table table-condensed" id="datatable-memberlist">
               <thead>
                 <tr>
-                  <th>নাম</th>
-                  <th>মেম্বার আইডি</th>
-                  <th>যোগাযোগ</th>
-                  <th>অফিস তথ্য</th>
+                  <th width="40%">নাম</th>
+                  <th width="10%">আইডি ও যোগাযোগ</th>
+                  <th width="40%">অফিস তথ্য</th>
                   <th>ছবি</th>
-                  <th>Action</th>
+                  <th width="5%">Action</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($members as $member)
                 <tr id="member_table_td_{{ $member->member_id }}">
                   <td>{{ $member->name_bangla }}<br/>{{ $member->name }}</td>
-                  <td>{{ $member->member_id }}</td>
-                  <td><small>{{ $member->mobile }}<br/>{{ $member->email }}</small></td>
+                  <td><small>{{ $member->member_id }}, {{ $member->mobile }}<br/>{{ $member->email }}</small></td>
                   <td><small>{{ $member->branch->name }}<br/>{{ $member->position->name }}</small></td>
                   <td>
                     @if(file_exists(public_path('images/users/'.$member->image)))
