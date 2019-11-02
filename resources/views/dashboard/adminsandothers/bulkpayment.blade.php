@@ -26,8 +26,8 @@
             <h3 class="box-title"><b>{{ Auth::user()->branch->name }}</b>-এর সদস্য তালিকা</h3>
           </div>
           <!-- /.box-header -->
-          <div class="box-body table-responsive" style="height: 600px; overflow: auto; padding: 0px;">
-            <table class="table table-condensed">
+          <div class="box-body table-responsive" style="height: 640px; overflow: auto; padding: 0px;">
+            <table class="table table-condensed" id="datatable-memberlist">
               <thead>
                 <tr>
                   <th>নাম</th>
@@ -58,40 +58,41 @@
                 </tr>
                 @endforeach
               </tbody>
-            </table><br/><br/>
+            </table>
 
-            <center>
-              <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> {{ Auth::user()->branch->name }} বহির্ভূত সদস্য যোগ করতে ক্লিক করুন</button>
-            </center>
-            <!-- Add Member Modal -->
-            <!-- Add Member Modal -->
-            <div class="modal fade" id="membersModal" role="dialog">
-              <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                  <div class="modal-header modal-header-success">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">সদস্য নির্বাচন করুন</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group">
-                      <label for="member_id">সদস্য নির্বাচন করুন</label><br/>
-                      <select class="form-control" name="member_select" id="member_select" data-placeholder="সদস্য নির্বাচন করুন">
-                        <option value="" disabled="" selected="">মেম্বার আইডি/নাম/মোবাইল নম্বর</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="add_member_btn">যোগ করুন</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Add Member Modal -->
-            <!-- Add Member Modal -->
+            
           </div>
           <!-- /.box-body -->
         </div>
+        <center>
+          <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> {{ Auth::user()->branch->name }} বহির্ভূত সদস্য যোগ করতে ক্লিক করুন</button>
+        </center>
+        <!-- Add Member Modal -->
+        <!-- Add Member Modal -->
+        <div class="modal fade" id="membersModal" role="dialog">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <div class="modal-header modal-header-success">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">সদস্য নির্বাচন করুন</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="member_id">সদস্য নির্বাচন করুন</label><br/>
+                  <select class="form-control" name="member_select" id="member_select" data-placeholder="সদস্য নির্বাচন করুন">
+                    <option value="" disabled="" selected="">মেম্বার আইডি/নাম/মোবাইল নম্বর</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="add_member_btn">যোগ করুন</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+              </div>
+            </div>
+          </div>
+        </div><br/>
+        <!-- Add Member Modal -->
+        <!-- Add Member Modal -->
       </div>
       <div class="col-md-5">
         <div class="box box-success">
@@ -511,5 +512,21 @@
           }
       });
     });
+
+    $(function () {
+      $('#datatable-memberlist').DataTable({
+        'paging'      : true,
+        'pageLength'  : 100,
+        'lengthChange': false,
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true,
+        'order': [[ 0, "desc" ]],
+         columnDefs: [
+              { targets: [1], type: 'number'}
+         ]
+      });
+        })
   </script>
 @stop

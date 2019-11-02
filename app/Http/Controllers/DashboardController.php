@@ -2548,7 +2548,7 @@ class DashboardController extends Controller
                         ->with('position')
                         ->orderBy('id', 'desc')->get();
 
-        return $response;          
+        return $response;
     }
 
     public function searchMemberForBulkPaymentSingleAPI($member_id)
