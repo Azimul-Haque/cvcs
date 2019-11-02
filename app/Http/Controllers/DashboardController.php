@@ -2736,6 +2736,11 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
+    public function getReportsPage()
+    {
+        return view('dashboard.adminsandothers.reports');
+    }
+
     public function getNotifications() 
     {
         return view('dashboard.notifications');

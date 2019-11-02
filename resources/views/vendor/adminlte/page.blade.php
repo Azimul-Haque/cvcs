@@ -344,6 +344,12 @@
                             <span>একাধিক পরিশোধ</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('dashboard/reports') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.reports') }}">
+                            <i class="fa fa-fw fa-pie-chart"></i>
+                            <span>রিপোর্ট</span>
+                        </a>
+                    </li>
                     @endif
                     <li class="{{ Request::is('dashboard/member/user/manual') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.memberusermanual') }}">

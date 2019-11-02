@@ -211,6 +211,9 @@ Route::get('/dashboard/member/payment/bulk/search/api', ['as'=>'dashboard.search
 Route::get('/dashboard/member/payment/bulk/search/single/member/api/{member_id}', ['as'=>'dashboard.searchmemberforbulkpaymentsingle','uses'=>'DashboardController@searchMemberForBulkPaymentSingleAPI']);
 Route::post('/dashboard/member/payment/bulk', ['as'=>'dashboard.storememberpaymentbulk','uses'=>'DashboardController@storeBulkPayment']);
 
+// REPORTS
+Route::get('/dashboard/reports', ['as'=>'dashboard.reports','uses'=>'DashboardController@getReportsPage']);
+
 // PAYMENTS BY ADMIN
 Route::get('/dashboard/members/payments/pending', ['as'=>'dashboard.memberspendingpayments','uses'=>'DashboardController@getMembersPendingPayments']);
 Route::get('/dashboard/members/payments/approved', ['as'=>'dashboard.membersapprovedpayments','uses'=>'DashboardController@getMembersApprovedPayments']);
