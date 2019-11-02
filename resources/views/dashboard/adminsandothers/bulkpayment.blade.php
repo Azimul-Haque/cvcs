@@ -60,7 +60,9 @@
                     @endif
                   </td>
                   <td>
-                    <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member }})"><i class="fa fa-plus"></i></button>
+                    <center>
+                      <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member }})"><i class="fa fa-plus"></i></button>
+                    </center>
                   </td>
                 </tr>
                 @endforeach
