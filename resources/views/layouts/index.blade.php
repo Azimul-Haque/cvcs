@@ -4,7 +4,7 @@
 <head>
     <title>@yield('title')</title>
     <meta name="description" content="কাস্টমস এন্ড ভ্যাট কো অপারেটিভ সোসাইটি (সিভিসিএস) লিমিটেড-এর অফিসিয়াল ওয়েবসাইট। &copy; {{ date('Y') }} Copyright Reserved. Developed By A. H. M. Azimul Haque.">
-    <meta name="keywords" content="CVCS, Bangladesh Customs">
+    <meta name="keywords" content="CVCS, Bangladesh Customs, কাস্টমস এন্ড ভ্যাট, কাস্টমস, ভ্যাট, কাস্টমস, এক্সাইজ ও ভ্যাট কমিশনারেট">
     <meta charset="utf-8">
     <meta name="author" content="A. H. M. Azimul Haque">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
