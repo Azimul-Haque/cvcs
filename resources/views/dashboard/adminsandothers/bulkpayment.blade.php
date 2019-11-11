@@ -74,7 +74,7 @@
           <!-- /.box-body -->
         </div>
         <center>
-          <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> {{ Auth::user()->branch->name }} বহির্ভূত সদস্য যোগ করতে ক্লিক করুন</button>
+          <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#membersModal" data-backdrop="static"><i class="fa fa-plus"></i> {{ Auth::user()->branch->name }}-এ বদলি হয়ে আসা নতুন সদস্য যোগ করতে ক্লিক করুন</button>
         </center>
         <!-- Add Member Modal -->
         <!-- Add Member Modal -->
