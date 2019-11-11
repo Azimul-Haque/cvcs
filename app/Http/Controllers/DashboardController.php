@@ -569,6 +569,43 @@ class DashboardController extends Controller
                     ->withPositions($positions);
     }
 
+    public function getDesignationMembers(Request $request, $position_id)
+    {
+        $designation = Position::find($position_id);
+        $memberscount = User::where('activation_status', 1)
+                            ->where('position_id', $position_id)
+                            ->where('role_type', '!=', 'admin')
+                            ->count();
+        $members = User::where('activation_status', 1)
+                       ->where('position_id', $position_id)
+                       ->where('role_type', '!=', 'admin')
+                       ->orderBy('id', 'desc')->get();
+
+        $ordered_member_array = [];
+        foreach ($members as $member) {
+            $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+        }
+        ksort($ordered_member_array); // ascending order according to key
+        
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        $itemCollection = collect($ordered_member_array);
+        
+        $perPage = 20;
+        
+        // Slice the collection to get the items to display in current page
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        // Create our paginator and pass it to the view
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        // set url path for generted links
+        $paginatedItems->setPath($request->url());
+
+        return view('dashboard.membership.designationmembers')
+                            ->withMembers($paginatedItems)
+                            ->withMemberscount($memberscount)
+                            ->withDesignation($designation);
+    }
+
     public function getAbouts()
     {
         $about = About::where('type', 'about')->get()->first();
