@@ -98,7 +98,7 @@ Route::patch('/dashboard/branch/payment/approve/{id}', ['as'=>'dashboard.approve
 Route::get('/dashboard/branch/payment/{id}/list', ['as'=>'dashboard.paymentofbranch','uses'=>'DashboardController@getPaymentofBranch']);
 
 Route::get('/dashboard/designations', ['as'=>'dashboard.designations','uses'=>'DashboardController@getDesignations']);
-Route::get('/dashboard/designation/position_id/members', ['as'=>'dashboard.designation.members','uses'=>'DashboardController@getDesignationMembers']);
+Route::get('/dashboard/designation/{position_id}/members', ['as'=>'dashboard.designation.members','uses'=>'DashboardController@getDesignationMembers']);
 
 
 

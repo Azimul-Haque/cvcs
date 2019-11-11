@@ -70,8 +70,8 @@
             <td><big><b>{{ $member->member_id }}</b></big></td>
             <td>{{ $member->mobile }}<br/>{{ $member->email }}</td>
             <td>
-              <a href="{{ route('dashboard.branch.members', $member->branch->id) }}" title="সদস্য তালিকা দেখুন">{{ $member->branch->name }}</a>
-              <br/>{{ $member->profession }} ({{ $member->position->name }})
+              <a href="{{ route('dashboard.branch.members', $member->branch->id) }}" title="দপ্তরের সদস্য তালিকা দেখুন">{{ $member->branch->name }}</a>
+              <br/>{{ $member->profession }} (<a href="{{ route('dashboard.designation.members', $member->position->id) }}" title="পদবির সদস্য তালিকা দেখুন">{{ $member->position->name }}</a>)
             </td>
             <td>
               @if($member->image != null)

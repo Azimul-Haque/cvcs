@@ -69,7 +69,7 @@
             <td>{{ $application->mobile }}<br/>{{ $application->email }}</td>
             <td>
               <a href="{{ route('dashboard.branch.members', $application->branch->id) }}" title="সদস্য তালিকা দেখুন">{{ $application->branch->name }}</a>
-              <br/>{{ $application->profession }} ({{ $application->position->name }})
+              <br/>{{ $application->profession }} (<a href="{{ route('dashboard.designation.members', $application->position->id) }}" title="পদবির সদস্য তালিকা দেখুন">{{ $application->position->name }}</a>)
             </td>
             <td>৳ {{ $application->application_payment_amount }}<br/>{{ $application->application_payment_bank }} ({{ $application->application_payment_branch }})</td>
             <td>
