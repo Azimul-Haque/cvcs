@@ -32,7 +32,7 @@
         @foreach($positions as $position)
         <tr>
           <td>{{ $position->id }}</td>
-          <td>{{ $position->name }}</td>
+          <td><a href="{{ route('dashboard.position.members', $position->id) }}">{{ $position->name }}</a></td>
           <td>
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $position->id }}" data-backdrop="static" title="পদবী সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
             <!-- Remove BulK Payer Modal -->

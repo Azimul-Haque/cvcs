@@ -89,7 +89,7 @@ Route::patch('/dashboard/donation/approve/{id}', ['as'=>'dashboard.approvedonati
 Route::get('/dashboard/donor/donation/{id}/list', ['as'=>'dashboard.donationofdonor','uses'=>'DashboardController@getDonationofDonor']);
 
 Route::get('/dashboard/branches', ['as'=>'dashboard.branches','uses'=>'DashboardController@getBranches']);
-Route::get('/dashboard/branch/{branch_id}/members/', ['as'=>'dashboard.branche.members','uses'=>'DashboardController@getBranchMembers']);
+Route::get('/dashboard/branch/{branch_id}/members/', ['as'=>'dashboard.branch.members','uses'=>'DashboardController@getBranchMembers']);
 Route::get('/dashboard/branches/payments', ['as'=>'dashboard.branches.payments','uses'=>'DashboardController@getBranchPayments']);
 Route::post('/dashboard/branches/store', ['as'=>'dashboard.storebranch','uses'=>'DashboardController@storeBranch']);
 Route::put('/dashboard/branches/update/{id}', ['as'=>'dashboard.updatebranch','uses'=>'DashboardController@updateBranch']);

@@ -20,16 +20,16 @@
 
 @section('content')
   @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'manager') || (Auth::user()->role_type == 'bulkpayer'))
-    <div class="row">
+    {{-- <div class="row">
       <div class="col-md-6">
         <input type="text" id="search" class="form-control" placeholder="&#xF002; খুঁজুন (কমপক্ষে ৫ টি সংখ্যা বা অক্ষর লিখুন)" style="font-family:Arial, FontAwesome"><br/>
       </div>
       <div class="col-md-6">
         <span style="color: #008D4C;" id="total_records"></span>
       </div>
-    </div>
+    </div> --}}
 
-    <div class="table-responsive">
+    {{-- <div class="table-responsive">
       <table class="table table-striped table-bordered" id="searchTable">
         <thead>
           <tr>
@@ -45,7 +45,7 @@
 
        </tbody>
       </table>
-    </div>
+    </div> --}}
 
     <div class="table-responsive">
       <table class="table table-bordered" id="mainTable">
@@ -97,43 +97,43 @@
 
 @section('js')
   <script>
-    $(document).ready(function(){
-     $('#searchTable').hide();
-     function searchMember(query = '')
-     {
-      $.ajax({
-       url:"{{ route('dashboard.membersearchapi2') }}",
-       method:'GET',
-       data:{query:query},
-       dataType:'json',
-       success:function(data)
-       {
-        $('#searchtbody').html(data.table_data);
-        $('#total_records').text(data.total_data);
-       }
-      })
-     }
+    // $(document).ready(function(){
+    //  $('#searchTable').hide();
+    //  function searchMember(query = '')
+    //  {
+    //   $.ajax({
+    //    url:"/// see other apis if necessary",
+    //    method:'GET',
+    //    data:{query:query},
+    //    dataType:'json',
+    //    success:function(data)
+    //    {
+    //     $('#searchtbody').html(data.table_data);
+    //     $('#total_records').text(data.total_data);
+    //    }
+    //   })
+    //  }
 
-     $(document).on('keyup', '#search', function(){
-      var query = $(this).val();
-      if(query.length == 0) {
-        $('#searchTable').hide();
-        $('#total_records').hide();
-        $('#mainTable').show();
-        $('#mainLink').show();
-      } else {
-        if(query.length < 5) {
+    //  $(document).on('keyup', '#search', function(){
+    //   var query = $(this).val();
+    //   if(query.length == 0) {
+    //     $('#searchTable').hide();
+    //     $('#total_records').hide();
+    //     $('#mainTable').show();
+    //     $('#mainLink').show();
+    //   } else {
+    //     if(query.length < 5) {
 
-        } else {
-          $('#mainTable').hide();
-          $('#mainLink').hide();
-          $('#searchTable').show();
-          $('#total_records').show();
-          searchMember(query);
-        }
-      }
+    //     } else {
+    //       $('#mainTable').hide();
+    //       $('#mainLink').hide();
+    //       $('#searchTable').show();
+    //       $('#total_records').show();
+    //       searchMember(query);
+    //     }
+    //   }
       
-     });
-    });
+    //  });
+    // });
   </script>
 @stop
