@@ -25,6 +25,7 @@
         <tr>
           <th width="5%">#</th>
           <th>নাম</th>
+          <th>সদস্য সংখ্যা</th>
           <th>ঠিকানা</th>
           <th width="10%">Action</th>
         </tr>
@@ -33,10 +34,14 @@
         @foreach($branches as $branche)
         <tr>
           <td>{{ $branche->id }}</td>
-          <td>{{ $branche->name }}</td>
+          <td><a href="{{ route('dashboard.branche.members', $branche->id) }}">{{ $branche->name }}</a></td>
+          <td>{{ $branche->users->where('activation_status', 1)->count() }} জন</td>
           <td>{{ $branche->address }}</td>
           <td>
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $branche->id }}" data-backdrop="static" title="দপ্তর সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
+            <a href="{{ route('dashboard.branche.members', $branche->id) }}" class="btn btn-sm btn-success" title="দপ্তরের সদস্য দেখুন">
+              <i class="fa fa-eye"></i>
+            </a>
             <!-- Remove BulK Payer Modal -->
             <!-- Remove BulK Payer Modal -->
             <div class="modal fade" id="editModal{{ $branche->id }}" role="dialog">
