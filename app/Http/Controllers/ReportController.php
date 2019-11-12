@@ -40,4 +40,28 @@ class ReportController extends Controller
     {
         return view('dashboard.reports.index');
     }
+
+    public function getPDFAllPnedingAndPayments(Request $request)
+    {
+    	//validation
+    	// $this->validate($request, array(
+    	//   'from' => 'required',
+    	//   'to' => 'required',
+    	// ));
+    	// $from = date("Y-m-d H:i:s", strtotime($request->from));
+    	// $to = date("Y-m-d H:i:s", strtotime($request->to.' 23:59:59'));
+    	// $commodities = Commodity::whereBetween('created_at', [$from, $to])
+    	//                 ->orderBy('created_at', 'desc')
+    	//                 ->where('isdeleted', '=', 0)
+    	//                 ->get();
+    	// $commodity_total = DB::table('commodities')
+    	//                 ->select(DB::raw('SUM(total) as totaltotal'), DB::raw('SUM(paid) as paidtotal'), DB::raw('SUM(due) as duetotal'))
+    	//                 ->whereBetween('created_at', [$from, $to])
+    	//                 ->where('isdeleted', '=', 0)
+    	//                 ->first();
+
+    	// $pdf = PDF::loadView('dashboard.reports.pdf.allpaymentsandpendings', ['commodities' => $commodities], ['data' => [$request->from, $request->to, $commodity_total->totaltotal, $commodity_total->paidtotal, $commodity_total->duetotal]]);
+    	// $fileName = 'Commodity_'. date("d_M_Y", strtotime($request->from)) .'-'. date("d_M_Y", strtotime($request->to)) .'.pdf';
+    	// return $pdf->download($fileName);
+    }
 }

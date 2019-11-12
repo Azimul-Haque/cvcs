@@ -26,9 +26,9 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            {{-- {!! Form::open(['route' => 'reports.getcommoditypdf', 'method' => 'GET']) !!} --}}
+            {!! Form::open(['route' => 'reports.getpaymentsallreport', 'method' => 'GET']) !!}
               <div class="form-group">
-                <select name="report_type" class="form-control">
+                <select name="report_type" class="form-control" required="">
                   <option value="" selected="" disabled="">রিপোর্টের ধরন নির্ধারণ করুন</option>
                   <option value="1">সাধারণ রিপোর্ট</option>
                   <option value="2">দপ্তরভিত্তিক রিপোর্ট</option>
