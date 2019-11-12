@@ -32,9 +32,9 @@
       <tbody>
         @foreach($positions as $position)
         <tr>
-          <td>{{ $position->id }}</td>
+          <td>{{ bangla($position->id) }}</td>
           <td><a href="{{ route('dashboard.designation.members', $position->id) }}">{{ $position->name }}</a></td>
-          <td>{{ $position->users->where('activation_status', 1)->count() }} জন</td>
+          <td>{{ bangla($position->users->where('activation_status', 1)->count()) }} জন</td>
           <td>
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $position->id }}" data-backdrop="static" title="পদবী সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
             <a href="{{ route('dashboard.designation.members', $position->id) }}" class="btn btn-sm btn-success" title="পদবির সদস্য দেখুন">

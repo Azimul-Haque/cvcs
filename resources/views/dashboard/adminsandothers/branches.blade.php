@@ -33,9 +33,9 @@
       <tbody>
         @foreach($branches as $branch)
         <tr>
-          <td>{{ $branch->id }}</td>
+          <td>{{ bangla($branch->id) }}</td>
           <td><a href="{{ route('dashboard.branch.members', $branch->id) }}">{{ $branch->name }}</a></td>
-          <td>{{ $branch->users->where('activation_status', 1)->count() }} জন</td>
+          <td>{{ bangla($branch->users->where('activation_status', 1)->count()) }} জন</td>
           <td>{{ $branch->address }}</td>
           <td>
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $branch->id }}" data-backdrop="static" title="দপ্তর সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
