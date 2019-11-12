@@ -2638,22 +2638,28 @@ class DashboardController extends Controller
 
     public function getBulkPaymentPage() 
     {
+        $branch = Branch::find(Auth::user()->branch->id);
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
                        ->where('branch_id', Auth::user()->branch->id)
                        ->orderBy('id', 'desc')
                        ->get();
-        return view('dashboard.adminsandothers.bulkpayment')->withMembers($members);
+        return view('dashboard.adminsandothers.bulkpayment')
+                            ->withBranch($branch)
+                            ->withMembers($members);
     }
 
     public function getBulkPaymentPageFromBranch($branch_id) 
     {
+        $branch = Branch::find($branch_id);
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
                        ->where('branch_id', $branch_id)
                        ->orderBy('id', 'desc')
                        ->get();
-        return view('dashboard.adminsandothers.bulkpayment')->withMembers($members);
+        return view('dashboard.adminsandothers.bulkpayment')
+                            ->withBranch($branch)
+                            ->withMembers($members);
     }
 
     public function searchMemberForBulkPaymentAPI(Request $request)
