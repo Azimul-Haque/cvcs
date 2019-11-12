@@ -43,11 +43,12 @@
   
   <div class="" style="padding-top: 0px;">
     <table class="">
-      <tr>
-        <th class="graybackground" width="40%">সদস্য</th>
-        <th class="graybackground">সদস্যপদ বাবদ পরিশোধ</th>
-        <th class="graybackground">মোট মাসিক কিস্তি পরিশোধ<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
-        <th class="graybackground">মোট মাসিক কিস্তি বকেয়া<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
+      <tr class="graybackground">
+        <th width="40%">সদস্য</th>
+        <th>সদস্যপদ বাবদ পরিশোধ</th>
+        <th>হিসাব শুরুর মাস</th>
+        <th>মোট মাসিক কিস্তি পরিশোধ<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
+        <th>মোট মাসিক কিস্তি বকেয়া<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
       </tr>
       @foreach($members->sortByDesc('totalpendingmonthly') as $member)
         <tr>
@@ -56,16 +57,23 @@
             <small>আইডিঃ {{ $member->member_id }}, ফোনঃ {{ $member->mobile }}</small>
           </td>
           <td align="center">৳ ৫০০০</td>
+          <td align="center">
+            @if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
+              {{ bangla(date('F, Y', strtotime('31-01-2019'))) }}
+            @else
+              {{ bangla(date('F, Y', strtotime($member->joining_date))) }}
+            @endif
+          </td>
           <td align="center">৳ {{ bangla($member->payments->sum('amount')) }}</td>
           <td align="center">৳ {{ bangla($member->totalpendingmonthly) }}</td>
         </tr>
       @endforeach
 
-      <tr>
-        <th class="graybackground" align="right">মোট</th>
-        <th class="graybackground">৳ {{ bangla($members->count() * 5000) }}</th>
-        <th class="graybackground">৳ {{ bangla($intotalmontlypaid) }}</th>
-        <th class="graybackground">৳ {{ bangla($intotalmontlydues) }}</th>
+      <tr class="graybackground">
+        <th align="right">মোট</th>
+        <th>৳ {{ bangla($members->count() * 5000) }}</th>
+        <th>৳ {{ bangla($intotalmontlypaid) }}</th>
+        <th>৳ {{ bangla($intotalmontlydues) }}</th>
       </tr>
       
     </table>
