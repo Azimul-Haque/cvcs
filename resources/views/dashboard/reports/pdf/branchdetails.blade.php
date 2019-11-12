@@ -15,9 +15,9 @@
       border: 1px solid black;
   }
   th, td{
-    padding: 5px;
+    padding: 4px;
     font-family: 'kalpurush', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
   }
   @page {
     header: page-header;
@@ -44,17 +44,20 @@
   <div class="" style="padding-top: 0px;">
     <table class="">
       <tr>
-        <td class="graybackground" width="35%">দপ্তরের নাম</td>
-        <td class="graybackground" width="12%">সদস্য সংখ্যা</td>
-        <td class="graybackground">মোট সদস্যপদ বাবদ পরিশোধ</td>
-        <td class="graybackground">মোট মাসিক কিস্তি পরিশোধ<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</td>
-        <td class="graybackground">মোট মাসিক কিস্তি বকেয়া<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</td>
+        <th class="graybackground" width="35%">দপ্তরের নাম</th>
+        <th class="graybackground">সদস্য সংখ্যা</th>
+        <th class="graybackground">মোট সদস্যপদ বাবদ পরিশোধ</th>
+        <th class="graybackground">মোট মাসিক কিস্তি পরিশোধ<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
+        <th class="graybackground">মোট মাসিক কিস্তি বকেয়া<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
       </tr>
 
       @foreach($branch_array as $branch)
       <tr>
-        <td class="graybackground">সর্বমোট সদস্য সংখ্যা</td>
-        <td align="right"> জন</td>
+        <td>{{ $branch['name'] }}</td>
+        <td align="center">{{ bangla($branch['totalmembers']) }} জন</td>
+        <td align="center">৳ {{ bangla($branch['totalmembers'] * 5000) }}</td>
+        <td align="center">৳ {{ bangla($branch['totalmontlypaid']) }}</td>
+        <td align="center">৳ {{ bangla($branch['totalmontlydues']) }}</td>
       </tr>
       @endforeach
     </table>

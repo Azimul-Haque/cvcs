@@ -102,6 +102,7 @@ class ReportController extends Controller
 			                         ->where('role_type', '!=', 'admin')                
 			                         ->where('branch_id', $branch->id)                
 			                         ->get();
+			    $branch_array[$branch->id]['name'] = $branch->name;
 			    $branch_array[$branch->id]['totalmembers'] = $branchmembers->count();
 			    $branch_array[$branch->id]['totalmontlypaid'] = 0;
 			    $branch_array[$branch->id]['totalmontlydues'] = 0;
