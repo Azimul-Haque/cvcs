@@ -113,6 +113,7 @@ class ReportController extends Controller
 			                          ->where('is_archieved', 0)
 			                          ->where('member_id', $member->member_id)
 			                          ->first();
+			                          
 	    			$approvedcashformontly = $approvedtotal->totalamount - 5000; // without the membership money;
 	    			$branch_array[$branch->id]['totalmontlypaid'] = $branch_array[$branch->id]['totalmontlypaid'] + $approvedcashformontly;
 
