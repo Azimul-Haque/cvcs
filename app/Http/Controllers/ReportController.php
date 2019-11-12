@@ -211,6 +211,6 @@ class ReportController extends Controller
 
 		$pdf = PDF::loadView('dashboard.reports.pdf.branchmembersdetails', ['branch' => $branch, 'members' => $members, 'intotalmontlypaid' => $intotalmontlypaid, 'intotalmontlydues' => $intotalmontlydues]);
 		$fileName = 'CVCS_Branch_Members_Details_Report.pdf';
-		return $pdf->download($fileName); // download
+		return $pdf->stream($fileName); // download
     }
 }

@@ -19,7 +19,9 @@
     <h1>
       একাধিক সদস্যের পরিশোধ
       <div class="pull-right">
-        
+        <a href="{{ url('dashboard/reports/export/branch/members/pdf?branch_id=' . Auth::user()->branch->id) }}" class="btn btn-success" title="সদস্যভিত্তিক রিপোর্ট ডাউনলোড করুন">
+          <i class="fa fa-download"></i> রিপোর্ট ডাউনলোড
+        </a>
       </div>
     </h1>
 @stop
@@ -32,7 +34,7 @@
         <div class="box box-primary">
           <div class="box-header with-border text-blue">
             <i class="fa fa-fw fa-users"></i>
-            <h3 class="box-title"><b>{{ Auth::user()->branch->name }}</b>-এর সদস্য তালিকা</h3>
+            <h3 class="box-title"><b>{{ Auth::user()->branch->name }}</b>-এর সদস্য তালিকা ({{ bangla($members->count()) }} জন)</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body table-responsive" style="height: 600px; overflow: auto; padding: 0px;">
