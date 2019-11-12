@@ -61,11 +61,11 @@ class ReportController extends Controller
     		$totalmontlydues = 0;
     		foreach ($registeredmembers as $member) {
     			$approvedtotal = DB::table('payments')
-    			                         ->select(DB::raw('SUM(amount) as totalamount'))
-    			                         ->where('payment_status', 1)
-    			                         ->where('is_archieved', 0)
-    			                         ->where('member_id', $member->member_id)
-    			                         ->first();
+		                           ->select(DB::raw('SUM(amount) as totalamount'))
+		                           ->where('payment_status', 1)
+		                           ->where('is_archieved', 0)
+		                           ->where('member_id', $member->member_id)
+		                           ->first();
     			$approvedcashformontly = $approvedtotal->totalamount - 5000; // without the membership money;
 
     			if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
@@ -108,11 +108,11 @@ class ReportController extends Controller
 			    $branch_array[$branch->id]['totalmontlydues'] = 0;
 	    		foreach ($branchmembers as $member) {
 	    			$approvedtotal = DB::table('payments')
-	    			                         ->select(DB::raw('SUM(amount) as totalamount'))
-	    			                         ->where('payment_status', 1)
-	    			                         ->where('is_archieved', 0)
-	    			                         ->where('member_id', $member->member_id)
-	    			                         ->first();
+			                          ->select(DB::raw('SUM(amount) as totalamount'))
+			                          ->where('payment_status', 1)
+			                          ->where('is_archieved', 0)
+			                          ->where('member_id', $member->member_id)
+			                          ->first();
 	    			$approvedcashformontly = $approvedtotal->totalamount - 5000; // without the membership money;
 	    			$branch_array[$branch->id]['totalmontlypaid'] = $branch_array[$branch->id]['totalmontlypaid'] + $approvedcashformontly;
 
