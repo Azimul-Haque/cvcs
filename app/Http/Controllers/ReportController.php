@@ -48,7 +48,7 @@ class ReportController extends Controller
     	  'report_type' => 'required'
     	));
 
-    	$registeredmember = User::where('activation_status', 1)
+    	$registeredmembers = User::where('activation_status', 1)
     	                        ->where('role_type', '!=', 'admin')                
     	                        ->count();
     	$totalapproved = DB::table('payments')
@@ -58,7 +58,8 @@ class ReportController extends Controller
     	                   ->first();
 
     	if($request->report_type == 1) {
-    		$pdf = PDF::loadView('dashboard.reports.pdf.allpaymentsandpendings', ['registeredmember' => $registeredmember, 'totalapproved' => $totalapproved]);
+
+    		$pdf = PDF::loadView('dashboard.reports.pdf.allpaymentsandpendings', ['registeredmembers' => $registeredmembers, 'totalapproved' => $totalapproved]);
     		$fileName = 'CVCS_General_Report.pdf';
     		return $pdf->stream($fileName); // download
     	}

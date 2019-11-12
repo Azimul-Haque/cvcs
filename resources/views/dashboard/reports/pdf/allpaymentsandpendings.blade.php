@@ -44,16 +44,20 @@
   <div class="" style="padding-top: 0px;">
     <table class="">
       <tr>
-        <td class="graybackground" width="50%">সর্বমোট সদস্য সংখ্যা</td>
-        <td>{{ bangla($registeredmember) }} জন</td>
+        <td class="graybackground" width="60%">সর্বমোট সদস্য সংখ্যা</td>
+        <td align="right">{{ bangla($registeredmembers) }} জন</td>
       </tr>
       <tr>
         <td class="graybackground">সর্বমোট সদস্যপদ বাবদ সফল পরিশোধ</td>
-        <td>৳ {{ $registeredmember * 5000 }}</td>
+        <td  align="right">৳ {{ bangla($registeredmembers * 5000) }}</td>
       </tr>
       <tr>
         <td class="graybackground">সর্বমোট মাসিক কিস্তি বাবদ সফল পরিশোধ ({{ bangla(date('F, Y')) }} পর্যন্ত)</td>
-        <td>৳ {{ $totalapproved->totalamount - ($registeredmember * 5000) }}</td>
+        <td  align="right">৳ {{ bangla($totalapproved->totalamount - ($registeredmembers * 5000)) }}</td>
+      </tr>
+      <tr>
+        <td class="graybackground">সর্বমোট মাসিক কিস্তি বাবদ বকেয়া ({{ bangla(date('F, Y')) }} পর্যন্ত)</td>
+        <td  align="right">৳ {{ bangla($totalapproved->totalamount - ($registeredmembers * 5000)) }}</td>
       </tr>
     </table>
   </div>
