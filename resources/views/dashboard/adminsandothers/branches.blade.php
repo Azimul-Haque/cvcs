@@ -27,7 +27,7 @@
           <th>নাম</th>
           <th>সদস্য সংখ্যা</th>
           <th>ঠিকানা</th>
-          <th width="10%">Action</th>
+          <th width="15%">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -41,6 +41,9 @@
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $branch->id }}" data-backdrop="static" title="দপ্তর সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
             <a href="{{ route('dashboard.branch.members', $branch->id) }}" class="btn btn-sm btn-success" title="দপ্তরের সদস্য দেখুন">
               <i class="fa fa-eye"></i>
+            </a>
+            <a href="{{ route('dashboard.bulkpaymentofbranch', $branch->id) }}" class="btn btn-sm btn-warning" title="দপ্তরের একাধিক পরিশোধ করুন">
+              <i class="fa fa-cubes"></i>
             </a>
             <!-- Remove BulK Payer Modal -->
             <!-- Remove BulK Payer Modal -->
