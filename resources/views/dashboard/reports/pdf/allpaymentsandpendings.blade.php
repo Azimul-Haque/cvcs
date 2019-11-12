@@ -52,7 +52,7 @@
         <td>৳ {{ $registeredmember * 5000 }}</td>
       </tr>
       <tr>
-        <td class="graybackground">সর্বমোট মাসিক কিস্তি বাবদ সফল পরিশোধ</td>
+        <td class="graybackground">সর্বমোট মাসিক কিস্তি বাবদ সফল পরিশোধ ({{ bangla(date('F, Y')) }} পর্যন্ত)</td>
         <td>৳ {{ $totalapproved->totalamount - ($registeredmember * 5000) }}</td>
       </tr>
     </table>
