@@ -16,7 +16,7 @@
 @stop
 
 @section('content')
-  @if(Auth::user()->role == 'admin' || Auth::user()->role_type == 'bulk_payer')
+  @if(Auth::user()->role == 'admin' || Auth::user()->role_type == 'bulkpayer')
     <div class="row">
       <div class="col-md-4">
         <div class="box box-primary" id="beforedivheightcommodity">
