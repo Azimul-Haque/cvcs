@@ -51,22 +51,22 @@ class ReportController extends Controller
     	$registeredmembers = User::where('activation_status', 1)
     	                        ->where('role_type', '!=', 'admin')                
     	                        ->get();
-    	$totalapproved = DB::table('payments')
-    	                   ->select(DB::raw('SUM(amount) as totalamount'))
-    	                   ->where('payment_status', '=', 1)
-    	                   ->where('is_archieved', '=', 0)
-    	                   ->first();
 
     	if($request->report_type == 1) {
+    		$totalapproved = DB::table('payments')
+    		                   ->select(DB::raw('SUM(amount) as totalamount'))
+    		                   ->where('payment_status', '=', 1)
+    		                   ->where('is_archieved', '=', 0)
+    		                   ->first();
     		$totalmontlydues = 0;
     		foreach ($registeredmembers as $member) {
-    			$approvedfordashboard = DB::table('payments')
+    			$approvedtotal = DB::table('payments')
     			                         ->select(DB::raw('SUM(amount) as totalamount'))
     			                         ->where('payment_status', 1)
     			                         ->where('is_archieved', 0)
     			                         ->where('member_id', $member->member_id)
     			                         ->first();
-    			$approvedcashformontly = $approvedfordashboard->totalamount - 5000; // without the membership money;
+    			$approvedcashformontly = $approvedtotal->totalamount - 5000; // without the membership money;
 
     			if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
     			{
@@ -95,7 +95,53 @@ class ReportController extends Controller
     		$fileName = 'CVCS_General_Report.pdf';
     		return $pdf->stream($fileName); // download
     	} elseif($request->report_type == 2) {
-    		
+    		$branches = Branch::all();
+    		$branch_array = [];
+    		foreach ($branches as $branch) {
+    			$branchmembers = User::where('activation_status', 1)
+			                         ->where('role_type', '!=', 'admin')                
+			                         ->where('branch_id', $branch->id)                
+			                         ->get();
+			    $branch_array[$branch->id]['totalmembers'] = $branchmembers->count();
+			    $branch_array[$branch->id]['totalmontlypaid'] = 0;
+			    $branch_array[$branch->id]['totalmontlydues'] = 0;
+	    		foreach ($branchmembers as $member) {
+	    			$approvedtotal = DB::table('payments')
+	    			                         ->select(DB::raw('SUM(amount) as totalamount'))
+	    			                         ->where('payment_status', 1)
+	    			                         ->where('is_archieved', 0)
+	    			                         ->where('member_id', $member->member_id)
+	    			                         ->first();
+	    			$approvedcashformontly = $approvedtotal->totalamount - 5000; // without the membership money;
+	    			$branch_array[$branch->id]['totalmontlypaid'] = $branch_array[$branch->id]['totalmontlypaid'] + $approvedcashformontly;
+
+	    			if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
+	    			{
+	    			    $thismonth = Carbon::now()->format('Y-m-');
+	    			    $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
+	    			    $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+	    			    $totalmonthsformember = $to->diffInMonths($from) + 1;
+	    			    if(($totalmonthsformember * 500) > $approvedcashformontly) {
+	    			    	$totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+	    			    	$branch_array[$branch->id]['totalmontlydues'] = $branch_array[$branch->id]['totalmontlydues'] + $totalpendingmonthly;
+	    			    }
+	    			} else {
+						$startmonth = date('Y-m-', strtotime($member->joining_date));
+						$thismonth = Carbon::now()->format('Y-m-');
+	    			    $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
+	    			    $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+	    			    $totalmonthsformember = $to->diffInMonths($from) + 1;
+	    			    if(($totalmonthsformember * 500) > $approvedcashformontly) {
+	    			    	$totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+	    			    	$branch_array[$branch->id]['totalmontlydues'] = $branch_array[$branch->id]['totalmontlydues'] + $totalpendingmonthly;
+	    			    }
+	    			}
+	    		}
+    		}
+    		// dd($branch_array); 
+    		$pdf = PDF::loadView('dashboard.reports.pdf.branchdetails', ['branch_array' => $branch_array]);
+    		$fileName = 'CVCS_Branch_Details_Report.pdf';
+    		return $pdf->stream($fileName); // download
     	}
     }
 }
