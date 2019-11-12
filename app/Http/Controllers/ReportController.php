@@ -95,6 +95,12 @@ class ReportController extends Controller
     		$fileName = 'CVCS_General_Report.pdf';
     		return $pdf->stream($fileName); // download
     	} elseif($request->report_type == 2) {
+    		$totalapproved = DB::table('payments')
+    		                   ->select(DB::raw('SUM(amount) as totalamount'))
+    		                   ->where('payment_status', '=', 1)
+    		                   ->where('is_archieved', '=', 0)
+    		                   ->first();
+
     		$branches = Branch::all();
     		$branch_array = [];
     		foreach ($branches as $branch) {
@@ -108,12 +114,12 @@ class ReportController extends Controller
 			    $branch_array[$branch->id]['totalmontlydues'] = 0;
 	    		foreach ($branchmembers as $member) {
 	    			$approvedtotal = DB::table('payments')
-			                          ->select(DB::raw('SUM(amount) as totalamount'))
-			                          ->where('payment_status', 1)
-			                          ->where('is_archieved', 0)
-			                          ->where('member_id', $member->member_id)
-			                          ->first();
-			                          
+			                           ->select(DB::raw('SUM(amount) as totalamount'))
+			                           ->where('payment_status', 1)
+			                           ->where('is_archieved', 0)
+			                           ->where('member_id', $member->member_id)
+			                           ->first();
+
 	    			$approvedcashformontly = $approvedtotal->totalamount - 5000; // without the membership money;
 	    			$branch_array[$branch->id]['totalmontlypaid'] = $branch_array[$branch->id]['totalmontlypaid'] + $approvedcashformontly;
 
@@ -141,7 +147,7 @@ class ReportController extends Controller
 	    		}
     		}
     		// dd($branch_array); 
-    		$pdf = PDF::loadView('dashboard.reports.pdf.branchdetails', ['branch_array' => $branch_array]);
+    		$pdf = PDF::loadView('dashboard.reports.pdf.branchdetails', ['branch_array' => $branch_array, 'totalapproved' => $totalapproved]);
     		$fileName = 'CVCS_Branch_Details_Report.pdf';
     		return $pdf->stream($fileName); // download
     	}
