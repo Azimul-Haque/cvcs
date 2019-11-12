@@ -245,7 +245,7 @@
           @php
               $startyear = 2019;
               $today = date("Y-m-d H:i:s");
-              $approvedcash = $approvedfordashboard->totalamount - 5000; // without the membership money;
+              $approvedcash = $totalmontlypaid->totalamount; // without the membership money;
               $totalyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
               if(date('Y') > $totalyear) {
                   $totalyear = date('Y');
@@ -281,7 +281,7 @@
               $startyear = date('Y', strtotime($member->joining_date));
               $startmonth = date('m', strtotime($member->joining_date));
               $today = date("Y-m-d H:i:s");
-              $approvedcash = $approvedfordashboard->totalamount - 5000; // without the membership money;
+              $approvedcash = $totalmontlypaid->totalamount; // without the membership money;
               $endyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
               if(date('Y') > $endyear) {
                   $endyear = date('Y');
@@ -325,9 +325,9 @@
               <td>{{ date('F Y', strtotime($month)) }}</td>
               <td>
                 @if($approvedcash/500 > 0)
-                  <span class="badge badge-success"><i class="fa fa-check"></i>পরিশোধিত</span>
+                  <span>পরিশোধিত</span>
                 @elseif(date('Y-m-d H:i:s', strtotime($month)) < $today)
-                  <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> পরিশোধনীয়</span>
+                  <span style="color: red;">পরিশোধনীয়</span>
                 @endif
               </td>
               <td>

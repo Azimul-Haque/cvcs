@@ -2448,13 +2448,21 @@ class DashboardController extends Controller
                                         ->where('member_id', $member->member_id)
                                         ->get()
                                         ->count();
+
         $approvedcountdashboard = Payment::where('payment_status', 1)
                                          ->where('is_archieved', 0)
                                          ->where('member_id', $member->member_id)
                                          ->get()
                                          ->count();
+        $totalmontlypaid = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 1)
+                                 ->where('is_archieved', 0)
+                                 ->where('payment_category', 1) // 1 means monthly, 0 for membership
+                                 ->where('member_id', $member->member_id)
+                                 ->first();
 
-        $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard]);
+        $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard, 'totalmontlypaid' => $totalmontlypaid]);
         $fileName = str_replace(' ', '_', $member->name).'_'. $member->member_id .'.pdf';
         return $pdf->download($fileName);
     }
