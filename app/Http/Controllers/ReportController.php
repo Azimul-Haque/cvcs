@@ -94,6 +94,8 @@ class ReportController extends Controller
     		$pdf = PDF::loadView('dashboard.reports.pdf.allpaymentsandpendings', ['registeredmembers' => $registeredmembers, 'totalapproved' => $totalapproved, 'totalmontlydues' => $totalmontlydues]);
     		$fileName = 'CVCS_General_Report.pdf';
     		return $pdf->stream($fileName); // download
+    	} elseif($request->report_type == 2) {
+    		
     	}
     	// $from = date("Y-m-d H:i:s", strtotime($request->from));
     	// $to = date("Y-m-d H:i:s", strtotime($request->to.' 23:59:59'));
