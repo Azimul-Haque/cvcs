@@ -49,6 +49,10 @@
       </tr>
       <tr>
         <td class="graybackground">সর্বমোট সদস্যপদ বাবদ সফল পরিশোধ</td>
+        <td>৳ {{ $registeredmember * 5000 }}</td>
+      </tr>
+      <tr>
+        <td class="graybackground">সর্বমোট মাসিক কিস্তি বাবদ সফল পরিশোধ</td>
         <td>৳ {{ $totalapproved->totalamount - ($registeredmember * 5000) }}</td>
       </tr>
     </table>
