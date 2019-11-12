@@ -95,7 +95,7 @@ class ReportController extends Controller
     		// dd($totalmontlydues); 
     		$pdf = PDF::loadView('dashboard.reports.pdf.allpaymentsandpendings', ['registeredmembers' => $registeredmembers, 'totalapproved' => $totalapproved, 'totalmontlydues' => $totalmontlydues]);
     		$fileName = 'CVCS_General_Report.pdf';
-    		return $pdf->stream($fileName); // stream
+    		return $pdf->download($fileName); // stream
     	} elseif($request->report_type == 2) {
     		$totalapproved = DB::table('payments')
     		                   ->select(DB::raw('SUM(amount) as totalamount'))
@@ -152,7 +152,7 @@ class ReportController extends Controller
     		// dd($branch_array); 
     		$pdf = PDF::loadView('dashboard.reports.pdf.branchdetails', ['branch_array' => $branch_array, 'totalapproved' => $totalapproved]);
     		$fileName = 'CVCS_Branch_Details_Report.pdf';
-    		return $pdf->stream($fileName); // stream
+    		return $pdf->download($fileName); // stream
     	}
     }
 
@@ -212,6 +212,6 @@ class ReportController extends Controller
 
 		$pdf = PDF::loadView('dashboard.reports.pdf.branchmembersdetails', ['branch' => $branch, 'members' => $members, 'intotalmontlypaid' => $intotalmontlypaid, 'intotalmontlydues' => $intotalmontlydues]);
 		$fileName = 'CVCS_Branch_Members_Details_Report.pdf';
-		return $pdf->stream($fileName); // download
+		return $pdf->download($fileName); // download
     }
 }

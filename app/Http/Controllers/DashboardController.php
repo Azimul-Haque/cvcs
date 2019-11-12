@@ -1883,7 +1883,7 @@ class DashboardController extends Controller
              </td>
              <td><big><b>'.$row->member_id.'</big></b></td>
              <td>'.$row->mobile.'<br/>'.$row->email.'</td>
-             <td>'.$row->office.'<br/>'.$row->profession.' ('. $row->designation .')</td>
+             <td>'.$row->branch->name.'<br/>'.$row->profession.' ('. $row->position->name .')</td>
             ';
             if($row->image != null) {
                 $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
@@ -1945,7 +1945,7 @@ class DashboardController extends Controller
              <td>'. $row->name_bangla .'<br/> '. $row->name .'</td>
              <td><big><b>'.$row->member_id.'</big></b></td>
              <td>'.$row->mobile.'<br/>'.$row->email.'</td>
-             <td>'.$row->office.'<br/>'.$row->profession.' ('. $row->designation .')</td>
+             <td>'.$row->branch->name.'<br/>'.$row->profession.' ('. $row->position->name .')</td>
             ';
             if($row->image != null) {
                 $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
