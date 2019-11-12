@@ -75,7 +75,7 @@
         <th class="graybackground" align="right">মোট</th>
         <th class="graybackground">{{ bangla($intotalmembers) }} জন</th>
         <th class="graybackground">৳ {{ bangla($intotalmembers * 5000) }}</th>
-        <th class="graybackground">৳ {{-- {{ bangla($intotalmontlypaid) }} --}} {{ bangla($totalapproved->totalamount - ($intotalmembers * 5000)) }}</th>
+        <th class="graybackground">৳ {{-- {{ bangla($intotalmontlypaid) }} --}} {{ bangla($totalapproved->totalamount) }}</th>
         <th class="graybackground">৳ {{ bangla($intotalmontlydues) }}</th>
       </tr>
     </table>

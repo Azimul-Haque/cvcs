@@ -49,59 +49,24 @@
         <th class="graybackground">মোট মাসিক কিস্তি পরিশোধ<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
         <th class="graybackground">মোট মাসিক কিস্তি বকেয়া<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
       </tr>
-      @php
-        $intotalmontlypaid = 0;
-        $intotalmontlydues = 0;
-      @endphp
-      @foreach($members as $member)
+      @foreach($members->sortByDesc('totalpendingmonthly') as $member)
         <tr>
           <td>
             {{ $member->name_bangla }}, <small>{{ $member->position->name }}</small><br/>
             <small>আইডিঃ {{ $member->member_id }}, ফোনঃ {{ $member->mobile }}</small>
           </td>
           <td align="center">৳ ৫০০০</td>
-          <td align="center">৳ {{ bangla($member->payments->sum('amount') - 5000) }}</td>
-          <td align="center">
-            @php
-              $approvedcashformontly = $member->payments->sum('amount') - 5000;
-              $totalpendingmonthly = 0;
-              if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
-              {
-                  $thismonth = Carbon::now()->format('Y-m-');
-                  $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
-                  $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
-                  $totalmonthsformember = $to->diffInMonths($from) + 1;
-                  if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                    $totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
-                  }
-              } else {
-                  $startmonth = date('Y-m-', strtotime($member->joining_date));
-                  $thismonth = Carbon::now()->format('Y-m-');
-                  $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
-                  $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
-                  $totalmonthsformember = $to->diffInMonths($from) + 1;
-                  if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                    $totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
-                  }
-              }
-            @endphp
-            ৳ {{ bangla($totalpendingmonthly) }}
-          </td>
+          <td align="center">৳ {{ bangla($member->payments->sum('amount')) }}</td>
+          <td align="center">৳ {{ bangla($member->totalpendingmonthly) }}</td>
         </tr>
-        {{-- @php
-          $intotalmembers = $intotalmembers + $branch['totalmembers'];
-          $intotalmontlypaid = $intotalmontlypaid + $branch['totalmontlypaid'];
-          $intotalmontlydues = $intotalmontlydues + $branch['totalmontlydues'];
-        @endphp --}}
       @endforeach
 
-      {{-- <tr>
+      <tr>
         <th class="graybackground" align="right">মোট</th>
-        <th class="graybackground">{{ bangla($intotalmembers) }} জন</th>
-        <th class="graybackground">৳ {{ bangla($intotalmembers * 5000) }}</th>
-        <th class="graybackground">৳ {{ bangla($totalapproved->totalamount - ($intotalmembers * 5000)) }}</th>
+        <th class="graybackground">৳ {{ bangla($members->count() * 5000) }}</th>
+        <th class="graybackground">৳ {{ bangla($intotalmontlypaid) }}</th>
         <th class="graybackground">৳ {{ bangla($intotalmontlydues) }}</th>
-      </tr> --}}
+      </tr>
       
     </table>
   </div>

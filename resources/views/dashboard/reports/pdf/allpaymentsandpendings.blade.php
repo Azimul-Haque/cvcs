@@ -53,7 +53,7 @@
       </tr>
       <tr>
         <td class="graybackground">সর্বমোট মাসিক কিস্তি বাবদ সফল পরিশোধ ({{ bangla(date('F, Y')) }} পর্যন্ত)</td>
-        <td  align="right">৳ {{ bangla($totalapproved->totalamount - ($registeredmembers->count() * 5000)) }}</td>
+        <td  align="right">৳ {{ bangla($totalapproved->totalamount) }}</td>
       </tr>
       <tr>
         <td class="graybackground">সর্বমোট মাসিক কিস্তি বাবদ বকেয়া ({{ bangla(date('F, Y')) }} পর্যন্ত)</td>

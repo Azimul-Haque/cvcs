@@ -18,7 +18,7 @@
 @section('content')
   @if(Auth::user()->role == 'admin')
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="box box-primary" id="beforedivheightcommodity">
           <div class="box-header with-border text-blue">
             <i class="fa fa-fw fa-bar-chart"></i>
@@ -40,7 +40,7 @@
           <!-- /.box-body -->
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="box box-success" id="beforedivheightcommodity">
           <div class="box-header with-border text-green">
             <i class="fa fa-fw fa-bar-chart"></i>
