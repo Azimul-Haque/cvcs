@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CVCS | পদবী সমূহ')
+@section('title', 'CVCS | রিপোর্ট')
 
 @section('css')
 
@@ -8,36 +8,38 @@
 
 @section('content_header')
     <h1>
-      পদবী সমূহ
+      রিপোর্ট
       <div class="pull-right">
-        @if(Auth::user()->role == 'admin')
-        <a class="btn btn-success" href="#!" title="পদবী যোগ করুন (কাজ চলছে...)"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></a> {{-- {{ route('dashboard.createbulkpayer') }} --}}
-        @endif
+
       </div>
     </h1>
 @stop
 
 @section('content')
   @if(Auth::user()->role == 'admin')
-    <div class="col-md-3">
-      <div class="box box-primary" id="beforedivheightcommodity">
-        <div class="box-header with-border text-blue">
-          <i class="fa fa-fw fa-bar-chart"></i>
-          <h3 class="box-title">Commodity Reports</h3>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="box box-primary" id="beforedivheightcommodity">
+          <div class="box-header with-border text-blue">
+            <i class="fa fa-fw fa-bar-chart"></i>
+            <h3 class="box-title">পরিশোধ ও বকেয়া রিপোর্ট</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {{-- {!! Form::open(['route' => 'reports.getcommoditypdf', 'method' => 'GET']) !!} --}}
+              <div class="form-group">
+                <select name="report_type" class="form-control">
+                  <option value="" selected="" disabled="">রিপোর্টের ধরন নির্ধারণ করুন</option>
+                  <option value="1">সাধারণ রিপোর্ট</option>
+                  <option value="2">দপ্তরভিত্তিক রিপোর্ট</option>
+                  <option value="3">দপ্তরের সদস্যগোণের বিস্তারিত রিপোর্ট</option>
+                </select>
+              </div>
+            <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+            {!! Form::close() !!}
+          </div>
+          <!-- /.box-body -->
         </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          {{-- {!! Form::open(['route' => 'reports.getcommoditypdf', 'method' => 'GET']) !!} --}}
-            <div class="form-group">
-              {!! Form::text('from', null, array('class' => 'form-control text-blue', 'required' => '', 'placeholder' => 'Enter From Date', 'id' => 'fromcomexDate', 'autocomplete' => 'off', 'readonly' => '')) !!}
-            </div>
-            <div class="form-group">
-              {!! Form::text('to', null, array('class' => 'form-control text-blue', 'required' => '', 'placeholder' => 'Enter To Date', 'id' => 'tocomexDate', 'autocomplete' => 'off', 'readonly' => '')) !!}
-            </div>
-          <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> Get Report</button>
-          {!! Form::close() !!}
-        </div>
-        <!-- /.box-body -->
       </div>
     </div>
   @else
