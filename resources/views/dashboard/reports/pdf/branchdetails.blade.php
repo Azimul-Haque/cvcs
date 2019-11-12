@@ -51,15 +51,33 @@
         <th class="graybackground">মোট মাসিক কিস্তি বকেয়া<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
       </tr>
 
+      @php
+        $intotalmembers = 0;
+        $intotalmontlypaid = 0;
+        $intotalmontlydues = 0;
+      @endphp
       @foreach($branch_array as $branch)
-      <tr>
-        <td>{{ $branch['name'] }}</td>
-        <td align="center">{{ bangla($branch['totalmembers']) }} জন</td>
-        <td align="center">৳ {{ bangla($branch['totalmembers'] * 5000) }}</td>
-        <td align="center">৳ {{ bangla($branch['totalmontlypaid']) }}</td>
-        <td align="center">৳ {{ bangla($branch['totalmontlydues']) }}</td>
-      </tr>
+        <tr>
+          <td>{{ $branch['name'] }}</td>
+          <td align="center">{{ bangla($branch['totalmembers']) }} জন</td>
+          <td align="center">৳ {{ bangla($branch['totalmembers'] * 5000) }}</td>
+          <td align="center">৳ {{ bangla($branch['totalmontlypaid']) }}</td>
+          <td align="center">৳ {{ bangla($branch['totalmontlydues']) }}</td>
+        </tr>
+        @php
+          $intotalmembers = $intotalmembers + $branch['totalmembers'];
+          $intotalmontlypaid = $intotalmontlypaid + $branch['totalmontlypaid'];
+          $intotalmontlydues = $intotalmontlydues + $branch['totalmontlydues'];
+        @endphp
       @endforeach
+
+      <tr>
+        <th class="graybackground" align="right">মোট</th>
+        <th class="graybackground">{{ bangla($intotalmembers) }} জন</th>
+        <th class="graybackground">৳ {{ bangla($intotalmembers * 5000) }}</th>
+        <th class="graybackground">৳ {{ bangla($intotalmontlypaid) }}</th>
+        <th class="graybackground">৳ {{ bangla($intotalmontlydues) }}</th>
+      </tr>
     </table>
   </div>
  
