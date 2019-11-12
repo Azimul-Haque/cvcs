@@ -51,12 +51,13 @@
             {!! Form::open(['route' => 'reports.getpaymentsallreport', 'method' => 'GET']) !!}
               <div class="form-group">
                 <select name="report_type" class="form-control" required="">
-                  <option value="" selected="" disabled="">রিপোর্টের ধরন নির্ধারণ করুন</option>
-                  <option value="2">দপ্তরভিত্তিক রিপোর্ট</option>
-                  <option value="3">দপ্তরের সদস্যগোণের বিস্তারিত রিপোর্ট</option>
+                  <option value="" selected="" disabled="">দপ্তর নির্ধারণ করুন</option>
+                  @foreach($branches as $branch)
+                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                  @endforeach
                 </select>
               </div>
-            <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+            <button class="btn btn-success" type="button" title="কাজ চলছে..."><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
             {!! Form::close() !!}
           </div>
           <!-- /.box-body -->
