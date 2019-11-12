@@ -44,7 +44,7 @@
         <div class="box box-success" id="beforedivheightcommodity">
           <div class="box-header with-border text-green">
             <i class="fa fa-fw fa-bar-chart"></i>
-            <h3 class="box-title">পরিশোধ ও বকেয়া রিপোর্ট</h3>
+            <h3 class="box-title">দপ্তরের সদস্য পরিশোধ ও বকেয়া</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
