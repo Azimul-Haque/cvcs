@@ -31,7 +31,7 @@
 </head>
 <body>
   <h2 align="center">
-    <img src="{{ public_path('images/custom2.png') }}" style="height: 100px; width: auto;"><br/>
+    <img src="{{ public_path('images/custom2.png') }}" style="height: 80px; width: auto;"><br/>
     কাস্টমস এন্ড ভ্যাট কো-অপারেটিভ সোসাইটি
   </h2>
   <p align="center" style="padding-top: -20px;">

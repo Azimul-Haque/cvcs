@@ -38,17 +38,18 @@
     কাস্টমস এন্ড ভ্যাট কো-অপারেটিভ সোসাইটি
   </h2>
   <p align="center" style="padding-top: -20px;">
-    <span style="font-size: 20px;">সদস্য রিপোর্ট</span><br/>
+    <span style="font-size: 20px;">সাধারণ রিপোর্ট</span><br/>
   </p>
   
   <div class="" style="padding-top: 0px;">
     <table class="">
       <tr>
-        <td class="graybackground">ব্যক্তিগত তথ্য</td>
+        <td class="graybackground" width="50%">সর্বমোট সদস্য সংখ্যা</td>
+        <td>{{ bangla($registeredmember) }} জন</td>
       </tr>
       <tr>
-        <td></td>
-        <td></td>
+        <td class="graybackground">সর্বমোট সদস্যপদ বাবদ সফল পরিশোধ</td>
+        <td>৳ {{ $totalapproved->totalamount - ($registeredmember * 5000) }}</td>
       </tr>
     </table>
   </div>
