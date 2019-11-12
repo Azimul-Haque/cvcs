@@ -44,10 +44,24 @@ class ReportController extends Controller
     public function getPDFAllPnedingAndPayments(Request $request)
     {
     	//validation
-    	// $this->validate($request, array(
-    	//   'from' => 'required',
-    	//   'to' => 'required',
-    	// ));
+    	$this->validate($request, array(
+    	  'report_type' => 'required'
+    	));
+
+    	$registeredmember = User::where('activation_status', 1)
+    	                        ->where('role_type', '!=', 'admin')                
+    	                        ->count();
+    	$totalapproved = DB::table('payments')
+    	                   ->select(DB::raw('SUM(amount) as totalamount'))
+    	                   ->where('payment_status', '=', 1)
+    	                   ->where('is_archieved', '=', 0)
+    	                   ->first();
+
+    	if($request->report_type == 1) {
+    		$pdf = PDF::loadView('dashboard.reports.pdf.allpaymentsandpendings', ['registeredmember' => $registeredmember, 'totalapproved' => $totalapproved]);
+    		$fileName = 'CVCS_General_Report.pdf';
+    		return $pdf->stream($fileName); // download
+    	}
     	// $from = date("Y-m-d H:i:s", strtotime($request->from));
     	// $to = date("Y-m-d H:i:s", strtotime($request->to.' 23:59:59'));
     	// $commodities = Commodity::whereBetween('created_at', [$from, $to])

@@ -32,7 +32,7 @@
 <body>
   <h2 align="center">
     <img src="{{ public_path('images/custom2.png') }}" style="height: 100px; width: auto;"><br/>
-    কাস্টমস অ্যান্ড ভ্যাট কো-অপারেটিভ সোসাইটি
+    কাস্টমস এন্ড ভ্যাট কো-অপারেটিভ সোসাইটি
   </h2>
   <p align="center" style="padding-top: -20px;">
     <span style="font-size: 20px;">সদস্য রিপোর্ট</span><br/>
