@@ -15,7 +15,7 @@
       border: 1px solid black;
   }
   th, td{
-    padding: 4px;
+    padding: 5px;
     font-family: 'kalpurush', sans-serif;
     font-size: 14px;
   }
