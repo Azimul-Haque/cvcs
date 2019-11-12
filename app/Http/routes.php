@@ -90,12 +90,15 @@ Route::get('/dashboard/donor/donation/{id}/list', ['as'=>'dashboard.donationofdo
 
 Route::get('/dashboard/branches', ['as'=>'dashboard.branches','uses'=>'DashboardController@getBranches']);
 Route::get('/dashboard/branch/{branch_id}/members/', ['as'=>'dashboard.branch.members','uses'=>'DashboardController@getBranchMembers']);
+Route::get('/dashboard/branch/{id}/payment/bulk/', ['as'=>'dashboard.bulkpaymentofbranch','uses'=>'DashboardController@getBulkPaymentPageFromBranch']);
+
 Route::get('/dashboard/branches/payments', ['as'=>'dashboard.branches.payments','uses'=>'DashboardController@getBranchPayments']);
 Route::post('/dashboard/branches/store', ['as'=>'dashboard.storebranch','uses'=>'DashboardController@storeBranch']);
 Route::put('/dashboard/branches/update/{id}', ['as'=>'dashboard.updatebranch','uses'=>'DashboardController@updateBranch']);
 Route::post('/dashboard/branch/payment/store', ['as'=>'dashboard.storebranchpayment','uses'=>'DashboardController@storeBranchPayment']);
 Route::patch('/dashboard/branch/payment/approve/{id}', ['as'=>'dashboard.approvebranchpayment','uses'=>'DashboardController@approveBranchPayment']);
 Route::get('/dashboard/branch/payment/{id}/list', ['as'=>'dashboard.paymentofbranch','uses'=>'DashboardController@getPaymentofBranch']);
+
 
 Route::get('/dashboard/designations', ['as'=>'dashboard.designations','uses'=>'DashboardController@getDesignations']);
 Route::get('/dashboard/designation/{position_id}/members', ['as'=>'dashboard.designation.members','uses'=>'DashboardController@getDesignationMembers']);

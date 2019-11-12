@@ -2646,6 +2646,16 @@ class DashboardController extends Controller
         return view('dashboard.adminsandothers.bulkpayment')->withMembers($members);
     }
 
+    public function getBulkPaymentPageFromBranch($branch_id) 
+    {
+        $members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')
+                       ->where('branch_id', $branch_id)
+                       ->orderBy('id', 'desc')
+                       ->get();
+        return view('dashboard.adminsandothers.bulkpayment')->withMembers($members);
+    }
+
     public function searchMemberForBulkPaymentAPI(Request $request)
     {
         $response = User::select('name_bangla', 'member_id', 'mobile', 'position_id', 'joining_date')
