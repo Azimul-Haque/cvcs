@@ -66,7 +66,7 @@ class ReportController extends Controller
 		                           ->where('payment_status', 1)
 		                           ->where('is_archieved', 0)
 		                           ->where('member_id', $member->member_id)
-		                           ->where('payment_category', 1)
+		                           ->where('payment_category', 1)  // 1 means monthly, 0 for membership
 		                           ->first();
     			$approvedcashformontly = $approvedtotal->totalamount;
 
@@ -120,7 +120,7 @@ class ReportController extends Controller
 			                           ->where('payment_status', 1)
 			                           ->where('is_archieved', 0)
 			                           ->where('member_id', $member->member_id)
-			                           ->where('payment_category', 1)
+			                           ->where('payment_category', 1)  // 1 means monthly, 0 for membership
 			                           ->first();
 
 	    			$approvedcashformontly = $approvedtotal->totalamount;
@@ -172,7 +172,7 @@ class ReportController extends Controller
 						    $query->orderBy('created_at', 'desc');
 						    $query->where('payment_status', '=', 1);
     		                $query->where('is_archieved', '=', 0);
-    		                $query->where('payment_category', '=', 1);
+    		                $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
 						}])           
                        ->get();
 

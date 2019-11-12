@@ -568,7 +568,7 @@
           @php
               $startyear = 2019;
               $today = date("Y-m-d H:i:s");
-              $approvedcash = $approvedfordashboard->totalamount - 5000; // without the membership money;
+              $approvedcash = $totalmontlypaid->totalamount; // without the membership money;
               $totalyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
               if(date('Y') > $totalyear) {
                   $totalyear = date('Y');
@@ -618,7 +618,7 @@
               $startyear = date('Y', strtotime($member->joining_date));
               $startmonth = date('m', strtotime($member->joining_date));
               $today = date("Y-m-d H:i:s");
-              $approvedcash = $approvedfordashboard->totalamount - 5000; // without the membership money;
+              $approvedcash = $totalmontlypaid->totalamount; // without the membership money;
               $endyear = $startyear + ceil($approvedcash/(500 * 12)); // get total year
               if(date('Y') > $endyear) {
                   $endyear = date('Y');
@@ -691,7 +691,6 @@
             </table>
           </div>
         @endif
-
       </div>
     </div>
   </div>

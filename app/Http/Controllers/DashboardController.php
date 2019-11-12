@@ -1987,6 +1987,13 @@ class DashboardController extends Controller
                                  ->where('is_archieved', 0)
                                  ->where('member_id', $member->member_id)
                                  ->first();
+        $totalmontlypaid = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 1)
+                                 ->where('is_archieved', 0)
+                                 ->where('payment_category', 1) // 1 means monthly, 0 for membership
+                                 ->where('member_id', $member->member_id)
+                                 ->first();
         $pendingcountdashboard = Payment::where('payment_status', 0)
                                         ->where('is_archieved', 0)
                                         ->where('member_id', $member->member_id)
@@ -2011,6 +2018,7 @@ class DashboardController extends Controller
                             ->withMembers($members)
                             ->withPendingfordashboard($pendingfordashboard)
                             ->withApprovedfordashboard($approvedfordashboard)
+                            ->withTotalmontlypaid($totalmontlypaid)
                             ->withPendingcountdashboard($pendingcountdashboard)
                             ->withApprovedcountdashboard($approvedcountdashboard);
     }
@@ -2470,10 +2478,18 @@ class DashboardController extends Controller
                                  // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
                                  // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
                                  ->first();
+        $membertotalmontlypaid = DB::table('payments')
+                                 ->select(DB::raw('SUM(amount) as totalamount'))
+                                 ->where('payment_status', 1)
+                                 ->where('is_archieved', 0)
+                                 ->where('payment_category', 1) // 1 means monthly, 0 for membership
+                                 ->where('member_id', Auth::user()->member_id)
+                                 ->first();
 
         return view('dashboard.profile.transactionsummary')
                         ->withMembertotalpending($membertotalpending)
-                        ->withMembertotalapproved($membertotalapproved);
+                        ->withMembertotalapproved($membertotalapproved)
+                        ->withMembertotalmontlypaid($membertotalmontlypaid);
     }
 
     public function getMemberUserManual() 
