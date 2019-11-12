@@ -62,8 +62,32 @@
                     @endif
                   </td>
                   <td>
+                    @php
+                      $approvedcashformontly = $member->payments->where('payment_status', 1)->where('is_archieved', 0)->where('payment_category', 1)->sum('amount');
+
+                      $totalpendingmonthly = 0;
+                      if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
+                      {
+                          $thismonth = Carbon::now()->format('Y-m-');
+                          $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
+                          $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+                          $totalmonthsformember = $to->diffInMonths($from) + 1;
+                          if(($totalmonthsformember * 500) > $approvedcashformontly) {
+                            $totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                          }
+                      } else {
+                          $startmonth = date('Y-m-', strtotime($member->joining_date));
+                          $thismonth = Carbon::now()->format('Y-m-');
+                          $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
+                          $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+                          $totalmonthsformember = $to->diffInMonths($from) + 1;
+                          if(($totalmonthsformember * 500) > $approvedcashformontly) {
+                            $totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                          }
+                      }
+                    @endphp
                     <center>
-                      <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member }})"><i class="fa fa-plus"></i></button>
+                      <button type="button" class="btn btn-success btn-sm" title="সদস্য যোগ করুন" onclick="addMember({{ $member }}, {{ $totalpendingmonthly }})"><i class="fa fa-plus"></i></button>
                     </center>
                   </td>
                 </tr>
@@ -307,19 +331,18 @@
       });
       
     });
-    function addMember(member_data) {
+    function addMember(member_data, totalpendingmonthly) {
       // console.log(member_data.mobile);
-      $('#member_list').append('<div class="row" id="memberRow'+member_data.member_id+'"><div class="col-md-6" id="member_name_preview'+member_data.member_id+'">'+ member_data.name_bangla +', <small>'+ member_data.position.name +'</small><br/><small>ID: '+ member_data.member_id +', ☎ '+ member_data.mobile +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data.member_id+'" id="member_amount_preview'+member_data.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMemberCurrent(memberRow'+member_data.member_id+', amount'+member_data.member_id+', '+member_data.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data.member_id+'"><hr/></div></div>');
-      // $.ajax({
-      //     url: '/dashboard/member/payment/bulk/search/single/member/api/'+'/'+member_id,
-      //     type: 'GET',
-      //     dataType: 'json', // added data type
-      //     success: function(item) {
-      //         // console.log(item.position.name);
-      //         // remove item from members table
-      //         // $("#member_table_td_" + member_id).remove();
-      //     }
-      // });
+      var validflagamount = '';
+      if(totalpendingmonthly > 1500) {
+        validflagamount = totalpendingmonthly;
+      }
+      if(totalpendingmonthly > 1500) {
+        $('#member_list').append('<div class="row" id="memberRow'+member_data.member_id+'"><div class="col-md-6" id="member_name_preview'+member_data.member_id+'">'+ member_data.name_bangla +', <small>'+ member_data.position.name +'</small><br/><small>ID: '+ member_data.member_id +', ☎ '+ member_data.mobile +'</small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data.member_id+'" id="member_amount_preview'+member_data.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMemberCurrent(memberRow'+member_data.member_id+', amount'+member_data.member_id+', '+member_data.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data.member_id+'"><hr/></div></div>');
+      } else {
+        $('#member_list').append('<div class="row" id="memberRow'+member_data.member_id+'"><div class="col-md-6" id="member_name_preview'+member_data.member_id+'">'+ member_data.name_bangla +', <small>'+ member_data.position.name +'</small><br/><small>ID: '+ member_data.member_id +', ☎ '+ member_data.mobile +'<br/><i class="fa fa-flag"></i></small></div><div class="col-md-4"><input type="number" class="form-control add_separate_amounts" name="amount'+member_data.member_id+'" id="member_amount_preview'+member_data.member_id+'" placeholder="পরিমাণ" required/></div><div class="col-md-2"><button type="button" class="btn btn-danger btn-sm" title="অপসারণ করুন" onclick="removeMemberCurrent(memberRow'+member_data.member_id+', amount'+member_data.member_id+', '+member_data.member_id+')"><i class="fa fa-trash"></i></button></div><div class="col-md-12"><input type="hidden" name="amountids[]" id="amountids" value="'+member_data.member_id+'"><hr/></div></div>');
+      }
+      
     }
     $(document).ready( function() {
       $('#add_member_btn').click(function() {
