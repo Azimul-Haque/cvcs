@@ -33,7 +33,6 @@ class ReportController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin');
     }
 
     public function getReportsPage()

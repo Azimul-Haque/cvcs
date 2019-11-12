@@ -1855,8 +1855,7 @@ class DashboardController extends Controller
           $query = $request->get('query');
           if($query != '')
           {
-           $data = DB::table('users')
-                    ->where('activation_status', 1)
+           $data = User::where('activation_status', 1)
                     ->where('role_type', '!=', 'admin') // avoid the super admin type
                     ->where(function($newquery) use ($query) {
                         $newquery->where('name', 'like', '%'.$query.'%')
@@ -1865,6 +1864,8 @@ class DashboardController extends Controller
                                  ->orWhere('mobile', 'like', '%'.$query.'%')
                                  ->orWhere('email', 'like', '%'.$query.'%');
                     })
+                    ->with('branch')
+                    ->with('position')
                     ->orderBy('id', 'desc')
                     ->get();
           }
@@ -1883,7 +1884,14 @@ class DashboardController extends Controller
              </td>
              <td><big><b>'.$row->member_id.'</big></b></td>
              <td>'.$row->mobile.'<br/>'.$row->email.'</td>
-             <td>'.$row->branch->name.'<br/>'.$row->profession.' ('. $row->position->name .')</td>
+             <td>
+                <a href="'. route('dashboard.branch.members', $row->branch->id) .'" title="সদস্য তথ্য দেখুন">
+                  '. $row->branch->name .'
+                </a><br/>
+                '. $row->profession .' (<a href="'. route('dashboard.designation.members', $row->position->id) .'" title="সদস্য তথ্য দেখুন">
+                  '. $row->position->name .'
+                </a>)
+            </td>
             ';
             if($row->image != null) {
                 $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
