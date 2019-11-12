@@ -72,6 +72,7 @@
       <tr class="graybackground">
         <th align="right">মোট</th>
         <th>৳ {{ bangla($members->count() * 5000) }}</th>
+        <th></th>
         <th>৳ {{ bangla($intotalmontlypaid) }}</th>
         <th>৳ {{ bangla($intotalmontlydues) }}</th>
       </tr>
