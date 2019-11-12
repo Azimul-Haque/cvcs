@@ -2705,11 +2705,40 @@ class DashboardController extends Controller
 
     public function searchMemberForBulkPaymentSingleAPI($member_id)
     {
-        $response = User::select('name_bangla', 'member_id', 'mobile', 'position_id')
+        $response = User::select('name_bangla', 'member_id', 'mobile', 'position_id', 'joining_date')
                         ->where('activation_status', 1)
                         ->where('member_id', $member_id)
                         ->with('position')
+                        ->with(['payments' => function ($query) {
+                            $query->orderBy('created_at', 'desc');
+                            $query->where('payment_status', '=', 1);
+                            $query->where('is_archieved', '=', 0);
+                            $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
+                        }]) 
                         ->first();
+
+        $approvedcashformontly = $response->payments->sum('amount');
+        $response->totalpendingmonthly = 0;
+        if($response->joining_date == '' || $response->joining_date == null || strtotime('31-01-2019') > strtotime($response->joining_date))
+        {
+            $thismonth = Carbon::now()->format('Y-m-');
+            $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
+            $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+            $totalmonthsformember = $to->diffInMonths($from) + 1;
+            if(($totalmonthsformember * 500) > $approvedcashformontly) {
+              $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+            }
+        } else {
+            $startmonth = date('Y-m-', strtotime($response->joining_date));
+            $thismonth = Carbon::now()->format('Y-m-');
+            $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
+            $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+            $totalmonthsformember = $to->diffInMonths($from) + 1;
+            if(($totalmonthsformember * 500) > $approvedcashformontly) {
+              $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+            }
+        }
+
         return $response;          
     }
 

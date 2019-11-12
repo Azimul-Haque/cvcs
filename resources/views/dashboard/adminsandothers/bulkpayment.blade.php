@@ -395,8 +395,8 @@
           success: function(item) {
               // console.log(item);
               $('#member_select').append($('<option>', { 
-                  value: item.name_bangla + "|" + item.member_id + "|" + item.mobile,
-                  text : item.name_bangla + "-" + item.member_id + "-(☎ " + item.mobile +")"
+                value: item.name_bangla + "|" + item.member_id + "|" + item.mobile + "|" + item.position.name + "|" + item.totalpendingmonthly,
+                text : item.name_bangla + " ("+ item.position.name +")" + "-" + item.member_id + "-(☎ " + item.mobile +")"
               }));
           }
       });
