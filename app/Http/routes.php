@@ -214,7 +214,7 @@ Route::get('/dashboard/member/payment/bulk/search/single/member/api/{member_id}'
 Route::post('/dashboard/member/payment/bulk', ['as'=>'dashboard.storememberpaymentbulk','uses'=>'DashboardController@storeBulkPayment']);
 
 // REPORTS
-Route::get('/dashboard/reports', ['as'=>'dashboard.reports','uses'=>'DashboardController@getReportsPage']);
+Route::get('/dashboard/reports', ['as'=>'dashboard.reports','uses'=>'ReportController@getReportsPage']);
 
 // PAYMENTS BY ADMIN
 Route::get('/dashboard/members/payments/pending', ['as'=>'dashboard.memberspendingpayments','uses'=>'DashboardController@getMembersPendingPayments']);
