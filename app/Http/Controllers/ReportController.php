@@ -42,7 +42,7 @@ class ReportController extends Controller
         return view('dashboard.reports.index')->withBranches($branches);
     }
 
-    public function getPDFAllPnedingAndPayments(Request $request)
+    public function getPDFAllPnedingAndPayments(Request $request) 
     {
     	//validation
     	$this->validate($request, array(
@@ -152,5 +152,30 @@ class ReportController extends Controller
     		$fileName = 'CVCS_Branch_Details_Report.pdf';
     		return $pdf->download($fileName); // stream
     	}
+    }
+
+    public function getPDFBranchMembersPayments(Request $request)
+    {
+    	//validation
+    	$this->validate($request, array(
+    	  'branch_id' => 'required'
+    	));
+
+    	$branch = Branch::find($request->branch_id);
+
+    	$members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')                
+                       ->where('branch_id', $request->branch_id)           
+                       ->with(['payments' => function ($query) use ($branch) {
+						    $query->orderBy('created_at', 'desc');
+						    $query->where('payment_status', '=', 1);
+    		                $query->where('is_archieved', '=', 0);
+						}])           
+                       ->get();
+
+        // dd($members->count());
+		$pdf = PDF::loadView('dashboard.reports.pdf.branchmembersdetails', ['branch' => $branch, 'members' => $members]);
+		$fileName = 'CVCS_Branch_Members_Details_Report.pdf';
+		return $pdf->stream($fileName); // download
     }
 }
