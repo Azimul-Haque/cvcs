@@ -44,14 +44,19 @@
   <div class="" style="padding-top: 0px;">
     <table class="">
       <tr class="graybackground">
+        <th width="5%">#</th>
         <th width="40%">সদস্য</th>
         <th>সদস্যপদ বাবদ পরিশোধ</th>
         <th>হিসাব শুরুর মাস</th>
         <th>মোট মাসিক কিস্তি পরিশোধ<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
         <th>মোট মাসিক কিস্তি বকেয়া<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
       </tr>
+      @php
+        $counter = 1;
+      @endphp
       @foreach($members->sortByDesc('totalpendingmonthly') as $member)
         <tr>
+          <td align="center">{{ bangla($counter) }}</td>
           <td>
             {{ $member->name_bangla }}, <small>{{ $member->position->name }}</small><br/>
             <small>আইডিঃ {{ $member->member_id }}, ফোনঃ {{ $member->mobile }}</small>
@@ -67,9 +72,13 @@
           <td align="center">৳ {{ bangla($member->payments->sum('amount')) }}</td>
           <td align="center">৳ {{ bangla($member->totalpendingmonthly) }}</td>
         </tr>
+        @php
+          $counter++;
+        @endphp
       @endforeach
 
       <tr class="graybackground">
+        <th width="5%"></th>
         <th align="right">মোট</th>
         <th>৳ {{ bangla($members->count() * 5000) }}</th>
         <th></th>
