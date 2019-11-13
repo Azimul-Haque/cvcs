@@ -57,6 +57,7 @@ class ReportController extends Controller
     		                   ->select(DB::raw('SUM(amount) as totalamount'))
     		                   ->where('payment_status', '=', 1)
     		                   ->where('is_archieved', '=', 0)
+                               ->where('payment_category', 1)  // 1 means monthly, 0 for membership
     		                   ->first();
     		$totalmontlydues = 0;
     		foreach ($registeredmembers as $member) {
@@ -100,6 +101,7 @@ class ReportController extends Controller
     		                   ->select(DB::raw('SUM(amount) as totalamount'))
     		                   ->where('payment_status', '=', 1)
     		                   ->where('is_archieved', '=', 0)
+                               ->where('payment_category', 1)  // 1 means monthly, 0 for membership
     		                   ->first();
 
     		$branches = Branch::all();
