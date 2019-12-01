@@ -1700,6 +1700,7 @@ class DashboardController extends Controller
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+            return $smsresult;
         }
 
         return redirect()->back();
