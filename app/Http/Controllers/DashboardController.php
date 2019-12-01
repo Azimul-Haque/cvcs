@@ -1692,7 +1692,7 @@ class DashboardController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
 
-        $sendstatus = $result = substr($smsresult, 0, 3);
+        $sendstatus = substr($smsresult, 0, 3);
         // send sms
         if($sendstatus == 200) {
             Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
@@ -1700,7 +1700,7 @@ class DashboardController extends Controller
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
-            return $smsresult;
+            return $smsresult
         }
 
         return redirect()->back();
