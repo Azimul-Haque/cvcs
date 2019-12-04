@@ -57,7 +57,7 @@
       @foreach($members->sortByDesc('totalpendingmonthly') as $member)
         <tr>
           <td align="center">{{ bangla($counter++) }}</td>
-          <td>{{ $member->name_bangla }}<br/><span style="font-family: Calibri;">{{ $member->name }}</span></td>
+          <td>{{ $member->name_bangla }}<br/><span style="font-family: Calibri; font-size: 12px;">{{ $member->name }}</span></td>
           <td align="center"><span style="font-family: Calibri;"><b>{{ $member->member_id }}</b></span></td>
           <td style="font-family: Calibri;">{{ $member->mobile }}<br/><small>{{ $member->email }}</small></td>
           <td align="center">{{ $member->position->name }}<br/>{{ $member->branch->name }}</td>
