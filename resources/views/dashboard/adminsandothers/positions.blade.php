@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CVCS | পদবী সমূহ')
+@section('title', 'CVCS | পদবি সমূহ')
 
 @section('css')
 
@@ -8,10 +8,10 @@
 
 @section('content_header')
     <h1>
-      পদবী সমূহ
+      পদবি সমূহ
       <div class="pull-right">
         @if(Auth::user()->role == 'admin')
-        <a class="btn btn-success" href="#!" title="পদবী যোগ করুন (কাজ চলছে...)"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></a> {{-- {{ route('dashboard.createbulkpayer') }} --}}
+        <a class="btn btn-success" href="#!" title="পদবি যোগ করুন (কাজ চলছে...)"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></a> {{-- {{ route('dashboard.createbulkpayer') }} --}}
         @endif
       </div>
     </h1>
@@ -36,7 +36,7 @@
           <td><a href="{{ route('dashboard.designation.members', $position->id) }}">{{ $position->name }}</a></td>
           <td>{{ bangla($position->users->where('activation_status', 1)->count()) }} জন</td>
           <td>
-            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $position->id }}" data-backdrop="static" title="পদবী সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $position->id }}" data-backdrop="static" title="পদবি সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
             <a href="{{ route('dashboard.designation.members', $position->id) }}" class="btn btn-sm btn-success" title="পদবির সদস্য দেখুন">
               <i class="fa fa-eye"></i>
             </a>
@@ -47,7 +47,7 @@
                 <div class="modal-content">
                   <div class="modal-header modal-header-primary">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">পদবী সম্পাদনা</h4>
+                    <h4 class="modal-title">পদবি সম্পাদনা</h4>
                   </div>
                   {!! Form::model($position, ['route' => ['dashboard.updatebranch', $position->id], 'method' => 'PUT', 'class' => 'form-default']) !!}
                         

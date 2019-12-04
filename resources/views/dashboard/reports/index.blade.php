@@ -22,6 +22,51 @@
         <div class="box box-primary" id="beforedivheightcommodity">
           <div class="box-header with-border text-blue">
             <i class="fa fa-fw fa-bar-chart"></i>
+            <h3 class="box-title">দপ্তরভিত্তিক সদস্য তালিকা</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {!! Form::open(['route' => 'reports.branchmemberslist', 'method' => 'GET']) !!}
+              <div class="form-group">
+                <select name="branch_id" class="form-control" required="">
+                  <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                  @foreach($branches as $branch)
+                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                  @endforeach
+                </select>
+              </div>
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+            {!! Form::close() !!}
+          </div>
+          <!-- /.box-body -->
+        </div>
+
+        <div class="box box-primary" id="beforedivheightcommodity">
+          <div class="box-header with-border text-blue">
+            <i class="fa fa-fw fa-bar-chart"></i>
+            <h3 class="box-title">পদবিভিত্তিক সদস্য তালিকা</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {!! Form::open(['route' => 'reports.designationsmemberslist', 'method' => 'GET']) !!}
+              <div class="form-group">
+                <select name="position_id" class="form-control" required="">
+                  <option value="" selected="" disabled="">পদবির নাম নির্ধারণ করুন</option>
+                  @foreach($positions as $position)
+                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                  @endforeach
+                </select>
+              </div>
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+            {!! Form::close() !!}
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="box box-success" id="beforedivheightcommodity">
+          <div class="box-header with-border text-green">
+            <i class="fa fa-fw fa-bar-chart"></i>
             <h3 class="box-title">সাধারণ রিপোর্ট</h3>
           </div>
           <!-- /.box-header -->
@@ -34,15 +79,15 @@
                   <option value="2">দপ্তরভিত্তিক রিপোর্ট</option>
                 </select>
               </div>
-              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+              <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
             {!! Form::close() !!}
           </div>
           <!-- /.box-body -->
         </div>
       </div>
       <div class="col-md-4">
-        <div class="box box-success" id="beforedivheightcommodity">
-          <div class="box-header with-border text-green">
+        <div class="box box-warning" id="beforedivheightcommodity">
+          <div class="box-header with-border text-yellow">
             <i class="fa fa-fw fa-bar-chart"></i>
             <h3 class="box-title">দপ্তরের সদস্য পরিশোধ ও বকেয়া</h3>
           </div>
@@ -57,7 +102,7 @@
                   @endforeach
                 </select>
               </div>
-              <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+              <button class="btn btn-warning" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
             {!! Form::close() !!}
           </div>
           <!-- /.box-body -->

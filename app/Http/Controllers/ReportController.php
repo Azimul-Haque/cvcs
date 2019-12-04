@@ -37,8 +37,12 @@ class ReportController extends Controller
 
     public function getReportsPage()
     {
-    	$branches = Branch::all();
-        return view('dashboard.reports.index')->withBranches($branches);
+        $branches = Branch::all();
+    	$positions = Position::orderBy('id', 'asc')->where('id', '>', 0)->get();
+
+        return view('dashboard.reports.index')
+                        ->withBranches($branches)
+                        ->withPositions($positions);
     }
 
     public function getPDFAllPnedingAndPayments(Request $request) 
@@ -233,7 +237,7 @@ class ReportController extends Controller
 
         $pdf = PDF::loadView('dashboard.reports.pdf.branchmemberslist', ['branch' => $branch, 'members' => $members]);
         $fileName = 'CVCS_Branch_Members_List_Report.pdf';
-        return $pdf->stream($fileName); // download
+        return $pdf->download($fileName); // download
     }
 
     public function getPDFDesignationMembersList(Request $request)
@@ -252,7 +256,7 @@ class ReportController extends Controller
                        ->get();
 
 		$pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members]);
-		$fileName = 'CVCS_Branch_Members_List_Report.pdf';
-		return $pdf->stream($fileName); // download
+		$fileName = 'CVCS_Designation_Members_List_Report.pdf';
+		return $pdf->download($fileName); // download
     }
 }

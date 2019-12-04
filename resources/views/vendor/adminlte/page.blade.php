@@ -237,7 +237,7 @@
                           <li class="{{ Request::is('dashboard/donors') ? 'active' : '' }} {{ Request::is('dashboard/donor/*') ? 'active' : '' }}"><a href="{{ route('dashboard.donors') }}"><i class="fa fa-trophy text-lightgreen"></i> ডোনেশন</a></li>
                           <li class="{{ Request::is('dashboard/branches/payments') ? 'active' : '' }}"><a href="{{ route('dashboard.branches.payments') }}"><i class="fa fa-list-ol text-green"></i> বিল অব এন্ট্রি</a></li>
                           <li class="{{ Request::is('dashboard/branches') ? 'active' : '' }} {{ Request::is('dashboard/branch/*') ? 'active' : '' }}"><a href="{{ route('dashboard.branches') }}"><i class="fa fa-home text-aqua"></i> দপ্তর সমূহ</a></li>
-                          <li class="{{ Request::is('dashboard/designations') ? 'active' : '' }} {{ Request::is('dashboard/designation/*') ? 'active' : '' }}"><a href="{{ route('dashboard.designations') }}"><i class="fa fa-id-card-o text-lightgreen"></i> পদবী সমূহ</a></li>
+                          <li class="{{ Request::is('dashboard/designations') ? 'active' : '' }} {{ Request::is('dashboard/designation/*') ? 'active' : '' }}"><a href="{{ route('dashboard.designations') }}"><i class="fa fa-id-card-o text-lightgreen"></i> পদবি সমূহ</a></li>
                         </ul>
                       </li>
                       

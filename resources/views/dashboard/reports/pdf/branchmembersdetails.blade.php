@@ -46,6 +46,7 @@
       <tr class="graybackground">
         <th width="5%">#</th>
         <th width="40%">সদস্য</th>
+        <th>ছবি</th>
         <th>সদস্যপদ বাবদ পরিশোধ</th>
         <th>হিসাব শুরুর মাস</th>
         <th>মোট মাসিক কিস্তি পরিশোধ<br/>({{ bangla(date('F, Y')) }} পর্যন্ত)</th>
@@ -60,6 +61,13 @@
           <td>
             {{ $member->name_bangla }}, <small>{{ $member->position->name }}</small><br/>
             <small>আইডিঃ {{ $member->member_id }}, ফোনঃ {{ $member->mobile }}</small>
+          </td>
+          <td>
+            @if($member->image != null && file_exists(public_path('images/users/'.$member->image)))
+              <img src="{{ public_path('images/users/'.$member->image)}}" style="height: 50px; width: auto;" />
+            @else
+              <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
+            @endif
           </td>
           <td align="center">৳ ৫০০০</td>
           <td align="center">
@@ -79,6 +87,7 @@
 
       <tr class="graybackground">
         <th width="5%"></th>
+        <th></th>
         <th align="right">মোট</th>
         <th>৳ {{ bangla($members->count() * 5000) }}</th>
         <th></th>
