@@ -240,18 +240,18 @@ class ReportController extends Controller
     {
     	//validation
     	$this->validate($request, array(
-    	  'branch_id' => 'required'
+    	  'position_id' => 'required'
     	));
 
-    	$branch = Branch::find($request->branch_id);
+    	$position = Position::find($request->position_id);
 
     	$members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')                
-                       ->where('branch_id', $request->branch_id)           
+                       ->where('position_id', $request->position_id)           
                        ->orderBy('position_id', 'asc')           
                        ->get();
 
-		$pdf = PDF::loadView('dashboard.reports.pdf.branchmemberslist', ['branch' => $branch, 'members' => $members]);
+		$pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members]);
 		$fileName = 'CVCS_Branch_Members_List_Report.pdf';
 		return $pdf->stream($fileName); // download
     }
