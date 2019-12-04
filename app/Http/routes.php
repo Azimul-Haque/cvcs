@@ -220,7 +220,8 @@ Route::post('/dashboard/member/payment/bulk', ['as'=>'dashboard.storememberpayme
 Route::get('/dashboard/reports', ['as'=>'dashboard.reports','uses'=>'ReportController@getReportsPage']);
 Route::get('/dashboard/reports/export/payment/pdf', ['as'=>'reports.getpaymentsallreport','uses'=>'ReportController@getPDFAllPnedingAndPayments']);
 Route::get('/dashboard/reports/export/branch/members/pdf', ['as'=>'reports.getbranchmemberspaymentreport','uses'=>'ReportController@getPDFBranchMembersPayments']);
-Route::get('/dashboard/reports/export/branches/members/list/pdf', ['as'=>'reports.branchmemberslist','uses'=>'ReportController@getPDFBranchMembersList']);
+Route::get('/dashboard/reports/export/branch/members/list/pdf', ['as'=>'reports.branchmemberslist','uses'=>'ReportController@getPDFBranchMembersList']);
+Route::get('/dashboard/reports/export/designation/members/list/pdf', ['as'=>'reports.designationsmemberslist','uses'=>'ReportController@getPDFDesignationMembersList']);
 
 // PAYMENTS BY ADMIN
 Route::get('/dashboard/members/payments/pending', ['as'=>'dashboard.memberspendingpayments','uses'=>'DashboardController@getMembersPendingPayments']);

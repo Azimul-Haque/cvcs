@@ -11,8 +11,7 @@
     <h1>
       <b>{{ $branch->name }}</b>-এর সদস্যগণ ({{ bangla($memberscount) }} জন)
       <div class="pull-right">
-        
-        {{-- <a class="btn btn-success" href="{{ route('dashboard.members.search') }}"><i class="fa fa-fw fa-search" aria-hidden="true"></i> সদস্য খুঁজুন</a> --}}
+        <a href="{{ url('dashboard/reports/export/branch/members/list/pdf?branch_id=' . $branch->id) }}" class="btn btn-success" title="সদস্য তালিকা ডাউনলোড করুন"><i class="fa fa-download"></i> সদস্য তালিকা</a>
       </div>
     </h1>
   @endif
