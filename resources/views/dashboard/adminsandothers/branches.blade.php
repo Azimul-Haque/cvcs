@@ -69,6 +69,9 @@
             </div>
             <!-- Remove BulK Payer Modal -->
             <!-- Remove BulK Payer Modal -->
+            <a href="{{ url('dashboard/reports/export/branches/members/list/pdf?branch_id=' . $branch->id) }}" class="btn btn-sm btn-info" title="সদস্য তালিকা ডাউনলোড করুন">
+              <i class="fa fa-download"></i>
+            </a>
           </td>
         </tr>
         @endforeach
