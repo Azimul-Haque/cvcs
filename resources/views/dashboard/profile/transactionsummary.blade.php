@@ -167,7 +167,7 @@
                       @if($approvedcash/500 > 0)
                         <span class="badge badge-success"><i class="fa fa-check"></i>পরিশোধিত</span>
                       @elseif(date('Y-m-d H:i:s', strtotime($month)) < $today)
-                        <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> পরিশোধনীয়</span>
+                        <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রদেয়</span>
                       @endif
                     </td>
                     <td>

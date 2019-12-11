@@ -262,7 +262,7 @@
                   @if($approvedcash/500 > 0)
                     <span>পরিশোধিত</span>
                   @elseif(date('Y-m-d H:i:s', strtotime($thismonth)) < $today)
-                    <span style="color: red;">পরিশোধনীয়</span>
+                    <span style="color: red;">প্রদেয়</span>
                   @endif
                 </td>
                 <td>
@@ -327,7 +327,7 @@
                 @if($approvedcash/500 > 0)
                   <span>পরিশোধিত</span>
                 @elseif(date('Y-m-d H:i:s', strtotime($month)) < $today)
-                  <span style="color: red;">পরিশোধনীয়</span>
+                  <span style="color: red;">প্রদেয়</span>
                 @endif
               </td>
               <td>
