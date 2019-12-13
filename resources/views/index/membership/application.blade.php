@@ -139,6 +139,7 @@
                                 <label for="position_id" class="">আবেদনকারীর পদবি *</label>
                                 <select name="position_id" id="position_id" class="form-control" required="">
                                     <option value="" selected="" disabled="">পদবি নির্ধারণ করুন</option>
+                                    <option value="34">সদস্য</option>
                                     @foreach($positions as $position)
                                       <option value="{{ $position->id }}">{{ $position->name }}</option>
                                     @endforeach

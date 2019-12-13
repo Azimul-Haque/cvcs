@@ -563,10 +563,16 @@ class DashboardController extends Controller
 
     public function getDesignations()
     {
-        $positions = Position::orderBy('id', 'asc')->where('id', '>', 0)->paginate(15);
+        $positions = Position::orderBy('id', 'asc')
+                                    ->where('id', '>', 0)
+                                    ->where('id', '<', 34)
+                                    ->paginate(15);
+                                    
+        $memberpos = Position::where('id', 34)->first(); // for the 34th, সদস্য!
 
         return view('dashboard.adminsandothers.positions')
-                    ->withPositions($positions);
+                    ->withPositions($positions)
+                    ->withMemberpos($memberpos);
     }
 
     public function getDesignationMembers(Request $request, $position_id)

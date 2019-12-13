@@ -3,7 +3,11 @@
 @section('title', 'CVCS | পদবি সমূহ')
 
 @section('css')
-
+  <style type="text/css">
+    .membersfrow {
+      
+    }
+  </style>
 @stop
 
 @section('content_header')
@@ -30,9 +34,47 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td style="background: #AECBFA !important;">{{ bangla(1) }}</td>
+          <td style="background: #AECBFA !important;"><a href="{{ route('dashboard.designation.members', $memberpos->id) }}">{{ $memberpos->name }}</a></td>
+          <td style="background: #AECBFA !important;">{{ bangla($memberpos->users->where('activation_status', 1)->count()) }} জন</td>
+          <td style="background: #AECBFA !important;">
+            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $memberpos->id }}" data-backdrop="static" title="পদবি সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
+            <a href="{{ route('dashboard.designation.members', $memberpos->id) }}" class="btn btn-sm btn-success" title="পদবির সদস্য দেখুন">
+              <i class="fa fa-eye"></i>
+            </a>
+            <!-- Remove BulK Payer Modal -->
+            <!-- Remove BulK Payer Modal -->
+            <div class="modal fade" id="editModal{{ $memberpos->id }}" role="dialog">
+              <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                  <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">পদবি সম্পাদনা</h4>
+                  </div>
+                  {!! Form::model($memberpos, ['route' => ['dashboard.updatebranch', $memberpos->id], 'method' => 'PUT', 'class' => 'form-default']) !!}
+                        
+                  <div class="modal-body">
+                    কাজ চলছে...
+                  </div>
+                  <div class="modal-footer">
+                    {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary')) !!}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                  </div>
+                  {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+            <!-- Remove BulK Payer Modal -->
+            <!-- Remove BulK Payer Modal -->
+            <a href="{{ url('dashboard/reports/export/designation/members/list/pdf?position_id=' . $memberpos->id) }}" class="btn btn-sm btn-info" title="সদস্য তালিকা ডাউনলোড করুন">
+              <i class="fa fa-download"></i>
+            </a>
+          </td>
+        </tr>
         @foreach($positions as $position)
         <tr>
-          <td>{{ bangla($position->id) }}</td>
+          <td>{{ bangla($position->id + 1) }}</td>
           <td><a href="{{ route('dashboard.designation.members', $position->id) }}">{{ $position->name }}</a></td>
           <td>{{ bangla($position->users->where('activation_status', 1)->count()) }} জন</td>
           <td>

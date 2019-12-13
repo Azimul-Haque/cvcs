@@ -132,6 +132,7 @@
                       <div class="col-md-6">
                         <select name="position_id" id="position_id" class="form-control" required="">
                             <option value="" selected="" disabled="">পদবি নির্ধারণ করুন</option>
+                            <option value="34" @if($application->position_id == 34) selected="" @endif>সদস্য</option>
                             @foreach($positions as $position)
                               <option value="{{ $position->id }}"  @if($position->id == $application->position_id) selected="" @endif>{{ $position->name }}</option>
                             @endforeach
