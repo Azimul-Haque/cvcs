@@ -46,7 +46,7 @@
       <tr class="graybackground">
         <th width="5%">#</th>
         <th width="30%">সদস্য</th>
-        <th>মেম্বার আইডি</th>
+        <th width="13%">মেম্বার আইডি</th>
         <th>যোগাযোগ</th>
         <th width="20%">অফিস তথ্য</th>
         <th>ছবি</th>
