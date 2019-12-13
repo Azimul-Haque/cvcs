@@ -60,7 +60,7 @@
           <td>{{ $member->name_bangla }}<br/><span style="font-family: Calibri; font-size: 12px;">{{ $member->name }}</span></td>
           <td align="center"><span style="font-family: Calibri;"><b>{{ $member->member_id }}</b></span></td>
           <td style="font-family: Calibri;">{{ $member->mobile }}<br/><small>{{ $member->email }}</small></td>
-          <td align="center">{{ $member->position->name }}<br/><small>{{ $member->branch->name }}</small></td>
+          <td align="center"><small><span style="color: #074EA2;">{{ $member->position->name }}</span><br/>{{ $member->branch->name }}</small></td>
           <td align="center">
             @if($member->image != null && file_exists(public_path('images/users/'.$member->image)))
               <img src="{{ public_path('images/users/'.$member->image)}}" style="height: 50px; width: auto;" />
