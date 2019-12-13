@@ -35,10 +35,10 @@
       </thead>
       <tbody>
         <tr>
-          <td style="background: #AECBFA !important;">{{ bangla(1) }}</td>
-          <td style="background: #AECBFA !important;"><a href="{{ route('dashboard.designation.members', $memberpos->id) }}">{{ $memberpos->name }}</a></td>
-          <td style="background: #AECBFA !important;">{{ bangla($memberpos->users->where('activation_status', 1)->count()) }} জন</td>
-          <td style="background: #AECBFA !important;">
+          <td style="background: #EEEEEE !important;">{{ bangla(1) }}</td>
+          <td style="background: #EEEEEE !important;"><a href="{{ route('dashboard.designation.members', $memberpos->id) }}">{{ $memberpos->name }}</a></td>
+          <td style="background: #EEEEEE !important;">{{ bangla($memberpos->users->where('activation_status', 1)->count()) }} জন</td>
+          <td style="background: #EEEEEE !important;">
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $memberpos->id }}" data-backdrop="static" title="পদবি সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
             <a href="{{ route('dashboard.designation.members', $memberpos->id) }}" class="btn btn-sm btn-success" title="পদবির সদস্য দেখুন">
               <i class="fa fa-eye"></i>
