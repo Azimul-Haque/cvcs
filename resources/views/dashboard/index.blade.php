@@ -20,7 +20,7 @@
                     @if(empty($totalapplicationpending->totalamount))
                     0.00
                     @else
-                    {{ $totalapplicationpending->totalamount }}
+                    {{ local_currency($totalapplicationpending->totalamount) }}
                     @endif
                   </span>
                   <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
@@ -39,7 +39,7 @@
 	                @if(empty($totalapproved->totalamount))
 	                0.00
 	                @else
-	                {{ $totalapproved->totalamount }}
+	                {{ local_currency($totalapproved->totalamount) }}
 	                @endif
 	              </span>
 	              <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
@@ -100,7 +100,7 @@
 	                @if(empty($totalpending->totalamount))
 	                0.00
 	                @else
-	                {{ $totalpending->totalamount }}
+	                {{ local_currency($totalpending->totalamount) }}
 	                @endif
 	              </span>
 	              <span class="info-box-text">জানুয়ারি ২০১৯ থেকে{{-- {{ date('F, Y') }} --}}</span>
@@ -138,7 +138,7 @@
 	                @if(empty($totaldonation->totalamount))
 	                0.00
 	                @else
-	                {{ $totaldonation->totalamount }}
+	                {{ local_currency($totaldonation->totalamount) }}
 	                @endif
 	              </span>
 	              <span class="info-box-text">ডোনার সংখ্যাঃ {{ $totaldonors }}</span>
@@ -157,7 +157,7 @@
 	                @if(empty($totalbranchpayment->totalamount))
 	                0.00
 	                @else
-	                {{ $totalbranchpayment->totalamount }}
+	                {{ local_currency($totalbranchpayment->totalamount) }}
 	                @endif
 	              </span>
 	              <span class="info-box-text">ব্রাঞ্চ সংখ্যাঃ {{ $totalbranches }}</span>
