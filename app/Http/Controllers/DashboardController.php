@@ -2931,7 +2931,7 @@ class DashboardController extends Controller
 
     public function getSMSModule() 
     {
-        // return view('dashboard.notifications');
+        return view('dashboard.smsmodule');
     }
 
     public function testGPSMSAPI() 

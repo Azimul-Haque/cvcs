@@ -236,7 +236,7 @@
 	              	<h4><i class="fa fa-envelope"></i> 
 	              		সর্বমোট এসএমএসঃ 
 	              		@if($notifsmsbalance > 0)
-	              			{{ (int) ($notifsmsbalance/0.30) }} টি
+	              			{{ (int) ($notifsmsbalance/0.40) }} টি
 	              		@endif
 	              	</h4>
 	              </center>

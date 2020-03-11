@@ -344,6 +344,12 @@
                             <span>একাধিক পরিশোধ</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('dashboard/sms/*') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard.smsmodule') }}">
+                            <i class="fa fa-fw fa-envelope-o"></i>
+                            <span>SMS মডিউল</span>
+                        </a>
+                    </li>
                     <li class="{{ Request::is('dashboard/reports') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.reports') }}">
                             <i class="fa fa-fw fa-pie-chart"></i>
