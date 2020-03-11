@@ -107,15 +107,15 @@
             <h4 class="modal-title"><i class="fa fa-envelope"></i> আবেদনকারীকে বার্তা পাঠান</h4>
           </div>
           {!! Form::open(['route' => 'dashboard.sendsmsapplicant', 'method' => 'POST', 'class' => 'form-default']) !!}
-          <div class="modal-body">
-            {!! Form::hidden('unique_key', $application->unique_key) !!}
-            {!! Form::textarea('message', null, array('class' => 'form-control textarea', 'placeholder' => 'বার্তা লিখুন', 'required' => '')) !!}
-          </div>
-          <div class="modal-footer">
-                {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-warning')) !!}
-                <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-            {!! Form::close() !!}
-          </div>
+            <div class="modal-body">
+              {!! Form::hidden('unique_key', $application->unique_key) !!}
+              {!! Form::textarea('message', null, array('class' => 'form-control textarea', 'placeholder' => 'বার্তা লিখুন', 'required' => '')) !!}
+            </div>
+            <div class="modal-footer">
+                  {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-warning')) !!}
+                  <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+              {!! Form::close() !!}
+            </div>
           {!! Form::close() !!}
         </div>
       </div>

@@ -15,49 +15,42 @@
 @section('content')
   <div class="row">
     <div class="col-md-6">
-      <div class="box box-widget widget-user-2">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-yellow">
-          <h3 class="widget-user-username">সিভিসিএস</h3>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">সকলকে SMS</h3>
+
+          <div class="box-tools pull-right"></div>
         </div>
-        <div class="box-footer no-padding">
-          <ul class="nav nav-stacked">
-            @if($notifpendingapplications > 0)
-              <li>
-                <a href="{{ route('dashboard.applications') }}">
-                  <i class="fa fa-users text-aqua"></i> নিবন্ধন আবেদন
-                  <span class="pull-right badge bg-aqua">{{ $notifpendingapplications }} জন</span>
-                </a>
-              </li>
-            @endif
-
-            @if($notifdefectiveapplications > 0)
-              <li>
-                <a href="{{ route('dashboard.defectiveapplications') }}">
-                  <i class="fa fa-exclamation-triangle text-maroon"></i> অসম্পূর্ণ আবেদন
-                  <span class="pull-right badge bg-aqua">{{ $notifdefectiveapplications }} টি</span>
-                </a>
-              </li>
-            @endif
-
-            @if($notifpendingpayments > 0)
-              <li>
-                <a href="{{ route('dashboard.memberspendingpayments') }}">
-                  <i class="fa fa-hourglass-start text-yellow"></i> প্রক্রিয়াধীন পরিশোধ
-                  <span class="pull-right badge bg-yellow">{{ $notifpendingpayments }} টি</span>
-                </a>
-              </li>
-            @endif
-
-            @if($notiftempmemdatas > 0)
-              <li>
-                <a href="{{ route('dashboard.membersupdaterequests') }}">
-                  <i class="fa fa-pencil-square-o text-green"></i> তথ্য হালনাগাদ অনুরোধ
-                  <span class="pull-right badge bg-green">{{ $notiftempmemdatas }} টি</span>
-                </a>
-              </li>
-            @endif 
-          </ul>
+        <div class="box-body no-padding">
+          {!! Form::open(['route' => 'dashboard.sendsmsapplicant', 'method' => 'POST', 'class' => 'form-default']) !!}
+            <div class="modal-body">
+              {!! Form::textarea('message', null, array('class' => 'form-control textarea', 'placeholder' => 'বার্তা লিখুন', 'required' => '')) !!}
+            </div>
+            <div class="modal-footer">
+                  {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-warning')) !!}
+                  <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+              {!! Form::close() !!}
+            </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">পেমেন্ট অনুরোধ মেসেজ</h3>
+        </div>
+        <div class="box-body no-padding">
+          {!! Form::open(['route' => 'dashboard.sendsmsapplicant', 'method' => 'POST', 'class' => 'form-default']) !!}
+            <div class="modal-body">
+              {!! Form::textarea('message', null, array('class' => 'form-control textarea', 'placeholder' => 'বার্তা লিখুন', 'required' => '')) !!}
+            </div>
+            <div class="modal-footer">
+                  {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-warning')) !!}
+                  <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+              {!! Form::close() !!}
+            </div>
+          {!! Form::close() !!}
         </div>
       </div>
     </div>
