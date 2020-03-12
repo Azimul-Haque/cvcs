@@ -2934,6 +2934,11 @@ class DashboardController extends Controller
         return view('dashboard.smsmodule');
     }
 
+    public function sendBulkSMS(Request $request) 
+    {
+        
+    }
+
     public function testGPSMSAPI() 
     {
         $url = config('sms.gp_url');
