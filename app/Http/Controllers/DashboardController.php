@@ -2944,7 +2944,7 @@ class DashboardController extends Controller
             'username'=>config('sms.gp_username'),
             'password'=>config('sms.gp_password'),
             'apicode'=>"1",
-            'msisdn'=>["01751398392", "01837409842"],
+            'msisdn'=>"01751398392,01837409842",
             'countrycode'=>"880",
             'cli'=>"CVCS",
             'messagetype'=>"1",
