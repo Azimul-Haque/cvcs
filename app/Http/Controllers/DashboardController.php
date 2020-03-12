@@ -2943,9 +2943,9 @@ class DashboardController extends Controller
 
     public function sendReminderSMS(Request $request) 
     {
-        // $this->validate($request,array(
-        //     'message' => 'required'
-        // ));
+        $this->validate($request,array(
+            'confirmation' => 'required'
+        ));
     }
 
     public function testGPSMSAPI() 

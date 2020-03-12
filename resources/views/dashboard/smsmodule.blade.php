@@ -45,20 +45,20 @@
               </tr>
             </table>
             <input type="hidden" name="smscount" id="smscounthidden" required="">
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sendBulkModal" data-backdrop="static"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send SMS</button>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sendBulkModal" data-backdrop="static"><i class="fa fa-paper-plane" aria-hidden="true"></i> বার্তা পাঠান</button>
               <div class="modal fade" id="sendBulkModal" role="dialog">
                 <div class="modal-dialog modal-md">
                   <div class="modal-content">
                     <div class="modal-header modal-header-success">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title"><i class="fa fa-envelope-o" aria-hidden="true"></i> SMS Sending Confirmation</h4>
+                      <h4 class="modal-title"><i class="fa fa-envelope-o" aria-hidden="true"></i> SMS প্রেরণ নিশ্চিতকরণ</h4>
                     </div>
                     <div class="modal-body">
-                      Are you sure to send SMS to <b>{{ $notifregisteredmember }} persons?</b>
+                      আপনি কি নিশ্চিতভাবে <b>{{ $notifregisteredmember }}</b> জনকে এ বার্তাটি পাঠাতে চান?</b>
                     </div>
                     <div class="modal-footer">
-                      <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> Send SMS</button>
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                     </div>
                   </div>
                 </div>
@@ -73,16 +73,12 @@
         <div class="box-header with-border">
           <h3 class="box-title">মাসিক পেমেন্ট রিমাইন্ডার মেসেজ</h3>
         </div>
-        <div class="box-body no-padding">
-          {!! Form::open(['route' => 'dashboard.sendsmsapplicant', 'method' => 'POST', 'class' => 'form-default']) !!}
-            <div class="modal-body">
-              {!! Form::textarea('message', null, array('class' => 'form-control textarea', 'placeholder' => 'বার্তা লিখুন', 'required' => '')) !!}
-            </div>
-            <div class="modal-footer">
-                  {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-warning')) !!}
-                  <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-              {!! Form::close() !!}
-            </div>
+        <div class="box-body">
+          {!! Form::open(['route' => 'dashboard.sms.sendreminder', 'method' => 'POST', 'class' => 'form-default']) !!}
+            <b>SMS Template: </b><br/>
+            Dear [Member Name], your montly payment for the month [Month Name] is due, please pay it. Total due: [Total Due Amount]/-.Login: https://cvcsbd.com/login<br/><br/>
+            {!! Form::text('confirmation', null, array('class' => 'form-control textarea', 'placeholder' => 'Type "Confirm"', 'required' => '')) !!}<br/>
+            {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-info')) !!}
           {!! Form::close() !!}
         </div>
       </div>
