@@ -234,6 +234,8 @@ Route::get('/dashboard/notifications', ['as'=>'dashboard.notifications','uses'=>
 
 // SMS MODULE
 Route::get('/dashboard/sms/module', ['as'=>'dashboard.smsmodule','uses'=>'DashboardController@getSMSModule']);
+Route::post('/dashboard/sms/send/buk', ['as'=>'dashboard.sms.sendbulk','uses'=>'DashboardController@sendBulkSMS']);
+
 Route::get('/dashboard/sms/module/test', ['as'=>'dashboard.testgpsmsapi','uses'=>'DashboardController@testGPSMSAPI']);
 Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsapi','uses'=>'DashboardController@testMultiGPSMSAPI']);
 

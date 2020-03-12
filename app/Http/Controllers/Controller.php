@@ -32,6 +32,10 @@ class Controller extends BaseController
 
       $notiftempmemdatas = Tempmemdata::count();
 
+      $notifregisteredmember = User::where('activation_status', 1)
+                                   ->where('role_type', '!=', 'admin')                
+                                   ->count();
+
       // sms balance check
       $url = config('sms.gp_url');
       $data_notif= array(
@@ -84,6 +88,7 @@ class Controller extends BaseController
       View::share('notiftempmemdatas', $notiftempmemdatas);
       View::share('notifcount', $notifcount);
       View::share('notifsmsbalance', $notifsmsbalance);
+      View::share('notifregisteredmember', $notifregisteredmember);
     }
 
 }
