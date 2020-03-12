@@ -2936,7 +2936,16 @@ class DashboardController extends Controller
 
     public function sendBulkSMS(Request $request) 
     {
-        
+        $this->validate($request,array(
+            'message' => 'required'
+        ));
+    }
+
+    public function sendReminderSMS(Request $request) 
+    {
+        // $this->validate($request,array(
+        //     'message' => 'required'
+        // ));
     }
 
     public function testGPSMSAPI() 

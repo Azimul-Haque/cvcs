@@ -71,7 +71,7 @@
     <div class="col-md-6">
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">পেমেন্ট অনুরোধ মেসেজ</h3>
+          <h3 class="box-title">মাসিক পেমেন্ট রিমাইন্ডার মেসেজ</h3>
         </div>
         <div class="box-body no-padding">
           {!! Form::open(['route' => 'dashboard.sendsmsapplicant', 'method' => 'POST', 'class' => 'form-default']) !!}
