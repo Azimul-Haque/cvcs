@@ -2996,9 +2996,9 @@ class DashboardController extends Controller
     public function testMultiGPSMSAPI() 
     {
         $users = User::where('mobile', '01837409842')
-                        ->orWhere('mobile', '01751398392')
-                        ->orWhere('mobile', '03846328463')
-                        ->get();
+                     ->orWhere('mobile', '01751398392')
+                     ->orWhere('mobile', '03846328463')
+                     ->get();
 
         $smssuccesscount = 0;
         $url = config('sms.gp_url');
@@ -3059,7 +3059,7 @@ class DashboardController extends Controller
         curl_multi_close($mh);
 
 
-        print_r($result);
+        print_r(count($result));
     }
 
 }
