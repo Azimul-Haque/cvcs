@@ -3059,7 +3059,7 @@ class DashboardController extends Controller
         curl_multi_close($mh);
 
 
-        print_r(count($result));
+        print_r($result);
     }
 
 }
