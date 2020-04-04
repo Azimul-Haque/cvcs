@@ -1946,6 +1946,8 @@ class DashboardController extends Controller
                                  ->orWhere('mobile', 'like', '%'.$query.'%')
                                  ->orWhere('email', 'like', '%'.$query.'%');
                     })
+                    ->with('branch')
+                    ->with('position')
                     ->orderBy('id', 'desc')
                     ->get();
           }
