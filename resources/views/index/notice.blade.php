@@ -43,12 +43,11 @@
                     </div>
                 @endforeach
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <br/><br/>
-                        @include('pagination.default', ['paginator' => $notices])
-                    </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <br/><br/>
+                    @include('pagination.default', ['paginator' => $notices])
                 </div>
             </div>
         </div>
