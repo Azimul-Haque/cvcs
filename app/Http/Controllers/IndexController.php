@@ -508,13 +508,14 @@ class IndexController extends Controller
             // send sms
             if($sendstatus == 200) {
                 Session::flash('info', $request->mobile . '-নম্বরে সিকিউরিটি কোড পাঠানো হয়েছে!');
+                return redirect()->route('index.mobileresetverifypage', $request->mobile);
             } elseif($sendstatus == 216) {
                 // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
                 dd($smsresult);
-                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।');
+                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।'); 
             }
-            return redirect()->route('index.mobileresetverifypage', $request->mobile);
+            return redirect()->route('index.mobilereset');
         } else {
             Session::flash('warning', 'এই নম্বরের কোন সদস্য পাওয়া যায়নি!');
             return redirect()->route('index.mobilereset');
