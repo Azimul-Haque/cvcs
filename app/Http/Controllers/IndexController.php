@@ -512,7 +512,7 @@ class IndexController extends Controller
             } elseif($sendstatus == 216) {
                 // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
-                dd($smsresult);
+                // dd($smsresult);
                 Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।'); 
             }
             return redirect()->route('index.mobilereset');
