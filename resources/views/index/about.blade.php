@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    CVCS asd | আমাদের সম্পর্কে
+    CVCS | আমাদের সম্পর্কে
 @endsection
 
 @section('css')
