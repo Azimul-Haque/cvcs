@@ -238,7 +238,7 @@ Route::post('/dashboard/sms/send/bulk', ['as'=>'dashboard.sms.sendbulk','uses'=>
 Route::post('/dashboard/sms/send/reminder', ['as'=>'dashboard.sms.sendreminder','uses'=>'DashboardController@sendReminderSMS']);
 
 Route::get('/dashboard/sms/module/test', ['as'=>'dashboard.testgpsmsapi','uses'=>'DashboardController@testGPSMSAPI']);
-Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsapi','uses'=>'DashboardController@testMultiGPSMSAPI']);
+Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsapi','uses'=>'IndexController@testMultiGPSMSAPI']);
 
 // dashboard routes
 // dashboard routes
