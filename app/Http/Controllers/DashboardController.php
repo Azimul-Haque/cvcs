@@ -2385,19 +2385,14 @@ class DashboardController extends Controller
                 $mobile_number = substr(Auth::user()->mobile, -11);
             }
         }
-        $url = config('sms.gp_url');
+        $url = config('sms.url');
         $number = $mobile_number;
         $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Login: https://cvcsbd.com/login';
         $data= array(
-            'username'=>config('sms.gp_username'),
-            'password'=>config('sms.gp_password'),
-            'apicode'=>"1",
-            'msisdn'=>"$number",
-            'countrycode'=>"880",
-            'cli'=>"CVCS",
-            'messagetype'=>"1",
-            'message'=>"$text",
-            'messageid'=>"1"
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            'number'=>"$number",
+            'message'=>"$text"
         );
         // initialize send status
         $ch = curl_init(); // Initialize cURL
@@ -2407,11 +2402,13 @@ class DashboardController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
 
-        $sendstatus = $result = substr($smsresult, 0, 3);
+        // $sendstatus = $result = substr($smsresult, 0, 3);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
         // send sms
-        if($sendstatus == 200) {
+        if($sendstatus == 1101) {
             // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 216) {
+        } elseif($sendstatus == 1006) {
             // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
@@ -2584,7 +2581,7 @@ class DashboardController extends Controller
         // send sms
         // $mobile_numbers = [];
         $smssuccesscount = 0;
-        $url = config('sms.gp_url');
+        $url = config('sms.url');
         
         $multiCurl = array();
         // data to be returned
@@ -2609,15 +2606,16 @@ class DashboardController extends Controller
             // }
             $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Login: https://cvcsbd.com/login';
             $smsdata[$i] = array(
-                'username'=>config('sms.gp_username'),
-                'password'=>config('sms.gp_password'),
-                'apicode'=>"1",
-                'msisdn'=>"$mobile_number",
-                'countrycode'=>"880",
-                'cli'=>"CVCS",
-                'messagetype'=>"1",
+                'username'=>config('sms.username'),
+                'password'=>config('sms.password'),
+                // 'apicode'=>"1",
+                'number'=>"$mobile_number",
+                // 'msisdn'=>"$mobile_number",
+                // 'countrycode'=>"880",
+                // 'cli'=>"CVCS",
+                // 'messagetype'=>"1",
                 'message'=>"$text",
-                'messageid'=>"1"
+                // 'messageid'=>"1"
             );
             $multiCurl[$i] = curl_init(); // Initialize cURL
             curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
@@ -2636,8 +2634,10 @@ class DashboardController extends Controller
         foreach($multiCurl as $k => $ch) {
           $result[$k] = curl_multi_getcontent($ch);
           curl_multi_remove_handle($mh, $ch);
-          $sendstatus = substr($result[$k], 0, 3);;
-          if($sendstatus == 200) {
+          // $sendstatus = substr($result[$k], 0, 3);
+          $p = explode("|",$result[$k]);
+          $sendstatus = $p[0];
+          if($sendstatus == 1101) {
               $smssuccesscount++;
           }
         }
@@ -2794,19 +2794,20 @@ class DashboardController extends Controller
                 $mobile_number = substr($payment->user->mobile, -11);
             }
         }
-        $url = config('sms.gp_url');
+        $url = config('sms.url');
         $number = $mobile_number;
         $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Login: https://cvcsbd.com/login';
         $data= array(
-            'username'=>config('sms.gp_username'),
-            'password'=>config('sms.gp_password'),
-            'apicode'=>"1",
-            'msisdn'=>"$number",
-            'countrycode'=>"880",
-            'cli'=>"CVCS",
-            'messagetype'=>"1",
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            // 'apicode'=>"1",
+            'number'=>"$number",
+            // 'msisdn'=>"$number",
+            // 'countrycode'=>"880",
+            // 'cli'=>"CVCS",
+            // 'messagetype'=>"1",
             'message'=>"$text",
-            'messageid'=>"1"
+            // 'messageid'=>"1"
         );
         // initialize send status
         $ch = curl_init(); // Initialize cURL
@@ -2816,11 +2817,13 @@ class DashboardController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
 
-        $sendstatus = $result = substr($smsresult, 0, 3);
+        // $sendstatus = $result = substr($smsresult, 0, 3);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
         // send sms
-        if($sendstatus == 200) {
+        if($sendstatus == 1101) {
             Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 216) {
+        } elseif($sendstatus == 1006) {
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
@@ -2866,7 +2869,7 @@ class DashboardController extends Controller
         // send sms
         // $mobile_numbers = [];
         $smssuccesscount = 0;
-        $url = config('sms.gp_url');
+        $url = config('sms.url');
         
         $multiCurl = array();
         // data to be returned
@@ -2891,15 +2894,16 @@ class DashboardController extends Controller
             // }
             $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Login: https://cvcsbd.com/login';
             $smsdata[$member_id] = array(
-                'username'=>config('sms.gp_username'),
-                'password'=>config('sms.gp_password'),
-                'apicode'=>"1",
-                'msisdn'=>"$mobile_number",
-                'countrycode'=>"880",
-                'cli'=>"CVCS",
-                'messagetype'=>"1",
+                'username'=>config('sms.username'),
+                'password'=>config('sms.password'),
+                // 'apicode'=>"1",
+                'number'=>"$mobile_number",
+                // 'msisdn'=>"$mobile_number",
+                // 'countrycode'=>"880",
+                // 'cli'=>"CVCS",
+                // 'messagetype'=>"1",
                 'message'=>"$text",
-                'messageid'=>"2"
+                // 'messageid'=>"2"
             );
             $multiCurl[$member_id] = curl_init(); // Initialize cURL
             curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
@@ -2918,8 +2922,10 @@ class DashboardController extends Controller
         foreach($multiCurl as $k => $ch) {
           $result[$k] = curl_multi_getcontent($ch);
           curl_multi_remove_handle($mh, $ch);
-          $sendstatus = substr($result[$k], 0, 3);;
-          if($sendstatus == 200) {
+          $smsresult = $result[$k];
+          $p = explode("|",$smsresult);
+          $sendstatus = $p[0];
+          if($sendstatus == 1101) {
               $smssuccesscount++;
           }
         }
