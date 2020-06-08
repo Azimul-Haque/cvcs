@@ -366,21 +366,16 @@ class IndexController extends Controller
                 $mobile_number = substr($application->mobile, -11);
             }
         }
-        $url = config('sms.gp_url');
+        $url = config('sms.url');
         $number = $mobile_number;
         $text = 'Dear ' . $application->name . ', your membership application has been submitted! We will notify you when we approve. Thanks. Visit: https://cvcsbd.com';
         // this sms costs 2 SMS
         
         $data= array(
-            'username'=>config('sms.gp_username'),
-            'password'=>config('sms.gp_password'),
-            'apicode'=>"1",
-            'msisdn'=>"$number",
-            'countrycode'=>"880",
-            'cli'=>"CVCS",
-            'messagetype'=>"1",
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            'number'=>"$number",
             'message'=>"$text",
-            'messageid'=>"1"
         );
 
         // initialize send status
@@ -391,11 +386,13 @@ class IndexController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
 
-        $sendstatus = $result = substr($smsresult, 0, 3);
+        // $sendstatus = $result = substr($smsresult, 0, 3);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
         // send sms
-        if($sendstatus == 200) {
+        if($sendstatus == 1101) {
             // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 216) {
+        } elseif($sendstatus == 1006) {
             // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
@@ -476,7 +473,7 @@ class IndexController extends Controller
                     $mobile_number = substr($request->mobile, -11);
                 }
             }
-            $url = config('sms.gp_url');
+            $url = config('sms.url');
             $number = $mobile_number;
             $text = $securuty_code . ' is your password reset security code. Thanks, https://cvcsbd.com';
             $data= array(
@@ -484,17 +481,6 @@ class IndexController extends Controller
                 'password'=>config('sms.password'),
                 'number'=>"$number",
                 'message'=>"$text"
-            );
-            $data= array(
-                'username'=>config('sms.gp_username'),
-                'password'=>config('sms.gp_password'),
-                'apicode'=>"1",
-                'msisdn'=>"$number",
-                'countrycode'=>"880",
-                'cli'=>"CVCS",
-                'messagetype'=>"1",
-                'message'=>"$text",
-                'messageid'=>"4"
             );
             // initialize send status
             $ch = curl_init(); // Initialize cURL
@@ -504,15 +490,17 @@ class IndexController extends Controller
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
             $smsresult = curl_exec($ch);
 
-            $sendstatus = $result = substr($smsresult, 0, 3);
+            // $sendstatus = $result = substr($smsresult, 0, 3);
+            $p = explode("|",$smsresult);
+            $sendstatus = $p[0];
             // send sms
-            if($sendstatus == 200) {
+            if($sendstatus == 1101) {
                 Session::flash('info', $request->mobile . '-নম্বরে সিকিউরিটি কোড পাঠানো হয়েছে!');
                 return redirect()->route('index.mobileresetverifypage', $request->mobile);
-            } elseif($sendstatus == 216) {
+            } elseif($sendstatus == 1006) {
                 // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
-                dd($smsresult);
+                // dd($smsresult);
                 Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।'); 
             }
             return redirect()->route('index.mobilereset');

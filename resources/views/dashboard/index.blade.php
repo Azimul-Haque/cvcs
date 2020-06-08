@@ -230,20 +230,20 @@
 	              	<h4><i class="fa fa-money"></i> 
 	              		সর্বমোট এসএমএস ব্যালেন্সঃ 
 	              		@if($notifsmsbalance > 0)
-	              			৳ {{ $notifsmsbalance }}
+	              			<b>৳ {{ $notifsmsbalance }}</b>
 	              		@endif
 	              	</h4>
 	              	<h4><i class="fa fa-envelope"></i> 
 	              		সর্বমোট এসএমএসঃ 
 	              		@if($notifsmsbalance > 0)
-	              			{{ (int) ($notifsmsbalance/0.40) }} টি
+	              			<b>{{ (int) ($notifsmsbalance/0.30) }} টি</b>
 	              		@endif
 	              	</h4>
 	              </center>
 	            </div>
 	            
 	            <div class="box-footer text-center">
-	              ভার্চুয়াল নাম্বারঃ 01708403978
+	              {{-- ভার্চুয়াল নাম্বারঃ 01708403978 --}}
 	            </div>
 	        </div>
     	</div>
