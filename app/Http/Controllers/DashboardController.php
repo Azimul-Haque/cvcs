@@ -2948,6 +2948,9 @@ class DashboardController extends Controller
 
     public function sendBulkSMS(Request $request) 
     {
+        // KAAJ BAKI ACHE...
+        // KAAJ BAKI ACHE...
+        // KAAJ BAKI ACHE...
         $this->validate($request,array(
             'message' => 'required'
         ));
@@ -2955,6 +2958,9 @@ class DashboardController extends Controller
 
     public function sendReminderSMS(Request $request) 
     {
+        // KAAJ BAKI ACHE...
+        // KAAJ BAKI ACHE...
+        // KAAJ BAKI ACHE...
         $this->validate($request,array(
             'confirmation' => 'required'
         ));
@@ -2962,6 +2968,9 @@ class DashboardController extends Controller
 
     public function testGPSMSAPI() 
     {
+        // KAAJ BAKI ACHE...
+        // KAAJ BAKI ACHE...
+        // KAAJ BAKI ACHE...
         $url = config('sms.gp_url');
         $number = '01751398392';
         $text = 'This is test';
