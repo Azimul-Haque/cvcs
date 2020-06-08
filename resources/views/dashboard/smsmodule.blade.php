@@ -9,10 +9,10 @@
 @section('content_header')
     <h1>
       SMS মডিউল (সর্বমোট ব্যবহারযোগ্য এসএমএসঃ 
-                    @if($notifsmsbalance > 0)
-                      <b>{{ (int) ($notifsmsbalance/0.30) }}</b> টি
-                    @endif
-                    )
+      @if($notifsmsbalance > 0)
+        <b>{{ (int) ($notifsmsbalance/0.30) }}</b> টি
+      @endif 
+      )
     </h1>
 @stop
 
