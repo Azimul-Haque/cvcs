@@ -37,30 +37,51 @@ class Controller extends BaseController
                                    ->count();
 
       // sms balance check
-      $url = config('sms.gp_url');
-      $data_notif= array(
-          'username'=>config('sms.gp_username'),
-          'password'=>config('sms.gp_password'),
-          'apicode'=>"3",
-          'msisdn'=>"0",
-          'countrycode'=>"0",
-          'cli'=>"0",
-          'messagetype'=>"0",
-          'message'=>"0",
-          'messageid'=>"0"
-      );
+      // $url = config('sms.gp_url');
+      // $data_notif= array(
+      //     'username'=>config('sms.gp_username'),
+      //     'password'=>config('sms.gp_password'),
+      //     'apicode'=>"3",
+      //     'msisdn'=>"0",
+      //     'countrycode'=>"0",
+      //     'cli'=>"0",
+      //     'messagetype'=>"0",
+      //     'message'=>"0",
+      //     'messageid'=>"0"
+      // );
       
-      // initialize send status
-      $chnotif = curl_init(); // Initialize cURL
-      curl_setopt($chnotif, CURLOPT_URL,$url);
-      curl_setopt($chnotif, CURLOPT_POSTFIELDS, http_build_query($data_notif));
-      curl_setopt($chnotif, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($chnotif, CURLOPT_SSL_VERIFYPEER, false); // this is important
-      $smsresultnotif = curl_exec($chnotif);
+      // // initialize send status
+      // $chnotif = curl_init(); // Initialize cURL
+      // curl_setopt($chnotif, CURLOPT_URL,$url);
+      // curl_setopt($chnotif, CURLOPT_POSTFIELDS, http_build_query($data_notif));
+      // curl_setopt($chnotif, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($chnotif, CURLOPT_SSL_VERIFYPEER, false); // this is important
+      // $smsresultnotif = curl_exec($chnotif);
       
+      // $notifsmsbalance = -1;
+      // if(substr($smsresultnotif, 0, 3) == 200) {
+      //   $notifsmsbalance = substr(substr($smsresultnotif, 4), 0, -2);
+      // }
+      $actualbalance = 0;
+      try {
+          // $actualbalance = number_format((float) file_get_contents('http://66.45.237.70/balancechk.php?username=01751398392&password=Bulk.Sms.Bd.123'), 2, '.', '');
+          $url = 'http://66.45.237.70/balancechk.php?username=01751398392&password=Bulk.Sms.Bd.123';
+          
+          //  Initiate curl
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_URL,$url);
+          $result=curl_exec($ch);
+          curl_close($ch);
+
+          $actualbalance = number_format((float) $result, 2, '.', '');
+          
+      } catch (\Exception $e) {
+
+      }
       $notifsmsbalance = -1;
-      if(substr($smsresultnotif, 0, 3) == 200) {
-        $notifsmsbalance = substr(substr($smsresultnotif, 4), 0, -2);
+      if($actualbalance > 0) {
+        $notifsmsbalance = $actualbalance;
       }
       // sms balance check
       

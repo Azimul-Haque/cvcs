@@ -1676,19 +1676,20 @@ class DashboardController extends Controller
                 $mobile_number = substr($applicant->mobile, -11);
             }
         }
-        $url = config('sms.gp_url');
+        $url = config('sms.url');
         $number = $mobile_number;
         $text = $request->message;
         $data= array(
-            'username'=>config('sms.gp_username'),
-            'password'=>config('sms.gp_password'),
-            'apicode'=>"1",
-            'msisdn'=>"$number",
-            'countrycode'=>"880",
-            'cli'=>"CVCS",
-            'messagetype'=>"3",
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            'number'=>"$number",
             'message'=>"$text",
-            'messageid'=>"3"
+            // 'apicode'=>"1",
+            // 'msisdn'=>"$number",
+            // 'countrycode'=>"880",
+            // 'cli'=>"CVCS",
+            // 'messagetype'=>"3",
+            // 'messageid'=>"3"
         );
         // initialize send status
         $ch = curl_init(); // Initialize cURL
@@ -1697,12 +1698,24 @@ class DashboardController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
 
-        $sendstatus = substr($smsresult, 0, 3);
+        // $sendstatus = substr($smsresult, 0, 3);
+        // API Response Code
+        // 1000 = Invalid user or Password
+        // 1002 = Empty Number
+        // 1003 = Invalid message or empty message
+        // 1004 = Invalid number
+        // 1005 = All Number is Invalid 
+        // 1006 = insufficient Balance 
+        // 1009 = Inactive Account
+        // 1010 = Max number limit exceeded
+        // 1101 = Success
         // send sms
-        if($sendstatus == 200) {
+        if($sendstatus == 1101) {
             Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 216) {
+        } elseif($sendstatus == 1006) {
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
