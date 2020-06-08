@@ -344,12 +344,16 @@
                             <span>একাধিক পরিশোধ</span>
                         </a>
                     </li>
+                    @endif
+                    @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'manager'))
                     <li class="{{ Request::is('dashboard/sms/*') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.smsmodule') }}">
                             <i class="fa fa-fw fa-envelope-o"></i>
                             <span>SMS মডিউল</span>
                         </a>
                     </li>
+                    @endif
+                    @if((Auth::user()->role_type == 'admin') || (Auth::user()->role_type == 'manager') || (Auth::user()->role_type == 'bulkpayer'))
                     <li class="{{ Request::is('dashboard/reports') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.reports') }}">
                             <i class="fa fa-fw fa-pie-chart"></i>
