@@ -2950,13 +2950,14 @@ class DashboardController extends Controller
     {
         $this->validate($request,array(
             'smsbalance' => 'required',
-            'message'    => 'required'
+            'message'    => 'required',
+            'smscount'   => 'required'
         ));
-
+        
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')                
                        ->get();
-        if($request->smsbalance < $members->count()) {
+        if($request->smsbalance < ($members->count() * $request->smscount)) {
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি! রিচার্জ করুন।');
             return redirect()->route('dashboard.smsmodule');
         }

@@ -46,24 +46,24 @@
               </tr>
             </table>
             <input type="hidden" name="smscount" id="smscounthidden" required="">
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sendBulkModal" data-backdrop="static"><i class="fa fa-paper-plane" aria-hidden="true"></i> বার্তা পাঠান</button>
-              <div class="modal fade" id="sendBulkModal" role="dialog">
-                <div class="modal-dialog modal-md">
-                  <div class="modal-content">
-                    <div class="modal-header modal-header-success">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title"><i class="fa fa-envelope-o" aria-hidden="true"></i> SMS প্রেরণ নিশ্চিতকরণ</h4>
-                    </div>
-                    <div class="modal-body">
-                      আপনি কি নিশ্চিতভাবে <b>{{ $notifregisteredmember }}</b> জনকে এ বার্তাটি পাঠাতে চান?</b>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
-                      <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-                    </div>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sendBulkModal" data-backdrop="static"><i class="fa fa-paper-plane" aria-hidden="true"></i> বার্তা পাঠান</button>
+            <div class="modal fade" id="sendBulkModal" role="dialog">
+              <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                  <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-envelope-o" aria-hidden="true"></i> SMS প্রেরণ নিশ্চিতকরণ</h4>
+                  </div>
+                  <div class="modal-body">
+                    আপনি কি নিশ্চিতভাবে <b>{{ $notifregisteredmember }}</b> জনকে এ বার্তাটি পাঠাতে চান?</b>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                   </div>
                 </div>
               </div>
+            </div>
           {!! Form::close() !!}
         </div>
         <!-- /.box-body -->
