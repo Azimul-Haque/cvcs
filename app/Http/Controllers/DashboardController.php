@@ -2952,29 +2952,34 @@ class DashboardController extends Controller
             'message' => 'required'
         ));
 
+        $members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')                
+                       ->get();
+
         // send sms
-        $mobile_number = 0;
-        if(strlen($payment->user->mobile) == 11) {
-            $mobile_number = $payment->user->mobile;
-        } elseif(strlen($payment->user->mobile) > 11) {
-            if (strpos($payment->user->mobile, '+') !== false) {
-                $mobile_number = substr($payment->user->mobile, -11);
+        $numbersarray = [];
+        foreach ($members as $member) {
+            $mobile_number = 0;
+            if(strlen($member->mobile) == 11) {
+                $mobile_number = $member->mobile;
+            } elseif(strlen($member->mobile) > 11) {
+                if (strpos($member->mobile, '+') !== false) {
+                    $mobile_number = substr($member->mobile, -11);
+                }
             }
+            $numbersarray[] = $mobile_number;
         }
+        $numbersstr = implode (",", $numbersarray);
+        // dd($numbersstr);
+        
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Login: https://cvcsbd.com/login';
+        $text = $request->message;
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
-            // 'apicode'=>"1",
-            'number'=>"$number",
-            // 'msisdn'=>"$number",
-            // 'countrycode'=>"880",
-            // 'cli'=>"CVCS",
-            // 'messagetype'=>"1",
+            'number'=>"$numbersstr",
             'message'=>"$text",
-            // 'messageid'=>"1"
         );
         // initialize send status
         $ch = curl_init(); // Initialize cURL
@@ -2995,9 +3000,7 @@ class DashboardController extends Controller
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
-
-        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
-        return redirect()->route('dashboard.membersapprovedpayments');
+        return redirect()->route('dashboard.smsmodule');
     }
 
     public function sendReminderSMS(Request $request) 
