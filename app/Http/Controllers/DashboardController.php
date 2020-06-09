@@ -2949,13 +2949,17 @@ class DashboardController extends Controller
     public function sendBulkSMS(Request $request) 
     {
         $this->validate($request,array(
-            'message' => 'required'
+            'smsbalance' => 'required',
+            'message'    => 'required'
         ));
 
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')                
                        ->get();
-
+        if($request->smsbalance < $members->count()) {
+            Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি! রিচার্জ করুন।');
+            return redirect()->route('dashboard.smsmodule');
+        }
         // send sms
         $numbersarray = [];
         foreach ($members as $member) {
@@ -2994,7 +2998,7 @@ class DashboardController extends Controller
         $sendstatus = $p[0];
         // send sms
         if($sendstatus == 1101) {
-            Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+            Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
         } elseif($sendstatus == 1006) {
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
