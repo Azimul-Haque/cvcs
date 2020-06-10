@@ -54,8 +54,8 @@
             <a href="{{ route('dashboard.designation.members', $memberpos->id) }}" class="btn btn-sm btn-success" title="পদবির সদস্য দেখুন">
               <i class="fa fa-eye"></i>
             </a>
-            <!-- Remove BulK Payer Modal -->
-            <!-- Remove BulK Payer Modal -->
+            <!-- Edit Modal -->
+            <!-- Edit Modal -->
             <div class="modal fade" id="editModal{{ $memberpos->id }}" role="dialog">
               <div class="modal-dialog modal-md">
                 <div class="modal-content">
@@ -76,8 +76,8 @@
                 </div>
               </div>
             </div>
-            <!-- Remove BulK Payer Modal -->
-            <!-- Remove BulK Payer Modal -->
+            <!-- Edit Modal -->
+            <!-- Edit Modal -->
             <a href="{{ url('dashboard/reports/export/designation/members/list/pdf?position_id=' . $memberpos->id) }}" class="btn btn-sm btn-info" title="সদস্য তালিকা ডাউনলোড করুন">
               <i class="fa fa-download"></i>
             </a>
@@ -87,14 +87,25 @@
         <tr>
           <td>{{ bangla($position->id + 1) }}</td>
           <td><a href="{{ route('dashboard.designation.members', $position->id) }}">{{ $position->name }}</a></td>
-          <td>{{ bangla($position->users->where('activation_status', 1)->count()) }} জন</td>
+          <td>
+            {{ bangla($position->users->where('activation_status', 1)->count()) }} জন
+            @php
+              $totalmembers = 0;
+              foreach ($position->users as $member) {
+                if($member->activation_status == 1) {
+                  $totalmembers++;
+                }
+              }
+            @endphp
+            {{ bangla($totalmembers) }} জন
+          </td>
           <td>
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $position->id }}" data-backdrop="static" title="পদবি সম্পাদনা করুন"><i class="fa fa-pencil"></i></button>
             <a href="{{ route('dashboard.designation.members', $position->id) }}" class="btn btn-sm btn-success" title="পদবির সদস্য দেখুন">
               <i class="fa fa-eye"></i>
             </a>
-            <!-- Remove BulK Payer Modal -->
-            <!-- Remove BulK Payer Modal -->
+            <!-- Edit Modal -->
+            <!-- Edit Modal -->
             <div class="modal fade" id="editModal{{ $position->id }}" role="dialog">
               <div class="modal-dialog modal-md">
                 <div class="modal-content">
@@ -115,8 +126,8 @@
                 </div>
               </div>
             </div>
-            <!-- Remove BulK Payer Modal -->
-            <!-- Remove BulK Payer Modal -->
+            <!-- Edit Modal -->
+            <!-- Edit Modal -->
             <a href="{{ url('dashboard/reports/export/designation/members/list/pdf?position_id=' . $position->id) }}" class="btn btn-sm btn-info" title="সদস্য তালিকা ডাউনলোড করুন">
               <i class="fa fa-download"></i>
             </a>
