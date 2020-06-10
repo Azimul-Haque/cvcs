@@ -88,7 +88,7 @@
           <td>{{ bangla($position->id + 1) }}</td>
           <td><a href="{{ route('dashboard.designation.members', $position->id) }}">{{ $position->name }}</a></td>
           <td>
-            {{ bangla($position->users->where('activation_status', 1)->count()) }} জন
+            {{-- {{ bangla($position->users->where('activation_status', 1)->count()) }} জন --}}
             @php
               $totalmembers = 0;
               foreach ($position->users as $member) {
