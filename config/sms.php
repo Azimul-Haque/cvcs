@@ -1,11 +1,15 @@
 <?php
 return [
-  // SMS Gateway API Url
+  // SMS Gateway API Data
   'url'      => env('SMS_GATEWAY_URL'),
   'username' => env('SMS_GATEWAY_USERNAME'),
   'password' => env('SMS_GATEWAY_PASSWORD'),
 
-  // GP SMS Gateway API Url
+  // GreenWeb Gateaway API Data
+  'gw_url'    => env('GREEN_WEB_URL'),
+  'gw_token'  => env('GREEN_WEB_API_TOKEN'),
+
+  // GP SMS Gateway API Data
   'gp_url'      => env('GP_SMS_GATEWAY_URL'),
   'gp_username' => env('GP_SMS_GATEWAY_USERNAME'),
   'gp_password' => env('GP_SMS_GATEWAY_PASSWORD'),

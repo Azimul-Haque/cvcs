@@ -10,7 +10,7 @@
     <h1>
       SMS মডিউল (সর্বমোট ব্যবহারযোগ্য এসএমএসঃ 
       @if($notifsmsbalance > 0)
-        <b>{{ (int) ($notifsmsbalance/0.30) }}</b> টি
+        <b>{{ (int) ($notifsmsbalance/0.30) - 27000 }}</b> টি
       @endif 
       )
     </h1>
@@ -77,7 +77,7 @@
         <div class="box-body">
           {!! Form::open(['route' => 'dashboard.sms.sendreminder', 'method' => 'POST', 'class' => 'form-default']) !!}
             <b>SMS Template: </b><br/>
-            Dear [Member Name], your montly payment for the month [Month Name] is due, please pay it. Total due: [Total Due Amount]/-.Login: https://cvcsbd.com/login<br/><br/>
+            Dear [Member Name], your montly payment for [Months Count] month(s) is due, please pay it. Total due: [Total Due Amount]/-.Login: https://cvcsbd.com/login<br/><br/>
             {!! Form::text('confirmation', null, array('class' => 'form-control', 'placeholder' => 'Type "Confirm"', 'required' => '')) !!}<br/>
             {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-info')) !!}
           {!! Form::close() !!}

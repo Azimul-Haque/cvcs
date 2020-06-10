@@ -168,26 +168,35 @@ class SMSController extends Controller
 
 	        $smsdata = array_values($smsdata);
 	        $smsjsondata = json_encode($smsdata);
-        	echo $smsjsondata;
+        	// echo $smsjsondata;
         	// dd($smsjsondata);
 
-	        // $url = config('sms.url');
+	        $url = config('sms.gw_url');
 
+	        $data= array(
+	            'smsdata'=>"$smsjsondata",
+	            // 'username'=>config('sms.username'),
+	            // 'password'=>config('sms.password'),
+	            'token'=>config('sms.gw_token'),
+	        ); // Add parameters in key value
+	        $ch = curl_init(); // Initialize cURL
+	        curl_setopt($ch, CURLOPT_URL,$url);
+	        curl_setopt($ch, CURLOPT_ENCODING, '');
+	        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	        $smsresult = curl_exec($ch);
 
-	        // $data= array(
-	        //     'message'=>"$smsjsondata",
-	        //     'username'=>config('sms.username'),
-	        //     'password'=>config('sms.password'),
-	        // ); // Add parameters in key value
-	        // $ch = curl_init(); // Initialize cURL
-	        // curl_setopt($ch, CURLOPT_URL,$url);
-	        // curl_setopt($ch, CURLOPT_ENCODING, '');
-	        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-	        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	        // $smsresult = curl_exec($ch);
-
-	        // //Result
-	        // echo $smsresult;
+	        $resultstr = substr($smsresult, 0, 6);
+	        // dd($resultstr);
+	        if($resultstr == 'success') {
+	            Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
+	        } elseif($resultstr == 'Error:') {
+	            Session::flash('info', 'কাজ চলছে...');
+	            // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+	        } else {
+	            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+	        }
+	        return redirect()->route('dashboard.smsmodule');
         } else {
         	Session::flash('warning', 'Confirm শব্দটি ঠিকমতো লিখুন!');
             return redirect()->route('dashboard.smsmodule');
