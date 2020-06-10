@@ -227,12 +227,12 @@
 	            </div>
 	            <div class="box-body">
 	              <center>
-	              	<h4><i class="fa fa-money"></i> 
+	              	{{-- <h4><i class="fa fa-money"></i> 
 	              		সর্বমোট এসএমএস ব্যালেন্সঃ 
 	              		@if($notifsmsbalance > 0)
 	              			<b>৳ {{ $notifsmsbalance }}</b>
 	              		@endif
-	              	</h4>
+	              	</h4> --}}
 	              	<h4><i class="fa fa-envelope"></i> 
 	              		সর্বমোট এসএমএসঃ 
 	              		@if($notifsmsbalance > 0)
