@@ -78,7 +78,7 @@
           {!! Form::open(['route' => 'dashboard.sms.sendreminder', 'method' => 'POST', 'class' => 'form-default']) !!}
             <b>SMS Template: </b><br/>
             Dear [Member Name], your montly payment for the month [Month Name] is due, please pay it. Total due: [Total Due Amount]/-.Login: https://cvcsbd.com/login<br/><br/>
-            {!! Form::text('confirmation', null, array('class' => 'form-control textarea', 'placeholder' => 'Type "Confirm"', 'required' => '')) !!}<br/>
+            {!! Form::text('confirmation', null, array('class' => 'form-control', 'placeholder' => 'Type "Confirm"', 'required' => '')) !!}<br/>
             {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-info')) !!}
           {!! Form::close() !!}
         </div>
