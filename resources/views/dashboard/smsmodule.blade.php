@@ -10,7 +10,7 @@
     <h1>
       SMS মডিউল (সর্বমোট ব্যবহারযোগ্য এসএমএসঃ 
       @if($notifsmsbalance > 0)
-        <b>{{ (int) ($notifsmsbalance/0.30) - 27000 }}</b> টি
+        <b>{{ (int) ($notifsmsbalance/0.30) }}</b> টি
       @endif 
       )
     </h1>
