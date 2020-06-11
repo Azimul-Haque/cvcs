@@ -187,11 +187,11 @@ class SMSController extends Controller
 	        $smsresult = curl_exec($ch);
 
 	        $resultstr = substr($smsresult, 0, 6);
-	        // dd($resultstr);
-	        if($resultstr == 'success') {
-	            Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
+	        // dd($smsresult);
+	        if($resultstr == '') {
+	            Session::flash('success', bangla(count($smsdata)) . ' জন সদস্যকে SMS সফলভাবে পাঠানো হয়েছে!');
 	        } elseif($resultstr == 'Error:') {
-	            Session::flash('info', 'কাজ চলছে...');
+	            Session::flash('info', 'দুঃখিত! SMS পাঠানো যায়নি!');
 	            // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
 	        } else {
 	            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
