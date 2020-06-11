@@ -31,10 +31,10 @@
         <!-- /.box-header -->
         <div class="box-body">
           <big>Total Recipients: {{ $notifregisteredmember }}</big>
-          {!! Form::open(['route' => ['dashboard.sms.sendbulk'], 'method' => 'POST']) !!}
+          {!! Form::open(['route' => ['dashboard.sms.sendbulk'], 'method' => 'POST', 'id' => 'sendBulkForm']) !!}
             <div class="form-group">
-              <label for="singlemessage">Message:</label>
               <input type="hidden" name="smsbalance" value="{{ $notifsmsbalance / 0.30 }}">
+              <label for="singlemessage">Message:</label>
               <textarea type="text" name="message" id="singlemessage" class="form-control textarea" required="" placeholder="Write message"></textarea>
             </div>
             <table class="table">
@@ -58,7 +58,7 @@
                     আপনি কি নিশ্চিতভাবে <b>{{ $notifregisteredmember }}</b> জনকে এ বার্তাটি পাঠাতে চান?</b>
                   </div>
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
+                    <button type="submit" class="btn btn-success" id="sendBulkModalBtn"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                   </div>
                 </div>
@@ -75,11 +75,11 @@
           <h3 class="box-title">মাসিক পেমেন্ট রিমাইন্ডার মেসেজ</h3>
         </div>
         <div class="box-body">
-          {!! Form::open(['route' => 'dashboard.sms.sendreminder', 'method' => 'POST', 'class' => 'form-default']) !!}
+          {!! Form::open(['route' => 'dashboard.sms.sendreminder', 'method' => 'POST', 'class' => 'form-default', 'id' => 'sendOneToManyForm']) !!}
             <b>SMS Template: </b><br/>
             Dear [Member Name], your montly payment for [Months Count] month(s) is due, please pay it. Total due: [Total Due Amount]/-.Login: https://cvcsbd.com/login<br/><br/>
-            {!! Form::text('confirmation', null, array('class' => 'form-control', 'placeholder' => 'Type "Confirm"', 'required' => '')) !!}<br/>
-            {!! Form::submit('বার্তা পাঠান', array('class' => 'btn btn-info')) !!}
+            {!! Form::text('confirmation', null, array('class' => 'form-control', 'placeholder' => 'Type "Confirm"', 'required' => '', 'id' => 'confirmation')) !!}<br/>
+            <button type="submit" class="btn btn-info" id="sendOneToManyBtn"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
           {!! Form::close() !!}
         </div>
       </div>
@@ -93,6 +93,32 @@
     $('#singlemessage').countSms('#smstestresult');
     $('#singlemessage').keyup(function() {
         $('#smscounthidden').val($('#smscount').text());
+    });
+
+    $('#sendBulkModalBtn').click(function(e) {
+      if(!$('#singlemessage').val()) {
+        if($(window).width() > 768) {
+          toastr.error('কিছুতো লিখুন!', 'ERROR').css('width', '400px');
+        } else {
+          toastr.error('কিছুতো লিখুন!', 'ERROR').css('width', ($(window).width()-25)+'px');
+        }
+      } else {
+        $("#sendBulkModalBtn").prop('disabled', true);
+        $('#sendBulkForm').submit();
+      }
+    });
+
+    $('#sendOneToManyBtn').click(function(e) {
+      if(!$('#confirmation').val() || $('#confirmation').val() != 'Confirm') {
+        if($(window).width() > 768) {
+          toastr.error('Confirm শব্দটি লিখুন!', 'ERROR').css('width', '400px');
+        } else {
+          toastr.error('Confirm শব্দটি লিখুন!', 'ERROR').css('width', ($(window).width()-25)+'px');
+        }
+      } else if($('#confirmation').val() == 'Confirm') {
+        $("#sendOneToManyBtn").prop('disabled', true);
+        $('#sendOneToManyForm').submit();
+      }
     });
   </script>
 @stop
