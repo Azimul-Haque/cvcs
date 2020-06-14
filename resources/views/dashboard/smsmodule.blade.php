@@ -72,12 +72,13 @@
     <div class="col-md-6">
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">মাসিক পেমেন্ট রিমাইন্ডার মেসেজ</h3>
+          <h3 class="box-title">মাসিক পেমেন্ট রিমাইন্ডার মেসেজ <b>[ডায়নামিক মেসেজ ব্যালেন্সঃ {{ (int) ($notifgbsmsbalance / 0.30) }} টি]</b></h3>
         </div>
         <div class="box-body">
           {!! Form::open(['route' => 'dashboard.sms.sendreminder', 'method' => 'POST', 'class' => 'form-default', 'id' => 'sendOneToManyForm']) !!}
             <b>SMS Template: </b><br/>
             Dear [Member Name], your montly payment for [Months Count] month(s) is due, please pay it. Total due: [Total Due Amount]/-.Login: https://cvcsbd.com/login<br/><br/>
+            {!! Form::hidden('hiddengbbalance', (int) ($notifgbsmsbalance / 0.30)) !!}
             {!! Form::text('confirmation', null, array('class' => 'form-control', 'placeholder' => 'Type "Confirm"', 'required' => '', 'id' => 'confirmation')) !!}<br/>
             <button type="submit" class="btn btn-info" id="sendOneToManyBtn"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
           {!! Form::close() !!}

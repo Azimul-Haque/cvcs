@@ -83,6 +83,30 @@ class Controller extends BaseController
         $notifsmsbalance = $actualbalance;
       }
       // sms balance check
+
+      // GREENWEBsms balance check
+      
+      $actualgbbalance = 0;
+      try {
+          $grurl = 'http://api.greenweb.com.bd/g_api.php?token='. config('sms.gw_token') .'&balance';
+          
+          //  Initiate curl
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_URL,$grurl);
+          $result=curl_exec($ch);
+          curl_close($ch);
+
+          $actualgbbalance = number_format((float) $result, 2, '.', '');
+          
+      } catch (\Exception $e) {
+
+      }
+      $notifgbsmsbalance = -1;
+      if($actualgbbalance > 0) {
+        $notifgbsmsbalance = $actualgbbalance;
+      }
+      // GREENWEBsms balance check
       
       $notifcount = 0;
       if($notifpendingapplications > 0) {
@@ -109,6 +133,7 @@ class Controller extends BaseController
       View::share('notifcount', $notifcount);
       View::share('notifsmsbalance', $notifsmsbalance);
       View::share('notifregisteredmember', $notifregisteredmember);
+      View::share('notifgbsmsbalance', $notifgbsmsbalance);
     }
 
 }
