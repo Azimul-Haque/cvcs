@@ -156,7 +156,7 @@ class SMSController extends Controller
 	            	        $mobile_number = substr($member->mobile, -11);
 	            	    }
 	            	}
-	            	$text = 'Dear ' . $member->name . ', your montly payment for ' . $member->totalpendingmonthly / 500 . ' month(s) is due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-.Login: https://cvcsbd.com/login';
+	            	$text = 'Dear ' . $member->name . ', your monthly payment for ' . $member->totalpendingmonthly / 500 . ' month(s) is due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
 
 	            	$text = rawurlencode($text);
 	            	$smsdata[$i] = array(
@@ -169,7 +169,7 @@ class SMSController extends Controller
 	        $smsdata = array_values($smsdata);
 	        $smsjsondata = json_encode($smsdata);
         	// echo $smsjsondata;
-        	// dd($smsjsondata);
+        	dd($smsjsondata);
 
 	        $url = config('sms.gw_url');
 
