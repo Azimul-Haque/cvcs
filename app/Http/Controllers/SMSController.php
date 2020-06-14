@@ -163,13 +163,29 @@ class SMSController extends Controller
 	            	    'to'=>"$mobile_number",
 	            	    'message'=>"$text",
 	            	);
-	            }
+	            } else {
+                    $mobile_number = 0;
+                    if(strlen($member->mobile) == 11) {
+                        $mobile_number = $member->mobile;
+                    } elseif(strlen($member->mobile) > 11) {
+                        if (strpos($member->mobile, '+') !== false) {
+                            $mobile_number = substr($member->mobile, -11);
+                        }
+                    }
+                    $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is paid. Thank you. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
+
+                    $text = rawurlencode($text);
+                    $smsdata[$i] = array(
+                        'to'=>"$mobile_number",
+                        'message'=>"$text",
+                    );
+                }
 	        }
 
 	        $smsdata = array_values($smsdata);
 	        $smsjsondata = json_encode($smsdata);
         	// echo $smsjsondata;
-        	dd($smsjsondata);
+        	// dd($smsjsondata);
 
 	        $url = config('sms.gw_url');
 
@@ -187,7 +203,7 @@ class SMSController extends Controller
 	        $smsresult = curl_exec($ch);
 
 	        $resultstr = substr($smsresult, 0, 6);
-	        // dd($smsresult);
+	        dd($smsresult);
 	        if($resultstr == '') {
 	            Session::flash('success', bangla(count($smsdata)) . ' জন সদস্যকে SMS সফলভাবে পাঠানো হয়েছে!');
 	        } elseif($resultstr == 'Error:') {
