@@ -1674,7 +1674,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = $request->message;
+        $text = $request->message . ' Customs and Vat Co-operative Society.';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
