@@ -71,7 +71,7 @@
     </div>
     <div class="col-md-6"></div>
   </div>
-  @stop
+  @endif
 @stop
 
 @section('js')
