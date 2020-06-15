@@ -16,6 +16,7 @@
 @stop
 
 @section('content')
+  @if(Auth::user()->role_type != 'admin')
   <div class="row">
     <div class="col-md-6">
       <div class="box box-primary">
@@ -70,6 +71,7 @@
     </div>
     <div class="col-md-6"></div>
   </div>
+  @stop
 @stop
 
 @section('js')
