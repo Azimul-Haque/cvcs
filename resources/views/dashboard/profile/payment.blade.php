@@ -14,7 +14,7 @@
           
         @else
           @if(Auth::user()->role_type != 'admin')
-          <a class="btn btn-primary" href="{{ route('dashboard.memberpaymentself') }}" title="টাকা পরিশোধ করুন"><i class="fa fa-fw fa-user" aria-hidden="true"></i></a>
+          <a class="btn btn-primary" href="{{ route('dashboard.memberpaymentself') }}" title="টাকা পরিশোধ করুন"><i class="fa fa-fw fa-user" aria-hidden="true"></i> পরিশোধ করুন</a>
           @endif
         @endif
       </div>
