@@ -21,7 +21,7 @@
 
                 <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
                     <input type="text" name="email" class="form-control" value="{{ old('email') }}"
-                           placeholder="ইমেইল{{-- {{ trans('adminlte::adminlte.email') }} --}}">
+                           placeholder="ইমেইল অথবা {{-- {{ trans('adminlte::adminlte.email') }} --}}">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
                         <span class="help-block">
