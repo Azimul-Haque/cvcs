@@ -39,6 +39,7 @@
               একাধিক
             @else
               <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
+              <small>ID: {{ $payment->user->member_id }}, ☎ {{ $payment->user->mobile }}</small>
             @endif
             <br/>
             জমাদানকারীঃ <a href="{{ route('dashboard.singlemember', $payment->payee->unique_key) }}">{{ $payment->payee->name_bangla }}</a>
