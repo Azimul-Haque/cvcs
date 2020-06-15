@@ -162,7 +162,7 @@ class SMSController extends Controller
                         $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
                     } else {
                         
-                        $text = 'Dear ' . $member->name . ', your monthly payments from ' . date("F, Y", strtotime("-". $pendingmonths ." months"))  . ' to ' . date('F, Y') . ' are due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
+                        $text = 'Dear ' . $member->name . ', your monthly payments from ' . date("F, Y", strtotime("-". $pendingmonths + 1 ." months"))  . ' to ' . date('F, Y') . ' are due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
                     }
 	            	
 
