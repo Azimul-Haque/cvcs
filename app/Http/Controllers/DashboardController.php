@@ -1599,7 +1599,7 @@ class DashboardController extends Controller
             }
             $url = config('sms.url');
             $number = $mobile_number;
-            $text = 'Dear ' . $application->name . ', your membership application has been approved! Your ID: '. $application->member_id .', Email: '. $application->email .' and Password: cvcs12345. Customs and Vat Co-operative Society. Login & change password: https://cvcsbd.com/login';
+            $text = 'Dear ' . $application->name . ', your membership application has been approved! Your ID: '. $application->member_id .', Email: '. $application->email .' and Password: cvcs12345. Customs and VAT Co-operative Society (CVCS). Login & change password: https://cvcsbd.com/login';
             // this sms costs 2 SMS
             // this sms costs 2 SMS
             
@@ -1674,7 +1674,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = $request->message . ' Customs and Vat Co-operative Society.';
+        $text = $request->message . ' Customs and VAT Co-operative Society (CVCS).';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -2244,7 +2244,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $member->name . ', your information changing request has been approved! Thanks. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
+        $text = 'Dear ' . $member->name . ', your information changing request has been approved! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
         // this sms costs 2 SMS
         
         $data= array(
@@ -2387,7 +2387,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
+        $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -2604,7 +2604,7 @@ class DashboardController extends Controller
             // if($mobile_number != 0) {
             //   array_push($mobile_numbers, $mobile_number);
             // }
-            $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
+            $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
             $smsdata[$i] = array(
                 'username'=>config('sms.username'),
                 'password'=>config('sms.password'),
@@ -2796,7 +2796,7 @@ class DashboardController extends Controller
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
+        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -2892,7 +2892,7 @@ class DashboardController extends Controller
             // if($mobile_number != 0) {
             //   array_push($mobile_numbers, $mobile_number);
             // }
-            $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and Vat Co-operative Society. Login: https://cvcsbd.com/login';
+            $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
             $smsdata[$member_id] = array(
                 'username'=>config('sms.username'),
                 'password'=>config('sms.password'),
