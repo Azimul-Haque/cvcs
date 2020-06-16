@@ -1619,7 +1619,7 @@ class DashboardController extends Controller
             $p = explode("|",$smsresult);
             $sendstatus = $p[0];
             // send sms
-            if($sendstatus == 1001) {
+            if($sendstatus == 1101) {
                 Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
             } elseif($sendstatus == 1006) {
                 Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
