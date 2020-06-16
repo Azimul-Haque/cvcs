@@ -74,7 +74,7 @@ class SMSController extends Controller
         
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = $request->message . ' Customs and VAR Co-operative Society (CVCS).';
+        $text = $request->message . ' Customs and VAT Co-operative Society (CVCS).';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -159,10 +159,10 @@ class SMSController extends Controller
 	            	}
                     $pendingmonths = (int) $member->totalpendingmonthly / 500;
                     if($pendingmonths == 1) {
-                        $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAR Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                        $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                     } else {
                         
-                        $text = 'Dear ' . $member->name . ', your monthly payments from ' . date("F, Y", strtotime("-". $pendingmonths + 1 ." months"))  . ' to ' . date('F, Y') . ' are due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAR Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                        $text = 'Dear ' . $member->name . ', your monthly payments from ' . date("F, Y", strtotime("-". $pendingmonths + 1 ." months"))  . ' to ' . date('F, Y') . ' are due, please pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                     }
 	            	
 
@@ -180,7 +180,7 @@ class SMSController extends Controller
                             $mobile_number = substr($member->mobile, -11);
                         }
                     }
-                    $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is already paid. Thank you. Customs and VAR Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                    $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is already paid. Thank you. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
 
                     $text = rawurlencode($text);
                     $smsdata[$i] = array(
