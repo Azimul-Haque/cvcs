@@ -103,6 +103,12 @@ Route::get('/dashboard/branch/payment/{id}/list', ['as'=>'dashboard.paymentofbra
 Route::get('/dashboard/designations', ['as'=>'dashboard.designations','uses'=>'DashboardController@getDesignations']);
 Route::get('/dashboard/designation/{position_id}/members', ['as'=>'dashboard.designation.members','uses'=>'DashboardController@getDesignationMembers']);
 
+##Fuad##
+Route::post('/dashboard/designation/store', ['as'=>'dashboard.storedesignation','uses'=>'FuadControllers\PositionController@addPosition']);
+Route::put('/dashboard/designation/update', ['as'=>'dashboard.updatedesignation','uses'=>'FuadControllers\PositionController@updatePosition']);
+########
+
+
 
 
 Route::get('/dashboard/bulk/payers', ['as'=>'dashboard.bulkpayers','uses'=>'DashboardController@getBulkPayers']);
@@ -198,7 +204,7 @@ Route::get('/dashboard/member/search/api/3', ['as'=>'dashboard.membersearchapi3'
 Route::get('/dashboard/profile', ['as'=>'dashboard.profile','uses'=>'DashboardController@getProfile']);
 Route::patch('/dashboard/profile/{id}/update', ['as'=>'dashboard.profileupdate','uses'=>'DashboardController@updateMemberProfile']);
 Route::get('/dashboard/member/payment', ['as'=>'dashboard.memberpayment','uses'=>'DashboardController@getPaymentPage']);
-Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself','uses'=>'DashboardController@getSelfPaymentPage']); 
+Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself','uses'=>'DashboardController@getSelfPaymentPage']);
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);
 Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.member.payment.pdf','uses'=>'DashboardController@downloadMemberPaymentPDF']);
 Route::post('/dashboard/member/complete/report/download/pdf', ['as'=>'dashboard.member.complete.pdf','uses'=>'DashboardController@downloadMemberCompletePDF']);
