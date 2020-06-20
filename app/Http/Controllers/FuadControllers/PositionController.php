@@ -23,7 +23,7 @@ class PositionController extends Controller
         ));
 
             $newPosition = new Position();
-            $newPosition->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
+            $newPosition->name = $request->name;
             $newPosition->save();
 
             Session::flash('success', 'সফলভাবে পদবি যোগ করা হয়েছে!');
@@ -39,7 +39,7 @@ class PositionController extends Controller
             $position = Position::findOrFail($request->position_id);
 
             if($position){
-                $position->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
+                $position->name = $request->name;
                 $position->save();
                 Session::flash('success', 'সফলভাবে পদবি যোগ করা হয়েছে!');
             } else{
