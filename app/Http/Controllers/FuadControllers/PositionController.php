@@ -41,7 +41,7 @@ class PositionController extends Controller
             if($position){
                 $position->name = $request->name;
                 $position->save();
-                Session::flash('success', 'সফলভাবে পদবি যোগ করা হয়েছে!');
+                Session::flash('success', 'সফলভাবে পদবি হালনাগাদ করা হয়েছে!');
             } else{
                 Session::flash('warning', 'সঠিক পদবি প্রদান করুন!');
             }
