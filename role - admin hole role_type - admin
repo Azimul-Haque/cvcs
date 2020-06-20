@@ -1,0 +1,15 @@
+role - admin hole role_type - admin
+
+
+role -- member(simple user, member list),  
+--rt member(nadan user), bulk payer(bulk payment)
+
+
+
+role admin  
+rt-admin super admin(no taka poysha hishab)
+rt-manager (approve user, )
+
+
+
+

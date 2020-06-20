@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56edb9fc-834c-4cd7-962a-95d05808ce81" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/adminsandothers/positions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/adminsandothers/positions.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +133,7 @@
       <workItem from="1592029425639" duration="647000" />
       <workItem from="1592130956630" duration="3950000" />
       <workItem from="1592570624277" duration="6289000" />
-      <workItem from="1592587167319" duration="7167000" />
+      <workItem from="1592587167319" duration="7736000" />
     </task>
     <servers />
   </component>
@@ -170,9 +169,9 @@
       <screen x="58" y="27" width="1308" height="741" />
     </state>
     <state width="636" height="446" key="SwitcherDM/58.27.1308.741@58.27.1308.741" timestamp="1592587116595" />
-    <state x="375" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1592590107499">
+    <state x="375" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1592595918909">
       <screen x="58" y="27" width="1308" height="741" />
     </state>
-    <state x="375" y="89" width="672" height="678" key="search.everywhere.popup/58.27.1308.741@58.27.1308.741" timestamp="1592590107499" />
+    <state x="375" y="89" width="672" height="678" key="search.everywhere.popup/58.27.1308.741@58.27.1308.741" timestamp="1592595918909" />
   </component>
 </project>
