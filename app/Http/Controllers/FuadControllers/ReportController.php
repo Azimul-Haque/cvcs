@@ -26,12 +26,23 @@ class ReportController extends Controller
             ->get();
 
         foreach ($positions as $position){
-            $position->memberCount = $position->users()->count();
+            $count = 0;
+            foreach ($position->users as $user){
+                if($user->activation_status == 1){
+                    $count++;
+                }
+            }
+            $position->memberCount = $count;
         }
 
         $memberpos = Position::where('id', 34)->first(); // for the 34th, সদস্য!
-        $memberpos->memberCount = $memberpos->users()->count();
-
+        $count = 0;
+        foreach ($memberpos->users as $user){
+            if($user->activation_status == 1){
+                $count ++;
+            }
+        }
+        $memberpos->memberCount = $count;
         $pdf = PDF::loadView('dashboard.reports.pdf.designationmemberscountlist', ['positions' => $positions, 'memberpos' => $memberpos]);
         $fileName = 'CVCS_Designation_Members_Count_List_Report.pdf';
         return $pdf->download($fileName); // download
