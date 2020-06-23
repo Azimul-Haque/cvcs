@@ -19,7 +19,10 @@
                         data-target="#addModal" data-backdrop="static"
                         title="পদবি যোগ করুন"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></button>
 
-
+                <a href="{{ url('dashboard/reports/export/designation/members/count/pdf') }}"
+                   class="btn btn-sm btn-info" title="পদবি তালিকা ডাউনলোড করুন">
+                    <i class="fa fa-download"></i>
+                </a>
             <!-- Edit Modal -->
             <!-- Edit Modal -->
             <div class="modal fade" id="addModal" role="dialog">

@@ -565,7 +565,7 @@ class DashboardController extends Controller
     {
         $positions = Position::orderBy('id', 'asc')
                                     ->where('id', '>', 0)
-                                    ->where('id', '<', 34)
+                                    ->where('id', '!=', 34)
                                     ->paginate(15);
                                     
         $memberpos = Position::where('id', 34)->first(); // for the 34th, সদস্য!
