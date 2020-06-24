@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56edb9fc-834c-4cd7-962a-95d05808ce81" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/API/GeneralUserAppController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/profile/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/profile/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/pdf/designationmemberscountlist.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/pdf/designationmemberscountlist.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/API/GeneralUserAppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/API/GeneralUserAppController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +144,7 @@
       <workItem from="1592897437660" duration="879000" />
       <workItem from="1592921382371" duration="2097000" />
       <workItem from="1592942977884" duration="57000" />
-      <workItem from="1592987501626" duration="2008000" />
+      <workItem from="1592987501626" duration="4930000" />
     </task>
     <servers />
   </component>
