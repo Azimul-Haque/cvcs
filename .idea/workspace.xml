@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56edb9fc-834c-4cd7-962a-95d05808ce81" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/API/GeneralUserAppController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/profile/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/profile/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/pdf/designationmemberscountlist.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/pdf/designationmemberscountlist.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,12 +107,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/dashboard/reports/pdf" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/API" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/API" />
       <recent name="$PROJECT_DIR$/resources/views/dashboard/reports/pdf" />
       <recent name="$PROJECT_DIR$/app/Http/Controllers/FuadControllers" />
       <recent name="$PROJECT_DIR$" />
@@ -141,7 +144,9 @@
       <workItem from="1592587167319" duration="7736000" />
       <workItem from="1592631715787" duration="32000" />
       <workItem from="1592897437660" duration="879000" />
-      <workItem from="1592921382371" duration="939000" />
+      <workItem from="1592921382371" duration="2097000" />
+      <workItem from="1592942977884" duration="57000" />
+      <workItem from="1592987501626" duration="2008000" />
     </task>
     <servers />
   </component>
@@ -161,18 +166,18 @@
       <screen x="58" y="27" width="1308" height="741" />
     </state>
     <state x="58" y="27" width="886" height="741" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/58.27.1308.741@58.27.1308.741" timestamp="1592588944563" />
-    <state x="118" y="155" width="524" height="488" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1592587961847">
+    <state x="118" y="155" width="524" height="488" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1592988188542">
       <screen x="58" y="27" width="1308" height="741" />
     </state>
-    <state x="118" y="155" width="524" height="488" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/58.27.1308.741@58.27.1308.741" timestamp="1592587961847" />
+    <state x="118" y="155" width="524" height="488" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/58.27.1308.741@58.27.1308.741" timestamp="1592988188542" />
     <state x="447" y="312" width="520" height="175" key="ComposerInitDialogKey" timestamp="1591640486563">
       <screen x="58" y="27" width="1308" height="741" />
     </state>
     <state x="447" y="312" width="520" height="175" key="ComposerInitDialogKey/58.27.1308.741@58.27.1308.741" timestamp="1591640486563" />
-    <state x="495" y="155" width="424" height="488" key="FileChooserDialogImpl" timestamp="1592631743838">
+    <state x="495" y="155" width="424" height="488" key="FileChooserDialogImpl" timestamp="1592943033103">
       <screen x="58" y="27" width="1308" height="741" />
     </state>
-    <state x="495" y="155" width="424" height="488" key="FileChooserDialogImpl/58.27.1308.741@58.27.1308.741" timestamp="1592631743838" />
+    <state x="495" y="155" width="424" height="488" key="FileChooserDialogImpl/58.27.1308.741@58.27.1308.741" timestamp="1592943033103" />
     <state width="636" height="446" key="SwitcherDM" timestamp="1592587116595">
       <screen x="58" y="27" width="1308" height="741" />
     </state>

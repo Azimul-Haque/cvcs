@@ -60,7 +60,7 @@
       @foreach($positions as $position)
         <tr>
           <td align="center">{{ bangla($counter++) }}</td>
-          <td align="center">{{ $position->name }}</td>
+          <td align="">{{ $position->name }}</td>
           <td align="center"><span><b>{{ bangla($position->memberCount) }}</b></span></td>
 
         </tr>
