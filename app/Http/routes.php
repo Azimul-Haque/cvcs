@@ -253,3 +253,27 @@ Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsa
 
 // dashboard routes
 // dashboard routes
+
+
+
+
+//Fuad API's
+Route::get('/api/load/users/{unique_key}/profile', ['uses'=>'FuadControllers\API\GeneralUserAppController@getUserProfile']);
+
+
+Route::get('/api/load/designations', ['uses'=>'FuadControllers\API\GeneralUserAppController@getDesignations']);
+
+
+Route::get('/api/load/branches', ['as'=>'api.branches', 'uses'=>'FuadControllers\API\GeneralUserAppController@getBranches']);
+
+
+Route::get('/api/load/notices/paginated', ['uses'=>'FuadControllers\API\GeneralUserAppController@getPaginatedNotices']);
+
+
+Route::get('/api/load/albums/paginated', ['uses'=>'FuadControllers\API\GeneralUserAppController@getPaginatedGallery']);
+
+
+Route::get('/api/load/users/{unique_key}/transactions/summary', ['uses'=>'FuadControllers\API\GeneralUserAppController@getMemberTransactionSummary']);
+
+Route::get('/api/load/users/{unique_key}/payments', ['uses'=>'FuadControllers\API\GeneralUserAppController@getMemberPayments']);
+//----------
