@@ -273,6 +273,10 @@ Route::get('/api/load/notices/paginated', ['uses'=>'FuadControllers\API\GeneralU
 Route::get('/api/load/albums/paginated', ['uses'=>'FuadControllers\API\GeneralUserAppController@getPaginatedGallery']);
 
 
+Route::get('/api/load/albums/{album_id}/photos', ['uses'=>'FuadControllers\API\GeneralUserAppController@getAlbumPhotos']);
+
+
+
 Route::get('/api/load/users/{unique_key}/transactions/summary', ['uses'=>'FuadControllers\API\GeneralUserAppController@getMemberTransactionSummary']);
 
 Route::get('/api/load/users/{unique_key}/payments', ['uses'=>'FuadControllers\API\GeneralUserAppController@getMemberPayments']);

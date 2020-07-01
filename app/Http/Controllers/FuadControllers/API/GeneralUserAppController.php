@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\FuadControllers\API;
 
 use App\Album;
+use App\Albumphoto;
 use App\Branch;
 use App\Notice;
 use App\Payment;
@@ -14,17 +15,27 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+
+
+
 class GeneralUserAppController extends Controller
 {
     public function getPaginatedNotices(){
-        $notices = Notice::orderBy('id', 'DESC')->paginate(4);
+        $notices = Notice::orderBy('id', 'DESC')->paginate(10);
         return response()->json($notices);
     }
 
     public function getPaginatedGallery(){
-        $albums = Album::orderBy('id', 'DESC')->paginate(4);
+        $albums = Album::orderBy('id', 'DESC')->paginate(8);
         return response()->json($albums);
     }
+
+    public function getAlbumPhotos($album_id){
+        $album = Album::findOrFail($album_id);
+        return response()->json($album->albumphotoes);
+    }
+
+
 
     public function getDesignations(){
         $positions = Position::where('id', '>', 0)->get();
@@ -48,13 +59,18 @@ class GeneralUserAppController extends Controller
             ->where('payment_status', 0)
             ->where('is_archieved', 0)
             ->where('member_id', $member->member_id)
-            ->first();
+            ->first()->totalamount;
+        $pendingfordashboard = ($pendingfordashboard)? $pendingfordashboard: 0;
+
         $approvedfordashboard = DB::table('payments')
             ->select(DB::raw('SUM(amount) as totalamount'))
             ->where('payment_status', 1)
             ->where('is_archieved', 0)
             ->where('member_id', $member->member_id)
-            ->first();
+            ->first()->totalamount;
+        $approvedfordashboard = ($approvedfordashboard)? $approvedfordashboard: 0;
+
+
         $pendingcountdashboard = Payment::where('payment_status', 0)
             ->where('is_archieved', 0)
             ->where('member_id', $member->member_id)
@@ -69,10 +85,10 @@ class GeneralUserAppController extends Controller
 
         return response()->json([
             'user' => $member,
-            'pendingfordashboard' => $pendingfordashboard,
-            'approvedfordashboard' => $approvedfordashboard,
-            'pendingcountdashboard' => $pendingcountdashboard,
-            'approvedcountdashboard' => $approvedcountdashboard
+            'pending_amount' => $pendingfordashboard,
+            'approved_amount' => $approvedfordashboard,
+            'pending_count' => $pendingcountdashboard,
+            'approved_count' => $approvedcountdashboard
         ], 200);
     }
 
@@ -92,7 +108,8 @@ class GeneralUserAppController extends Controller
             ->where('is_archieved', 0)
             // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
             // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-            ->first();
+            ->first()->totalamount;
+        $membertotalpending = ($membertotalpending)? $membertotalpending: 0;
 
         $membertotalapproved = DB::table('payments')
             ->select(DB::raw('SUM(amount) as totalamount'))
@@ -101,15 +118,19 @@ class GeneralUserAppController extends Controller
             ->where('is_archieved', '=', 0)
             // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
             // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-            ->first();
+            ->first()->totalamount;
+        $membertotalapproved = ($membertotalapproved)? $membertotalapproved: 0;
+
+
         $membertotalmontlypaid = DB::table('payments')
             ->select(DB::raw('SUM(amount) as totalamount'))
             ->where('payment_status', 1)
             ->where('is_archieved', 0)
             ->where('payment_category', 1) // 1 means monthly, 0 for membership
             ->where('member_id', $member->member_id)
-            ->first();
+            ->first()->totalamount;
 
+        $membertotalmontlypaid = ($membertotalmontlypaid)? $membertotalmontlypaid: 0;
 
         return response()->json([
             'membertotalpending' => $membertotalpending,
@@ -130,10 +151,11 @@ class GeneralUserAppController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        foreach ($payments as $payment){
-            $payment->payee = $payment->payee->name_bangla;
-        }
-
+        $payments->getCollection()->transform(function ($payment) {
+            $payment->payment_user = User::where('member_id', $payment->payer_id)->first()->name_bangla;
+            return $payment;
+        });
+    
         return response()->json($payments, 200);
     }
 
