@@ -280,4 +280,8 @@ Route::get('/api/load/albums/{album_id}/photos', ['uses'=>'FuadControllers\API\G
 Route::get('/api/load/users/{unique_key}/transactions/summary', ['uses'=>'FuadControllers\API\GeneralUserAppController@getMemberTransactionSummary']);
 
 Route::get('/api/load/users/{unique_key}/payments', ['uses'=>'FuadControllers\API\GeneralUserAppController@getMemberPayments']);
+
+Route::post('/api/users/member/authenticate', ['uses'=>'FuadControllers\API\GeneralUserAppController@authenticateMember']);
+Route::post('/api/users/member', ['uses'=>'FuadControllers\API\GeneralUserAppController@updateMemberProfile']);
+Route::post('/api/users/member/selfpayments', ['uses'=>'FuadControllers\API\GeneralUserAppController@storeSelfPayment']);
 //----------
