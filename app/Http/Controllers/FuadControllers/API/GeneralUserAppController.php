@@ -164,6 +164,7 @@ class GeneralUserAppController extends Controller
 
 
     public function authenticateMember(Request $request){
+
         $this->validate($request,array(
             'email'       =>   'required',
             'password'      =>   'required',
