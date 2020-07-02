@@ -247,6 +247,38 @@ class GeneralUserAppController extends Controller
     }
 
 
+    public function storeTrasactionReceipt(Request $request){
+        $this->validate($request,array(
+            'member_id'   =>   'required',
+            'payment_key'      =>   'required|integer',
+            'image'       =>   'sometimes|image'
+        ));
+
+        $payment = Payment::where('payment_key', $request->payment_key)
+        ->where('member_id', $request->member_id)->first();
+
+
+        if(!$payment){
+            return response()->json('unauthorized request', 403);
+        }
+
+        // receipt upload
+        if($request->hasFile('image')) {
+            $receipt      = $request->file('image');
+            $filename   = $payment->member_id.'_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
+            $location   = public_path('/images/receipts/'. $filename);
+            Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+            $paymentreceipt = new Paymentreceipt;
+            $paymentreceipt->payment_id = $payment->id;
+            $paymentreceipt->image = $filename;
+            $paymentreceipt->save();
+            
+            return response()->json($paymentreceipt, 201);
+
+        }
+        return response()->json('no image provided', 200);
+    }
+
     public function storeSelfPayment(Request $request)
     {
         $this->validate($request,array(
@@ -255,7 +287,6 @@ class GeneralUserAppController extends Controller
             'bank'        =>   'required',
             'branch'      =>   'required',
             'pay_slip'    =>   'required',
-            'image'       =>   'sometimes|image|max:500'
         ));
 
         $member = User::where('member_id', $request->member_id)->first();
@@ -281,17 +312,7 @@ class GeneralUserAppController extends Controller
         $payment->payment_key = $payment_key;
         $payment->save();
 
-        // receipt upload
-        if($request->hasFile('image')) {
-            $receipt      = $request->file('image');
-            $filename   = $payment->member_id.'_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
-            $location   = public_path('/images/receipts/'. $filename);
-            Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
-            $paymentreceipt = new Paymentreceipt;
-            $paymentreceipt->payment_id = $payment->id;
-            $paymentreceipt->image = $filename;
-            $paymentreceipt->save();
-        }
+        
 
         // send pending SMS ... aro kichu kaaj baki ache...
         // send sms
@@ -332,7 +353,7 @@ class GeneralUserAppController extends Controller
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
 
-        return response()->json('Payment issued successfully', 201);
+        return response()->json($payment, 201);
     }
 
 }
