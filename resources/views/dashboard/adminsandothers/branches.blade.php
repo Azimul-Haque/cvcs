@@ -40,7 +40,7 @@
             @php
               $totalmembers = 0;
               foreach ($branch->users as $member) {
-                if($member->activation_status == 1) {
+                if($member->activation_status == 1 && $member->role_type != 'admin') {
                   $totalmembers++;
                 }
               }
@@ -66,7 +66,7 @@
                     <h4 class="modal-title">দপ্তর সম্পাদনা</h4>
                   </div>
                   {!! Form::model($branch, ['route' => ['dashboard.updatebranch', $branch->id], 'method' => 'PUT', 'class' => 'form-default']) !!}
-                        
+
                   <div class="modal-body">
                     কাজ চলছে...
                   </div>

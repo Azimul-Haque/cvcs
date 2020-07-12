@@ -64,6 +64,10 @@ class CreateUsersTable extends Migration
 
             $table->integer('position_id')->unsigned();
             $table->integer('office_id')->unsigned();
+            $table->integer('district_id')->unsigned();
+
+            $table->string('blood_group')->nullable();
+
 
             $table->string('password');
             $table->rememberToken();

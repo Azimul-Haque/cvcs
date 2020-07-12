@@ -7,10 +7,10 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('css/DateTimePicker.css') }}">
   {!!Html::style('css/parsley.css')!!}
   <style type="text/css">
-    input[type=number]::-webkit-inner-spin-button, 
-    input[type=number]::-webkit-outer-spin-button { 
-      -webkit-appearance: none; 
-      margin: 0; 
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
   </style>
 @stop
@@ -44,7 +44,7 @@
                     <h5 class="text-center">নিবন্ধন নং - ০০০৩১</h5>
                     <h2 class="text-center">মেম্বারশিপ ফরম</h2>
                     <div class="separator-line bg-yellow margin-four"></div>
-                   
+
                         {!! csrf_field() !!}
                         <h3 class="agency-title margin-two">আবেদনকারীর ব্যক্তিগত তথ্যঃ</h3>
                         <div class="row">
@@ -75,6 +75,37 @@
                             </div>
                           </div>
                         </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label for="blood_group" class="">আবেদনকারীর রক্তের গ্রুপ</label>
+                                <select name="blood_group" id="blood_group" class="form-control">
+                                    <option value="" selected="" disabled="">রক্তের গ্রুপ নির্ধারণ করুন</option>
+                                    @foreach(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $blood_group)
+                                        <option value="{{ $blood_group }}">{{ $blood_group }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+{{--                            <div class="form-group ">--}}
+{{--                                <label for="branch_id" class="">আবেদনকারীর দপ্তরের নাম *</label>--}}
+{{--                                <select name="branch_id" id="branch_id" class="form-control" required="">--}}
+{{--                                    <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>--}}
+{{--                                    @foreach($branches as $branch)--}}
+{{--                                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+                        </div>
+                    </div>
+
+
+
+
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
@@ -200,7 +231,7 @@
                         </div>
 
                         <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০১) <small>(নমিনির তথ্য নমিনি ০১ এর ক্ষেত্রে বাধ্যতামূলক)</small></h3>
-                        
+
                         <div class="form-group ">
                             <label for="nominee_one_name" class="">নাম (বাংলায়) *</label>
                             <input type="text" name="nominee_one_name" id="nominee_one_name" required="" class="text_bangla" placeholder="বাংলা বর্ণমালায় লিখুন">
@@ -254,7 +285,7 @@
                             <div class="panel panel-default" id="collapse-nominee2">
                               <div role="tablist" id="headingnominee2" class="panel-heading">
                                   <a data-toggle="collapse" data-parent="#collapse-nominee2" href="#collapse-nominee2-link1">
-                                      <h4 class="panel-title">আরও একজন নমিনি যোগ করতে, এখানে ক্লিক করুন 
+                                      <h4 class="panel-title">আরও একজন নমিনি যোগ করতে, এখানে ক্লিক করুন
                                           <span class="pull-right">
                                               <i class="fa fa-plus"></i>
                                           </span>
@@ -264,7 +295,7 @@
                               <div id="collapse-nominee2-link1" class="panel-collapse collapse">
                                   <div class="panel-body">
                                     <h3 class="agency-title margin-two">নমিনীর বিস্তারিত তথ্যঃ (নমিনি ০২) <small>(নমিনির তথ্য নমিনি ০২ এর ক্ষেত্রে ঐচ্ছিক)</small></h3>
-                                                            
+
                                     <div class="form-group">
                                         <label for="nominee_two_name" class="">নাম (বাংলায়)</label>
                                         <input type="text" name="nominee_two_name" id="nominee_two_name" class="text_bangla" placeholder="বাংলা বর্ণমালায় লিখুন">
@@ -311,13 +342,13 @@
                                       <div class="col-md-4">
                                         <img src="{{ asset('images/user.png')}}" id='nominee_two_image-upload' style="height: 120px; width: auto; padding: 5px;" />
                                       </div>
-                                    </div> 
+                                    </div>
                                   </div>
                               </div>
                           </div>
                         </div><br/>
 
-                        
+
 
                         <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত</h3>
                         <div class="row">
@@ -443,7 +474,7 @@
             $("#presubmission_div").hide(2000);
         });
 
-        
+
         $('#nominee_one_percentage').blur(function() {
           var percentagesum1 = parseInt(setDefaultVal($('#nominee_one_percentage').val())) + parseInt(setDefaultVal($('#nominee_two_percentage').val()));
           if(percentagesum1 != 100) {
@@ -558,7 +589,7 @@
           $("#submit_btn").prop("disabled",true);
       });
     })
-      
+
   </script>
   <script type="text/javascript">
     $(document).ready( function() {

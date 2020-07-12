@@ -38,6 +38,7 @@ class User extends Authenticatable
       return $this->belongsTo('App\Branch');
     }
 
+
     protected $fillable = [
         'name', 'email', 'password',
     ];

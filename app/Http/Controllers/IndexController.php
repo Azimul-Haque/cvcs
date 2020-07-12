@@ -35,7 +35,7 @@ class IndexController extends Controller
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->middleware('guest')->only('getLogin');
         $this->middleware('auth')->only('getProfile');
     }
@@ -208,9 +208,9 @@ class IndexController extends Controller
                     ->withBlogs($blogs);
         } else {
             Session::flash('info', 'Redirected to your profile!');
-            return redirect()->route('index.profile', Auth::user()->unique_key); 
+            return redirect()->route('index.profile', Auth::user()->unique_key);
         }
-        
+
     }
 
     public function storeApplication(Request $request)
@@ -255,8 +255,9 @@ class IndexController extends Controller
             'application_payment_bank'     => 'required|max:255',
             'application_payment_branch'   => 'required|max:255',
             'application_payment_pay_slip' => 'required|max:255',
-            'application_payment_receipt'  => 'required|image|max:2048'
+            'application_payment_receipt'  => 'required|image|max:2048',
 
+            'blood_group' => 'sometimes'
             // 'password'                     => 'required|min:8|same:password_confirmation'
         ));
 
@@ -272,6 +273,9 @@ class IndexController extends Controller
         $application->father = htmlspecialchars(preg_replace("/\s+/", " ", $request->father));
         $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
         $application->branch_id = $request->branch_id;
+        $application->blood_group = htmlspecialchars(preg_replace("/\s+/", " ", $request->blood_group));
+
+
         if($request->joining_date != '') {
             $joining_date = htmlspecialchars(preg_replace("/\s+/", " ", $request->joining_date));
             $application->joining_date = new Carbon($joining_date);
@@ -289,7 +293,7 @@ class IndexController extends Controller
         } else {
             $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile)) . '@cvcsbd.com';
         }
-        
+
 
         // applicant's image upload
         if($request->hasFile('image')) {
@@ -327,7 +331,7 @@ class IndexController extends Controller
             Image::make($nominee_two_image)->resize(200, 200)->save($location);
             $application->nominee_two_image = $filename;
         }
-        
+
         $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
         $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
         $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
@@ -370,7 +374,7 @@ class IndexController extends Controller
         $number = $mobile_number;
         $text = 'Dear ' . $application->name . ', your membership application has been submitted! We will notify you when we approve. Thanks. Customs and Vat Co-operative Society. Visit: https://cvcsbd.com';
         // this sms costs 2 SMS
-        
+
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -397,7 +401,7 @@ class IndexController extends Controller
         } else {
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
-        
+
         Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে আবেদনটি গৃহীত হওয়া পর্যন্ত অপেক্ষা করুন।');
 
         if(Auth::guest()) {
@@ -410,7 +414,7 @@ class IndexController extends Controller
                 return redirect()->route('index.index');
             }
         }
-        
+
     }
 
     public function storeFormMessage(Request $request)
@@ -429,7 +433,7 @@ class IndexController extends Controller
             $message->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
             $message->message = htmlspecialchars(preg_replace("/\s+/", " ", $request->message));
             $message->save();
-            
+
             Session::flash('success', 'আপনার বার্তা আমাদের কাছে পৌঁছেছে। ধন্যবাদ!');
             return redirect()->route('index.contact');
         } else {
@@ -437,12 +441,12 @@ class IndexController extends Controller
         }
     }
 
-    public function getMobileReset() 
+    public function getMobileReset()
     {
         return view('auth.sms.sendpage');
     }
 
-    public function sendPasswordResetSMS(Request $request) 
+    public function sendPasswordResetSMS(Request $request)
     {
         $this->validate($request,array(
             'mobile' => 'required|max:11'
@@ -501,7 +505,7 @@ class IndexController extends Controller
                 // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
                 // dd($smsresult);
-                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।'); 
+                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।');
             }
             return redirect()->route('index.mobilereset');
         } else {
@@ -510,12 +514,12 @@ class IndexController extends Controller
         }
     }
 
-    public function getMobileResetVerifyPage($mobile) 
+    public function getMobileResetVerifyPage($mobile)
     {
         return view('auth.sms.verifypage')->withMobile($mobile);
     }
 
-    public function mobileResetVerifyCode(Request $request) 
+    public function mobileResetVerifyCode(Request $request)
     {
         $this->validate($request,array(
             'mobile'         => 'required|max:11',
@@ -538,7 +542,7 @@ class IndexController extends Controller
         }
     }
 
-    public function getPasswordResetPage($mobile, $security_code) 
+    public function getPasswordResetPage($mobile, $security_code)
     {
         $security_token = Passwordresetsms::where('mobile', $mobile)
                                           ->where('security_code', $security_code)
@@ -550,10 +554,10 @@ class IndexController extends Controller
             Session::flash('warning', 'সিকিউরিটি কোডটি ব্যবহৃত/ অকার্যকর হয়ে গেছে! আবার সিকিউরিটি কোড জেনারেট করুন।');
             return redirect()->route('index.mobilereset');
         }
-        
+
     }
 
-    public function updatePasswordMobileVerified(Request $request) 
+    public function updatePasswordMobileVerified(Request $request)
     {
         $this->validate($request,array(
             'user_id'               => 'required',
@@ -591,13 +595,13 @@ class IndexController extends Controller
     }
 
 
-    public function testMultiGPSMSAPI() 
+    public function testMultiGPSMSAPI()
     {
         // $users = User::where('mobile', '01751398392')
         //                 ->orWhere('mobile', '01837409842')
         //                 ->get();
 
-        
+
 
         // // sms data
         // $smsdata = [];
@@ -644,7 +648,7 @@ class IndexController extends Controller
 
 
         // $url = config('sms.gp_url');
-        
+
         // $multiCurl = array();
         // // data to be returned
         // $result = array();

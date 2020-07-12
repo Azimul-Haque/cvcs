@@ -47,7 +47,7 @@
                 </span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg">
-                  <img src="{{ asset('images/custom.png') }}" style="height: 30px; width: auto;"> 
+                  <img src="{{ asset('images/custom.png') }}" style="height: 30px; width: auto;">
                   {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
                 </span>
             </a>
@@ -65,7 +65,7 @@
                     <ul class="nav navbar-nav">
                         <li class="tasks-menu">
                             <a href="{{ url('/') }}" target="_blank" title="View Website" data-placement="bottom">
-                                <i class="fa fa-fw fa-eye" aria-hidden="true"></i>
+                                View Website
                             </a>
                         </li>
                         @if(Auth::user()->role == 'admin') {{-- eita apatoto, karon kichudin por eita normal user er jonnou kora hobe --}}
@@ -82,7 +82,7 @@
                             @else
                               <li class="header">কোন নোটিফিকেশন নেই!</li>
                             @endif
-                            
+
                             <li>
                               <!-- inner menu: contains the actual data -->
                               <ul class="menu">
@@ -116,7 +116,7 @@
                                       <i class="fa fa-pencil-square-o text-green"></i> {{ $notiftempmemdatas }} টি তথ্য হালনাগাদ অনুরোধ
                                     </a>
                                   </li>
-                                @endif 
+                                @endif
 
                                 @if($notifsmsbalance > 0 && $notifsmsbalance < 21)
                                   <li>
@@ -124,7 +124,7 @@
                                       <i class="fa fa-envelope-o text-red"></i> অপর্যাপ্ত SMS ব্যালেন্সঃ ৳ {{ $notifsmsbalance }}
                                     </a>
                                   </li>
-                                @endif                                
+                                @endif
                               </ul>
                             </li>
                             <li class="footer"><a href="{{ route('dashboard.notifications') }}">সব দেখুন</a></li>
@@ -138,7 +138,7 @@
                             @else
                               <img src="{{ asset('images/user.png')}}" class="user-image" alt="{{ Auth::User()->name_bangla }}-এর মুখছবি">
                             @endif
-                            
+
                             {{ Auth::User()->name_bangla }}</a>
                             <ul class="dropdown-menu" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                               <!-- User image -->
@@ -192,7 +192,7 @@
                                   @endif
                                 </div>
                               </li>
-                            </ul>                            
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -220,7 +220,7 @@
                               <span>ড্যাশবোর্ড</span>
                           </a>
                       </li>
-                      
+
                       <li class="{{ Request::is('dashboard/branches/payments') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donors') ? 'active menu-open' : '' }} {{ Request::is('dashboard/donor/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins') ? 'active menu-open' : '' }} {{ Request::is('dashboard/admins/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers') ? 'active menu-open' : '' }} {{ Request::is('dashboard/bulk/payers/create') ? 'active menu-open' : '' }} {{ Request::is('dashboard/branches') ? 'active menu-open' : '' }} {{ Request::is('dashboard/branch/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/designations') ? 'active menu-open' : '' }} {{ Request::is('dashboard/designation/*') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-key"></i>
@@ -240,7 +240,7 @@
                           <li class="{{ Request::is('dashboard/designations') ? 'active' : '' }} {{ Request::is('dashboard/designation/*') ? 'active' : '' }}"><a href="{{ route('dashboard.designations') }}"><i class="fa fa-id-card-o text-lightgreen"></i> পদবি সমূহ</a></li>
                         </ul>
                       </li>
-                      
+
                       {{-- <li class="header">হোমপেইজ কাস্টমাইজেশন</li> --}}
                       <li class="{{ Request::is('dashboard/committee') ? 'active menu-open' : '' }} {{ Request::is('dashboard/abouts') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery') ? 'active menu-open' : '' }} {{ Request::is('dashboard/gallery/*') ? 'active menu-open' : '' }} {{ Request::is('dashboard/events') ? 'active menu-open' : '' }} {{ Request::is('dashboard/notice') ? 'active menu-open' : '' }} {{ Request::is('dashboard/form/messages') ? 'active menu-open' : '' }} {{ Request::is('dashboard/slider') ? 'active menu-open' : '' }} {{ Request::is('dashboard/faq') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
@@ -285,7 +285,7 @@
                         </ul>
                       </li>
                     @endif
-                    
+
                     @if((Auth::user()->role == 'admin') || (Auth::user()->role == 'member'))
                       {{-- <li class="header">একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</li> --}}
                       <li class="{{ Request::is('dashboard/profile') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/transaction/summary') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/change/password') ? 'active menu-open' : '' }} treeview">
@@ -324,9 +324,9 @@
                         </ul>
                       </li>
                     @endif
-                    
 
-                    
+
+
                     @if(Auth::user()->role_type == 'member')
                     <li class="{{ Request::is('dashboard/members/for/all') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.membersforall') }}">
@@ -402,7 +402,7 @@
           <div class="pull-right hidden-xs">
             <b>Version</b> 1.0.28
           </div>
-          <strong>Copyright © {{ date('Y') }}</strong> 
+          <strong>Copyright © {{ date('Y') }}</strong>
           All rights reserved.
         </footer>
 
