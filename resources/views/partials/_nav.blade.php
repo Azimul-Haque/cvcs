@@ -2,13 +2,19 @@
     <div class="container">
         <div class="row">
             <!-- logo -->
-            <div class="col-md-2 pull-left">
-                <a class="logo-light" href="{{ route('index.index') }}">
+            <div class="col-md-1 pull-left" style="padding-top: 10px">
+                <a class="logo-ight" href="{{ route('index.index') }}">
                     <img alt="" src="{{ asset('images/custom.png') }}" class="logo" style="max-height: 60px;" />
                 </a>
-                <a class="logo-dark" href="{{ route('index.index') }}">
-                    <img alt="" src="{{ asset('images/custom_dark.png') }}" class="logo" style="max-height: 60px;" /> {{-- kaaj ta korte hobe --}}
-                </a>
+{{--                <a class="logo-dark" href="{{ route('index.index') }}">--}}
+{{--                    <img alt="" src="{{ asset('images/custom_dark.png') }}" class="logo" style="max-height: 60px;" /> --}}{{-- kaaj ta korte hobe --}}
+{{--                </a>--}}
+            </div>
+            <div class="col-md-3 col-sm-8 col-xs-8 pull-left" style="padding-top: 10px">
+                <h3 style="color: white">
+                    কাস্টমস এন্ড ভ্যাট কো অপারেটিভ সোসাইটি (সিভিসিএস) লিমিটেড
+                </h3>
+                <p style="color: lightgrey"><b>নিবন্ধন নং - ০০০৩১</b></p>
             </div>
             <!-- end logo -->
             <!-- search and cart  -->
@@ -27,11 +33,12 @@
                        <input type="text" name="search" class="search-input" placeholder="Enter your keywords..." autocomplete="off">
                    </div>
                </form>
-           
+
            </div> -->
             <!-- end search and cart  -->
             <!-- toggle navigation -->
-            <div class="navbar-header col-sm-8 col-xs-2 pull-right">
+            <div class="navbar-header col-sm-2 col-xs-1 pull-right">
+
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -41,13 +48,14 @@
             </div>
             <!-- toggle navigation end -->
             <!-- main menu -->
-            <div class="col-md-9 no-padding-right accordion-menu text-right">
+            <div class="col-md-7 no-padding-right accordion-menu text-right">
                 <div class="navbar-collapse collapse">
                     <ul id="accordion" class="nav navbar-nav navbar-right panel-group main-menu">
-                        <li>
-                            <a href="{{ route('index.index') }}">হোম</a>
-                        </li>
-                        
+{{--                        <li>--}}
+{{--                            <a href="{{ route('index.index') }}">হোম</a>--}}
+{{--                        </li>--}}
+
+
                         <li class="dropdown panel simple-dropdown">
                             <a href="#nav_abouts" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
                                 এবাউট ▾
@@ -81,12 +89,12 @@
                             <a href="{{ route('blogs.index') }}">Blog</a>
                         </li> -->
                         <li class="dropdown panel simple-dropdown">
-                            <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
+                            <a href="#nav_activities" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
                                 কার্যক্রমসমূহ ▾
                             </a>
                             <!-- sub menu single -->
                             <!-- sub menu item  -->
-                            <ul id="nav_others" class="dropdown-menu panel-collapse collapse" role="menu">
+                            <ul id="nav_activities" class="dropdown-menu panel-collapse collapse" role="menu">
                                 <li>
                                     <a href="{{ route('index.business_entitny') }}" class="text-large">বিজনেস এন্টিটি</a>
                                 </li>
@@ -98,12 +106,25 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="{{ route('index.faq') }}">FAQs</a>
+
+
+
+                        <li class="dropdown panel simple-dropdown">
+                            <a href="#nav_others" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">
+                                অন্যান্য ▾
+                            </a>
+                            <ul id="nav_others" class="dropdown-menu panel-collapse collapse" role="menu">
+                                <li>
+                                    <a href="{{ route('index.faq') }}" class="text-large">FAQs</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('index.contact') }}" class="text-large">যোগাযোগ</a>
+                                </li>
+
+                            </ul>
                         </li>
-                        <li>
-                            <a href="{{ route('index.contact') }}">যোগাযোগ</a>
-                        </li>
+
+
                         @if(Auth::check())
                         <li class="dropdown panel simple-dropdown">
                             <a href="#nav_auth_user" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">

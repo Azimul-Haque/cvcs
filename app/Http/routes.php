@@ -281,7 +281,9 @@ Route::get('/api/load/users/{unique_key}/transactions/summary', ['uses'=>'FuadCo
 
 Route::get('/api/load/users/{unique_key}/payments', ['uses'=>'FuadControllers\API\GeneralUserAppController@getMemberPayments']);
 
-Route::post('/api/users/member/authenticate', ['uses'=>'FuadControllers\API\GeneralUserAppController@authenticateMember']);
-Route::post('/api/users/member', ['uses'=>'FuadControllers\API\GeneralUserAppController@updateMemberProfile']);
-Route::post('/api/users/member/selfpayments', ['uses'=>'FuadControllers\API\GeneralUserAppController@storeSelfPayment']);
+Route::post('/api/users/member/authenticate', ['as'=>'api_member_authenticate', 'uses'=>'FuadControllers\API\GeneralUserAppController@authenticateMember']);
+Route::post('/api/users/member/updte', ['as'=>'api_member_profile_update', 'uses'=>'FuadControllers\API\GeneralUserAppController@updateMemberProfile']);
+Route::post('/api/users/member/selfpayments', ['as'=>'api_member_selfpayment', 'uses'=>'FuadControllers\API\GeneralUserAppController@storeSelfPayment']);
+
+Route::post('/api/users/member/selfpayments/receipt', ['as'=>'api_member_selfpayment_receipt', 'uses'=>'FuadControllers\API\GeneralUserAppController@storeTrasactionReceipt']);
 //----------
