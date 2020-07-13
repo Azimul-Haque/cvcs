@@ -4,13 +4,8 @@
     <list default="true" id="56edb9fc-834c-4cd7-962a-95d05808ce81" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/adminsandothers/branches.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/adminsandothers/branches.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/index/membership/application.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index/membership/application.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/adminlte/page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/adminlte/page.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +150,8 @@
       <workItem from="1593419503541" duration="1831000" />
       <workItem from="1593693377847" duration="6363000" />
       <workItem from="1593765558089" duration="95000" />
-      <workItem from="1594566902444" duration="10371000" />
+      <workItem from="1594566902444" duration="11882000" />
+      <workItem from="1594649817021" duration="3929000" />
     </task>
     <servers />
   </component>
@@ -193,10 +189,10 @@
       <screen x="58" y="27" width="1308" height="741" />
     </state>
     <state width="636" height="446" key="SwitcherDM/58.27.1308.741@58.27.1308.741" timestamp="1592587116595" />
-    <state x="370" y="89" width="676" height="678" key="search.everywhere.popup" timestamp="1594583615340">
+    <state x="370" y="89" width="676" height="678" key="search.everywhere.popup" timestamp="1594654022336">
       <screen x="52" y="27" width="1314" height="741" />
     </state>
-    <state x="370" y="89" width="676" height="678" key="search.everywhere.popup/52.27.1314.741@52.27.1314.741" timestamp="1594583615340" />
+    <state x="370" y="89" width="676" height="678" key="search.everywhere.popup/52.27.1314.741@52.27.1314.741" timestamp="1594654022336" />
     <state x="375" y="89" width="672" height="678" key="search.everywhere.popup/58.27.1308.741@58.27.1308.741" timestamp="1593013156874" />
   </component>
 </project>

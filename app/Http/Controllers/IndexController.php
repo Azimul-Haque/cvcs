@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Upazilla;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -185,10 +186,13 @@ class IndexController extends Controller
     {
         $branches = Branch::where('id', '>', 0)->get();
         $positions = Position::where('id', '>', 0)->get();
+        $upazillas = Upazilla::groupBy('district_bangla')
+            ->get();
 
         return view('index.membership.application')
                             ->withBranches($branches)
-                            ->withPositions($positions);
+                            ->withPositions($positions)
+                            ->withUpazillas($upazillas);
     }
 
     public function getLogin()
@@ -257,7 +261,13 @@ class IndexController extends Controller
             'application_payment_pay_slip' => 'required|max:255',
             'application_payment_receipt'  => 'required|image|max:2048',
 
-            'blood_group' => 'sometimes'
+            'blood_group' => 'sometimes',
+            'district_id' => 'sometimes',
+            'prl_date' => 'sometimes| max:255',
+            'application_hard_copy'  => 'sometimes|image|max:2048',
+            'digital_signature'  => 'sometimes|image|max:2048',
+
+
             // 'password'                     => 'required|min:8|same:password_confirmation'
         ));
 
@@ -273,6 +283,10 @@ class IndexController extends Controller
         $application->father = htmlspecialchars(preg_replace("/\s+/", " ", $request->father));
         $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
         $application->branch_id = $request->branch_id;
+
+        if($request->has('district_id')){
+            $application->district_id = $request->district_id;
+        }
         $application->blood_group = htmlspecialchars(preg_replace("/\s+/", " ", $request->blood_group));
 
 
@@ -280,6 +294,13 @@ class IndexController extends Controller
             $joining_date = htmlspecialchars(preg_replace("/\s+/", " ", $request->joining_date));
             $application->joining_date = new Carbon($joining_date);
         }
+
+        if($request->prl_date != '') {
+            $prl_date = htmlspecialchars(preg_replace("/\s+/", " ", $request->prl_date));
+            $application->prl_date = new Carbon($prl_date);
+        }
+
+
         $application->profession = htmlspecialchars(preg_replace("/\s+/", " ", $request->profession));
         $application->position_id = $request->position_id;
         $application->membership_designation = htmlspecialchars(preg_replace("/\s+/", " ", $request->designation));
@@ -344,6 +365,26 @@ class IndexController extends Controller
             Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
             $application->application_payment_receipt = $filename;
         }
+
+
+        if($request->hasFile('application_hard_copy')) {
+            $application_hard_copy = $request->file('application_hard_copy');
+            $filename   = 'application_hard_copy_' . str_replace(' ','',$request->name).time() .'.' . $application_hard_copy->getClientOriginalExtension();
+            $location   = public_path('/images/users/'. $filename);
+            Image::make($application_hard_copy)->resize(200, 200)->save($location);
+            $application->application_hard_copy = $filename;
+        }
+
+        if($request->hasFile('digital_signature')) {
+            $digital_signature = $request->file('digital_signature');
+            $filename   = 'digital_signature_' . str_replace(' ','',$request->name).time() .'.' . $digital_signature->getClientOriginalExtension();
+            $location   = public_path('/images/users/'. $filename);
+            Image::make($digital_signature)->resize(200, 200)->save($location);
+            $application->digital_signature = $filename;
+        }
+
+
+
 
         $application->password = Hash::make('cvcs12345');
 

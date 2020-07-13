@@ -67,6 +67,11 @@ class CreateUsersTable extends Migration
             $table->integer('district_id')->unsigned();
 
             $table->string('blood_group')->nullable();
+            $table->string('prl_date')->nullable();
+
+            $table->string('application_hard_copy')->nullable();
+            $table->string('digital_signature')->nullable();
+
 
 
             $table->string('password');
