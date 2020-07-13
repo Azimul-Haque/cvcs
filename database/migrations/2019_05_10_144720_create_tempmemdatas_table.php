@@ -19,6 +19,7 @@ class CreateTempmemdatasTable extends Migration
             $table->integer('position_id')->unsigned();
             $table->string('office');
             $table->integer('branch_id')->unsigned();
+            $table->dateTime('start_time')->nullable();
             $table->string('present_address');
             $table->string('mobile');
             $table->string('email');

@@ -3,7 +3,9 @@
 @section('title', 'CVCS | সদস্য তথ্য')
 
 @section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/DateTimePicker.css') }}">
     {!!Html::style('css/parsley.css')!!}
+
 @stop
 
 @section('content_header')
@@ -49,6 +51,7 @@
     </div>
     <!-- Download Report PDF Modal -->
     <!-- Download Report PDF Modal -->
+    <div id="dtBox"></div>
 
     <!-- Edit Info Modal -->
     <!-- Edit Info Modal -->
@@ -94,6 +97,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group invisible" id="start_date_input">
+                            {!! Form::label('start_date', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
+                            <input type="text" class="form-control" name="start_date" id="start_date" data-field="date" autocomplete="off"
+                                   placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন">
+{{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
+                        </div>
+
                         <div class="form-group ">
                             {!! Form::label('present_address', 'বর্তমান ঠিকানা *') !!}
                             {!! Form::text('present_address', null, array('class' => 'form-control', 'placeholder' => 'বর্তমান ঠিকানা লিখুন', 'required')) !!}
@@ -508,9 +518,18 @@
 
 @section('js')
     {!!Html::script('js/parsley.min.js')!!}
+    <script type="text/javascript" src="{{ asset('js/DateTimePicker.min.js') }}"></script>
+
     <script type="text/javascript">
         var _URL = window.URL || window.webkitURL;
         $(document).ready(function () {
+            $("#dtBox").DateTimePicker({
+                mode: "date",
+                dateFormat: "dd-MM-yyyy",
+                titleContentDate: 'তারিখ নির্ধারণ করুন'
+            });
+
+
             $(document).on('change', '.btn-file :file', function () {
                 var input = $(this),
                     label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -573,6 +592,17 @@
                     img.src = _URL.createObjectURL(file);
                 }
             });
+
+
+
+
+        });
+
+
+        $('#position_id').change(function(e) {
+            e.preventDefault();
+            $('#start_date_input').removeClass('invisible');
+            $('#start_date_input').addClass('visible');
         });
     </script>
 

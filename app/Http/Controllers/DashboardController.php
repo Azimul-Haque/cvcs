@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Careerlog;
 use App\Http\Requests;
+use DateTime;
 use Illuminate\Http\Request;
 
 use App\User;
@@ -46,7 +48,7 @@ class DashboardController extends Controller
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->middleware('auth');
         $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
     }
@@ -79,12 +81,12 @@ class DashboardController extends Controller
                            // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
                            ->first();
         $registeredmember = User::where('activation_status', 1)
-                                ->where('role_type', '!=', 'admin')                
+                                ->where('role_type', '!=', 'admin')
                                 ->count();
 
         $pendingpayments = Payment::where('payment_status', 0)
                                       ->where('is_archieved', 0)
-                                      ->count() 
+                                      ->count()
                                       +
                            User::where('activation_status', 0)
                                ->orWhere('activation_status', 202)
@@ -204,7 +206,7 @@ class DashboardController extends Controller
                         ->where('activation_status', 1)
                         ->orderBy('id', 'desc')->get();
 
-        return $response;          
+        return $response;
     }
 
     public function addAdmin(Request $request)
@@ -230,7 +232,7 @@ class DashboardController extends Controller
         $member->save();
 
         Session::flash('success', 'সফলভাবে অ্যাডমিন থেকে অব্যহতি দেওয়া হয়েছে!');
-        return redirect()->route('dashboard.admins');          
+        return redirect()->route('dashboard.admins');
     }
 
     public function getBulkPayers()
@@ -252,7 +254,7 @@ class DashboardController extends Controller
                         ->where('activation_status', 1)
                         ->orderBy('id', 'desc')->get();
 
-        return $response;          
+        return $response;
     }
 
     public function addBulkPayer(Request $request)
@@ -276,7 +278,7 @@ class DashboardController extends Controller
         $member->save();
 
         Session::flash('success', 'সফলভাবে একাধিক পরিশোধকারী থেকে অব্যহতি দেওয়া হয়েছে!');
-        return redirect()->route('dashboard.bulkpayers');          
+        return redirect()->route('dashboard.bulkpayers');
     }
 
     public function getDonors()
@@ -354,7 +356,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.donors');
     }
 
-    public function approveDonation(Request $request, $id) 
+    public function approveDonation(Request $request, $id)
     {
         $donation = Donation::find($id);
         $donation->payment_status = 1;
@@ -440,13 +442,13 @@ class DashboardController extends Controller
             $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
         }
         ksort($ordered_member_array); // ascending order according to key
-        
+
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
         $itemCollection = collect($ordered_member_array);
-        
+
         $perPage = 20;
-        
+
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
@@ -477,7 +479,7 @@ class DashboardController extends Controller
         Session::flash('success', 'সফলভাবে ব্রাঞ্চ সংরক্ষন হয়েছে!');
         return redirect()->route('dashboard.branches');
     }
-    
+
     public function updateBranch(Request $request, $id)
     {
         $this->validate($request,array(
@@ -535,7 +537,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.branches.payments');
     }
 
-    public function approveBranchPayment(Request $request, $id) 
+    public function approveBranchPayment(Request $request, $id)
     {
         $branchpayment = Branchpayment::find($id);
         $branchpayment->payment_status = 1;
@@ -567,7 +569,7 @@ class DashboardController extends Controller
                                     ->where('id', '>', 0)
                                     ->where('id', '!=', 34)
                                     ->paginate(15);
-                                    
+
         $memberpos = Position::where('id', 34)->first(); // for the 34th, সদস্য!
 
         return view('dashboard.adminsandothers.positions')
@@ -592,13 +594,13 @@ class DashboardController extends Controller
             $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
         }
         ksort($ordered_member_array); // ascending order according to key
-        
+
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
         $itemCollection = collect($ordered_member_array);
-        
+
         $perPage = 20;
-        
+
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
@@ -639,9 +641,9 @@ class DashboardController extends Controller
 
         $about = About::find($id);
         $about->text = nl2br($request->text);
-     
+
         $about->save();
-        
+
         Session::flash('success', 'Updated Successfully!');
         return redirect()->route('dashboard.abouts');
     }
@@ -667,9 +669,9 @@ class DashboardController extends Controller
         $basicinfo->gplus = $request->gplus;
         $basicinfo->ytube = $request->ytube;
         $basicinfo->linkedin = $request->linkedin;
-     
+
         $basicinfo->save();
-        
+
         Session::flash('success', 'Updated Successfully!');
         return redirect()->route('dashboard.abouts');
     }
@@ -706,7 +708,7 @@ class DashboardController extends Controller
         $committeemember->twitter = htmlspecialchars(preg_replace("/\s+/", " ", $request->twitter));
         $committeemember->linkedin = htmlspecialchars(preg_replace("/\s+/", " ", $request->linkedin));
         $committeemember->serial = $request->serial;
-        
+
         // image upload
         if($request->hasFile('image')) {
             $image      = $request->file('image');
@@ -717,7 +719,7 @@ class DashboardController extends Controller
         }
 
         $committeemember->save();
-        
+
         Session::flash('success', 'সফলভাবে সংরক্ষণ করা হয়েছে!');
         return redirect()->route('dashboard.committee');
     }
@@ -759,9 +761,9 @@ class DashboardController extends Controller
             Image::make($image)->resize(250, 250)->save($location);
             $committeemember->image = $filename;
         }
-            
+
         $committeemember->save();
-        
+
         Session::flash('success', 'সফলভাবে হালনাগাদ করা হয়েছে!');
         return redirect()->route('dashboard.committee');
     }
@@ -807,9 +809,9 @@ class DashboardController extends Controller
             $newfile->move($location, $filename);
             $notice->attachment = $filename;
         }
-        
+
         $notice->save();
-        
+
         Session::flash('success', 'Notice has been created successfully!');
         return redirect()->route('dashboard.notice');
     }
@@ -836,9 +838,9 @@ class DashboardController extends Controller
             $newfile->move($location, $filename);
             $notice->attachment = $filename;
         }
-        
+
         $notice->save();
-        
+
         Session::flash('success', 'Notice has been updated successfully!');
         return redirect()->route('dashboard.notice');
     }
@@ -851,7 +853,7 @@ class DashboardController extends Controller
             File::delete($file_path);
         }
         $notice->delete();
-        
+
         Session::flash('success', 'Deleted Successfully!');
         return redirect()->route('dashboard.notice');
     }
@@ -873,7 +875,7 @@ class DashboardController extends Controller
         $faq->question = $request->question;
         $faq->answer = $request->answer;
         $faq->save();
-        
+
         Session::flash('success', 'প্রশ্ন-উত্তর সফলভাবে সংরক্ষন করা হয়েছে!');
         return redirect()->route('dashboard.faq');
     }
@@ -889,7 +891,7 @@ class DashboardController extends Controller
         $faq->question = $request->question;
         $faq->answer = $request->answer;
         $faq->save();
-        
+
         Session::flash('success', 'প্রশ্ন-উত্তর সফলভাবে হালনাগাদ করা হয়েছে!');
         return redirect()->route('dashboard.faq');
     }
@@ -898,7 +900,7 @@ class DashboardController extends Controller
     {
         $faq = Faq::find($id);
         $faq->delete();
-        
+
         Session::flash('success', 'প্রশ্ন-উত্তর সফলভাবে মুছে দেওয়া হয়েছে!');
         return redirect()->route('dashboard.faq');
     }
@@ -929,9 +931,9 @@ class DashboardController extends Controller
             Image::make($image)->resize(400, 250)->save($location);
             $event->image = $filename;
         }
-        
+
         $event->save();
-        
+
         Session::flash('success', 'Event has been created successfully!');
         return redirect()->route('dashboard.events');
     }
@@ -961,9 +963,9 @@ class DashboardController extends Controller
             Image::make($image)->resize(400, 250)->save($location);
             $event->image = $filename;
         }
-        
+
         $event->save();
-        
+
         Session::flash('success', 'Event has been updated successfully!');
         return redirect()->route('dashboard.events');
     }
@@ -976,7 +978,7 @@ class DashboardController extends Controller
             File::delete($image_path);
         }
         $event->delete();
-        
+
         Session::flash('success', 'Deleted Successfully!');
         return redirect()->route('dashboard.events');
     }
@@ -1005,9 +1007,9 @@ class DashboardController extends Controller
             Image::make($image)->resize(1500, 500)->save($location);
             $slider->image = $filename;
         }
-        
+
         $slider->save();
-        
+
         Session::flash('success', 'সফলভাবে স্লাইডারের ছবি আপলোড করা হয়েছে!');
         return redirect()->route('dashboard.slider');
     }
@@ -1020,7 +1022,7 @@ class DashboardController extends Controller
             File::delete($image_path);
         }
         $slider->delete();
-        
+
         Session::flash('success', 'সফলভাবে মুছে ফেলা হয়েছে!');
         return redirect()->route('dashboard.slider');
     }
@@ -1063,7 +1065,7 @@ class DashboardController extends Controller
             Image::make($thumbnail)->resize(1000, 625)->save($location);
             $album->thumbnail = $filename;
         }
-        
+
         $album->save();
 
         // photo (s) upload
@@ -1083,7 +1085,7 @@ class DashboardController extends Controller
                 $albumphoto->save();
             }
         }
-        
+
         Session::flash('success', 'Album has been created successfully!');
         return redirect()->route('dashboard.gallery');
     }
@@ -1154,7 +1156,7 @@ class DashboardController extends Controller
             File::delete($image_path);
         }
         $albumphoto->delete();
-        
+
         Session::flash('success', 'Deleted Successfully!');
         return redirect()->route('dashboard.editgallery', $albumphoto->album->id);
     }
@@ -1281,7 +1283,7 @@ class DashboardController extends Controller
             'nominee_two_image'            => 'sometimes|image|max:250'
         ));
         }
-        
+
 
 
         if($request->mobile != $application->mobile) {
@@ -1380,7 +1382,7 @@ class DashboardController extends Controller
             Image::make($nominee_two_image)->resize(200, 200)->save($location);
             $application->nominee_two_image = $filename;
         }
-        
+
         if($application->activation_status == 0) {
            $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
            $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
@@ -1397,9 +1399,9 @@ class DashboardController extends Controller
                $location   = public_path('/images/receipts/'. $filename);
                Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
                $application->application_payment_receipt = $filename;
-           } 
+           }
         }
-        
+
         $application->save();
 
         if($application->activation_status == 0 || $application->activation_status == 202) {
@@ -1503,7 +1505,7 @@ class DashboardController extends Controller
           );
 
           echo json_encode($data);
-        }        
+        }
     }
 
     public function activateMember(Request $request, $id)
@@ -1535,7 +1537,7 @@ class DashboardController extends Controller
             $newmembercheck = User::where('activation_status', 1)
                                   ->where('member_id', $application->member_id)
                                   ->first();
-            
+
             if($newmembercheck) {
                 // dd($newmembercheck);
                 // save the payment!
@@ -1602,7 +1604,7 @@ class DashboardController extends Controller
             $text = 'Dear ' . $application->name . ', your membership application has been approved! Your ID: '. $application->member_id .', Email: '. $application->email .' and Password: cvcs12345. Customs and VAT Co-operative Society (CVCS). Login & change password: https://cvcsbd.com/login';
             // this sms costs 2 SMS
             // this sms costs 2 SMS
-            
+
             $data= array(
                 'username'=>config('sms.username'),
                 'password'=>config('sms.password'),
@@ -1630,7 +1632,7 @@ class DashboardController extends Controller
             Session::flash('success', 'সদস্য সফলভাবে অনুমোদন করা হয়েছে!');
             return redirect()->route('dashboard.applications');
         }
-        
+
     }
 
     public function deleteApplication(Request $request, $id)
@@ -1703,8 +1705,8 @@ class DashboardController extends Controller
         // 1002 = Empty Number
         // 1003 = Invalid message or empty message
         // 1004 = Invalid number
-        // 1005 = All Number is Invalid 
-        // 1006 = insufficient Balance 
+        // 1005 = All Number is Invalid
+        // 1006 = insufficient Balance
         // 1009 = Inactive Account
         // 1010 = Max number limit exceeded
         // 1101 = Success
@@ -1783,7 +1785,7 @@ class DashboardController extends Controller
           );
 
           echo json_encode($data);
-        }        
+        }
     }
 
     public function getMembers(Request $request)
@@ -1798,13 +1800,13 @@ class DashboardController extends Controller
             $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
         }
         ksort($ordered_member_array); // ascending order according to key
-    
+
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
         $itemCollection = collect($ordered_member_array);
- 
+
         $perPage = 20;
- 
+
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
@@ -1829,13 +1831,13 @@ class DashboardController extends Controller
             $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
         }
         ksort($ordered_member_array); // ascending order according to key
-    
+
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
         $itemCollection = collect($ordered_member_array);
- 
+
         $perPage = 20;
- 
+
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
@@ -1860,7 +1862,7 @@ class DashboardController extends Controller
                         ->where('role_type', '!=', 'admin') // avoid the super admin type
                         ->orderBy('id', 'desc')->get();
 
-        return $response;          
+        return $response;
     }
 
     public function searchMemberAPI2(Request $request)
@@ -1934,7 +1936,7 @@ class DashboardController extends Controller
           );
 
           echo json_encode($data);
-        }        
+        }
     }
 
     public function searchMemberAPI3(Request $request)
@@ -1994,7 +1996,7 @@ class DashboardController extends Controller
           );
 
           echo json_encode($data);
-        }        
+        }
     }
 
     public function getSingleMember($unique_key)
@@ -2048,7 +2050,7 @@ class DashboardController extends Controller
                             ->withApprovedcountdashboard($approvedcountdashboard);
     }
 
-    public function getFormMessages() 
+    public function getFormMessages()
     {
         $messages = Formmessage::orderBy('id', 'desc')->paginate(10);
 
@@ -2057,7 +2059,7 @@ class DashboardController extends Controller
     }
 
 
-    public function deleteFormMessage($id) 
+    public function deleteFormMessage($id)
     {
         $messages = Formmessage::find($id);
         $messages->delete();
@@ -2066,7 +2068,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.formmessage');
     }
 
-    public function getProfile() 
+    public function getProfile()
     {
         $positions = Position::where('id', '>', 0)->get();
         $branches = Branch::where('id', '>', 0)->get();
@@ -2105,11 +2107,12 @@ class DashboardController extends Controller
                     ->withApprovedcountdashboard($approvedcountdashboard);
     }
 
-    public function updateMemberProfile(Request $request, $id) 
+    public function updateMemberProfile(Request $request, $id)
     {
         $this->validate($request,array(
             'position_id'      =>   'required',
             'branch_id'        =>   'required',
+            'start_time'       =>   'sometimes',
             'present_address'  =>   'required',
             'mobile'           =>   'required',
             'email'            =>   'required',
@@ -2149,7 +2152,9 @@ class DashboardController extends Controller
             return redirect()->route('dashboard.profile');
         }
 
-        // update data accordign to role...
+
+
+        // update data accordign Tempmemdatato role...
         if(Auth::user()->role != 'admin') {
             $tempmemdata = new Tempmemdata;
             $tempmemdata->user_id = $member->id;
@@ -2158,6 +2163,22 @@ class DashboardController extends Controller
             $tempmemdata->present_address = $request->present_address;
             $tempmemdata->mobile = $request->mobile;
             $tempmemdata->email = $request->email;
+
+
+            //check if career info changed and start_time not provided
+            if(Auth::user()->position_id != $request->position_id || Auth::user()->branch_id == $request->branch_id) {
+
+                if(!$request->has('start_date') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_date) == false){
+                    Session::flash('warning', 'আপনি নতুন পদবি/দপ্তর এ যোগদানের তারিখ দেননি!');
+                    if($member->id == Auth::user()->id) {
+                        return redirect()->route('dashboard.profile');
+                    } else {
+                        return redirect()->back();
+                    }
+                }
+                $tempmemdata->start_time = Carbon::parse($request->start_date);
+            }
+
 
             // applicant's temp image upload
             if($request->hasFile('image')) {
@@ -2171,6 +2192,11 @@ class DashboardController extends Controller
                 Image::make($image)->resize(200, 200)->save($location);
                 $tempmemdata->image = $filename;
             }
+
+
+
+
+
             $tempmemdata->save();
 
             Session::flash('success', 'আপনার তথ্য পরিবর্তন অনুরোধ সফলভাবে করা হয়েছে। আমাদের একজন প্রতিনিধি তা অনুমোদন করবেন। ধন্যবাদ।');
@@ -2201,7 +2227,7 @@ class DashboardController extends Controller
         }
     }
 
-    public function getMembersUpdateRequests() 
+    public function getMembersUpdateRequests()
     {
         $tempmemdatas = Tempmemdata::orderBy('id', 'desc')->paginate(10);
 
@@ -2209,16 +2235,33 @@ class DashboardController extends Controller
                     ->withTempmemdatas($tempmemdatas);
     }
 
-    public function approveUpdateRequest(Request $request) 
+    public function approveUpdateRequest(Request $request)
     {
         $tempmemdata = Tempmemdata::where('id', $request->tempmemdata_id)->first();
         $member = User::where('id', $request->user_id)->first();
+
+        //create Career log entry if position/branch changes
+        if($member->position_id != $tempmemdata->position_id || $member->branch_id != $tempmemdata->branch_id) {
+            $newCareerLog = new Careerlog();
+            $newCareerLog->user_id = $member->id;
+            $newCareerLog->branch_id = $tempmemdata->branch_id;
+            $newCareerLog->position_id = $tempmemdata->position_id;
+            $newCareerLog->start_time = $tempmemdata->start_time;
+            $newCareerLog->prev_branch_name = ($member->branch_id != 0)? $member->branch->name: $member->office;
+            $newCareerLog->prev_position_name = ($member->position_id != 0)? $member->position->name: $member->designation;
+            $newCareerLog->save();
+        }
+
 
         $member->position_id = $tempmemdata->position_id;
         $member->branch_id = $tempmemdata->branch_id;
         $member->present_address = $tempmemdata->present_address;
         $member->mobile = $tempmemdata->mobile;
         $member->email = $tempmemdata->email;
+
+
+
+
 
         // applicant's temp image upload
         if($tempmemdata->image != '') {
@@ -2246,7 +2289,7 @@ class DashboardController extends Controller
         $number = $mobile_number;
         $text = 'Dear ' . $member->name . ', your information changing request has been approved! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
         // this sms costs 2 SMS
-        
+
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -2277,7 +2320,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersupdaterequests');
     }
 
-    public function deleteUpdateRequest($id) 
+    public function deleteUpdateRequest($id)
     {
         $tempmemdata = Tempmemdata::find($id);
         $image_path = public_path('images/users/'. $tempmemdata->image);
@@ -2290,12 +2333,12 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersupdaterequests');
     }
 
-    public function getMemberChangePassword() 
+    public function getMemberChangePassword()
     {
         return view('dashboard.profile.changepassword');
     }
 
-    public function memberChangePassword(Request $request) 
+    public function memberChangePassword(Request $request)
     {
         $this->validate($request,array(
             'oldpassword'        =>   'required',
@@ -2316,7 +2359,7 @@ class DashboardController extends Controller
         }
     }
 
-    public function getPaymentPage() 
+    public function getPaymentPage()
     {
         $payments = Payment::where('member_id', Auth::user()->member_id)
                            ->where('is_archieved', 0)
@@ -2329,12 +2372,12 @@ class DashboardController extends Controller
                     ->withMembers($members);
     }
 
-    public function getSelfPaymentPage() 
+    public function getSelfPaymentPage()
     {
         return view('dashboard.profile.selfpayment');
     }
 
-    public function storeSelfPayment(Request $request) 
+    public function storeSelfPayment(Request $request)
     {
         $this->validate($request,array(
             'member_id'   =>   'required',
@@ -2413,7 +2456,7 @@ class DashboardController extends Controller
         } else {
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
-        
+
         Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
         return redirect()->route('dashboard.memberpayment');
     }
@@ -2440,7 +2483,7 @@ class DashboardController extends Controller
             'id'            =>   'required',
             'member_id'     =>   'required'
         ));
-        
+
         $member = User::where('id', $request->id)
                       ->where('member_id', $request->member_id)
                       ->first();
@@ -2485,7 +2528,7 @@ class DashboardController extends Controller
         return $pdf->download($fileName);
     }
 
-    public function getMemberTransactionSummary() 
+    public function getMemberTransactionSummary()
     {
         $membertotalpending = DB::table('payments')
                                 ->select(DB::raw('SUM(amount) as totalamount'))
@@ -2518,12 +2561,12 @@ class DashboardController extends Controller
                         ->withMembertotalmontlypaid($membertotalmontlypaid);
     }
 
-    public function getMemberUserManual() 
+    public function getMemberUserManual()
     {
         return view('dashboard.profile.usermanual');
     }
 
-    public function storeBulkPayment(Request $request) 
+    public function storeBulkPayment(Request $request)
     {
         $this->validate($request,array(
             'amount'      =>   'required|integer',
@@ -2582,7 +2625,7 @@ class DashboardController extends Controller
         // $mobile_numbers = [];
         $smssuccesscount = 0;
         $url = config('sms.url');
-        
+
         $multiCurl = array();
         // data to be returned
         $result = array();
@@ -2643,13 +2686,13 @@ class DashboardController extends Controller
         }
         // close
         curl_multi_close($mh);
-        
-        
+
+
         Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
         return redirect()->route('dashboard.memberpayment');
     }
 
-    public function getBulkPaymentPage() 
+    public function getBulkPaymentPage()
     {
         $branch = Branch::find(Auth::user()->branch->id);
         $members = User::where('activation_status', 1)
@@ -2662,7 +2705,7 @@ class DashboardController extends Controller
                             ->withMembers($members);
     }
 
-    public function getBulkPaymentPageFromBranch($branch_id) 
+    public function getBulkPaymentPageFromBranch($branch_id)
     {
         $branch = Branch::find($branch_id);
         $members = User::where('activation_status', 1)
@@ -2686,7 +2729,7 @@ class DashboardController extends Controller
                             $query->where('payment_status', '=', 1);
                             $query->where('is_archieved', '=', 0);
                             $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
-                        }]) 
+                        }])
                         ->orderBy('id', 'desc')->get();
 
         foreach ($response as $member) {
@@ -2727,7 +2770,7 @@ class DashboardController extends Controller
                             $query->where('payment_status', '=', 1);
                             $query->where('is_archieved', '=', 0);
                             $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
-                        }]) 
+                        }])
                         ->first();
 
         $approvedcashformontly = $response->payments->sum('amount');
@@ -2752,10 +2795,10 @@ class DashboardController extends Controller
             }
         }
 
-        return $response;          
+        return $response;
     }
 
-    public function getMembersPendingPayments() 
+    public function getMembersPendingPayments()
     {
         $payments = Payment::where('payment_status', 0)
                            ->where('is_archieved', 0)
@@ -2767,7 +2810,7 @@ class DashboardController extends Controller
                     ->withMembers($members);
     }
 
-    public function getMembersApprovedPayments() 
+    public function getMembersApprovedPayments()
     {
         $payments = Payment::where('payment_status', 1)
                            ->where('is_archieved', 0)
@@ -2777,7 +2820,7 @@ class DashboardController extends Controller
                     ->withPayments($payments);
     }
 
-    public function approveSinglePayment(Request $request, $id) 
+    public function approveSinglePayment(Request $request, $id)
     {
         $payment = Payment::find($id);
 
@@ -2833,7 +2876,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
-    public function approveBulkPayment(Request $request, $id) 
+    public function approveBulkPayment(Request $request, $id)
     {
         $bulkpayment = Payment::find($id);
 
@@ -2870,7 +2913,7 @@ class DashboardController extends Controller
         // $mobile_numbers = [];
         $smssuccesscount = 0;
         $url = config('sms.url');
-        
+
         $multiCurl = array();
         // data to be returned
         $result = array();
@@ -2936,7 +2979,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
-    public function getNotifications() 
+    public function getNotifications()
     {
         return view('dashboard.notifications');
     }
