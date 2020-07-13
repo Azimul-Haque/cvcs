@@ -13,6 +13,7 @@ return array(
     'CreateBlogsTable' => $baseDir . '/database/migrations/2018_10_25_113938_create_blogs_table.php',
     'CreateBranchesTable' => $baseDir . '/database/migrations/2019_04_07_145718_create_branches_table.php',
     'CreateBranchpaymentsTable' => $baseDir . '/database/migrations/2019_05_07_235333_create_branchpayments_table.php',
+    'CreateCareerlogsTable' => $baseDir . '/database/migrations/2020_07_13_223830_create_careerlogs_table.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2018_10_25_114844_create_categories_table.php',
     'CreateCommitteesTable' => $baseDir . '/database/migrations/2019_04_06_035151_create_committees_table.php',
     'CreateDonationsTable' => $baseDir . '/database/migrations/2019_04_20_013848_create_donations_table.php',

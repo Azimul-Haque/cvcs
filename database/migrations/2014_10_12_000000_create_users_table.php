@@ -63,7 +63,7 @@ class CreateUsersTable extends Migration
             $table->string('application_payment_receipt');
 
             $table->integer('position_id')->unsigned();
-            $table->integer('office_id')->unsigned();
+            $table->integer('branch_id')->unsigned();
             $table->integer('district_id')->unsigned();
 
             $table->string('blood_group')->nullable();

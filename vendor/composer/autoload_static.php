@@ -342,6 +342,7 @@ class ComposerStaticInit5ba844acaeab7533148c65467b83a279
         'CreateBlogsTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_25_113938_create_blogs_table.php',
         'CreateBranchesTable' => __DIR__ . '/../..' . '/database/migrations/2019_04_07_145718_create_branches_table.php',
         'CreateBranchpaymentsTable' => __DIR__ . '/../..' . '/database/migrations/2019_05_07_235333_create_branchpayments_table.php',
+        'CreateCareerlogsTable' => __DIR__ . '/../..' . '/database/migrations/2020_07_13_223830_create_careerlogs_table.php',
         'CreateCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2018_10_25_114844_create_categories_table.php',
         'CreateCommitteesTable' => __DIR__ . '/../..' . '/database/migrations/2019_04_06_035151_create_committees_table.php',
         'CreateDonationsTable' => __DIR__ . '/../..' . '/database/migrations/2019_04_20_013848_create_donations_table.php',
