@@ -26,6 +26,10 @@ class User extends Authenticatable
       return $this->hasMany('App\Donation', 'submitter_id', 'id');
     }
 
+    public function careerlogs() {
+      return $this->hasMany('App\Careerlog');
+    }
+
     public function tempmemdatas() {
       return $this->hasMany('App\Tempmemdata', 'user_id', 'id');
     }

@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Careerlog extends Model
 {
     //
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }
