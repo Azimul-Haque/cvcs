@@ -163,7 +163,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Mews\Purifier\PurifierServiceProvider::class
+        Mews\Purifier\PurifierServiceProvider::class,
+        Spatie\Activitylog\ActivitylogServiceProvider::class,
 
 
     ],

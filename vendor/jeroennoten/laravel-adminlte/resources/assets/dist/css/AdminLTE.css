@@ -1,9 +1,10 @@
 /*!
- *   AdminLTE v2.4.0
- *   Author: Almsaeed Studio
- *	 Website: Almsaeed Studio <https://adminlte.io>
- *   License: Open source - MIT
- *           Please visit http://opensource.org/licenses/MIT for more information
+ * AdminLTE v2.4.15
+ * 
+ *   Author:  Colorlib
+ *   Support: <https://github.com/ColorlibHQ/AdminLTE/issues>
+ *   Repository: git://github.com/ColorlibHQ/AdminLTE.git
+ *   License: MIT <http://opensource.org/licenses/MIT>
  */
 /*
  * Core: General Layout Style
@@ -46,7 +47,7 @@ body {
   position: relative;
 }
 .layout-boxed {
-  background: url('../img/boxed-bg.jpg') repeat fixed;
+  background-color: #f9fafc;
 }
 /*
  * Content Wrapper - contains the main content
@@ -86,9 +87,14 @@ body {
   }
 }
 .content-wrapper {
-  min-height: 100%;
+  min-height: calc(100vh - 101px);
   background-color: #ecf0f5;
   z-index: 800;
+}
+@media (max-width: 767px) {
+  .content-wrapper {
+    min-height: calc(100vh - 151px);
+  }
 }
 .main-footer {
   background: #fff;
@@ -262,6 +268,13 @@ a:focus {
 .main-header .sidebar-toggle:active {
   background: transparent;
 }
+.main-header .sidebar-toggle.fa5 {
+  font-family: "Font Awesome\ 5 Free";
+}
+.main-header .sidebar-toggle.fa5:before {
+  content: "\f0c9";
+  font-weight: 900;
+}
 .main-header .sidebar-toggle .icon-bar {
   display: none;
 }
@@ -295,11 +308,39 @@ a:focus {
   font-weight: 300;
   overflow: hidden;
 }
+.main-header .logo img {
+  padding: 4px;
+  object-fit: contain;
+  margin: 0 auto;
+}
 .main-header .logo .logo-lg {
   display: block;
 }
+.main-header .logo .logo-lg img {
+  max-width: 200px;
+  max-height: 50px;
+}
+.main-header .logo .logo-lg .brandlogo-image {
+  margin-top: 8px;
+  margin-right: 10px;
+  margin-left: -5px;
+}
 .main-header .logo .logo-mini {
   display: none;
+}
+.main-header .logo .logo-mini img {
+  max-width: 50px;
+  max-height: 50px;
+}
+.main-header .logo .logo-mini .brandlogo-image {
+  margin-top: 8px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.main-header .logo .brandlogo-image {
+  float: left;
+  height: 34px;
+  width: auto;
 }
 .main-header .navbar-brand {
   color: #fff;
@@ -592,6 +633,7 @@ a:focus {
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span,
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu,
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > .pull-right,
+  .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span > .pull-right,
   .sidebar-mini.sidebar-collapse .sidebar-menu li.header {
     display: none !important;
     -webkit-transform: translateZ(0);
@@ -612,33 +654,35 @@ a:focus {
     margin-left: 50px;
   }
 }
-.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right),
-.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
-  display: block !important;
-  position: absolute;
-  width: 180px;
-  left: 50px;
-}
-.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span {
-  top: 0;
-  margin-left: -3px;
-  padding: 12px 5px 12px 20px;
-  background-color: inherit;
-}
-.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > .pull-right-container {
-  position: relative !important;
-  float: right;
-  width: auto !important;
-  left: 180px !important;
-  top: -22px !important;
-  z-index: 900;
-}
-.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > .pull-right-container > .label:not(:first-of-type) {
-  display: none;
-}
-.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
-  top: 44px;
-  margin-left: 0;
+@media (min-width: 768px) {
+  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right),
+  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
+    display: block !important;
+    position: absolute;
+    width: 180px;
+    left: 50px;
+  }
+  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span {
+    top: 0;
+    margin-left: -3px;
+    padding: 12px 5px 12px 20px;
+    background-color: inherit;
+  }
+  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > .pull-right-container {
+    position: relative !important;
+    float: right;
+    width: auto !important;
+    left: 180px !important;
+    top: -22px !important;
+    z-index: 900;
+  }
+  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > .pull-right-container > .label:not(:first-of-type) {
+    display: none;
+  }
+  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
+    top: 44px;
+    margin-left: 0;
+  }
 }
 .sidebar-expanded-on-hover .main-footer,
 .sidebar-expanded-on-hover .content-wrapper {
@@ -692,7 +736,7 @@ a:focus {
   padding-top: 50px;
   z-index: 1010;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .control-sidebar {
     padding-top: 100px;
   }
@@ -3094,6 +3138,16 @@ table.text-center th {
 .treeview-menu > li > a > .fa-angle-down {
   width: auto;
 }
+.treeview > ul.treeview-menu {
+  overflow: hidden;
+  height: auto;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+.treeview.menu-open > ul.treeview-menu {
+  overflow: visible;
+  height: auto;
+}
 /*
  * Page: Mailbox
  * -------------
@@ -3246,6 +3300,7 @@ table.text-center th {
 }
 .login-page,
 .register-page {
+  height: auto;
   background: #d2d6de;
 }
 .login-box,
@@ -4930,6 +4985,9 @@ table.text-center th {
 .chart svg,
 .chart canvas {
   width: 100% !important;
+}
+hr {
+  border-top: 1px solid #555555;
 }
 /*
  * Misc: print
