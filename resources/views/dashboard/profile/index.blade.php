@@ -348,6 +348,21 @@
                                 <th>মাতার নাম</th>
                                 <td>{{ $member->mother }}</td>
                             </tr>
+                            <tr>
+                                <th>সদস্য আবেদন ফর্মের হার্ড কপি</th>
+                                <td>
+                                    <center>
+                                        @if($member->application_hard_copy != null)
+                                            <img src="{{ asset('images/users/'.$member->application_hard_copy)}}"
+                                                 alt="application hard copy of {{ $member->name }}"
+                                                 class="img-responsive shadow"
+                                                 style="max-width: 200px; height: auto;"/>
+                                        @endif
+                                    </center>
+                                </td>
+                            </tr>
+
+
                             </tbody>
                         </table>
                     </div>
@@ -417,6 +432,20 @@
                                 <th>ইমেইল এড্রেস</th>
                                 <td>{{ $member->email }}</td>
                             </tr>
+                            <tr>
+                                <th>স্বাক্ষর</th>
+                                <td>
+                                    <center>
+                                        @if($member->digital_signature != null)
+                                            <img src="{{ asset('images/users/'.$member->digital_signature)}}"
+                                                 alt="digital signature of {{ $member->name }}"
+                                                 class="img-responsive shadow"
+                                                 style="max-width: 200px; height: auto;"/>
+                                        @endif
+                                    </center>
+                                </td>
+                            </tr>
+
                             </tbody>
                         </table>
                     </div>
