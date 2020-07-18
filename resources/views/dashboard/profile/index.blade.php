@@ -97,12 +97,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group invisible" id="start_date_input">
-                            {!! Form::label('start_date', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
-                            <input type="text" class="form-control" name="start_date" id="start_date" data-field="date"
+                        <div class="form-group invisible" id="start_time_input">
+                            {!! Form::label('start_time', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
+                            <input type="text" class="form-control" name="start_time" id="start_time" data-field="date"
                                    autocomplete="off"
                                    placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন">
-                            {{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
+                            {{--                            {!! Form::text('start_time', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
                         </div>
 
                         <div class="form-group ">
@@ -790,8 +790,8 @@
 
         $('#position_id').change(function (e) {
             e.preventDefault();
-            $('#start_date_input').removeClass('invisible');
-            $('#start_date_input').addClass('visible');
+            $('#start_time_input').removeClass('invisible');
+            $('#start_time_input').addClass('visible');
         });
     </script>
 

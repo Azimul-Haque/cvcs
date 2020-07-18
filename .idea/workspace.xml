@@ -4,10 +4,7 @@
     <list default="true" id="56edb9fc-834c-4cd7-962a-95d05808ce81" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_05_10_144720_create_tempmemdatas_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_05_10_144720_create_tempmemdatas_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/dashboard/profile/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/profile/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index/membership/application.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index/membership/application.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +160,7 @@
       <workItem from="1594721612136" duration="4768000" />
       <workItem from="1594738408247" duration="1790000" />
       <workItem from="1595049677919" duration="12433000" />
-      <workItem from="1595087887487" duration="2738000" />
+      <workItem from="1595087887487" duration="6674000" />
     </task>
     <servers />
   </component>

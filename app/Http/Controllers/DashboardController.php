@@ -2133,7 +2133,12 @@ class DashboardController extends Controller
             'present_address' => 'required',
             'mobile' => 'required',
             'email' => 'required',
-            'image' => 'sometimes|image|max:250'
+            'blood_group' => 'sometimes',
+            'upazilla_id' => 'sometimes| numeric',
+            'prl_date' => 'sometimes',
+            'image' => 'sometimes|image|max:250',
+            'application_hard_copy' => 'sometimes|image|max:2048',
+            'digital_signature' => 'sometimes|image|max:2048',
         ));
 
         $member = User::find($id);
@@ -2180,11 +2185,20 @@ class DashboardController extends Controller
             $tempmemdata->mobile = $request->mobile;
             $tempmemdata->email = $request->email;
 
+            if($request->has('blood_group')){
+                $tempmemdata->blood_group = $request->blood_group;
+            }
+            if($request->has('upazilla_id')){
+                $tempmemdata->upazilla_id = $request->upazilla_id;
+            }
+            if($request->has('prl_date')){
+                $tempmemdata->prl_date = Carbon::parse($request->prl_date);
+            }
 
             //check if career info changed and start_time not provided
-            if (Auth::user()->position_id != $request->position_id || Auth::user()->branch_id == $request->branch_id) {
+            if (Auth::user()->position_id != $request->position_id || Auth::user()->branch_id != $request->branch_id) {
 
-                if (!$request->has('start_date') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_date) == false) {
+                if (!$request->has('start_time') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_time) == false) {
                     Session::flash('warning', 'আপনি নতুন পদবি/দপ্তর এ যোগদানের তারিখ দেননি!');
                     if ($member->id == Auth::user()->id) {
                         return redirect()->route('dashboard.profile');
@@ -2192,7 +2206,7 @@ class DashboardController extends Controller
                         return redirect()->back();
                     }
                 }
-                $tempmemdata->start_time = Carbon::parse($request->start_date);
+                $tempmemdata->start_time = Carbon::parse($request->start_time);
             }
 
 
@@ -2209,17 +2223,74 @@ class DashboardController extends Controller
                 $tempmemdata->image = $filename;
             }
 
+            if ($request->hasFile('application_hard_copy')) {
+                // $old_img = public_path('images/users/'. $application->image);
+                // if(File::exists($old_img)) {
+                //     File::delete($old_img);
+                // }
+                $image = $request->file('application_hard_copy');
+                $filename = 'temp_application_hard_copy' . str_replace(' ', '', $member->name) . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('/images/users/' . $filename);
+                Image::make($image)->resize(200, 200)->save($location);
+                $tempmemdata->application_hard_copy = $filename;
+            }
+
+            if ($request->hasFile('digital_signature')) {
+                // $old_img = public_path('images/users/'. $application->image);
+                // if(File::exists($old_img)) {
+                //     File::delete($old_img);
+                // }
+                $image = $request->file('digital_signature');
+                $filename = 'temp_digital_signature' . str_replace(' ', '', $member->name) . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('/images/users/' . $filename);
+                Image::make($image)->resize(200, 200)->save($location);
+                $tempmemdata->digital_signature = $filename;
+            }
+
 
             $tempmemdata->save();
 
             Session::flash('success', 'আপনার তথ্য পরিবর্তন অনুরোধ সফলভাবে করা হয়েছে। আমাদের একজন প্রতিনিধি তা অনুমোদন করবেন। ধন্যবাদ।');
             return redirect()->route('dashboard.profile');
         } else {
+
+
+
+            //check if career info changed and start_time not provided
+            if (Auth::user()->position_id != $request->position_id || Auth::user()->branch_id != $request->branch_id) {
+
+                if (!$request->has('start_time') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_time) == false) {
+                    Session::flash('warning', 'আপনি নতুন পদবি/দপ্তর এ যোগদানের তারিখ দেননি!');
+                    if ($member->id == Auth::user()->id) {
+                        return redirect()->route('dashboard.profile');
+                    } else {
+                        return redirect()->back();
+                    }
+                }
+                $newCareerLog = new Careerlog();
+                $newCareerLog->user_id = $member->id;
+                $newCareerLog->branch_id = $request->branch_id;
+                $newCareerLog->position_id = $request->position_id;
+                $newCareerLog->start_time = Carbon::parse($request->start_time);
+                $newCareerLog->prev_branch_name = ($member->branch_id != 0) ? $member->branch->name : $member->office;
+                $newCareerLog->prev_position_name = ($member->position_id != 0) ? $member->position->name : $member->designation;
+                $newCareerLog->save();
+            }
+
+
+
             $member->position_id = $request->position_id;
             $member->branch_id = $request->branch_id;
             $member->present_address = $request->present_address;
             $member->mobile = $request->mobile;
             $member->email = $request->email;
+
+            if($request->has('blood_group')){
+                $member->blood_group = $request->blood_group;
+            }
+            if($request->has('upazilla_id')){
+                $member->upazilla_id = $request->upazilla_id;
+            }
 
             // applicant's temp image upload
             if ($request->hasFile('image')) {
@@ -2233,6 +2304,32 @@ class DashboardController extends Controller
                 Image::make($image)->resize(200, 200)->save($location);
                 $member->image = $filename;
             }
+
+            if ($request->hasFile('application_hard_copy')) {
+                // $old_img = public_path('images/users/'. $application->image);
+                // if(File::exists($old_img)) {
+                //     File::delete($old_img);
+                // }
+                $image = $request->file('application_hard_copy');
+                $filename = 'application_hard_copy' . str_replace(' ', '', $member->name) . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('/images/users/' . $filename);
+                Image::make($image)->resize(200, 200)->save($location);
+                $member->application_hard_copy = $filename;
+            }
+
+            if ($request->hasFile('digital_signature')) {
+                // $old_img = public_path('images/users/'. $application->image);
+                // if(File::exists($old_img)) {
+                //     File::delete($old_img);
+                // }
+                $image = $request->file('digital_signature');
+                $filename = 'digital_signature' . str_replace(' ', '', $member->name) . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('/images/users/' . $filename);
+                Image::make($image)->resize(200, 200)->save($location);
+                $member->digital_signature = $filename;
+            }
+
+
             $member->save();
 
             Session::flash('success', 'সফলভাবে হালনাগাদ করা হয়েছে!');
@@ -2271,6 +2368,9 @@ class DashboardController extends Controller
         $member->present_address = $tempmemdata->present_address;
         $member->mobile = $tempmemdata->mobile;
         $member->email = $tempmemdata->email;
+        $member->blood_group = $tempmemdata->blood_group;
+        $member->upazilla_id = $tempmemdata->upazilla_id;
+        $member->prl_date = $tempmemdata->prl_date;
 
 
         // applicant's temp image upload
@@ -2280,6 +2380,22 @@ class DashboardController extends Controller
                 File::delete($old_img);
             }
             $member->image = $tempmemdata->image;
+        }
+
+        if ($tempmemdata->application_hard_copy != null) {
+            $old_img = public_path('images/users/' . $member->application_hard_copy);
+            if (File::exists($old_img)) {
+                File::delete($old_img);
+            }
+            $member->application_hard_copy = $tempmemdata->application_hard_copy;
+        }
+
+        if ($tempmemdata->digital_signature != null) {
+            $old_img = public_path('images/users/' . $member->digital_signature);
+            if (File::exists($old_img)) {
+                File::delete($old_img);
+            }
+            $member->digital_signature = $tempmemdata->digital_signature;
         }
         $member->save();
         $this->addToAdminLog($member, 'update_member', 'সদস্য তথ্য দাখিল');
