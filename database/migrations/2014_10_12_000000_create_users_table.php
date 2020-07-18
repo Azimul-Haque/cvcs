@@ -64,7 +64,7 @@ class CreateUsersTable extends Migration
 
             $table->integer('position_id')->unsigned();
             $table->integer('branch_id')->unsigned();
-            $table->integer('district_id')->unsigned();
+            $table->integer('upazilla_id')->unsigned();
 
             $table->string('blood_group')->nullable();
             $table->string('prl_date')->nullable();

@@ -42,6 +42,9 @@ class User extends Authenticatable
       return $this->belongsTo('App\Branch');
     }
 
+    public function upazilla(){
+        return $this->belongsTo('App\Upazilla');
+    }
 
     protected $fillable = [
         'name', 'email', 'password',

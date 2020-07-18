@@ -317,8 +317,16 @@
                                 <td>{{ $member->nid}}</td>
                             </tr>
                             <tr>
+                                <th>জেলা</th>
+                                <td>{{ ($member->upazilla_id != 0)? $member->upazilla->district_bangla: ""}}</td>
+                            </tr>
+                            <tr>
                                 <th>জন্ম তারিখ</th>
                                 <td>{{ date('F d, Y', strtotime($member->dob)) }}</td>
+                            </tr>
+                            <tr>
+                                <th>রক্তের গ্রুপ</th>
+                                <td>{{ ($member->blood_group != null)? $member->blood_group: "" }}</td>
                             </tr>
                             <tr>
                                 <th>লিঙ্গ</th>
@@ -371,6 +379,12 @@
                                     @else
                                         N/A
                                     @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>চাকুরি থেকে অবসরের তারিখ</th>
+                                <td>
+                                    {{($member->joining_date != null)? date('F d, Y', strtotime($member->prl_date)): ""}}
                                 </td>
                             </tr>
 

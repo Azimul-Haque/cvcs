@@ -113,7 +113,7 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label for="district_id" class="">আবেদনকারীর জেলার নাম *</label>
-                                    <select name="district_id" id="district_id" class="form-control">
+                                    <select name="upazilla_id" id="upazilla_id" class="form-control">
                                         <option value="" selected="" disabled="">জেলার নাম নির্ধারণ করুন</option>
                                         @foreach($upazillas as $upazilla)
                                             <option value="{{ $upazilla->id }}">{{ $upazilla->district_bangla }}</option>
