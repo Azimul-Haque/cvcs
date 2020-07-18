@@ -62,9 +62,9 @@ class CreateUsersTable extends Migration
             $table->string('application_payment_pay_slip');
             $table->string('application_payment_receipt');
 
-            $table->integer('position_id')->unsigned();
-            $table->integer('branch_id')->unsigned();
-            $table->integer('upazilla_id')->unsigned();
+            $table->integer('position_id')->unsigned()->default(0);
+            $table->integer('branch_id')->unsigned()->default(0);
+            $table->integer('upazilla_id')->unsigned()->default(0);
 
             $table->string('blood_group')->nullable();
             $table->string('prl_date')->nullable();

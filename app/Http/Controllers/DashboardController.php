@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Careerlog;
 use App\Http\Requests;
+use App\Upazilla;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,7 @@ use Session, Config;
 use Hash;
 use PDF;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 // use BanglaDate;
 
 class DashboardController extends Controller
@@ -53,7 +55,8 @@ class DashboardController extends Controller
         $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
     }
 
-    private function addToAdminLog($performedOn, $type, $description){
+    private function addToAdminLog($performedOn, $type, $description)
+    {
         activity()
             ->performedOn($performedOn)
             ->causedBy(Auth::user())
@@ -76,70 +79,70 @@ class DashboardController extends Controller
         // $membership = About::where('type', 'membership')->get()->first();
         // $basicinfo = Basicinfo::where('id', 1)->first();
         $totalpending = DB::table('payments')
-                           ->select(DB::raw('SUM(amount) as totalamount'))
-                           ->where('payment_status', '=', 0)
-                           ->where('is_archieved', '=', 0)
-                           // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
-                           // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-                           ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', '=', 0)
+            ->where('is_archieved', '=', 0)
+            // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+            // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->first();
         $totalapproved = DB::table('payments')
-                           ->select(DB::raw('SUM(amount) as totalamount'))
-                           ->where('payment_status', '=', 1)
-                           ->where('is_archieved', '=', 0)
-                           // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
-                           // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-                           ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', '=', 1)
+            ->where('is_archieved', '=', 0)
+            // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+            // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->first();
         $registeredmember = User::where('activation_status', 1)
-                                ->where('role_type', '!=', 'admin')
-                                ->count();
+            ->where('role_type', '!=', 'admin')
+            ->count();
 
         $pendingpayments = Payment::where('payment_status', 0)
-                                      ->where('is_archieved', 0)
-                                      ->count()
-                                      +
-                           User::where('activation_status', 0)
-                               ->orWhere('activation_status', 202)
-                               ->count();
+                ->where('is_archieved', 0)
+                ->count()
+            +
+            User::where('activation_status', 0)
+                ->orWhere('activation_status', 202)
+                ->count();
 
         $successfullpayments = Payment::where('payment_status', 1)->count();
 
         $totalapplicationpending = DB::table('users')
-                                     ->select(DB::raw('SUM(application_payment_amount) as totalamount'))
-                                     ->where('activation_status', '=', 0)
-                                     // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
-                                     // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-                                     ->first();
+            ->select(DB::raw('SUM(application_payment_amount) as totalamount'))
+            ->where('activation_status', '=', 0)
+            // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+            // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->first();
 
         $totaldonation = DB::table('donations')
-                                ->select(DB::raw('SUM(amount) as totalamount'))
-                                ->where('payment_status', 1)
-                                ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->first();
         $totaldonors = Donor::count();
 
         $totalbranchpayment = DB::table('branchpayments')
-                                ->select(DB::raw('SUM(amount) as totalamount'))
-                                ->where('payment_status', 1)
-                                ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->first();
         $totalbranches = Branch::count();
 
         $lastsixmembers = User::where('activation_status', 1)
-                              ->where('role', 'member')
-                              ->orderBy('updated_at', 'desc')
-                              ->take(6)->get();
+            ->where('role', 'member')
+            ->orderBy('updated_at', 'desc')
+            ->take(6)->get();
 
         $lastsixmemberstest = User::where('activation_status', 1)
-                              ->where('role', 'member')
-                              ->orderBy('updated_at', 'desc')
-                              ->take(6)->get()->toJson();
+            ->where('role', 'member')
+            ->orderBy('updated_at', 'desc')
+            ->take(6)->get()->toJson();
 
         $lastsevenmonthscollection = DB::table('payments')
-                                    ->select('created_at', DB::raw('SUM(amount) as totalamount'))
-                                    ->where('is_archieved', '=', 0)
-                                    ->where('payment_status', '=', 1)
-                                    ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-                                    ->orderBy('created_at', 'DESC')
-                                    ->take(12)
-                                    ->get();
+            ->select('created_at', DB::raw('SUM(amount) as totalamount'))
+            ->where('is_archieved', '=', 0)
+            ->where('payment_status', '=', 1)
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->orderBy('created_at', 'DESC')
+            ->take(12)
+            ->get();
         $monthsforchartc = [];
         foreach ($lastsevenmonthscollection as $key => $months) {
             $monthsforchartc[] = date_format(date_create($months->created_at), "M Y");
@@ -159,32 +162,32 @@ class DashboardController extends Controller
         // $datebangla =  $bangla_output[1] . ' ' . $bangla_output[0]  . ', ' . $bangla_output[2];
 
         return view('dashboard.index')
-                    ->withTotalpending($totalpending)
-                    ->withTotalapproved($totalapproved)
-                    ->withRegisteredmember($registeredmember)
-                    ->withPendingpayments($pendingpayments)
-                    ->withSuccessfullpayments($successfullpayments)
-                    ->withLastsixmembers($lastsixmembers)
-                    ->withMonthsforchartc($monthsforchartc)
-                    ->withTotalsforchartc($totalsforchartc)
-                    ->withTotaldonation($totaldonation)
-                    ->withTotaldonors($totaldonors)
-                    ->withTotalbranchpayment($totalbranchpayment)
-                    ->withTotalbranches($totalbranches)
-                    ->withTotalapplicationpending($totalapplicationpending)
-                    ->withLastsixmemberstest($lastsixmemberstest);
+            ->withTotalpending($totalpending)
+            ->withTotalapproved($totalapproved)
+            ->withRegisteredmember($registeredmember)
+            ->withPendingpayments($pendingpayments)
+            ->withSuccessfullpayments($successfullpayments)
+            ->withLastsixmembers($lastsixmembers)
+            ->withMonthsforchartc($monthsforchartc)
+            ->withTotalsforchartc($totalsforchartc)
+            ->withTotaldonation($totaldonation)
+            ->withTotaldonors($totaldonors)
+            ->withTotalbranchpayment($totalbranchpayment)
+            ->withTotalbranches($totalbranches)
+            ->withTotalapplicationpending($totalapplicationpending)
+            ->withLastsixmemberstest($lastsixmemberstest);
     }
 
     public function getAdmins()
     {
         $superadmins = User::where('role', 'admin')
-                           ->whereNotIn('email', ['mannan@cvcsbd.com', 'dataentry@cvcsbd.com']) // jei email gula deoa hobe tader k dekhabe na!!!
-                           ->where('role_type', 'admin')
-                           ->paginate(10);
+            ->whereNotIn('email', ['mannan@cvcsbd.com', 'dataentry@cvcsbd.com']) // jei email gula deoa hobe tader k dekhabe na!!!
+            ->where('role_type', 'admin')
+            ->paginate(10);
 
         $admins = User::where('role', 'admin')
-                      ->where('role_type', 'manager')
-                      ->paginate(10);
+            ->where('role_type', 'manager')
+            ->paginate(10);
         // $whoweare = About::where('type', 'whoweare')->get()->first();
         // $whatwedo = About::where('type', 'whatwedo')->get()->first();
         // $ataglance = About::where('type', 'ataglance')->get()->first();
@@ -192,8 +195,8 @@ class DashboardController extends Controller
         // $basicinfo = Basicinfo::where('id', 1)->first();
 
         return view('dashboard.adminsandothers.admins')
-                    ->withSuperadmins($superadmins)
-                    ->withAdmins($admins);
+            ->withSuperadmins($superadmins)
+            ->withAdmins($admins);
     }
 
     public function getCreateAdmin()
@@ -210,22 +213,22 @@ class DashboardController extends Controller
         //                 ->orWhere('mobile', 'like', '%' . $request->searchentry . '%')
         //                 ->get();
         $response = User::select('name_bangla', 'member_id', 'mobile')
-                        ->where('role_type', '!=', 'admin')
-                        ->where('role_type', '!=', 'manager')
-                        ->where('activation_status', 1)
-                        ->orderBy('id', 'desc')->get();
+            ->where('role_type', '!=', 'admin')
+            ->where('role_type', '!=', 'manager')
+            ->where('activation_status', 1)
+            ->orderBy('id', 'desc')->get();
 
         return $response;
     }
 
     public function addAdmin(Request $request)
     {
-        $this->validate($request,array(
+        $this->validate($request, array(
             'member_id' => 'required'
         ));
 
         $member = User::where('member_id', $request->member_id)->first();
-        $member->role      = 'admin';
+        $member->role = 'admin';
         $member->role_type = 'manager';
         $member->save();
         $this->addToAdminLog($member, 'add_admin', 'নতুন এডমিন যোগদান');
@@ -238,7 +241,7 @@ class DashboardController extends Controller
     public function removeAdmin(Request $request, $id)
     {
         $member = User::find($id);
-        $member->role      = 'member';
+        $member->role = 'member';
         $member->role_type = 'member';
         $member->save();
         $this->addToAdminLog($member, 'remove_admin', 'এডমিন অব্যহতি');
@@ -262,16 +265,16 @@ class DashboardController extends Controller
     public function searchMemberForBulkPayerAPI(Request $request)
     {
         $response = User::select('name_bangla', 'member_id', 'mobile')
-                        ->where('role_type', 'member')
-                        ->where('activation_status', 1)
-                        ->orderBy('id', 'desc')->get();
+            ->where('role_type', 'member')
+            ->where('activation_status', 1)
+            ->orderBy('id', 'desc')->get();
 
         return $response;
     }
 
     public function addBulkPayer(Request $request)
     {
-        $this->validate($request,array(
+        $this->validate($request, array(
             'member_id' => 'required'
         ));
 
@@ -300,23 +303,23 @@ class DashboardController extends Controller
         $donors = Donor::orderBy('id', 'desc')->paginate(10);
         $donations = Donation::orderBy('id', 'desc')->paginate(10);
         $totaldonation = DB::table('donations')
-                                ->select(DB::raw('SUM(amount) as totalamount'))
-                                ->where('payment_status', 1)
-                                ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->first();
 
         return view('dashboard.adminsandothers.donors')
-                    ->withDonors($donors)
-                    ->withDonations($donations)
-                    ->withTotaldonation($totaldonation);
+            ->withDonors($donors)
+            ->withDonations($donations)
+            ->withTotaldonation($totaldonation);
     }
 
     public function storeDonor(Request $request)
     {
-        $this->validate($request,array(
-            'name'    => 'required|max:255',
+        $this->validate($request, array(
+            'name' => 'required|max:255',
             'address' => 'required|max:255',
-            'email'   => 'required|max:255',
-            'phone'   => 'required|max:255'
+            'email' => 'required|max:255',
+            'phone' => 'required|max:255'
         ));
 
         $donor = new Donor;
@@ -332,14 +335,14 @@ class DashboardController extends Controller
 
     public function storeDonation(Request $request)
     {
-        $this->validate($request,array(
-            'donor_id'       =>   'required',
-            'submitter_id'   =>   'required',
-            'amount'         =>   'required|integer',
-            'bank'           =>   'required',
-            'branch'         =>   'required',
-            'pay_slip'       =>   'required',
-            'image'          =>   'sometimes|image|max:500'
+        $this->validate($request, array(
+            'donor_id' => 'required',
+            'submitter_id' => 'required',
+            'amount' => 'required|integer',
+            'bank' => 'required',
+            'branch' => 'required',
+            'pay_slip' => 'required',
+            'image' => 'sometimes|image|max:500'
         ));
 
         $donation = new Donation;
@@ -357,11 +360,13 @@ class DashboardController extends Controller
         // generate payment_key
         $donation->payment_key = $payment_key;
         // receipt upload
-        if($request->hasFile('image')) {
-            $receipt      = $request->file('image');
-            $filename   = $request->submitter_id.'_donation_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
-            $location   = public_path('/images/receipts/'. $filename);
-            Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+        if ($request->hasFile('image')) {
+            $receipt = $request->file('image');
+            $filename = $request->submitter_id . '_donation_receipt_' . time() . '.' . $receipt->getClientOriginalExtension();
+            $location = public_path('/images/receipts/' . $filename);
+            Image::make($receipt)->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location);
             $donation->image = $filename;
         }
         $donation->save();
@@ -385,24 +390,24 @@ class DashboardController extends Controller
         $donor = Donor::find($id);
         $donations = Donation::where('donor_id', $id)->paginate(10);
         $totalapproved = DB::table('donations')
-                           ->select(DB::raw('SUM(amount) as totalamount'))
-                           ->where('payment_status', 1)
-                           ->where('donor_id', $id)
-                           ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->where('donor_id', $id)
+            ->first();
 
         return view('dashboard.adminsandothers.donationsofdonor')
-                    ->withDonor($donor)
-                    ->withDonations($donations)
-                    ->withTotalapproved($totalapproved);
+            ->withDonor($donor)
+            ->withDonations($donations)
+            ->withTotalapproved($totalapproved);
     }
 
     public function updateDonor(Request $request, $id)
     {
-        $this->validate($request,array(
-            'name'    => 'required|max:255',
+        $this->validate($request, array(
+            'name' => 'required|max:255',
             'address' => 'required|max:255',
-            'email'   => 'required|max:255',
-            'phone'   => 'required|max:255'
+            'email' => 'required|max:255',
+            'phone' => 'required|max:255'
         ));
 
         $donor = Donor::find($id);
@@ -421,14 +426,14 @@ class DashboardController extends Controller
         $branches = Branch::orderBy('id', 'desc')->paginate(10);
         $branchpayments = Branchpayment::orderBy('id', 'desc')->paginate(10);
         $totalbranchpayment = DB::table('branchpayments')
-                                ->select(DB::raw('SUM(amount) as totalamount'))
-                                ->where('payment_status', 1)
-                                ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->first();
 
         return view('dashboard.adminsandothers.branchepayments')
-                    ->withBranches($branches)
-                    ->withBranchpayments($branchpayments)
-                    ->withTotalbranchpayment($totalbranchpayment);
+            ->withBranches($branches)
+            ->withBranchpayments($branchpayments)
+            ->withTotalbranchpayment($totalbranchpayment);
     }
 
     public function getBranches()
@@ -436,24 +441,24 @@ class DashboardController extends Controller
         $branches = Branch::orderBy('id', 'asc')->where('id', '>', 0)->paginate(15);
 
         return view('dashboard.adminsandothers.branches')
-                    ->withBranches($branches);
+            ->withBranches($branches);
     }
 
     public function getBranchMembers(Request $request, $branch_id)
     {
         $branch = Branch::find($branch_id);
         $memberscount = User::where('activation_status', 1)
-                            ->where('branch_id', $branch_id)
-                            ->where('role_type', '!=', 'admin')
-                            ->count();
+            ->where('branch_id', $branch_id)
+            ->where('role_type', '!=', 'admin')
+            ->count();
         $members = User::where('activation_status', 1)
-                       ->where('branch_id', $branch_id)
-                       ->where('role_type', '!=', 'admin')
-                       ->orderBy('id', 'desc')->get();
+            ->where('branch_id', $branch_id)
+            ->where('role_type', '!=', 'admin')
+            ->orderBy('id', 'desc')->get();
 
         $ordered_member_array = [];
         foreach ($members as $member) {
-            $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+            $ordered_member_array[(int)substr($member->member_id, -5)] = $member;
         }
         ksort($ordered_member_array); // ascending order according to key
 
@@ -466,22 +471,22 @@ class DashboardController extends Controller
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
-        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        $paginatedItems = new LengthAwarePaginator($currentPageItems, count($itemCollection), $perPage);
         // set url path for generted links
         $paginatedItems->setPath($request->url());
 
         return view('dashboard.membership.branchmembers')
-                            ->withMembers($paginatedItems)
-                            ->withMemberscount($memberscount)
-                            ->withBranch($branch);
+            ->withMembers($paginatedItems)
+            ->withMemberscount($memberscount)
+            ->withBranch($branch);
     }
 
     public function storeBranch(Request $request)
     {
-        $this->validate($request,array(
-            'name'    => 'required|max:255',
+        $this->validate($request, array(
+            'name' => 'required|max:255',
             'address' => 'required|max:255',
-            'phone'   => 'required|max:255'
+            'phone' => 'required|max:255'
         ));
 
         $branch = new Branch;
@@ -497,10 +502,10 @@ class DashboardController extends Controller
 
     public function updateBranch(Request $request, $id)
     {
-        $this->validate($request,array(
-            'name'    => 'required|max:255',
+        $this->validate($request, array(
+            'name' => 'required|max:255',
             'address' => 'required|max:255',
-            'phone'   => 'required|max:255'
+            'phone' => 'required|max:255'
         ));
 
         $branch = Branch::find($id);
@@ -516,14 +521,14 @@ class DashboardController extends Controller
 
     public function storeBranchPayment(Request $request)
     {
-        $this->validate($request,array(
-            'branch_id'       =>   'required',
-            'submitter_id'    =>   'required',
-            'amount'          =>   'required|integer',
-            'bank'            =>   'required',
-            'branch_name'     =>   'required',
-            'pay_slip'        =>   'required',
-            'image'           =>   'sometimes|image|max:500'
+        $this->validate($request, array(
+            'branch_id' => 'required',
+            'submitter_id' => 'required',
+            'amount' => 'required|integer',
+            'bank' => 'required',
+            'branch_name' => 'required',
+            'pay_slip' => 'required',
+            'image' => 'sometimes|image|max:500'
         ));
 
         $branchpayment = new Branchpayment;
@@ -541,11 +546,13 @@ class DashboardController extends Controller
         // generate payment_key
         $branchpayment->payment_key = $payment_key;
         // receipt upload
-        if($request->hasFile('image')) {
-            $receipt      = $request->file('image');
-            $filename   = $request->submitter_id.'_branch_payment_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
-            $location   = public_path('/images/receipts/'. $filename);
-            Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+        if ($request->hasFile('image')) {
+            $receipt = $request->file('image');
+            $filename = $request->submitter_id . '_branch_payment_receipt_' . time() . '.' . $receipt->getClientOriginalExtension();
+            $location = public_path('/images/receipts/' . $filename);
+            Image::make($receipt)->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location);
             $branchpayment->image = $filename;
         }
         $branchpayment->save();
@@ -572,46 +579,46 @@ class DashboardController extends Controller
         $branch = branch::find($id);
         $branchpayments = Branchpayment::where('branch_id', $id)->paginate(10);
         $totalapproved = DB::table('branchpayments')
-                           ->select(DB::raw('SUM(amount) as totalamount'))
-                           ->where('payment_status', 1)
-                           ->where('branch_id', $id)
-                           ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->where('branch_id', $id)
+            ->first();
 
         return view('dashboard.adminsandothers.paymentofbranch')
-                    ->withBranch($branch)
-                    ->withBranchpayments($branchpayments)
-                    ->withTotalapproved($totalapproved);
+            ->withBranch($branch)
+            ->withBranchpayments($branchpayments)
+            ->withTotalapproved($totalapproved);
     }
 
     public function getDesignations()
     {
         $positions = Position::orderBy('id', 'asc')
-                                    ->where('id', '>', 0)
-                                    ->where('id', '!=', 34)
-                                    ->paginate(15);
+            ->where('id', '>', 0)
+            ->where('id', '!=', 34)
+            ->paginate(15);
 
         $memberpos = Position::where('id', 34)->first(); // for the 34th, সদস্য!
 
         return view('dashboard.adminsandothers.positions')
-                    ->withPositions($positions)
-                    ->withMemberpos($memberpos);
+            ->withPositions($positions)
+            ->withMemberpos($memberpos);
     }
 
     public function getDesignationMembers(Request $request, $position_id)
     {
         $designation = Position::find($position_id);
         $memberscount = User::where('activation_status', 1)
-                            ->where('position_id', $position_id)
-                            ->where('role_type', '!=', 'admin')
-                            ->count();
+            ->where('position_id', $position_id)
+            ->where('role_type', '!=', 'admin')
+            ->count();
         $members = User::where('activation_status', 1)
-                       ->where('position_id', $position_id)
-                       ->where('role_type', '!=', 'admin')
-                       ->orderBy('id', 'desc')->get();
+            ->where('position_id', $position_id)
+            ->where('role_type', '!=', 'admin')
+            ->orderBy('id', 'desc')->get();
 
         $ordered_member_array = [];
         foreach ($members as $member) {
-            $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+            $ordered_member_array[(int)substr($member->member_id, -5)] = $member;
         }
         ksort($ordered_member_array); // ascending order according to key
 
@@ -624,14 +631,14 @@ class DashboardController extends Controller
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
-        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        $paginatedItems = new LengthAwarePaginator($currentPageItems, count($itemCollection), $perPage);
         // set url path for generted links
         $paginatedItems->setPath($request->url());
 
         return view('dashboard.membership.designationmembers')
-                            ->withMembers($paginatedItems)
-                            ->withMemberscount($memberscount)
-                            ->withDesignation($designation);
+            ->withMembers($paginatedItems)
+            ->withMemberscount($memberscount)
+            ->withDesignation($designation);
     }
 
     public function getAbouts()
@@ -645,17 +652,18 @@ class DashboardController extends Controller
         $basicinfo = Basicinfo::where('id', 1)->first();
 
         return view('dashboard.abouts')
-                    ->withAbout($about)
-                    ->withWhoweare($whoweare)
-                    ->withWhatwedo($whatwedo)
-                    ->withAtaglance($ataglance)
-                    ->withMembership($membership)
-                    ->withMission($mission)
-                    ->withBasicinfo($basicinfo);
+            ->withAbout($about)
+            ->withWhoweare($whoweare)
+            ->withWhatwedo($whatwedo)
+            ->withAtaglance($ataglance)
+            ->withMembership($membership)
+            ->withMission($mission)
+            ->withBasicinfo($basicinfo);
     }
 
-    public function updateAbouts(Request $request, $id) {
-        $this->validate($request,array(
+    public function updateAbouts(Request $request, $id)
+    {
+        $this->validate($request, array(
             'text' => 'required',
         ));
 
@@ -668,16 +676,17 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.abouts');
     }
 
-    public function updateBasicInfo(Request $request, $id) {
-        $this->validate($request,array(
-            'address'      => 'required',
-            'contactno'    => 'required',
-            'email'        => 'required',
-            'fb'           => 'sometimes',
-            'twitter'      => 'sometimes',
-            'gplus'        => 'sometimes',
-            'ytube'        => 'sometimes',
-            'linkedin'     => 'sometimes'
+    public function updateBasicInfo(Request $request, $id)
+    {
+        $this->validate($request, array(
+            'address' => 'required',
+            'contactno' => 'required',
+            'email' => 'required',
+            'fb' => 'sometimes',
+            'twitter' => 'sometimes',
+            'gplus' => 'sometimes',
+            'ytube' => 'sometimes',
+            'linkedin' => 'sometimes'
         ));
 
         $basicinfo = Basicinfo::find($id);
@@ -699,23 +708,23 @@ class DashboardController extends Controller
     public function getCommittee()
     {
         $committeemembers = Committee::orderBy('committee_type', 'desc')
-                                     ->orderBy('serial', 'asc')->get();
+            ->orderBy('serial', 'asc')->get();
         return view('dashboard.committee')->withCommitteemembers($committeemembers);
     }
 
     public function storeCommittee(Request $request)
     {
-        $this->validate($request,array(
-            'name'                      => 'required|max:255',
-            'email'                     => 'required|email',
-            'phone'                     => 'required|numeric',
-            'designation'               => 'required|max:255',
-            'fb'                        => 'sometimes|max:255',
-            'twitter'                   => 'sometimes|max:255',
-            'linkedin'                  => 'sometimes|max:255',
-            'image'                     => 'sometimes|image|max:500',
-            'committee_type'            => 'required',
-            'serial'                    => 'required'
+        $this->validate($request, array(
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'designation' => 'required|max:255',
+            'fb' => 'sometimes|max:255',
+            'twitter' => 'sometimes|max:255',
+            'linkedin' => 'sometimes|max:255',
+            'image' => 'sometimes|image|max:500',
+            'committee_type' => 'required',
+            'serial' => 'required'
         ));
 
         $committeemember = new Committee();
@@ -730,10 +739,10 @@ class DashboardController extends Controller
         $committeemember->serial = $request->serial;
 
         // image upload
-        if($request->hasFile('image')) {
-            $image      = $request->file('image');
-            $filename   = 'member_' . time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('/images/committee/'. $filename);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = 'member_' . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/committee/' . $filename);
             Image::make($image)->resize(250, 250)->save($location);
             $committeemember->image = $filename;
         }
@@ -744,18 +753,19 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.committee');
     }
 
-    public function updateCommittee(Request $request, $id) {
-        $this->validate($request,array(
-            'name'                      => 'required|max:255',
-            'email'                     => 'required|email',
-            'phone'                     => 'required|numeric',
-            'designation'               => 'required|max:255',
-            'fb'                        => 'sometimes|max:255',
-            'twitter'                   => 'sometimes|max:255',
-            'linkedin'                  => 'sometimes|max:255',
-            'image'                     => 'sometimes|image|max:250',
-            'committee_type'            => 'required',
-            'serial'                    => 'required'
+    public function updateCommittee(Request $request, $id)
+    {
+        $this->validate($request, array(
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'designation' => 'required|max:255',
+            'fb' => 'sometimes|max:255',
+            'twitter' => 'sometimes|max:255',
+            'linkedin' => 'sometimes|max:255',
+            'image' => 'sometimes|image|max:250',
+            'committee_type' => 'required',
+            'serial' => 'required'
         ));
 
         $committeemember = Committee::find($id);
@@ -770,14 +780,14 @@ class DashboardController extends Controller
         $committeemember->serial = $request->serial;
 
         // image upload
-        if($request->hasFile('image')) {
-            $image_path = public_path('/images/committee/'. $committeemember->image);
-            if(File::exists($image_path)) {
+        if ($request->hasFile('image')) {
+            $image_path = public_path('/images/committee/' . $committeemember->image);
+            if (File::exists($image_path)) {
                 File::delete($image_path);
             }
-            $image      = $request->file('image');
-            $filename   = 'member_' . time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('/images/committee/'. $filename);
+            $image = $request->file('image');
+            $filename = 'member_' . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/committee/' . $filename);
             Image::make($image)->resize(250, 250)->save($location);
             $committeemember->image = $filename;
         }
@@ -791,8 +801,8 @@ class DashboardController extends Controller
     public function deleteCommittee($id)
     {
         $committeemember = Committee::find($id);
-        $image_path = public_path('images/committee/'. $committeemember->image);
-        if(File::exists($image_path)) {
+        $image_path = public_path('images/committee/' . $committeemember->image);
+        if (File::exists($image_path)) {
             File::delete($image_path);
         }
         $committeemember->delete();
@@ -814,18 +824,18 @@ class DashboardController extends Controller
 
     public function storeNotice(Request $request)
     {
-        $this->validate($request,array(
-            'name'          =>   'required',
-            'attachment'    => 'required|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif,txt|max:10000'
+        $this->validate($request, array(
+            'name' => 'required',
+            'attachment' => 'required|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif,txt|max:10000'
         ));
 
         $notice = new Notice;
         $notice->name = $request->name;
 
-        if($request->hasFile('attachment')) {
+        if ($request->hasFile('attachment')) {
             $newfile = $request->file('attachment');
-            $filename   = 'file_'.time() .'.' . $newfile->getClientOriginalExtension();
-            $location   = public_path('/files/');
+            $filename = 'file_' . time() . '.' . $newfile->getClientOriginalExtension();
+            $location = public_path('/files/');
             $newfile->move($location, $filename);
             $notice->attachment = $filename;
         }
@@ -838,23 +848,23 @@ class DashboardController extends Controller
 
     public function updateNotice(Request $request, $id)
     {
-        $this->validate($request,array(
-            'name'          =>   'required',
-            'attachment'    => 'sometimes|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif,txt|max:10000'
+        $this->validate($request, array(
+            'name' => 'required',
+            'attachment' => 'sometimes|mimes:doc,docx,ppt,pptx,png,jpeg,jpg,pdf,gif,txt|max:10000'
         ));
 
         $notice = Notice::find($id);
         $notice->name = $request->name;
 
-        if($request->hasFile('attachment')) {
+        if ($request->hasFile('attachment')) {
             // delete the previous one
-            $file_path = public_path('files/'. $notice->attachment);
-            if(File::exists($file_path)) {
+            $file_path = public_path('files/' . $notice->attachment);
+            if (File::exists($file_path)) {
                 File::delete($file_path);
             }
             $newfile = $request->file('attachment');
-            $filename   = 'file_'.time() .'.' . $newfile->getClientOriginalExtension();
-            $location   = public_path('/files/');
+            $filename = 'file_' . time() . '.' . $newfile->getClientOriginalExtension();
+            $location = public_path('/files/');
             $newfile->move($location, $filename);
             $notice->attachment = $filename;
         }
@@ -868,8 +878,8 @@ class DashboardController extends Controller
     public function deleteNotice($id)
     {
         $notice = Notice::find($id);
-        $file_path = public_path('files/'. $notice->attachment);
-        if(File::exists($file_path)) {
+        $file_path = public_path('files/' . $notice->attachment);
+        if (File::exists($file_path)) {
             File::delete($file_path);
         }
         $notice->delete();
@@ -886,9 +896,9 @@ class DashboardController extends Controller
 
     public function storeFAQ(Request $request)
     {
-        $this->validate($request,array(
-            'question'          =>   'required|max:255',
-            'answer'            =>   'required'
+        $this->validate($request, array(
+            'question' => 'required|max:255',
+            'answer' => 'required'
         ));
 
         $faq = new Faq;
@@ -902,9 +912,9 @@ class DashboardController extends Controller
 
     public function updateFAQ(Request $request, $id)
     {
-        $this->validate($request,array(
-            'question'          =>   'required|max:255',
-            'answer'            =>   'required'
+        $this->validate($request, array(
+            'question' => 'required|max:255',
+            'answer' => 'required'
         ));
 
         $faq = Faq::find($id);
@@ -933,10 +943,10 @@ class DashboardController extends Controller
 
     public function storeEvent(Request $request)
     {
-        $this->validate($request,array(
-            'name'          =>   'required',
-            'description'   =>   'required',
-            'image'         =>   'sometimes|image|max:500'
+        $this->validate($request, array(
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'sometimes|image|max:500'
         ));
 
         $event = new Event;
@@ -944,10 +954,10 @@ class DashboardController extends Controller
         $event->description = $request->description;
 
         // image upload
-        if($request->hasFile('image')) {
-            $image      = $request->file('image');
-            $filename   = 'event_' . time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('/images/events/'. $filename);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = 'event_' . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/events/' . $filename);
             Image::make($image)->resize(400, 250)->save($location);
             $event->image = $filename;
         }
@@ -960,10 +970,10 @@ class DashboardController extends Controller
 
     public function updateEvent(Request $request, $id)
     {
-        $this->validate($request,array(
-            'name'          =>   'required',
-            'description'   =>   'required',
-            'image'         =>   'sometimes|image|max:500'
+        $this->validate($request, array(
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'sometimes|image|max:500'
         ));
 
         $event = Event::find($id);
@@ -971,15 +981,15 @@ class DashboardController extends Controller
         $event->description = $request->description;
 
         // image upload
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             // delete the previous one
-            $image_path = public_path('images/events/'. $event->image);
-            if(File::exists($image_path)) {
+            $image_path = public_path('images/events/' . $event->image);
+            if (File::exists($image_path)) {
                 File::delete($image_path);
             }
-            $image      = $request->file('image');
-            $filename   = 'event_' . time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('/images/events/'. $filename);
+            $image = $request->file('image');
+            $filename = 'event_' . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/events/' . $filename);
             Image::make($image)->resize(400, 250)->save($location);
             $event->image = $filename;
         }
@@ -993,8 +1003,8 @@ class DashboardController extends Controller
     public function deleteEvent($id)
     {
         $event = Event::find($id);
-        $image_path = public_path('images/events/'. $event->image);
-        if(File::exists($image_path)) {
+        $image_path = public_path('images/events/' . $event->image);
+        if (File::exists($image_path)) {
             File::delete($image_path);
         }
         $event->delete();
@@ -1011,19 +1021,19 @@ class DashboardController extends Controller
 
     public function storeSlider(Request $request)
     {
-        $this->validate($request,array(
-            'title'          =>   'required',
-            'image'          =>   'sometimes|image|max:1000'
+        $this->validate($request, array(
+            'title' => 'required',
+            'image' => 'sometimes|image|max:1000'
         ));
 
         $slider = new Slider;
         $slider->title = $request->title;
 
         // slider upload
-        if($request->hasFile('image')) {
-            $image      = $request->file('image');
-            $filename   = 'slider_' . time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('/images/slider/'. $filename);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = 'slider_' . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/slider/' . $filename);
             Image::make($image)->resize(1500, 500)->save($location);
             $slider->image = $filename;
         }
@@ -1037,8 +1047,8 @@ class DashboardController extends Controller
     public function deleteSlider($id)
     {
         $slider = Slider::find($id);
-        $image_path = public_path('images/slider/'. $slider->image);
-        if(File::exists($image_path)) {
+        $image_path = public_path('images/slider/' . $slider->image);
+        if (File::exists($image_path)) {
             File::delete($image_path);
         }
         $slider->delete();
@@ -1060,16 +1070,16 @@ class DashboardController extends Controller
 
     public function storeGalleryAlbum(Request $request)
     {
-        $this->validate($request,array(
-            'name'          =>   'required',
-            'description'   =>   'sometimes',
-            'thumbnail'     =>   'required|image|max:500',
-            'image1'        =>   'sometimes|image|max:500',
-            'image2'        =>   'sometimes|image|max:500',
-            'image3'        =>   'sometimes|image|max:500',
-            'caption1'      =>   'sometimes',
-            'caption2'      =>   'sometimes',
-            'caption3'      =>   'sometimes'
+        $this->validate($request, array(
+            'name' => 'required',
+            'description' => 'sometimes',
+            'thumbnail' => 'required|image|max:500',
+            'image1' => 'sometimes|image|max:500',
+            'image2' => 'sometimes|image|max:500',
+            'image3' => 'sometimes|image|max:500',
+            'caption1' => 'sometimes',
+            'caption2' => 'sometimes',
+            'caption3' => 'sometimes'
 
         ));
 
@@ -1078,10 +1088,10 @@ class DashboardController extends Controller
         $album->description = $request->description;
 
         // thumbnail upload
-        if($request->hasFile('thumbnail')) {
-            $thumbnail      = $request->file('thumbnail');
-            $filename   = 'thumbnail_' . time() .'.' . $thumbnail->getClientOriginalExtension();
-            $location   = public_path('/images/gallery/'. $filename);
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $filename = 'thumbnail_' . time() . '.' . $thumbnail->getClientOriginalExtension();
+            $location = public_path('/images/gallery/' . $filename);
             Image::make($thumbnail)->resize(1000, 625)->save($location);
             $album->thumbnail = $filename;
         }
@@ -1089,19 +1099,19 @@ class DashboardController extends Controller
         $album->save();
 
         // photo (s) upload
-        for($i = 1; $i <= 3; $i++) {
-            if($request->hasFile('image'.$i)) {
-                $image      = $request->file('image'.$i);
-                $filename   = 'photo_'. $i . time() .'.' . $image->getClientOriginalExtension();
-                $location   = public_path('/images/gallery/'. $filename);
+        for ($i = 1; $i <= 3; $i++) {
+            if ($request->hasFile('image' . $i)) {
+                $image = $request->file('image' . $i);
+                $filename = 'photo_' . $i . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('/images/gallery/' . $filename);
                 Image::make($image)->resize(1000, null, function ($constraint) {
-                                        $constraint->aspectRatio();
-                                        $constraint->upsize();
-                                    })->save($location);
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save($location);
                 $albumphoto = new Albumphoto;
                 $albumphoto->album_id = $album->id;
                 $albumphoto->image = $filename;
-                $albumphoto->caption = $request->input('caption'.$i);
+                $albumphoto->caption = $request->input('caption' . $i);
                 $albumphoto->save();
             }
         }
@@ -1110,32 +1120,34 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.gallery');
     }
 
-    public function getEditGalleryAlbum($id) {
+    public function getEditGalleryAlbum($id)
+    {
         $album = Album::find($id);
         return view('dashboard.gallery.edit')->withAlbum($album);
     }
 
-    public function updateGalleryAlbum(Request $request, $id) {
-        $this->validate($request,array(
-            'name'          =>   'required',
-            'description'   =>   'required',
-            'image'         =>   'sometimes|image|max:500',
-            'caption'       =>   'sometimes'
+    public function updateGalleryAlbum(Request $request, $id)
+    {
+        $this->validate($request, array(
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'sometimes|image|max:500',
+            'caption' => 'sometimes'
         ));
 
         $album = Album::find($id);
-        $album->name =$request->name;
-        $album->description =$request->description;
+        $album->name = $request->name;
+        $album->description = $request->description;
         $album->save();
 
-        if($request->hasFile('image')) {
-            $image      = $request->file('image');
-            $filename   = 'photo_'. time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('/images/gallery/'. $filename);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = 'photo_' . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/gallery/' . $filename);
             Image::make($image)->resize(1000, null, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                    $constraint->upsize();
-                                })->save($location);
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->save($location);
             $albumphoto = new Albumphoto;
             $albumphoto->album_id = $album->id;
             $albumphoto->image = $filename;
@@ -1150,14 +1162,14 @@ class DashboardController extends Controller
     public function deleteAlbum($id)
     {
         $album = Album::find($id);
-        $thumbnail_path = public_path('images/gallery/'. $album->thumbnail);
-        if(File::exists($thumbnail_path)) {
+        $thumbnail_path = public_path('images/gallery/' . $album->thumbnail);
+        if (File::exists($thumbnail_path)) {
             File::delete($thumbnail_path);
         }
-        if($album->albumphotoes->count() > 0) {
+        if ($album->albumphotoes->count() > 0) {
             foreach ($album->albumphotoes as $albumphoto) {
-                $image_path = public_path('images/gallery/'. $albumphoto->image);
-                if(File::exists($image_path)) {
+                $image_path = public_path('images/gallery/' . $albumphoto->image);
+                if (File::exists($image_path)) {
                     File::delete($image_path);
                 }
             }
@@ -1171,8 +1183,8 @@ class DashboardController extends Controller
     public function deleteSinglePhoto($id)
     {
         $albumphoto = Albumphoto::find($id);
-        $image_path = public_path('images/gallery/'. $albumphoto->image);
-        if(File::exists($image_path)) {
+        $image_path = public_path('images/gallery/' . $albumphoto->image);
+        if (File::exists($image_path)) {
             File::delete($image_path);
         }
         $albumphoto->delete();
@@ -1189,13 +1201,13 @@ class DashboardController extends Controller
     public function getApplications()
     {
         $applications = User::where('activation_status', 0)
-                            ->orderBy('id', 'asc')->paginate(20);
+            ->orderBy('id', 'asc')->paginate(20);
         $applicationscount = User::where('activation_status', 0)
-                                 ->where('role_type', '!=', 'admin')->count();
+            ->where('role_type', '!=', 'admin')->count();
 
         return view('dashboard.membership.applications')
-                            ->withApplications($applications)
-                            ->withapplicationscount($applicationscount);
+            ->withApplications($applications)
+            ->withapplicationscount($applicationscount);
     }
 
     public function getSignleApplication($unique_key)
@@ -1203,7 +1215,7 @@ class DashboardController extends Controller
         $application = User::where('unique_key', $unique_key)->first();
 
         return view('dashboard.membership.singleapplication')
-                            ->withApplication($application);
+            ->withApplication($application);
     }
 
     public function getSignleApplicationEdit($unique_key)
@@ -1213,111 +1225,110 @@ class DashboardController extends Controller
         $application = User::where('unique_key', $unique_key)->first(); // this is also used to edit MEMBERS!
 
         return view('dashboard.membership.singleapplicationedit')
-                            ->withApplication($application)
-                            ->withBranches($branches)
-                            ->withPositions($positions);
+            ->withApplication($application)
+            ->withBranches($branches)
+            ->withPositions($positions);
     }
 
     public function updateSignleApplication(Request $request, $id)
     {
         $application = User::find($id);
 
-        if($application->activation_status == 0) {
-            $this->validate($request,array(
-                'name_bangla'                  => 'required|max:255',
-                'name'                         => 'required|max:255',
-                'nid'                          => 'required|max:255',
-                'dob'                          => 'required|max:255',
-                'gender'                       => 'required',
-                'spouse'                       => 'sometimes|max:255',
-                'spouse_profession'            => 'sometimes|max:255',
-                'father'                       => 'required|max:255',
-                'mother'                       => 'required|max:255',
-                'profession'                   => 'required|max:255',
-                'position_id'                  => 'required',
-                'branch_id'                    => 'required',
-                'joining_date'                 => 'sometimes|max:255',
-                'present_address'              => 'required|max:255',
-                'permanent_address'            => 'required|max:255',
-                'office_telephone'             => 'sometimes|max:255',
-                'mobile'                       => 'required|max:11',
-                'home_telephone'               => 'sometimes|max:255',
-                'email'                        => 'sometimes|email',
-                'image'                        => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
+        if ($application->activation_status == 0) {
+            $this->validate($request, array(
+                'name_bangla' => 'required|max:255',
+                'name' => 'required|max:255',
+                'nid' => 'required|max:255',
+                'dob' => 'required|max:255',
+                'gender' => 'required',
+                'spouse' => 'sometimes|max:255',
+                'spouse_profession' => 'sometimes|max:255',
+                'father' => 'required|max:255',
+                'mother' => 'required|max:255',
+                'profession' => 'required|max:255',
+                'position_id' => 'required',
+                'branch_id' => 'required',
+                'joining_date' => 'sometimes|max:255',
+                'present_address' => 'required|max:255',
+                'permanent_address' => 'required|max:255',
+                'office_telephone' => 'sometimes|max:255',
+                'mobile' => 'required|max:11',
+                'home_telephone' => 'sometimes|max:255',
+                'email' => 'sometimes|email',
+                'image' => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
 
-                'nominee_one_name'             => 'required|max:255',
-                'nominee_one_identity_type'    => 'required',
-                'nominee_one_identity_text'    => 'required|max:255',
-                'nominee_one_relation'         => 'required|max:255',
-                'nominee_one_percentage'       => 'required|max:255',
-                'nominee_one_image'            => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
+                'nominee_one_name' => 'required|max:255',
+                'nominee_one_identity_type' => 'required',
+                'nominee_one_identity_text' => 'required|max:255',
+                'nominee_one_relation' => 'required|max:255',
+                'nominee_one_percentage' => 'required|max:255',
+                'nominee_one_image' => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
 
-                'nominee_two_name'             => 'sometimes|max:255',
-                'nominee_two_identity_type'    => 'sometimes',
-                'nominee_two_identity_text'    => 'sometimes|max:255',
-                'nominee_two_relation'         => 'sometimes|max:255',
-                'nominee_two_percentage'       => 'sometimes|max:255',
-                'nominee_two_image'            => 'sometimes|image|max:250',
+                'nominee_two_name' => 'sometimes|max:255',
+                'nominee_two_identity_type' => 'sometimes',
+                'nominee_two_identity_text' => 'sometimes|max:255',
+                'nominee_two_relation' => 'sometimes|max:255',
+                'nominee_two_percentage' => 'sometimes|max:255',
+                'nominee_two_image' => 'sometimes|image|max:250',
 
-                'application_payment_amount'   => 'required|max:255',
-                'application_payment_bank'     => 'required|max:255',
-                'application_payment_branch'   => 'required|max:255',
+                'application_payment_amount' => 'required|max:255',
+                'application_payment_bank' => 'required|max:255',
+                'application_payment_branch' => 'required|max:255',
                 'application_payment_pay_slip' => 'required|max:255',
-                'application_payment_receipt'  => 'sometimes|image|max:2048', // jehetu up korse ekbar, ekhane na korleo cholbe
+                'application_payment_receipt' => 'sometimes|image|max:2048', // jehetu up korse ekbar, ekhane na korleo cholbe
             ));
         } else {
-            $this->validate($request,array(
-            'name_bangla'                  => 'required|max:255',
-            'name'                         => 'required|max:255',
-            'nid'                          => 'required|max:255',
-            'dob'                          => 'required|max:255',
-            'gender'                       => 'required',
-            'spouse'                       => 'sometimes|max:255',
-            'spouse_profession'            => 'sometimes|max:255',
-            'father'                       => 'required|max:255',
-            'mother'                       => 'required|max:255',
-            'profession'                   => 'required|max:255',
-            'position_id'                  => 'required|max:255',
-            'branch_id'                    => 'required',
-            'joining_date'                 => 'sometimes|max:255',
-            'present_address'              => 'required|max:255',
-            'permanent_address'            => 'required|max:255',
-            'office_telephone'             => 'sometimes|max:255',
-            'mobile'                       => 'required|max:11',
-            'home_telephone'               => 'sometimes|max:255',
-            'email'                        => 'sometimes|email',
-            'image'                        => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
+            $this->validate($request, array(
+                'name_bangla' => 'required|max:255',
+                'name' => 'required|max:255',
+                'nid' => 'required|max:255',
+                'dob' => 'required|max:255',
+                'gender' => 'required',
+                'spouse' => 'sometimes|max:255',
+                'spouse_profession' => 'sometimes|max:255',
+                'father' => 'required|max:255',
+                'mother' => 'required|max:255',
+                'profession' => 'required|max:255',
+                'position_id' => 'required|max:255',
+                'branch_id' => 'required',
+                'joining_date' => 'sometimes|max:255',
+                'present_address' => 'required|max:255',
+                'permanent_address' => 'required|max:255',
+                'office_telephone' => 'sometimes|max:255',
+                'mobile' => 'required|max:11',
+                'home_telephone' => 'sometimes|max:255',
+                'email' => 'sometimes|email',
+                'image' => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
 
-            'nominee_one_name'             => 'required|max:255',
-            'nominee_one_identity_type'    => 'required',
-            'nominee_one_identity_text'    => 'required|max:255',
-            'nominee_one_relation'         => 'required|max:255',
-            'nominee_one_percentage'       => 'required|max:255',
-            'nominee_one_image'            => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
+                'nominee_one_name' => 'required|max:255',
+                'nominee_one_identity_type' => 'required',
+                'nominee_one_identity_text' => 'required|max:255',
+                'nominee_one_relation' => 'required|max:255',
+                'nominee_one_percentage' => 'required|max:255',
+                'nominee_one_image' => 'sometimes|image|max:250', // jehetu up korse ekbar, ekhane na korleo cholbe
 
-            'nominee_two_name'             => 'sometimes|max:255',
-            'nominee_two_identity_type'    => 'sometimes',
-            'nominee_two_identity_text'    => 'sometimes|max:255',
-            'nominee_two_relation'         => 'sometimes|max:255',
-            'nominee_two_percentage'       => 'sometimes|max:255',
-            'nominee_two_image'            => 'sometimes|image|max:250'
-        ));
+                'nominee_two_name' => 'sometimes|max:255',
+                'nominee_two_identity_type' => 'sometimes',
+                'nominee_two_identity_text' => 'sometimes|max:255',
+                'nominee_two_relation' => 'sometimes|max:255',
+                'nominee_two_percentage' => 'sometimes|max:255',
+                'nominee_two_image' => 'sometimes|image|max:250'
+            ));
         }
 
 
-
-        if($request->mobile != $application->mobile) {
+        if ($request->mobile != $application->mobile) {
             $findmobileuser = User::where('mobile', $request->mobile)->first();
 
-            if($findmobileuser) {
+            if ($findmobileuser) {
                 Session::flash('warning', 'দুঃখিত! মোবাইল নম্বরটি ব্যবহৃত হয়ে গেছে; আরেকটি দিন');
                 return redirect()->route('dashboard.singleapplicationedit', $application->unique_key);
             }
         }
-        if($request->email != $application->email) {
+        if ($request->email != $application->email) {
             $findemailuser = User::where('email', $request->email)->first();
 
-            if($findemailuser) {
+            if ($findemailuser) {
                 Session::flash('warning', 'দুঃখিত! ইমেইলটি ব্যবহৃত হয়ে গেছে; আরেকটি দিন');
                 return redirect()->route('dashboard.singleapplicationedit', $application->unique_key);
             }
@@ -1335,7 +1346,7 @@ class DashboardController extends Controller
         $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
         // $application->office = htmlspecialchars(preg_replace("/\s+/", " ", $request->office));
         $application->branch_id = $request->branch_id;
-        if($request->joining_date != '') {
+        if ($request->joining_date != '') {
             $joining_date = htmlspecialchars(preg_replace("/\s+/", " ", $request->joining_date));
             $application->joining_date = new Carbon($joining_date);
         }
@@ -1348,21 +1359,21 @@ class DashboardController extends Controller
         $application->office_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->office_telephone));
         $application->mobile = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile));
         $application->home_telephone = htmlspecialchars(preg_replace("/\s+/", " ", $request->home_telephone));
-        if($request->email != '') {
+        if ($request->email != '') {
             $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
         } else {
             $application->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile)) . '@cvcsbd.com';
         }
 
         // applicant's image upload
-        if($request->hasFile('image')) {
-            $old_img = public_path('images/users/'. $application->image);
-            if(File::exists($old_img)) {
+        if ($request->hasFile('image')) {
+            $old_img = public_path('images/users/' . $application->image);
+            if (File::exists($old_img)) {
                 File::delete($old_img);
             }
-            $image      = $request->file('image');
-            $filename   = str_replace(' ','',$request->name).time() .'.' . $image->getClientOriginalExtension();
-            $location   = public_path('/images/users/'. $filename);
+            $image = $request->file('image');
+            $filename = str_replace(' ', '', $request->name) . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/users/' . $filename);
             Image::make($image)->resize(200, 200)->save($location);
             $application->image = $filename;
         }
@@ -1373,14 +1384,14 @@ class DashboardController extends Controller
         $application->nominee_one_relation = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_relation));
         $application->nominee_one_percentage = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_percentage));
         // nominee one's image upload
-        if($request->hasFile('nominee_one_image')) {
-            $old_nominee_one_image = public_path('images/users/'. $application->nominee_one_image);
-            if(File::exists($old_nominee_one_image)) {
+        if ($request->hasFile('nominee_one_image')) {
+            $old_nominee_one_image = public_path('images/users/' . $application->nominee_one_image);
+            if (File::exists($old_nominee_one_image)) {
                 File::delete($old_nominee_one_image);
             }
-            $nominee_one_image      = $request->file('nominee_one_image');
-            $filename   = 'nominee_one_' . str_replace(' ','',$request->name).time() .'.' . $nominee_one_image->getClientOriginalExtension();
-            $location   = public_path('/images/users/'. $filename);
+            $nominee_one_image = $request->file('nominee_one_image');
+            $filename = 'nominee_one_' . str_replace(' ', '', $request->name) . time() . '.' . $nominee_one_image->getClientOriginalExtension();
+            $location = public_path('/images/users/' . $filename);
             Image::make($nominee_one_image)->resize(200, 200)->save($location);
             $application->nominee_one_image = $filename;
         }
@@ -1391,40 +1402,42 @@ class DashboardController extends Controller
         $application->nominee_two_relation = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_relation));
         $application->nominee_two_percentage = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_two_percentage));
         // nominee two's image upload
-        if($request->hasFile('nominee_two_image')) {
-            $old_nominee_two_image = public_path('images/users/'. $application->nominee_two_image);
-            if(File::exists($old_nominee_two_image)) {
+        if ($request->hasFile('nominee_two_image')) {
+            $old_nominee_two_image = public_path('images/users/' . $application->nominee_two_image);
+            if (File::exists($old_nominee_two_image)) {
                 File::delete($old_nominee_two_image);
             }
-            $nominee_two_image      = $request->file('nominee_two_image');
-            $filename   = 'nominee_two_' . str_replace(' ','',$request->name).time() .'.' . $nominee_two_image->getClientOriginalExtension();
-            $location   = public_path('/images/users/'. $filename);
+            $nominee_two_image = $request->file('nominee_two_image');
+            $filename = 'nominee_two_' . str_replace(' ', '', $request->name) . time() . '.' . $nominee_two_image->getClientOriginalExtension();
+            $location = public_path('/images/users/' . $filename);
             Image::make($nominee_two_image)->resize(200, 200)->save($location);
             $application->nominee_two_image = $filename;
         }
 
-        if($application->activation_status == 0) {
-           $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
-           $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
-           $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
-           $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));
-           // application payment receipt's image upload
-           if($request->hasFile('application_payment_receipt')) {
-               $old_application_payment_receipt = public_path('images/receipts/'. $application->application_payment_receipt);
-               if(File::exists($old_application_payment_receipt)) {
-                   File::delete($old_application_payment_receipt);
-               }
-               $application_payment_receipt      = $request->file('application_payment_receipt');
-               $filename   = 'application_payment_receipt_' . str_replace(' ','',$request->name).time() .'.' . $application_payment_receipt->getClientOriginalExtension();
-               $location   = public_path('/images/receipts/'. $filename);
-               Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
-               $application->application_payment_receipt = $filename;
-           }
+        if ($application->activation_status == 0) {
+            $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
+            $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
+            $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
+            $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));
+            // application payment receipt's image upload
+            if ($request->hasFile('application_payment_receipt')) {
+                $old_application_payment_receipt = public_path('images/receipts/' . $application->application_payment_receipt);
+                if (File::exists($old_application_payment_receipt)) {
+                    File::delete($old_application_payment_receipt);
+                }
+                $application_payment_receipt = $request->file('application_payment_receipt');
+                $filename = 'application_payment_receipt_' . str_replace(' ', '', $request->name) . time() . '.' . $application_payment_receipt->getClientOriginalExtension();
+                $location = public_path('/images/receipts/' . $filename);
+                Image::make($application_payment_receipt)->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($location);
+                $application->application_payment_receipt = $filename;
+            }
         }
 
         $application->save();
 
-        if($application->activation_status == 0 || $application->activation_status == 202) {
+        if ($application->activation_status == 0 || $application->activation_status == 202) {
             Session::flash('success', 'আবেদনটি সফলভাবে হালনাগাদ করা হয়েছে!');
             return redirect()->route('dashboard.singleapplication', $application->unique_key);
         } else {
@@ -1436,13 +1449,13 @@ class DashboardController extends Controller
     public function getDefectiveApplications()
     {
         $applications = User::where('activation_status', 202)
-                            ->orderBy('id', 'asc')->paginate(20);
+            ->orderBy('id', 'asc')->paginate(20);
         $applicationscount = User::where('activation_status', 202)
-                                 ->where('role_type', '!=', 'admin')->count();
+            ->where('role_type', '!=', 'admin')->count();
 
         return view('dashboard.membership.defectiveapplications')
-                            ->withApplications($applications)
-                            ->withapplicationscount($applicationscount);
+            ->withApplications($applications)
+            ->withapplicationscount($applicationscount);
     }
 
     public function makeDefectiveApplication(Request $request, $id)
@@ -1465,66 +1478,60 @@ class DashboardController extends Controller
 
     public function searchDefectiveApplicationAPI(Request $request)
     {
-        if($request->ajax())
-        {
-          $output = '';
-          $query = $request->get('query');
-          if($query != '')
-          {
-           $data = DB::table('users')
+        if ($request->ajax()) {
+            $output = '';
+            $query = $request->get('query');
+            if ($query != '') {
+                $data = DB::table('users')
                     ->where('activation_status', 202) // 202 for defective applications
                     ->where('role_type', '!=', 'admin') // avoid the super admin type
-                    ->where(function($newquery) use ($query) {
-                        $newquery->where('name', 'like', '%'.$query.'%')
-                                 ->orWhere('name_bangla', 'like', '%'.$query.'%')
-                                 ->orWhere('mobile', 'like', '%'.$query.'%')
-                                 ->orWhere('email', 'like', '%'.$query.'%');
+                    ->where(function ($newquery) use ($query) {
+                        $newquery->where('name', 'like', '%' . $query . '%')
+                            ->orWhere('name_bangla', 'like', '%' . $query . '%')
+                            ->orWhere('mobile', 'like', '%' . $query . '%')
+                            ->orWhere('email', 'like', '%' . $query . '%');
                     })
                     ->orderBy('id', 'desc')
                     ->get();
-          }
+            }
 
-          $total_row = count($data);
-          if($total_row > 0)
-          {
-           foreach($data as $row)
-           {
-            $output .= '
+            $total_row = count($data);
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
             <tr>
              <td>
-                <a href="'. route('dashboard.singleapplication', $row->unique_key) .'" title="সদস্য তথ্য দেখুন">
-                  '. $row->name_bangla .'<br/> '. $row->name .'
+                <a href="' . route('dashboard.singleapplication', $row->unique_key) . '" title="সদস্য তথ্য দেখুন">
+                  ' . $row->name_bangla . '<br/> ' . $row->name . '
                 </a>
              </td>
-             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
-             <td>'.$row->office.'<br/>'.$row->profession.' ('. $row->designation .')</td>
-             <td>৳ '. $row->application_payment_amount .'<br/>'. $row->application_payment_bank .' ('. $row->application_payment_branch .')</td>
+             <td>' . $row->mobile . '<br/>' . $row->email . '</td>
+             <td>' . $row->office . '<br/>' . $row->profession . ' (' . $row->designation . ')</td>
+             <td>৳ ' . $row->application_payment_amount . '<br/>' . $row->application_payment_bank . ' (' . $row->application_payment_branch . ')</td>
             ';
-            if($row->image != null) {
-                $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
-            } else {
-                $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
-            }
-            $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singleapplication', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a> 
-                <a class="btn btn-sm btn-primary" href="'. route('dashboard.singleapplicationedit', $row->unique_key) .'" title="সদস্য তথ্য সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
+                    if ($row->image != null) {
+                        $output .= '<td><img src="' . asset('images/users/' . $row->image) . '" style="height: 50px; width: auto;" /></td>';
+                    } else {
+                        $output .= '<td><img src="' . asset('images/user.png') . '" style="height: 50px; width: auto;" /></td>';
+                    }
+                    $output .= '<td><a class="btn btn-sm btn-success" href="' . route('dashboard.singleapplication', $row->unique_key) . '" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a> 
+                <a class="btn btn-sm btn-primary" href="' . route('dashboard.singleapplicationedit', $row->unique_key) . '" title="সদস্য তথ্য সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
               </td>
             </tr>';
-           }
-          }
-          else
-          {
-           $output = '
+                }
+            } else {
+                $output = '
            <tr>
             <td align="center" colspan="6">পাওয়া যায়নি!</td>
            </tr>
            ';
-          }
-          $data = array(
-           'table_data'  => $output,
-           'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
-          );
+            }
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_row . ' টি ফলাফল পাওয়া গেছে'
+            );
 
-          echo json_encode($data);
+            echo json_encode($data);
         }
     }
 
@@ -1541,14 +1548,14 @@ class DashboardController extends Controller
         $members = User::where('activation_status', 1)->get();
         $ordered_member_ids = [];
         foreach ($members as $member) {
-            array_push($ordered_member_ids, (int) substr($member->member_id, -5));
+            array_push($ordered_member_ids, (int)substr($member->member_id, -5));
         }
         rsort($ordered_member_ids); // descending order to get the last value
 
-        $application->member_id = date('Y', strtotime($application->dob)).str_pad(($ordered_member_ids[0]+1), 5, '0', STR_PAD_LEFT);
+        $application->member_id = date('Y', strtotime($application->dob)) . str_pad(($ordered_member_ids[0] + 1), 5, '0', STR_PAD_LEFT);
         // check if the id already exists...
         $ifexists = User::where('member_id', $application->member_id)->first();
-        if($ifexists) {
+        if ($ifexists) {
             Session::flash('warning', 'দুঃখিত! আবার চেষ্টা করুন!');
             return redirect()->route('dashboard.applications');
         } else {
@@ -1556,10 +1563,10 @@ class DashboardController extends Controller
             $this->addToAdminLog($application, 'activate_member', 'সদস্য অনুমোদন');
 
             $newmembercheck = User::where('activation_status', 1)
-                                  ->where('member_id', $application->member_id)
-                                  ->first();
+                ->where('member_id', $application->member_id)
+                ->first();
 
-            if($newmembercheck) {
+            if ($newmembercheck) {
                 // dd($newmembercheck);
                 // save the payment!
                 $payment = new Payment;
@@ -1577,13 +1584,13 @@ class DashboardController extends Controller
                 $this->addToAdminLog($payment, 'approve_payment', 'পেমেন্ট অনুমোদন');
 
                 // receipt upload
-                if($newmembercheck->application_payment_receipt != '') {
+                if ($newmembercheck->application_payment_receipt != '') {
                     $paymentreceipt = new Paymentreceipt;
                     $paymentreceipt->payment_id = $payment->id;
                     $paymentreceipt->image = $newmembercheck->application_payment_receipt;
                     $paymentreceipt->save();
                 }
-                if($newmembercheck->application_payment_amount > 5000) {
+                if ($newmembercheck->application_payment_amount > 5000) {
                     $payment = new Payment;
                     $payment->member_id = $newmembercheck->member_id;
                     $payment->payer_id = $newmembercheck->member_id;
@@ -1599,7 +1606,7 @@ class DashboardController extends Controller
                     $this->addToAdminLog($payment, 'approve_payment', 'পেমেন্ট অনুমোদন');
 
                     // receipt upload
-                    if($newmembercheck->application_payment_receipt != '') {
+                    if ($newmembercheck->application_payment_receipt != '') {
                         $paymentreceipt = new Paymentreceipt;
                         $paymentreceipt->payment_id = $payment->id;
                         $paymentreceipt->image = $newmembercheck->application_payment_receipt;
@@ -1615,38 +1622,38 @@ class DashboardController extends Controller
             // send activation SMS ... aro kichu kaaj baki ache...
             // send sms
             $mobile_number = 0;
-            if(strlen($application->mobile) == 11) {
+            if (strlen($application->mobile) == 11) {
                 $mobile_number = $application->mobile;
-            } elseif(strlen($application->mobile) > 11) {
+            } elseif (strlen($application->mobile) > 11) {
                 if (strpos($application->mobile, '+') !== false) {
                     $mobile_number = substr($application->mobile, -11);
                 }
             }
             $url = config('sms.url');
             $number = $mobile_number;
-            $text = 'Dear ' . $application->name . ', your membership application has been approved! Your ID: '. $application->member_id .', Email: '. $application->email .' and Password: cvcs12345. Customs and VAT Co-operative Society (CVCS). Login & change password: https://cvcsbd.com/login';
+            $text = 'Dear ' . $application->name . ', your membership application has been approved! Your ID: ' . $application->member_id . ', Email: ' . $application->email . ' and Password: cvcs12345. Customs and VAT Co-operative Society (CVCS). Login & change password: https://cvcsbd.com/login';
             // this sms costs 2 SMS
             // this sms costs 2 SMS
 
-            $data= array(
-                'username'=>config('sms.username'),
-                'password'=>config('sms.password'),
-                'number'=>"$number",
-                'message'=>"$text",
+            $data = array(
+                'username' => config('sms.username'),
+                'password' => config('sms.password'),
+                'number' => "$number",
+                'message' => "$text",
             );
             // initialize send status
             $ch = curl_init(); // Initialize cURL
-            curl_setopt($ch, CURLOPT_URL,$url);
+            curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
             $smsresult = curl_exec($ch);
-            $p = explode("|",$smsresult);
+            $p = explode("|", $smsresult);
             $sendstatus = $p[0];
             // send sms
-            if($sendstatus == 1101) {
+            if ($sendstatus == 1101) {
                 Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-            } elseif($sendstatus == 1006) {
+            } elseif ($sendstatus == 1006) {
                 Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
                 Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
@@ -1661,16 +1668,16 @@ class DashboardController extends Controller
     public function deleteApplication(Request $request, $id)
     {
         $application = User::find($id);
-        $image_path = public_path('images/users/'. $application->image);
-        if(File::exists($image_path)) {
+        $image_path = public_path('images/users/' . $application->image);
+        if (File::exists($image_path)) {
             File::delete($image_path);
         }
-        $nominee_one_path = public_path('images/users/'. $application->nominee_one_image);
-        if(File::exists($nominee_one_path)) {
+        $nominee_one_path = public_path('images/users/' . $application->nominee_one_image);
+        if (File::exists($nominee_one_path)) {
             File::delete($nominee_one_path);
         }
-        $nominee_two_path = public_path('images/users/'. $application->nominee_two_image);
-        if(File::exists($nominee_two_path)) {
+        $nominee_two_path = public_path('images/users/' . $application->nominee_two_image);
+        if (File::exists($nominee_two_path)) {
             File::delete($nominee_two_path);
         }
         $application->delete();
@@ -1681,9 +1688,9 @@ class DashboardController extends Controller
 
     public function sendSMSApplicant(Request $request)
     {
-        $this->validate($request,array(
-            'unique_key'        =>   'required',
-            'message'           =>   'required'
+        $this->validate($request, array(
+            'unique_key' => 'required',
+            'message' => 'required'
         ));
 
         $applicant = User::where('unique_key', $request->unique_key)->first();
@@ -1691,9 +1698,9 @@ class DashboardController extends Controller
         // send pending SMS ... aro kichu kaaj baki ache...
         // send sms
         $mobile_number = 0;
-        if(strlen($applicant->mobile) == 11) {
+        if (strlen($applicant->mobile) == 11) {
             $mobile_number = $applicant->mobile;
-        } elseif(strlen($applicant->mobile) > 11) {
+        } elseif (strlen($applicant->mobile) > 11) {
             if (strpos($applicant->mobile, '+') !== false) {
                 $mobile_number = substr($applicant->mobile, -11);
             }
@@ -1701,11 +1708,11 @@ class DashboardController extends Controller
         $url = config('sms.url');
         $number = $mobile_number;
         $text = $request->message . ' Customs and VAT Co-operative Society (CVCS).';
-        $data= array(
-            'username'=>config('sms.username'),
-            'password'=>config('sms.password'),
-            'number'=>"$number",
-            'message'=>"$text",
+        $data = array(
+            'username' => config('sms.username'),
+            'password' => config('sms.password'),
+            'number' => "$number",
+            'message' => "$text",
             // 'apicode'=>"1",
             // 'msisdn'=>"$number",
             // 'countrycode'=>"880",
@@ -1715,12 +1722,12 @@ class DashboardController extends Controller
         );
         // initialize send status
         $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
-        $p = explode("|",$smsresult);
+        $p = explode("|", $smsresult);
         $sendstatus = $p[0];
 
         // $sendstatus = substr($smsresult, 0, 3);
@@ -1735,9 +1742,9 @@ class DashboardController extends Controller
         // 1010 = Max number limit exceeded
         // 1101 = Success
         // send sms
-        if($sendstatus == 1101) {
+        if ($sendstatus == 1101) {
             Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 1006) {
+        } elseif ($sendstatus == 1006) {
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
@@ -1749,66 +1756,60 @@ class DashboardController extends Controller
 
     public function searchApplicationAPI(Request $request)
     {
-        if($request->ajax())
-        {
-          $output = '';
-          $query = $request->get('query');
-          if($query != '')
-          {
-           $data = DB::table('users')
+        if ($request->ajax()) {
+            $output = '';
+            $query = $request->get('query');
+            if ($query != '') {
+                $data = DB::table('users')
                     ->where('activation_status', 0)
                     ->where('role_type', '!=', 'admin') // avoid the super admin type
-                    ->where(function($newquery) use ($query) {
-                        $newquery->where('name', 'like', '%'.$query.'%')
-                                 ->orWhere('name_bangla', 'like', '%'.$query.'%')
-                                 ->orWhere('mobile', 'like', '%'.$query.'%')
-                                 ->orWhere('email', 'like', '%'.$query.'%');
+                    ->where(function ($newquery) use ($query) {
+                        $newquery->where('name', 'like', '%' . $query . '%')
+                            ->orWhere('name_bangla', 'like', '%' . $query . '%')
+                            ->orWhere('mobile', 'like', '%' . $query . '%')
+                            ->orWhere('email', 'like', '%' . $query . '%');
                     })
                     ->orderBy('id', 'desc')
                     ->get();
-          }
+            }
 
-          $total_row = count($data);
-          if($total_row > 0)
-          {
-           foreach($data as $row)
-           {
-            $output .= '
+            $total_row = count($data);
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
             <tr>
              <td>
-                <a href="'. route('dashboard.singleapplication', $row->unique_key) .'" title="সদস্য তথ্য দেখুন">
-                  '. $row->name_bangla .'<br/> '. $row->name .'
+                <a href="' . route('dashboard.singleapplication', $row->unique_key) . '" title="সদস্য তথ্য দেখুন">
+                  ' . $row->name_bangla . '<br/> ' . $row->name . '
                 </a>
              </td>
-             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
-             <td>'.$row->office.'<br/>'.$row->profession.' ('. $row->designation .')</td>
-             <td>৳ '. $row->application_payment_amount .'<br/>'. $row->application_payment_bank .' ('. $row->application_payment_branch .')</td>
+             <td>' . $row->mobile . '<br/>' . $row->email . '</td>
+             <td>' . $row->office . '<br/>' . $row->profession . ' (' . $row->designation . ')</td>
+             <td>৳ ' . $row->application_payment_amount . '<br/>' . $row->application_payment_bank . ' (' . $row->application_payment_branch . ')</td>
             ';
-            if($row->image != null) {
-                $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
-            } else {
-                $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
-            }
-            $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singleapplication', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
-                <a class="btn btn-sm btn-primary" href="'. route('dashboard.singleapplicationedit', $row->unique_key) .'" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
+                    if ($row->image != null) {
+                        $output .= '<td><img src="' . asset('images/users/' . $row->image) . '" style="height: 50px; width: auto;" /></td>';
+                    } else {
+                        $output .= '<td><img src="' . asset('images/user.png') . '" style="height: 50px; width: auto;" /></td>';
+                    }
+                    $output .= '<td><a class="btn btn-sm btn-success" href="' . route('dashboard.singleapplication', $row->unique_key) . '" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
+                <a class="btn btn-sm btn-primary" href="' . route('dashboard.singleapplicationedit', $row->unique_key) . '" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
               </td>
             </tr>';
-           }
-          }
-          else
-          {
-           $output = '
+                }
+            } else {
+                $output = '
            <tr>
             <td align="center" colspan="6">পাওয়া যায়নি!</td>
            </tr>
            ';
-          }
-          $data = array(
-           'table_data'  => $output,
-           'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
-          );
+            }
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_row . ' টি ফলাফল পাওয়া গেছে'
+            );
 
-          echo json_encode($data);
+            echo json_encode($data);
         }
     }
 
@@ -1816,12 +1817,12 @@ class DashboardController extends Controller
     {
         $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')
-                       ->orderBy('id', 'desc')->get();
+            ->where('role_type', '!=', 'admin')
+            ->orderBy('id', 'desc')->get();
 
         $ordered_member_array = [];
         foreach ($members as $member) {
-            $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+            $ordered_member_array[(int)substr($member->member_id, -5)] = $member;
         }
         ksort($ordered_member_array); // ascending order according to key
 
@@ -1834,25 +1835,25 @@ class DashboardController extends Controller
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
-        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        $paginatedItems = new LengthAwarePaginator($currentPageItems, count($itemCollection), $perPage);
         // set url path for generted links
         $paginatedItems->setPath($request->url());
 
         return view('dashboard.membership.members')
-                            ->withMembers($paginatedItems)
-                            ->withMemberscount($memberscount);
+            ->withMembers($paginatedItems)
+            ->withMemberscount($memberscount);
     }
 
     public function getMembersForAll(Request $request)
     {
         $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')
-                       ->orderBy('id', 'desc')->get();
+            ->where('role_type', '!=', 'admin')
+            ->orderBy('id', 'desc')->get();
 
         $ordered_member_array = [];
         foreach ($members as $member) {
-            $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+            $ordered_member_array[(int)substr($member->member_id, -5)] = $member;
         }
         ksort($ordered_member_array); // ascending order according to key
 
@@ -1865,13 +1866,13 @@ class DashboardController extends Controller
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
-        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        $paginatedItems = new LengthAwarePaginator($currentPageItems, count($itemCollection), $perPage);
         // set url path for generted links
         $paginatedItems->setPath($request->url());
 
         return view('dashboard.profile.membersforall')
-                            ->withMembers($paginatedItems)
-                            ->withMemberscount($memberscount);
+            ->withMembers($paginatedItems)
+            ->withMemberscount($memberscount);
     }
 
     public function getSearchMember()
@@ -1882,144 +1883,132 @@ class DashboardController extends Controller
     public function searchMemberAPI(Request $request)
     {
         $response = User::select('name_bangla', 'member_id', 'mobile', 'unique_key')
-                        ->where('activation_status', 1)
-                        ->where('role_type', '!=', 'admin') // avoid the super admin type
-                        ->orderBy('id', 'desc')->get();
+            ->where('activation_status', 1)
+            ->where('role_type', '!=', 'admin') // avoid the super admin type
+            ->orderBy('id', 'desc')->get();
 
         return $response;
     }
 
     public function searchMemberAPI2(Request $request)
     {
-        if($request->ajax())
-        {
-          $output = '';
-          $query = $request->get('query');
-          if($query != '')
-          {
-           $data = User::where('activation_status', 1)
+        if ($request->ajax()) {
+            $output = '';
+            $query = $request->get('query');
+            if ($query != '') {
+                $data = User::where('activation_status', 1)
                     ->where('role_type', '!=', 'admin') // avoid the super admin type
-                    ->where(function($newquery) use ($query) {
-                        $newquery->where('name', 'like', '%'.$query.'%')
-                                 ->orWhere('name_bangla', 'like', '%'.$query.'%')
-                                 ->orWhere('member_id', 'like', '%'.$query.'%')
-                                 ->orWhere('mobile', 'like', '%'.$query.'%')
-                                 ->orWhere('email', 'like', '%'.$query.'%');
+                    ->where(function ($newquery) use ($query) {
+                        $newquery->where('name', 'like', '%' . $query . '%')
+                            ->orWhere('name_bangla', 'like', '%' . $query . '%')
+                            ->orWhere('member_id', 'like', '%' . $query . '%')
+                            ->orWhere('mobile', 'like', '%' . $query . '%')
+                            ->orWhere('email', 'like', '%' . $query . '%');
                     })
                     ->with('branch')
                     ->with('position')
                     ->orderBy('id', 'desc')
                     ->get();
-          }
+            }
 
-          $total_row = count($data);
-          if($total_row > 0)
-          {
-           foreach($data as $row)
-           {
-            $output .= '
+            $total_row = count($data);
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
             <tr>
              <td>
-                <a href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন">
-                  '. $row->name_bangla .'<br/> '. $row->name .'
+                <a href="' . route('dashboard.singlemember', $row->unique_key) . '" title="সদস্য তথ্য দেখুন">
+                  ' . $row->name_bangla . '<br/> ' . $row->name . '
                 </a>
              </td>
-             <td><big><b>'.$row->member_id.'</big></b></td>
-             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
+             <td><big><b>' . $row->member_id . '</big></b></td>
+             <td>' . $row->mobile . '<br/>' . $row->email . '</td>
              <td>
-                <a href="'. route('dashboard.branch.members', $row->branch->id) .'" title="সদস্য তথ্য দেখুন">
-                  '. $row->branch->name .'
+                <a href="' . route('dashboard.branch.members', $row->branch->id) . '" title="সদস্য তথ্য দেখুন">
+                  ' . $row->branch->name . '
                 </a><br/>
-                '. $row->profession .' (<a href="'. route('dashboard.designation.members', $row->position->id) .'" title="সদস্য তথ্য দেখুন">
-                  '. $row->position->name .'
+                ' . $row->profession . ' (<a href="' . route('dashboard.designation.members', $row->position->id) . '" title="সদস্য তথ্য দেখুন">
+                  ' . $row->position->name . '
                 </a>)
             </td>
             ';
-            if($row->image != null) {
-                $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
-            } else {
-                $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
-            }
-            $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
-                <a class="btn btn-sm btn-primary" href="'. route('dashboard.singleapplicationedit', $row->unique_key) .'" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
+                    if ($row->image != null) {
+                        $output .= '<td><img src="' . asset('images/users/' . $row->image) . '" style="height: 50px; width: auto;" /></td>';
+                    } else {
+                        $output .= '<td><img src="' . asset('images/user.png') . '" style="height: 50px; width: auto;" /></td>';
+                    }
+                    $output .= '<td><a class="btn btn-sm btn-success" href="' . route('dashboard.singlemember', $row->unique_key) . '" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
+                <a class="btn btn-sm btn-primary" href="' . route('dashboard.singleapplicationedit', $row->unique_key) . '" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
               </td>
             </tr>';
-           }
-          }
-          else
-          {
-           $output = '
+                }
+            } else {
+                $output = '
            <tr>
             <td align="center" colspan="6">পাওয়া যায়নি!</td>
            </tr>
            ';
-          }
-          $data = array(
-           'table_data'  => $output,
-           'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
-          );
+            }
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_row . ' টি ফলাফল পাওয়া গেছে'
+            );
 
-          echo json_encode($data);
+            echo json_encode($data);
         }
     }
 
     public function searchMemberAPI3(Request $request)
     {
-        if($request->ajax())
-        {
-          $output = '';
-          $query = $request->get('query');
-          if($query != '')
-          {
-           $data = User::where('activation_status', 1)
+        if ($request->ajax()) {
+            $output = '';
+            $query = $request->get('query');
+            if ($query != '') {
+                $data = User::where('activation_status', 1)
                     ->where('role_type', '!=', 'admin') // avoid the super admin type
-                    ->where(function($newquery) use ($query) {
-                        $newquery->where('name', 'like', '%'.$query.'%')
-                                 ->orWhere('name_bangla', 'like', '%'.$query.'%')
-                                 ->orWhere('member_id', 'like', '%'.$query.'%')
-                                 ->orWhere('mobile', 'like', '%'.$query.'%')
-                                 ->orWhere('email', 'like', '%'.$query.'%');
+                    ->where(function ($newquery) use ($query) {
+                        $newquery->where('name', 'like', '%' . $query . '%')
+                            ->orWhere('name_bangla', 'like', '%' . $query . '%')
+                            ->orWhere('member_id', 'like', '%' . $query . '%')
+                            ->orWhere('mobile', 'like', '%' . $query . '%')
+                            ->orWhere('email', 'like', '%' . $query . '%');
                     })
                     ->with('branch')
                     ->with('position')
                     ->orderBy('id', 'desc')
                     ->get();
-          }
-
-          $total_row = count($data);
-          if($total_row > 0)
-          {
-           foreach($data as $row)
-           {
-            $output .= '
-            <tr>
-             <td>'. $row->name_bangla .'<br/> '. $row->name .'</td>
-             <td><big><b>'.$row->member_id.'</big></b></td>
-             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
-             <td>'.$row->branch->name.'<br/>'.$row->profession.' ('. $row->position->name .')</td>
-            ';
-            if($row->image != null) {
-                $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
-            } else {
-                $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
             }
-            $output .= '</tr>';
-           }
-          }
-          else
-          {
-           $output = '
+
+            $total_row = count($data);
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
+            <tr>
+             <td>' . $row->name_bangla . '<br/> ' . $row->name . '</td>
+             <td><big><b>' . $row->member_id . '</big></b></td>
+             <td>' . $row->mobile . '<br/>' . $row->email . '</td>
+             <td>' . $row->branch->name . '<br/>' . $row->profession . ' (' . $row->position->name . ')</td>
+            ';
+                    if ($row->image != null) {
+                        $output .= '<td><img src="' . asset('images/users/' . $row->image) . '" style="height: 50px; width: auto;" /></td>';
+                    } else {
+                        $output .= '<td><img src="' . asset('images/user.png') . '" style="height: 50px; width: auto;" /></td>';
+                    }
+                    $output .= '</tr>';
+                }
+            } else {
+                $output = '
            <tr>
             <td align="center" colspan="6">পাওয়া যায়নি!</td>
            </tr>
            ';
-          }
-          $data = array(
-           'table_data'  => $output,
-           'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
-          );
+            }
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_row . ' টি ফলাফল পাওয়া গেছে'
+            );
 
-          echo json_encode($data);
+            echo json_encode($data);
         }
     }
 
@@ -2027,51 +2016,51 @@ class DashboardController extends Controller
     {
         $member = User::where('unique_key', $unique_key)->first();
         $pendingfordashboard = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 0)
-                                 ->where('is_archieved', 0)
-                                 ->where('member_id', $member->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 0)
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->first();
         $approvedfordashboard = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 1)
-                                 ->where('is_archieved', 0)
-                                 ->where('member_id', $member->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->first();
         $totalmontlypaid = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 1)
-                                 ->where('is_archieved', 0)
-                                 ->where('payment_category', 1) // 1 means monthly, 0 for membership
-                                 ->where('member_id', $member->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->where('is_archieved', 0)
+            ->where('payment_category', 1) // 1 means monthly, 0 for membership
+            ->where('member_id', $member->member_id)
+            ->first();
         $pendingcountdashboard = Payment::where('payment_status', 0)
-                                        ->where('is_archieved', 0)
-                                        ->where('member_id', $member->member_id)
-                                        ->get()
-                                        ->count();
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->get()
+            ->count();
         $approvedcountdashboard = Payment::where('payment_status', 1)
-                                         ->where('is_archieved', 0)
-                                         ->where('member_id', $member->member_id)
-                                         ->get()
-                                         ->count();
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->get()
+            ->count();
 
         $members = User::all();
 
         // for now, user can only see his profile, so if there is a change, then kaaj kora jaabe...
-        if((Auth::user()->role == 'member') && ($member->unique_key != Auth::user()->unique_key)) {
+        if ((Auth::user()->role == 'member') && ($member->unique_key != Auth::user()->unique_key)) {
             Session::flash('warning', ' দুঃখিত, আপনার এই পাতাটি দেখার অনুমতি নেই!');
             return redirect()->route('dashboard.memberpayment');
         }
 
         return view('dashboard.membership.singlemember')
-                            ->withMember($member)
-                            ->withMembers($members)
-                            ->withPendingfordashboard($pendingfordashboard)
-                            ->withApprovedfordashboard($approvedfordashboard)
-                            ->withTotalmontlypaid($totalmontlypaid)
-                            ->withPendingcountdashboard($pendingcountdashboard)
-                            ->withApprovedcountdashboard($approvedcountdashboard);
+            ->withMember($member)
+            ->withMembers($members)
+            ->withPendingfordashboard($pendingfordashboard)
+            ->withApprovedfordashboard($approvedfordashboard)
+            ->withTotalmontlypaid($totalmontlypaid)
+            ->withPendingcountdashboard($pendingcountdashboard)
+            ->withApprovedcountdashboard($approvedcountdashboard);
     }
 
     public function getFormMessages()
@@ -2079,7 +2068,7 @@ class DashboardController extends Controller
         $messages = Formmessage::orderBy('id', 'desc')->paginate(10);
 
         return view('dashboard.formmessage')
-                    ->withMessages($messages);
+            ->withMessages($messages);
     }
 
 
@@ -2097,72 +2086,76 @@ class DashboardController extends Controller
         $positions = Position::where('id', '>', 0)->get();
         $branches = Branch::where('id', '>', 0)->get();
         $member = User::find(Auth::user()->id);
+        $upazillas = Upazilla::groupBy('district_bangla')
+            ->get();
 
         $pendingfordashboard = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 0)
-                                 ->where('is_archieved', 0)
-                                 ->where('member_id', $member->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 0)
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->first();
         $approvedfordashboard = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 1)
-                                 ->where('is_archieved', 0)
-                                 ->where('member_id', $member->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->first();
         $pendingcountdashboard = Payment::where('payment_status', 0)
-                                        ->where('is_archieved', 0)
-                                        ->where('member_id', $member->member_id)
-                                        ->get()
-                                        ->count();
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->get()
+            ->count();
         $approvedcountdashboard = Payment::where('payment_status', 1)
-                                         ->where('is_archieved', 0)
-                                         ->where('member_id', $member->member_id)
-                                         ->get()
-                                         ->count();
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->get()
+            ->count();
 
         return view('dashboard.profile.index')
-                    ->withPositions($positions)
-                    ->withBranches($branches)
-                    ->withMember($member)
-                    ->withPendingfordashboard($pendingfordashboard)
-                    ->withApprovedfordashboard($approvedfordashboard)
-                    ->withPendingcountdashboard($pendingcountdashboard)
-                    ->withApprovedcountdashboard($approvedcountdashboard);
+            ->withPositions($positions)
+            ->withBranches($branches)
+            ->withMember($member)
+            ->withPendingfordashboard($pendingfordashboard)
+            ->withApprovedfordashboard($approvedfordashboard)
+            ->withPendingcountdashboard($pendingcountdashboard)
+            ->withApprovedcountdashboard($approvedcountdashboard)
+            ->withUpazillas($upazillas);
+
     }
 
     public function updateMemberProfile(Request $request, $id)
     {
-        $this->validate($request,array(
-            'position_id'      =>   'required',
-            'branch_id'        =>   'required',
-            'start_time'       =>   'sometimes',
-            'present_address'  =>   'required',
-            'mobile'           =>   'required',
-            'email'            =>   'required',
-            'image'            =>   'sometimes|image|max:250'
+        $this->validate($request, array(
+            'position_id' => 'required',
+            'branch_id' => 'required',
+            'start_time' => 'sometimes',
+            'present_address' => 'required',
+            'mobile' => 'required',
+            'email' => 'required',
+            'image' => 'sometimes|image|max:250'
         ));
 
         $member = User::find($id);
 
-        if($request->mobile != $member->mobile) {
+        if ($request->mobile != $member->mobile) {
             $findmobileuser = User::where('mobile', $request->mobile)->first();
 
-            if($findmobileuser) {
+            if ($findmobileuser) {
                 Session::flash('warning', 'দুঃখিত! মোবাইল নম্বরটি ব্যবহৃত হয়ে গেছে; আরেকটি দিন');
-                if($member->id == Auth::user()->id) {
+                if ($member->id == Auth::user()->id) {
                     return redirect()->route('dashboard.profile');
                 } else {
                     return redirect()->back();
                 }
             }
         }
-        if($request->email != $member->email) {
+        if ($request->email != $member->email) {
             $findemailuser = User::where('email', $request->email)->first();
 
-            if($findemailuser) {
+            if ($findemailuser) {
                 Session::flash('warning', 'দুঃখিত! ইমেইলটি ব্যবহৃত হয়ে গেছে; আরেকটি দিন');
-                if($member->id == Auth::user()->id) {
+                if ($member->id == Auth::user()->id) {
                     return redirect()->route('dashboard.profile');
                 } else {
                     return redirect()->back();
@@ -2171,15 +2164,14 @@ class DashboardController extends Controller
         }
 
         // check if any data is changed...
-        if((Auth::user()->position_id == $request->position_id) && (Auth::user()->branch_id == $request->branch_id) && (Auth::user()->present_address == $request->present_address) && (Auth::user()->mobile == $request->mobile) && (Auth::user()->email == $request->email) && !$request->hasFile('image')) {
+        if ((Auth::user()->position_id == $request->position_id) && (Auth::user()->branch_id == $request->branch_id) && (Auth::user()->present_address == $request->present_address) && (Auth::user()->mobile == $request->mobile) && (Auth::user()->email == $request->email) && !$request->hasFile('image')) {
             Session::flash('info', 'আপনি কোন তথ্য পরিবর্তন করেননি!');
             return redirect()->route('dashboard.profile');
         }
 
 
-
         // update data accordign Tempmemdatato role...
-        if(Auth::user()->role != 'admin') {
+        if (Auth::user()->role != 'admin') {
             $tempmemdata = new Tempmemdata;
             $tempmemdata->user_id = $member->id;
             $tempmemdata->position_id = $request->position_id;
@@ -2190,11 +2182,11 @@ class DashboardController extends Controller
 
 
             //check if career info changed and start_time not provided
-            if(Auth::user()->position_id != $request->position_id || Auth::user()->branch_id == $request->branch_id) {
+            if (Auth::user()->position_id != $request->position_id || Auth::user()->branch_id == $request->branch_id) {
 
-                if(!$request->has('start_date') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_date) == false){
+                if (!$request->has('start_date') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_date) == false) {
                     Session::flash('warning', 'আপনি নতুন পদবি/দপ্তর এ যোগদানের তারিখ দেননি!');
-                    if($member->id == Auth::user()->id) {
+                    if ($member->id == Auth::user()->id) {
                         return redirect()->route('dashboard.profile');
                     } else {
                         return redirect()->back();
@@ -2205,20 +2197,17 @@ class DashboardController extends Controller
 
 
             // applicant's temp image upload
-            if($request->hasFile('image')) {
+            if ($request->hasFile('image')) {
                 // $old_img = public_path('images/users/'. $application->image);
                 // if(File::exists($old_img)) {
                 //     File::delete($old_img);
                 // }
-                $image      = $request->file('image');
-                $filename   = 'temp_'. str_replace(' ','',$member->name).time() .'.' . $image->getClientOriginalExtension();
-                $location   = public_path('/images/users/'. $filename);
+                $image = $request->file('image');
+                $filename = 'temp_' . str_replace(' ', '', $member->name) . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('/images/users/' . $filename);
                 Image::make($image)->resize(200, 200)->save($location);
                 $tempmemdata->image = $filename;
             }
-
-
-
 
 
             $tempmemdata->save();
@@ -2233,14 +2222,14 @@ class DashboardController extends Controller
             $member->email = $request->email;
 
             // applicant's temp image upload
-            if($request->hasFile('image')) {
-                $old_img = public_path('images/users/'. $member->image);
-                if(File::exists($old_img)) {
+            if ($request->hasFile('image')) {
+                $old_img = public_path('images/users/' . $member->image);
+                if (File::exists($old_img)) {
                     File::delete($old_img);
                 }
-                $image      = $request->file('image');
-                $filename   = str_replace(' ','',$member->name).time() .'.' . $image->getClientOriginalExtension();
-                $location   = public_path('/images/users/'. $filename);
+                $image = $request->file('image');
+                $filename = str_replace(' ', '', $member->name) . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('/images/users/' . $filename);
                 Image::make($image)->resize(200, 200)->save($location);
                 $member->image = $filename;
             }
@@ -2256,7 +2245,7 @@ class DashboardController extends Controller
         $tempmemdatas = Tempmemdata::orderBy('id', 'desc')->paginate(10);
 
         return view('dashboard.membership.membersupdaterequests')
-                    ->withTempmemdatas($tempmemdatas);
+            ->withTempmemdatas($tempmemdatas);
     }
 
     public function approveUpdateRequest(Request $request)
@@ -2265,14 +2254,14 @@ class DashboardController extends Controller
         $member = User::where('id', $request->user_id)->first();
 
         //create Career log entry if position/branch changes
-        if($member->position_id != $tempmemdata->position_id || $member->branch_id != $tempmemdata->branch_id) {
+        if ($member->position_id != $tempmemdata->position_id || $member->branch_id != $tempmemdata->branch_id) {
             $newCareerLog = new Careerlog();
             $newCareerLog->user_id = $member->id;
             $newCareerLog->branch_id = $tempmemdata->branch_id;
             $newCareerLog->position_id = $tempmemdata->position_id;
             $newCareerLog->start_time = $tempmemdata->start_time;
-            $newCareerLog->prev_branch_name = ($member->branch_id != 0)? $member->branch->name: $member->office;
-            $newCareerLog->prev_position_name = ($member->position_id != 0)? $member->position->name: $member->designation;
+            $newCareerLog->prev_branch_name = ($member->branch_id != 0) ? $member->branch->name : $member->office;
+            $newCareerLog->prev_position_name = ($member->position_id != 0) ? $member->position->name : $member->designation;
             $newCareerLog->save();
         }
 
@@ -2284,13 +2273,10 @@ class DashboardController extends Controller
         $member->email = $tempmemdata->email;
 
 
-
-
-
         // applicant's temp image upload
-        if($tempmemdata->image != '') {
-            $old_img = public_path('images/users/'. $member->image);
-            if(File::exists($old_img)) {
+        if ($tempmemdata->image != '') {
+            $old_img = public_path('images/users/' . $member->image);
+            if (File::exists($old_img)) {
                 File::delete($old_img);
             }
             $member->image = $tempmemdata->image;
@@ -2303,9 +2289,9 @@ class DashboardController extends Controller
 
         // send sms
         $mobile_number = 0;
-        if(strlen($member->mobile) == 11) {
+        if (strlen($member->mobile) == 11) {
             $mobile_number = $member->mobile;
-        } elseif(strlen($member->mobile) > 11) {
+        } elseif (strlen($member->mobile) > 11) {
             if (strpos($member->mobile, '+') !== false) {
                 $mobile_number = substr($member->mobile, -11);
             }
@@ -2315,27 +2301,27 @@ class DashboardController extends Controller
         $text = 'Dear ' . $member->name . ', your information changing request has been approved! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
         // this sms costs 2 SMS
 
-        $data= array(
-            'username'=>config('sms.username'),
-            'password'=>config('sms.password'),
-            'number'=>"$number",
-            'message'=>"$text",
+        $data = array(
+            'username' => config('sms.username'),
+            'password' => config('sms.password'),
+            'number' => "$number",
+            'message' => "$text",
         );
 
         // initialize send status
         $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
 
-        $p = explode("|",$smsresult);
+        $p = explode("|", $smsresult);
         $sendstatus = $p[0];
         // send sms
-        if($sendstatus == 1101) {
+        if ($sendstatus == 1101) {
             Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 1006) {
+        } elseif ($sendstatus == 1006) {
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
@@ -2348,8 +2334,8 @@ class DashboardController extends Controller
     public function deleteUpdateRequest($id)
     {
         $tempmemdata = Tempmemdata::find($id);
-        $image_path = public_path('images/users/'. $tempmemdata->image);
-        if(File::exists($image_path)) {
+        $image_path = public_path('images/users/' . $tempmemdata->image);
+        if (File::exists($image_path)) {
             File::delete($image_path);
         }
         $tempmemdata->delete();
@@ -2365,10 +2351,10 @@ class DashboardController extends Controller
 
     public function memberChangePassword(Request $request)
     {
-        $this->validate($request,array(
-            'oldpassword'        =>   'required',
-            'newpassword'        =>   'required|min:8',
-            'againnewpassword'   =>   'required|same:newpassword'
+        $this->validate($request, array(
+            'oldpassword' => 'required',
+            'newpassword' => 'required|min:8',
+            'againnewpassword' => 'required|same:newpassword'
         ));
 
         $member = User::find(Auth::user()->id);
@@ -2387,14 +2373,14 @@ class DashboardController extends Controller
     public function getPaymentPage()
     {
         $payments = Payment::where('member_id', Auth::user()->member_id)
-                           ->where('is_archieved', 0)
-                           ->orderBy('id', 'desc')
-                           ->paginate(10);
+            ->where('is_archieved', 0)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
         $members = User::all();
 
         return view('dashboard.profile.payment')
-                    ->withPayments($payments)
-                    ->withMembers($members);
+            ->withPayments($payments)
+            ->withMembers($members);
     }
 
     public function getSelfPaymentPage()
@@ -2404,13 +2390,13 @@ class DashboardController extends Controller
 
     public function storeSelfPayment(Request $request)
     {
-        $this->validate($request,array(
-            'member_id'   =>   'required',
-            'amount'      =>   'required|integer',
-            'bank'        =>   'required',
-            'branch'      =>   'required',
-            'pay_slip'    =>   'required',
-            'image'       =>   'sometimes|image|max:500'
+        $this->validate($request, array(
+            'member_id' => 'required',
+            'amount' => 'required|integer',
+            'bank' => 'required',
+            'branch' => 'required',
+            'pay_slip' => 'required',
+            'image' => 'sometimes|image|max:500'
         ));
 
         $payment = new Payment;
@@ -2432,11 +2418,13 @@ class DashboardController extends Controller
         $payment->save();
 
         // receipt upload
-        if($request->hasFile('image')) {
-            $receipt      = $request->file('image');
-            $filename   = $payment->member_id.'_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
-            $location   = public_path('/images/receipts/'. $filename);
-            Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+        if ($request->hasFile('image')) {
+            $receipt = $request->file('image');
+            $filename = $payment->member_id . '_receipt_' . time() . '.' . $receipt->getClientOriginalExtension();
+            $location = public_path('/images/receipts/' . $filename);
+            Image::make($receipt)->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($location);
             $paymentreceipt = new Paymentreceipt;
             $paymentreceipt->payment_id = $payment->id;
             $paymentreceipt->image = $filename;
@@ -2446,37 +2434,37 @@ class DashboardController extends Controller
         // send pending SMS ... aro kichu kaaj baki ache...
         // send sms
         $mobile_number = 0;
-        if(strlen(Auth::user()->mobile) == 11) {
+        if (strlen(Auth::user()->mobile) == 11) {
             $mobile_number = Auth::user()->mobile;
-        } elseif(strlen(Auth::user()->mobile) > 11) {
+        } elseif (strlen(Auth::user()->mobile) > 11) {
             if (strpos(Auth::user()->mobile, '+') !== false) {
                 $mobile_number = substr(Auth::user()->mobile, -11);
             }
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-        $data= array(
-            'username'=>config('sms.username'),
-            'password'=>config('sms.password'),
-            'number'=>"$number",
-            'message'=>"$text"
+        $text = 'Dear ' . Auth::user()->name . ', payment of tk. ' . $request->amount . ' is submitted successfully. We will notify you once we approve it. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+        $data = array(
+            'username' => config('sms.username'),
+            'password' => config('sms.password'),
+            'number' => "$number",
+            'message' => "$text"
         );
         // initialize send status
         $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
 
         // $sendstatus = $result = substr($smsresult, 0, 3);
-        $p = explode("|",$smsresult);
+        $p = explode("|", $smsresult);
         $sendstatus = $p[0];
         // send sms
-        if($sendstatus == 1101) {
+        if ($sendstatus == 1101) {
             // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 1006) {
+        } elseif ($sendstatus == 1006) {
             // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
@@ -2488,102 +2476,102 @@ class DashboardController extends Controller
 
     public function downloadMemberPaymentPDF(Request $request)
     {
-        $this->validate($request,array(
-            'id'              =>   'required',
-            'payment_key'     =>   'required'
+        $this->validate($request, array(
+            'id' => 'required',
+            'payment_key' => 'required'
         ));
 
         $payment = Payment::where('id', $request->id)
-                          ->where('payment_key', $request->payment_key)
-                          ->first();
+            ->where('payment_key', $request->payment_key)
+            ->first();
 
         $pdf = PDF::loadView('dashboard.profile.pdf.paymentreportsingle', ['payment' => $payment]);
-        $fileName = 'Payment_Report_'. Auth::user()->member_id .'_'. $payment->payment_key .'.pdf';
+        $fileName = 'Payment_Report_' . Auth::user()->member_id . '_' . $payment->payment_key . '.pdf';
         return $pdf->download($fileName);
     }
 
     public function downloadMemberCompletePDF(Request $request)
     {
-        $this->validate($request,array(
-            'id'            =>   'required',
-            'member_id'     =>   'required'
+        $this->validate($request, array(
+            'id' => 'required',
+            'member_id' => 'required'
         ));
 
         $member = User::where('id', $request->id)
-                      ->where('member_id', $request->member_id)
-                      ->first();
+            ->where('member_id', $request->member_id)
+            ->first();
 
         $payments = Payment::where('member_id', $request->member_id)
-                           ->where('is_archieved', 0)
-                           ->get();
+            ->where('is_archieved', 0)
+            ->get();
 
         $pendingfordashboard = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 0)
-                                 ->where('is_archieved', 0)
-                                 ->where('member_id', $member->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 0)
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->first();
         $approvedfordashboard = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 1)
-                                 ->where('is_archieved', 0)
-                                 ->where('member_id', $member->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->first();
         $pendingcountdashboard = Payment::where('payment_status', 0)
-                                        ->where('is_archieved', 0)
-                                        ->where('member_id', $member->member_id)
-                                        ->get()
-                                        ->count();
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->get()
+            ->count();
 
         $approvedcountdashboard = Payment::where('payment_status', 1)
-                                         ->where('is_archieved', 0)
-                                         ->where('member_id', $member->member_id)
-                                         ->get()
-                                         ->count();
+            ->where('is_archieved', 0)
+            ->where('member_id', $member->member_id)
+            ->get()
+            ->count();
         $totalmontlypaid = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 1)
-                                 ->where('is_archieved', 0)
-                                 ->where('payment_category', 1) // 1 means monthly, 0 for membership
-                                 ->where('member_id', $member->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->where('is_archieved', 0)
+            ->where('payment_category', 1) // 1 means monthly, 0 for membership
+            ->where('member_id', $member->member_id)
+            ->first();
 
         $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard, 'totalmontlypaid' => $totalmontlypaid]);
-        $fileName = str_replace(' ', '_', $member->name).'_'. $member->member_id .'.pdf';
+        $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '.pdf';
         return $pdf->download($fileName);
     }
 
     public function getMemberTransactionSummary()
     {
         $membertotalpending = DB::table('payments')
-                                ->select(DB::raw('SUM(amount) as totalamount'))
-                                ->where('member_id', Auth::user()->member_id)
-                                ->where('payment_status', 0)
-                                ->where('is_archieved', 0)
-                                // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
-                                // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-                                ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('member_id', Auth::user()->member_id)
+            ->where('payment_status', 0)
+            ->where('is_archieved', 0)
+            // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+            // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->first();
 
         $membertotalapproved = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('member_id', Auth::user()->member_id)
-                                 ->where('payment_status', '=', 1)
-                                 ->where('is_archieved', '=', 0)
-                                 // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
-                                 // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('member_id', Auth::user()->member_id)
+            ->where('payment_status', '=', 1)
+            ->where('is_archieved', '=', 0)
+            // ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), "=", Carbon::now()->format('Y-m'))
+            // ->groupBy(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->first();
         $membertotalmontlypaid = DB::table('payments')
-                                 ->select(DB::raw('SUM(amount) as totalamount'))
-                                 ->where('payment_status', 1)
-                                 ->where('is_archieved', 0)
-                                 ->where('payment_category', 1) // 1 means monthly, 0 for membership
-                                 ->where('member_id', Auth::user()->member_id)
-                                 ->first();
+            ->select(DB::raw('SUM(amount) as totalamount'))
+            ->where('payment_status', 1)
+            ->where('is_archieved', 0)
+            ->where('payment_category', 1) // 1 means monthly, 0 for membership
+            ->where('member_id', Auth::user()->member_id)
+            ->first();
 
         return view('dashboard.profile.transactionsummary')
-                        ->withMembertotalpending($membertotalpending)
-                        ->withMembertotalapproved($membertotalapproved)
-                        ->withMembertotalmontlypaid($membertotalmontlypaid);
+            ->withMembertotalpending($membertotalpending)
+            ->withMembertotalapproved($membertotalapproved)
+            ->withMembertotalmontlypaid($membertotalmontlypaid);
     }
 
     public function getMemberUserManual()
@@ -2593,14 +2581,14 @@ class DashboardController extends Controller
 
     public function storeBulkPayment(Request $request)
     {
-        $this->validate($request,array(
-            'amount'      =>   'required|integer',
-            'bank'        =>   'required',
-            'branch'      =>   'required',
-            'pay_slip'    =>   'required',
-            'image1'      =>   'required|image|max:500',
-            'image2'      =>   'sometimes|image|max:500',
-            'image3'      =>   'sometimes|image|max:500'
+        $this->validate($request, array(
+            'amount' => 'required|integer',
+            'bank' => 'required',
+            'branch' => 'required',
+            'pay_slip' => 'required',
+            'image1' => 'required|image|max:500',
+            'image2' => 'sometimes|image|max:500',
+            'image3' => 'sometimes|image|max:500'
         ));
 
         // dd($request->all());
@@ -2625,19 +2613,21 @@ class DashboardController extends Controller
         $amountids = $request->amountids;
         $amount_id = [];
         foreach ($amountids as $amountid) {
-            $amount_id[$amountid] = $request['amount'.$amountid];
+            $amount_id[$amountid] = $request['amount' . $amountid];
         }
         $payment->bulk_payment_member_ids = json_encode($amount_id);
 
         $payment->save();
 
         // receipt upload
-        for($itrt=1; $itrt<4;$itrt++) {
-            if($request->hasFile('image'.$itrt)) {
-                $receipt      = $request->file('image'.$itrt);
-                $filename   = $payment->member_id . $itrt . '_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
-                $location   = public_path('/images/receipts/'. $filename);
-                Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+        for ($itrt = 1; $itrt < 4; $itrt++) {
+            if ($request->hasFile('image' . $itrt)) {
+                $receipt = $request->file('image' . $itrt);
+                $filename = $payment->member_id . $itrt . '_receipt_' . time() . '.' . $receipt->getClientOriginalExtension();
+                $location = public_path('/images/receipts/' . $filename);
+                Image::make($receipt)->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($location);
                 $paymentreceipt = new Paymentreceipt;
                 $paymentreceipt->payment_id = $payment->id;
                 $paymentreceipt->image = $filename;
@@ -2662,9 +2652,9 @@ class DashboardController extends Controller
         $members = User::whereIn('member_id', $amountids)->get();
         foreach ($members as $i => $member) {
             $mobile_number = 0;
-            if(strlen($member->mobile) == 11) {
+            if (strlen($member->mobile) == 11) {
                 $mobile_number = $member->mobile;
-            } elseif(strlen($member->mobile) > 11) {
+            } elseif (strlen($member->mobile) > 11) {
                 if (strpos($member->mobile, '+') !== false) {
                     $mobile_number = substr($member->mobile, -11);
                 }
@@ -2674,15 +2664,15 @@ class DashboardController extends Controller
             // }
             $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
             $smsdata[$i] = array(
-                'username'=>config('sms.username'),
-                'password'=>config('sms.password'),
+                'username' => config('sms.username'),
+                'password' => config('sms.password'),
                 // 'apicode'=>"1",
-                'number'=>"$mobile_number",
+                'number' => "$mobile_number",
                 // 'msisdn'=>"$mobile_number",
                 // 'countrycode'=>"880",
                 // 'cli'=>"CVCS",
                 // 'messagetype'=>"1",
-                'message'=>"$text",
+                'message' => "$text",
                 // 'messageid'=>"1"
             );
             $multiCurl[$i] = curl_init(); // Initialize cURL
@@ -2694,20 +2684,20 @@ class DashboardController extends Controller
             curl_multi_add_handle($mh, $multiCurl[$i]);
         }
 
-        $index=null;
+        $index = null;
         do {
-          curl_multi_exec($mh, $index);
-        } while($index > 0);
+            curl_multi_exec($mh, $index);
+        } while ($index > 0);
         // get content and remove handles
-        foreach($multiCurl as $k => $ch) {
-          $result[$k] = curl_multi_getcontent($ch);
-          curl_multi_remove_handle($mh, $ch);
-          // $sendstatus = substr($result[$k], 0, 3);
-          $p = explode("|",$result[$k]);
-          $sendstatus = $p[0];
-          if($sendstatus == 1101) {
-              $smssuccesscount++;
-          }
+        foreach ($multiCurl as $k => $ch) {
+            $result[$k] = curl_multi_getcontent($ch);
+            curl_multi_remove_handle($mh, $ch);
+            // $sendstatus = substr($result[$k], 0, 3);
+            $p = explode("|", $result[$k]);
+            $sendstatus = $p[0];
+            if ($sendstatus == 1101) {
+                $smssuccesscount++;
+            }
         }
         // close
         curl_multi_close($mh);
@@ -2721,53 +2711,52 @@ class DashboardController extends Controller
     {
         $branch = Branch::find(Auth::user()->branch->id);
         $members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')
-                       ->where('branch_id', Auth::user()->branch->id)
-                       ->orderBy('id', 'desc')
-                       ->get();
+            ->where('role_type', '!=', 'admin')
+            ->where('branch_id', Auth::user()->branch->id)
+            ->orderBy('id', 'desc')
+            ->get();
         return view('dashboard.adminsandothers.bulkpayment')
-                            ->withBranch($branch)
-                            ->withMembers($members);
+            ->withBranch($branch)
+            ->withMembers($members);
     }
 
     public function getBulkPaymentPageFromBranch($branch_id)
     {
         $branch = Branch::find($branch_id);
         $members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')
-                       ->where('branch_id', $branch_id)
-                       ->orderBy('id', 'desc')
-                       ->get();
+            ->where('role_type', '!=', 'admin')
+            ->where('branch_id', $branch_id)
+            ->orderBy('id', 'desc')
+            ->get();
         return view('dashboard.adminsandothers.bulkpayment')
-                            ->withBranch($branch)
-                            ->withMembers($members);
+            ->withBranch($branch)
+            ->withMembers($members);
     }
 
     public function searchMemberForBulkPaymentAPI(Request $request)
     {
         $response = User::select('name_bangla', 'member_id', 'mobile', 'position_id', 'joining_date')
-                        ->where('activation_status', 1)
-                        ->where('role_type', '!=', 'admin')
-                        ->with('position')
-                        ->with(['payments' => function ($query) {
-                            $query->orderBy('created_at', 'desc');
-                            $query->where('payment_status', '=', 1);
-                            $query->where('is_archieved', '=', 0);
-                            $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
-                        }])
-                        ->orderBy('id', 'desc')->get();
+            ->where('activation_status', 1)
+            ->where('role_type', '!=', 'admin')
+            ->with('position')
+            ->with(['payments' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+                $query->where('payment_status', '=', 1);
+                $query->where('is_archieved', '=', 0);
+                $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
+            }])
+            ->orderBy('id', 'desc')->get();
 
         foreach ($response as $member) {
             $approvedcashformontly = $member->payments->sum('amount');
             $member->totalpendingmonthly = 0;
-            if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
-            {
+            if ($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date)) {
                 $thismonth = Carbon::now()->format('Y-m-');
                 $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
                 $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
-                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                if (($totalmonthsformember * 500) > $approvedcashformontly) {
+                    $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
                 }
             } else {
                 $startmonth = date('Y-m-', strtotime($member->joining_date));
@@ -2775,8 +2764,8 @@ class DashboardController extends Controller
                 $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
                 $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
-                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                if (($totalmonthsformember * 500) > $approvedcashformontly) {
+                    $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
                 }
             }
         }
@@ -2787,27 +2776,26 @@ class DashboardController extends Controller
     public function searchMemberForBulkPaymentSingleAPI($member_id)
     {
         $response = User::select('name_bangla', 'member_id', 'mobile', 'position_id', 'joining_date')
-                        ->where('activation_status', 1)
-                        ->where('member_id', $member_id)
-                        ->with('position')
-                        ->with(['payments' => function ($query) {
-                            $query->orderBy('created_at', 'desc');
-                            $query->where('payment_status', '=', 1);
-                            $query->where('is_archieved', '=', 0);
-                            $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
-                        }])
-                        ->first();
+            ->where('activation_status', 1)
+            ->where('member_id', $member_id)
+            ->with('position')
+            ->with(['payments' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+                $query->where('payment_status', '=', 1);
+                $query->where('is_archieved', '=', 0);
+                $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
+            }])
+            ->first();
 
         $approvedcashformontly = $response->payments->sum('amount');
         $response->totalpendingmonthly = 0;
-        if($response->joining_date == '' || $response->joining_date == null || strtotime('31-01-2019') > strtotime($response->joining_date))
-        {
+        if ($response->joining_date == '' || $response->joining_date == null || strtotime('31-01-2019') > strtotime($response->joining_date)) {
             $thismonth = Carbon::now()->format('Y-m-');
             $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
             $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
             $totalmonthsformember = $to->diffInMonths($from) + 1;
-            if(($totalmonthsformember * 500) > $approvedcashformontly) {
-              $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+            if (($totalmonthsformember * 500) > $approvedcashformontly) {
+                $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
             }
         } else {
             $startmonth = date('Y-m-', strtotime($response->joining_date));
@@ -2815,8 +2803,8 @@ class DashboardController extends Controller
             $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
             $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
             $totalmonthsformember = $to->diffInMonths($from) + 1;
-            if(($totalmonthsformember * 500) > $approvedcashformontly) {
-              $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+            if (($totalmonthsformember * 500) > $approvedcashformontly) {
+                $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
             }
         }
 
@@ -2826,23 +2814,23 @@ class DashboardController extends Controller
     public function getMembersPendingPayments()
     {
         $payments = Payment::where('payment_status', 0)
-                           ->where('is_archieved', 0)
-                           ->orderBy('id', 'desc')
-                           ->paginate(10);
+            ->where('is_archieved', 0)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
         $members = User::all();
         return view('dashboard.payments.pending')
-                    ->withPayments($payments)
-                    ->withMembers($members);
+            ->withPayments($payments)
+            ->withMembers($members);
     }
 
     public function getMembersApprovedPayments()
     {
         $payments = Payment::where('payment_status', 1)
-                           ->where('is_archieved', 0)
-                           ->orderBy('id', 'desc')
-                           ->paginate(10);
+            ->where('is_archieved', 0)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
         return view('dashboard.payments.approved')
-                    ->withPayments($payments);
+            ->withPayments($payments);
     }
 
     public function approveSinglePayment(Request $request, $id)
@@ -2856,43 +2844,43 @@ class DashboardController extends Controller
         // send pending SMS ... aro kichu kaaj baki ache...
         // send sms
         $mobile_number = 0;
-        if(strlen($payment->user->mobile) == 11) {
+        if (strlen($payment->user->mobile) == 11) {
             $mobile_number = $payment->user->mobile;
-        } elseif(strlen($payment->user->mobile) > 11) {
+        } elseif (strlen($payment->user->mobile) > 11) {
             if (strpos($payment->user->mobile, '+') !== false) {
                 $mobile_number = substr($payment->user->mobile, -11);
             }
         }
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-        $data= array(
-            'username'=>config('sms.username'),
-            'password'=>config('sms.password'),
+        $text = 'Dear ' . $payment->user->name . ', payment of tk. ' . $payment->amount . ' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+        $data = array(
+            'username' => config('sms.username'),
+            'password' => config('sms.password'),
             // 'apicode'=>"1",
-            'number'=>"$number",
+            'number' => "$number",
             // 'msisdn'=>"$number",
             // 'countrycode'=>"880",
             // 'cli'=>"CVCS",
             // 'messagetype'=>"1",
-            'message'=>"$text",
+            'message' => "$text",
             // 'messageid'=>"1"
         );
         // initialize send status
         $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
         $smsresult = curl_exec($ch);
 
         // $sendstatus = $result = substr($smsresult, 0, 3);
-        $p = explode("|",$smsresult);
+        $p = explode("|", $smsresult);
         $sendstatus = $p[0];
         // send sms
-        if($sendstatus == 1101) {
+        if ($sendstatus == 1101) {
             Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 1006) {
+        } elseif ($sendstatus == 1006) {
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
@@ -2906,7 +2894,7 @@ class DashboardController extends Controller
     {
         $bulkpayment = Payment::find($id);
 
-        foreach(json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+        foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
             $payment = new Payment;
             $payment->member_id = $member_id;
             $payment->payer_id = $bulkpayment->payer_id;
@@ -2922,8 +2910,8 @@ class DashboardController extends Controller
 
 
             // receipt upload
-            if(count($bulkpayment->paymentreceipts) > 0) {
-                foreach($bulkpayment->paymentreceipts as $paymentreceipt) {
+            if (count($bulkpayment->paymentreceipts) > 0) {
+                foreach ($bulkpayment->paymentreceipts as $paymentreceipt) {
                     $newpaymentreceipt = new Paymentreceipt;
                     $newpaymentreceipt->payment_id = $payment->id;
                     $newpaymentreceipt->image = $paymentreceipt->image;
@@ -2953,9 +2941,9 @@ class DashboardController extends Controller
         foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
             $member = User::where('member_id', $member_id)->first();
             $mobile_number = 0;
-            if(strlen($member->mobile) == 11) {
+            if (strlen($member->mobile) == 11) {
                 $mobile_number = $member->mobile;
-            } elseif(strlen($member->mobile) > 11) {
+            } elseif (strlen($member->mobile) > 11) {
                 if (strpos($member->mobile, '+') !== false) {
                     $mobile_number = substr($member->mobile, -11);
                 }
@@ -2963,17 +2951,17 @@ class DashboardController extends Controller
             // if($mobile_number != 0) {
             //   array_push($mobile_numbers, $mobile_number);
             // }
-            $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+            $text = 'Dear ' . $member->name . ', payment of tk. ' . $amount . ' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
             $smsdata[$member_id] = array(
-                'username'=>config('sms.username'),
-                'password'=>config('sms.password'),
+                'username' => config('sms.username'),
+                'password' => config('sms.password'),
                 // 'apicode'=>"1",
-                'number'=>"$mobile_number",
+                'number' => "$mobile_number",
                 // 'msisdn'=>"$mobile_number",
                 // 'countrycode'=>"880",
                 // 'cli'=>"CVCS",
                 // 'messagetype'=>"1",
-                'message'=>"$text",
+                'message' => "$text",
                 // 'messageid'=>"2"
             );
             $multiCurl[$member_id] = curl_init(); // Initialize cURL
@@ -2985,20 +2973,20 @@ class DashboardController extends Controller
             curl_multi_add_handle($mh, $multiCurl[$member_id]);
         }
 
-        $index=null;
+        $index = null;
         do {
-          curl_multi_exec($mh, $index);
-        } while($index > 0);
+            curl_multi_exec($mh, $index);
+        } while ($index > 0);
         // get content and remove handles
-        foreach($multiCurl as $k => $ch) {
-          $result[$k] = curl_multi_getcontent($ch);
-          curl_multi_remove_handle($mh, $ch);
-          $smsresult = $result[$k];
-          $p = explode("|",$smsresult);
-          $sendstatus = $p[0];
-          if($sendstatus == 1101) {
-              $smssuccesscount++;
-          }
+        foreach ($multiCurl as $k => $ch) {
+            $result[$k] = curl_multi_getcontent($ch);
+            curl_multi_remove_handle($mh, $ch);
+            $smsresult = $result[$k];
+            $p = explode("|", $smsresult);
+            $sendstatus = $p[0];
+            if ($sendstatus == 1101) {
+                $smssuccesscount++;
+            }
         }
         // close
         curl_multi_close($mh);

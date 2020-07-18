@@ -23,7 +23,12 @@ class CreateTempmemdatasTable extends Migration
             $table->string('present_address');
             $table->string('mobile');
             $table->string('email');
+            $table->string('blood_group')->nullable();
+            $table->string('prl_date')->nullable();
+            $table->integer('upazilla_id')->unsigned();
             $table->string('image');
+            $table->string('digital_signature');
+            $table->string('application_hard_copy');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
