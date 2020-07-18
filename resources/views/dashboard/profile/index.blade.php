@@ -99,9 +99,10 @@
                         </div>
                         <div class="form-group invisible" id="start_date_input">
                             {!! Form::label('start_date', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
-                            <input type="text" class="form-control" name="start_date" id="start_date" data-field="date" autocomplete="off"
+                            <input type="text" class="form-control" name="start_date" id="start_date" data-field="date"
+                                   autocomplete="off"
                                    placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন">
-{{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
+                            {{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
                         </div>
 
                         <div class="form-group ">
@@ -297,6 +298,10 @@
                                 <tr>
                                     <th width="40%">সদস্যপদ নং</th>
                                     <td>{{ $member->member_id }}</td>
+                                </tr>
+                                <tr>
+                                    <th width="40%">সদস্যপদ প্রাপ্তি</th>
+                                    <td>{{ date('F, Y', strtotime($member->created_at)) }}</td>
                                 </tr>
                             @endif
                             <tr>
@@ -594,12 +599,10 @@
             });
 
 
-
-
         });
 
 
-        $('#position_id').change(function(e) {
+        $('#position_id').change(function (e) {
             e.preventDefault();
             $('#start_date_input').removeClass('invisible');
             $('#start_date_input').addClass('visible');

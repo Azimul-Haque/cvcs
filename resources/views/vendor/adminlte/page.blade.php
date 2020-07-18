@@ -150,7 +150,7 @@
                                 @endif
                                 <p>
                                   {{ Auth::User()->name_bangla }}
-                                  <small>সদস্যপদ প্রাপ্তিঃ {{ date('F, Y', strtotime(Auth::User()->created_at)) }}</small>
+                                  <small>সদস্যপদ নং: {{Auth::user()->member_id}}</small>
                                 </p>
                               </li>
                               <!-- Menu Body -->
