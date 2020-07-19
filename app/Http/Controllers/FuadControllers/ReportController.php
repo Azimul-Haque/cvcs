@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\FuadControllers;
 
+use App\Careerlog;
 use App\Position;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -45,6 +47,17 @@ class ReportController extends Controller
         $memberpos->memberCount = $count;
         $pdf = PDF::loadView('dashboard.reports.pdf.designationmemberscountlist', ['positions' => $positions, 'memberpos' => $memberpos]);
         $fileName = 'CVCS_Designation_Members_Count_List_Report.pdf';
+        return $pdf->download($fileName); // download
+    }
+
+
+    public function getMemberCareerlogReport($member_id)
+    {
+        $member = User::findOrFail($member_id);
+        $memberCareerlogs = Careerlog::where('user_id', $member->id)->orderBy("start_date")->get();
+
+        $pdf = PDF::loadView('dashboard.reports.pdf.membercareerlog', ['member' => $member, 'careerlogs' => $memberCareerlogs]);
+        $fileName = 'CVCS_Members_Career_Log_Report.pdf';
         return $pdf->download($fileName); // download
     }
 

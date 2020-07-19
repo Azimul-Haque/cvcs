@@ -231,6 +231,7 @@ Route::get('/dashboard/reports/export/designation/members/list/pdf', ['as'=>'rep
 
 //Fuads reports----
 Route::get('/dashboard/reports/export/designation/members/count/pdf', ['as'=>'reports.designationsmemberscountlist','uses'=>'FuadControllers\ReportController@getDesignationMemberCounts']);
+Route::get('/dashboard/reports/export/members/{member_id}/careerlog/pdf', ['as'=>'reports.membercareerlog','uses'=>'FuadControllers\ReportController@getMemberCareerlogReport']);
 
 //-----------------
 

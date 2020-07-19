@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56edb9fc-834c-4cd7-962a-95d05808ce81" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/pdf/membercareerlog.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cvcs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cvcs.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/profile/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/profile/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Careerlog.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Careerlog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +108,9 @@
       <path value="$PROJECT_DIR$/vendor/anahkiasen/underscore-php" />
       <path value="$PROJECT_DIR$/vendor/spatie/string" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-activitylog" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
     </include_path>
   </component>
   <component name="ProjectId" id="1d32Gap8Hact6fFDW2KK19pHhot" />
@@ -111,14 +125,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/dashboard/reports/pdf" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/API" />
       <recent name="$PROJECT_DIR$/resources/views/dashboard/reports/pdf" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/API" />
       <recent name="$PROJECT_DIR$/app/Http/Controllers/FuadControllers" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -160,7 +174,8 @@
       <workItem from="1594721612136" duration="4768000" />
       <workItem from="1594738408247" duration="1790000" />
       <workItem from="1595049677919" duration="12433000" />
-      <workItem from="1595087887487" duration="6674000" />
+      <workItem from="1595087887487" duration="8509000" />
+      <workItem from="1595142457549" duration="4568000" />
     </task>
     <servers />
   </component>
@@ -207,10 +222,10 @@
       <screen x="52" y="27" width="1314" height="741" />
     </state>
     <state x="373" y="175" key="run.anything.popup/52.27.1314.741@52.27.1314.741" timestamp="1594668162713" />
-    <state x="370" y="89" width="676" height="678" key="search.everywhere.popup" timestamp="1595066776379">
+    <state x="370" y="89" width="676" height="678" key="search.everywhere.popup" timestamp="1595147236917">
       <screen x="52" y="27" width="1314" height="741" />
     </state>
-    <state x="370" y="89" width="676" height="678" key="search.everywhere.popup/52.27.1314.741@52.27.1314.741" timestamp="1595066776379" />
+    <state x="370" y="89" width="676" height="678" key="search.everywhere.popup/52.27.1314.741@52.27.1314.741" timestamp="1595147236917" />
     <state x="375" y="89" width="672" height="678" key="search.everywhere.popup/58.27.1308.741@58.27.1308.741" timestamp="1593013156874" />
   </component>
 </project>

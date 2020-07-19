@@ -77,6 +77,9 @@
       <path value="$PROJECT_DIR$/vendor/anahkiasen/underscore-php" />
       <path value="$PROJECT_DIR$/vendor/spatie/string" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-activitylog" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7" />
