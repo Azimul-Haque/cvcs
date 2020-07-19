@@ -202,8 +202,16 @@
                   <td>{{ $application->nid}}</td>
                 </tr>
                 <tr>
+                  <th>জেলা</th>
+                  <td>{{ ($application->upazilla_id != 0)? $application->upazilla->district_bangla: ""}}</td>
+                </tr>
+                <tr>
                   <th>জন্ম তারিখ</th>
                   <td>{{ date('F d, Y', strtotime($application->dob)) }}</td>
+                </tr>
+                <tr>
+                  <th>রক্তের গ্রুপ</th>
+                  <td>{{ ($application->blood_group != null)? $application->blood_group: "" }}</td>
                 </tr>
                 <tr>
                   <th>লিঙ্গ</th>
@@ -224,6 +232,19 @@
                 <tr>
                   <th>মাতার নাম</th>
                   <td>{{ $application->mother }}</td>
+                </tr>
+                <tr>
+                  <th>আবেদন ফর্মের হার্ড কপি</th>
+                  <td>
+                    <center>
+                      @if($application->application_hard_copy != null)
+                        <img src="{{ asset('images/users/'.$application->application_hard_copy)}}"
+                             alt="application hard copy of {{ $application->name }}"
+                             class="img-responsive shadow"
+                             style="max-width: 200px; height: auto;"/>
+                      @endif
+                    </center>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -256,10 +277,15 @@
                     @else
                       N/A
                     @endif
-                    
+
                   </td>
                 </tr>
-
+                <tr>
+                  <th>চাকুরি থেকে অবসরের তারিখ</th>
+                  <td>
+                    {{($application->prl_date != null)? date('F d, Y', strtotime($application->prl_date)): ""}}
+                  </td>
+                </tr>
                 <tr>
                   <th colspan="2">
                     <center>যোগাযোগ</center>
@@ -288,6 +314,19 @@
                 <tr>
                   <th>ইমেইল এড্রেস</th>
                   <td>{{ $application->email }}</td>
+                </tr>
+                <tr>
+                  <th>স্বাক্ষর</th>
+                  <td>
+                    <center>
+                      @if($application->digital_signature != null)
+                        <img src="{{ asset('images/users/'.$application->digital_signature)}}"
+                             alt="digital signature of {{ $application->name }}"
+                             class="img-responsive shadow"
+                             style="max-width: 200px; height: auto;"/>
+                      @endif
+                    </center>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -449,7 +488,7 @@
               </tr>
             </tbody>
           </table>
-        </div>        
+        </div>
       </div>
     </div>
     <!-- /.tab-content -->

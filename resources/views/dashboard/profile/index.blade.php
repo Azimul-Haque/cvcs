@@ -470,7 +470,7 @@
                             <tr>
                                 <th>চাকুরি থেকে অবসরের তারিখ</th>
                                 <td>
-                                    {{($member->joining_date != null)? date('F d, Y', strtotime($member->prl_date)): ""}}
+                                    {{($member->prl_date != null)? date('F d, Y', strtotime($member->prl_date)): ""}}
                                 </td>
                             </tr>
 
@@ -757,9 +757,9 @@
                         var imagewidth = this.width;
                         var imageheight = this.height;
                         filesize = parseInt((file.size / 1024));
-                        if (filesize > 2048) {
+                        if (filesize > 250) {
                             $("#digital_signature").val('');
-                            toastr.warning('ফাইলের আকৃতি ' + filesize + ' কিলোবাইট. ২ মেগাবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
+                            toastr.warning('ফাইলের আকৃতি ' + filesize + ' কিলোবাইট. ২৫০ কিলোবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
                             setTimeout(function () {
                                 $("#digital_signature-upload").attr('src', '{{ asset('images/800x500.png') }}');
                             }, 1000);
