@@ -20,7 +20,7 @@ class CreateCareerlogsTable extends Migration
             $table->dateTime('start_date')->unsigned();
             $table->string('prev_position_name');
             $table->string('prev_branch_name');
-//            $table->timestamps();
+            $table->timestamps();
         });
     }
 

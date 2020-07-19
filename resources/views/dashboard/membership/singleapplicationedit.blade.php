@@ -76,22 +76,24 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="blood_group" class="">আবেদনকারীর রক্তের গ্রুপ</label>
+                                <label for="blood_group" class="">রক্তের গ্রুপ</label>
                                 <select name="blood_group" id="blood_group" class="form-control">
                                     <option value="" selected="" disabled="">রক্তের গ্রুপ নির্ধারণ করুন</option>
                                     @foreach(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $blood_group)
-                                        <option value="{{ $blood_group }}" @if($application->$blood_group == $blood_group) selected="" @endif>{{ $blood_group }}</option>
+                                        <option value="{{ $blood_group }}"
+                                                @if($application->$blood_group == $blood_group) selected="" @endif>{{ $blood_group }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="district_id" class="">আবেদনকারীর জেলার নাম</label>
+                                <label for="district_id" class="">জেলার নাম</label>
                                 <select name="upazilla_id" id="upazilla_id" class="form-control">
                                     <option value="" selected="" disabled="">জেলার নাম নির্ধারণ করুন</option>
                                     @foreach($upazillas as $upazilla)
-                                        <option value="{{ $upazilla->id }}" @if($application->upazilla_id == $upazilla->id) selected="" @endif>{{ $upazilla->district_bangla }}</option>
+                                        <option value="{{ $upazilla->id }}"
+                                                @if($application->upazilla_id == $upazilla->id) selected="" @endif>{{ $upazilla->district_bangla }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -155,20 +157,15 @@
                             <div class="form-group ">
                                 <label for="branch_id" class="">@if($application->activation_status == 0)
                                         আবেদনকারীর @else সদস্যের @endif দপ্তরের নাম *</label>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input value="{{ $application->office }}" type="text" name="office" id="office"
-                                               class="form-control" placeholder="দপ্তরের নাম বাংলায় লিখুন">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select name="branch_id" id="branch_id" class="form-control" required="">
-                                            <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
-                                            @foreach($branches as $branch)
-                                                <option value="{{ $branch->id }}"
-                                                        @if($branch->id == $application->branch_id) selected="" @endif>{{ $branch->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+
+                                <div class="">
+                                    <select name="branch_id" id="branch_id" class="form-control" required="">
+                                        <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                                        @foreach($branches as $branch)
+                                            <option value="{{ $branch->id }}"
+                                                    @if($branch->id == $application->branch_id) selected="" @endif>{{ $branch->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -187,24 +184,18 @@
                             <div class="form-group ">
                                 <label for="position_id" class="">@if($application->activation_status == 0)
                                         আবেদনকারীর @else সদস্যের @endif পদবি *</label>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input value="{{ $application->designation }}" type="text" name="designation"
-                                               id="designation" class="text_bangla form-control"
-                                               placeholder="পদবি বাংলায় লিখুন">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select name="position_id" id="position_id" class="form-control" required="">
-                                            <option value="" selected="" disabled="">পদবি নির্ধারণ করুন</option>
-                                            <option value="34" @if($application->position_id == 34) selected="" @endif>
-                                                সদস্য
-                                            </option>
-                                            @foreach($positions as $position)
-                                                <option value="{{ $position->id }}"
-                                                        @if($position->id == $application->position_id) selected="" @endif>{{ $position->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+
+                                <div class="col-md-6">
+                                    <select name="position_id" id="position_id" class="form-control" required="">
+                                        <option value="" selected="" disabled="">পদবি নির্ধারণ করুন</option>
+                                        <option value="34" @if($application->position_id == 34) selected="" @endif>
+                                            সদস্য
+                                        </option>
+                                        @foreach($positions as $position)
+                                            <option value="{{ $position->id }}"
+                                                    @if($position->id == $application->position_id) selected="" @endif>{{ $position->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -328,13 +319,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nominee_one_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর
-                                <label for="nominee_one_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর
-                                    *</label>
-                                <input value="{{ $application->nominee_one_identity_text }}" class="form-control"
-                                       type="number"
-                                       {{-- pattern="/^-?\d+\.?\d*$/" --}} onKeyPress="if(this.value.length==17) return false;"
-                                       name="nominee_one_identity_text" id="nominee_one_identity_text" required=""
-                                       placeholder="ইংরেজি অংকে লিখুন">
+                                    <label for="nominee_one_identity_text" class="">জাতীয় পরিচয়পত্র/ জন্ম নিবন্ধন নম্বর
+                                        *</label>
+                                    <input value="{{ $application->nominee_one_identity_text }}" class="form-control"
+                                           type="number"
+                                           {{-- pattern="/^-?\d+\.?\d*$/" --}} onKeyPress="if(this.value.length==17) return false;"
+                                           name="nominee_one_identity_text" id="nominee_one_identity_text" required=""
+                                           placeholder="ইংরেজি অংকে লিখুন">
                             </div>
                         </div>
                     </div>
@@ -537,13 +528,14 @@
                         <div class="col-md-8">
                             <div class="form-group ">
                                 <label><strong>@if($application->activation_status == 0)
-                                            আবেদনকারীর @else সদস্যের @endif স্বাক্ষর (সর্বোচ্চ ২ মেগাবাইট) </strong></label>
+                                            আবেদনকারীর @else সদস্যের @endif স্বাক্ষর (সর্বোচ্চ ২৫০
+                                        কিলোবাইট) </strong></label>
                                 <input type="file" id="digital_signature" name="digital_signature" required="">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <img src="@if($application->digital_signature != null) {{ asset('images/users/' .$application->digital_signature)}} @else {{ asset('images/800x500.png')}} @endif"
-                                 id='digital_signature-upload' style="width: 250px; height: auto; padding: 5px;" />
+                                 id='digital_signature-upload' style="width: 250px; height: auto; padding: 5px;"/>
                         </div>
                     </div>
 
@@ -950,7 +942,6 @@
             });
 
 
-
             function readURLApplicationHardCopy(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
@@ -972,7 +963,6 @@
                     }, 1000);
                 }
             });
-
 
 
             function readURLDigitalSignature(input) {

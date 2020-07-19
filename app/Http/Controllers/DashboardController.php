@@ -1223,11 +1223,13 @@ class DashboardController extends Controller
         $positions = Position::where('id', '>', 0)->get();
         $branches = Branch::where('id', '>', 0)->get();
         $application = User::where('unique_key', $unique_key)->first(); // this is also used to edit MEMBERS!
+        $upazillas = Upazilla::groupBy('district_bangla')->get();
 
         return view('dashboard.membership.singleapplicationedit')
             ->withApplication($application)
             ->withBranches($branches)
-            ->withPositions($positions);
+            ->withPositions($positions)
+            ->withUpazillas($upazillas);
     }
 
     public function updateSignleApplication(Request $request, $id)
@@ -2129,7 +2131,7 @@ class DashboardController extends Controller
         $this->validate($request, array(
             'position_id' => 'required',
             'branch_id' => 'required',
-            'start_time' => 'sometimes',
+            'start_date' => 'sometimes',
             'present_address' => 'required',
             'mobile' => 'required',
             'email' => 'required',
@@ -2195,10 +2197,12 @@ class DashboardController extends Controller
                 $tempmemdata->prl_date = Carbon::parse($request->prl_date);
             }
 
-            //check if career info changed and start_time not provided
+            //check if career info changed and start_date not provided
+
             if (Auth::user()->position_id != $request->position_id || Auth::user()->branch_id != $request->branch_id) {
 
-                if (!$request->has('start_time') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_time) == false) {
+//                dd(DateTime::createFromFormat('d-m-Y', $request->start_date));
+                if (!$request->has('start_date') || DateTime::createFromFormat('d-m-Y', $request->start_date) == false) {
                     Session::flash('warning', 'আপনি নতুন পদবি/দপ্তর এ যোগদানের তারিখ দেননি!');
                     if ($member->id == Auth::user()->id) {
                         return redirect()->route('dashboard.profile');
@@ -2206,7 +2210,7 @@ class DashboardController extends Controller
                         return redirect()->back();
                     }
                 }
-                $tempmemdata->start_time = Carbon::parse($request->start_time);
+                $tempmemdata->start_date = Carbon::parse($request->start_date);
             }
 
 
@@ -2256,10 +2260,10 @@ class DashboardController extends Controller
 
 
 
-            //check if career info changed and start_time not provided
+            //check if career info changed and start_date not provided
             if (Auth::user()->position_id != $request->position_id || Auth::user()->branch_id != $request->branch_id) {
 
-                if (!$request->has('start_time') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_time) == false) {
+                if (!$request->has('start_date') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_date) == false) {
                     Session::flash('warning', 'আপনি নতুন পদবি/দপ্তর এ যোগদানের তারিখ দেননি!');
                     if ($member->id == Auth::user()->id) {
                         return redirect()->route('dashboard.profile');
@@ -2271,7 +2275,7 @@ class DashboardController extends Controller
                 $newCareerLog->user_id = $member->id;
                 $newCareerLog->branch_id = $request->branch_id;
                 $newCareerLog->position_id = $request->position_id;
-                $newCareerLog->start_time = Carbon::parse($request->start_time);
+                $newCareerLog->start_date = Carbon::parse($request->start_date);
                 $newCareerLog->prev_branch_name = ($member->branch_id != 0) ? $member->branch->name : $member->office;
                 $newCareerLog->prev_position_name = ($member->position_id != 0) ? $member->position->name : $member->designation;
                 $newCareerLog->save();
@@ -2356,7 +2360,7 @@ class DashboardController extends Controller
             $newCareerLog->user_id = $member->id;
             $newCareerLog->branch_id = $tempmemdata->branch_id;
             $newCareerLog->position_id = $tempmemdata->position_id;
-            $newCareerLog->start_time = $tempmemdata->start_time;
+            $newCareerLog->start_date = $tempmemdata->start_date;
             $newCareerLog->prev_branch_name = ($member->branch_id != 0) ? $member->branch->name : $member->office;
             $newCareerLog->prev_position_name = ($member->position_id != 0) ? $member->position->name : $member->designation;
             $newCareerLog->save();
@@ -2606,56 +2610,56 @@ class DashboardController extends Controller
         return $pdf->download($fileName);
     }
 
-    public function downloadMemberCompletePDF(Request $request)
-    {
-        $this->validate($request, array(
-            'id' => 'required',
-            'member_id' => 'required'
-        ));
-
-        $member = User::where('id', $request->id)
-            ->where('member_id', $request->member_id)
-            ->first();
-
-        $payments = Payment::where('member_id', $request->member_id)
-            ->where('is_archieved', 0)
-            ->get();
-
-        $pendingfordashboard = DB::table('payments')
-            ->select(DB::raw('SUM(amount) as totalamount'))
-            ->where('payment_status', 0)
-            ->where('is_archieved', 0)
-            ->where('member_id', $member->member_id)
-            ->first();
-        $approvedfordashboard = DB::table('payments')
-            ->select(DB::raw('SUM(amount) as totalamount'))
-            ->where('payment_status', 1)
-            ->where('is_archieved', 0)
-            ->where('member_id', $member->member_id)
-            ->first();
-        $pendingcountdashboard = Payment::where('payment_status', 0)
-            ->where('is_archieved', 0)
-            ->where('member_id', $member->member_id)
-            ->get()
-            ->count();
-
-        $approvedcountdashboard = Payment::where('payment_status', 1)
-            ->where('is_archieved', 0)
-            ->where('member_id', $member->member_id)
-            ->get()
-            ->count();
-        $totalmontlypaid = DB::table('payments')
-            ->select(DB::raw('SUM(amount) as totalamount'))
-            ->where('payment_status', 1)
-            ->where('is_archieved', 0)
-            ->where('payment_category', 1) // 1 means monthly, 0 for membership
-            ->where('member_id', $member->member_id)
-            ->first();
-
-        $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard, 'totalmontlypaid' => $totalmontlypaid]);
-        $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '.pdf';
-        return $pdf->download($fileName);
-    }
+//    public function downloadMemberCompletePDF(Request $request)
+//    {
+//        $this->validate($request, array(
+//            'id' => 'required',
+//            'member_id' => 'required'
+//        ));
+//
+//        $member = User::where('id', $request->id)
+//            ->where('member_id', $request->member_id)
+//            ->first();
+//
+//        $payments = Payment::where('member_id', $request->member_id)
+//            ->where('is_archieved', 0)
+//            ->get();
+//
+//        $pendingfordashboard = DB::table('payments')
+//            ->select(DB::raw('SUM(amount) as totalamount'))
+//            ->where('payment_status', 0)
+//            ->where('is_archieved', 0)
+//            ->where('member_id', $member->member_id)
+//            ->first();
+//        $approvedfordashboard = DB::table('payments')
+//            ->select(DB::raw('SUM(amount) as totalamount'))
+//            ->where('payment_status', 1)
+//            ->where('is_archieved', 0)
+//            ->where('member_id', $member->member_id)
+//            ->first();
+//        $pendingcountdashboard = Payment::where('payment_status', 0)
+//            ->where('is_archieved', 0)
+//            ->where('member_id', $member->member_id)
+//            ->get()
+//            ->count();
+//
+//        $approvedcountdashboard = Payment::where('payment_status', 1)
+//            ->where('is_archieved', 0)
+//            ->where('member_id', $member->member_id)
+//            ->get()
+//            ->count();
+//        $totalmontlypaid = DB::table('payments')
+//            ->select(DB::raw('SUM(amount) as totalamount'))
+//            ->where('payment_status', 1)
+//            ->where('is_archieved', 0)
+//            ->where('payment_category', 1) // 1 means monthly, 0 for membership
+//            ->where('member_id', $member->member_id)
+//            ->first();
+//
+//        $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard, 'totalmontlypaid' => $totalmontlypaid]);
+//        $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '.pdf';
+//        return $pdf->download($fileName);
+//    }
 
     public function getMemberTransactionSummary()
     {

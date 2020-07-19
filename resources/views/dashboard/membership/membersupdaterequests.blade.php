@@ -102,6 +102,13 @@
                                                             <td>দপ্তরঃ {{ $tempmemdata->user->branch->name }}</td>
                                                         </tr>
                                                         <tr>
+                                                            <td>রক্তের গ্রুপ: {{ ($tempmemdata->user->blood_group != null)? $tempmemdata->user->blood_group: "" }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>জেলা: {{ ($tempmemdata->user->upazilla != 0)? $tempmemdata->user->upazilla->district_bangla: "" }}</td>
+                                                        </tr>
+
+                                                        <tr>
                                                             <td>মোবাইলঃ {{ $tempmemdata->user->mobile }}</td>
                                                         </tr>
                                                         <tr>
@@ -112,10 +119,36 @@
                                                                 ঠিকানাঃ {{ $tempmemdata->user->present_address }}</td>
                                                         </tr>
                                                         <tr>
+                                                            <td>অবসরের তারিখ: {{ ($tempmemdata->user->prl_date != null)? date("F d, Y", strtotime($tempmemdata->user->prl_date)): "" }}</td>
+                                                        </tr>
+
+                                                        <tr>
                                                             <td>
                                                                 ছবিঃ
                                                                 @if($tempmemdata->user->image)
                                                                     <img src="{{ asset('images/users/'. $tempmemdata->user->image)}}"
+                                                                         style="height: 120px; width: auto; padding: 5px;"/>
+                                                                @else
+                                                                    <span class="text-muted">অপরিবর্তিত</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                স্বাক্ষর:
+                                                                @if($tempmemdata->user->digital_signature)
+                                                                    <img src="{{ asset('images/users/'. $tempmemdata->user->digital_signature)}}"
+                                                                         style="height: 120px; width: auto; padding: 5px;"/>
+                                                                @else
+                                                                    <span class="text-muted">অপরিবর্তিত</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                ফর্মের হার্ড কপি:
+                                                                @if($tempmemdata->user->application_hard_copy)
+                                                                    <img src="{{ asset('images/users/'. $tempmemdata->user->application_hard_copy)}}"
                                                                          style="height: 120px; width: auto; padding: 5px;"/>
                                                                 @else
                                                                     <span class="text-muted">অপরিবর্তিত</span>
@@ -153,6 +186,8 @@
                                                                 @endif
                                                             </td>
                                                         </tr>
+
+
                                                         @if($tempmemdata->start_time && ($tempmemdata->position->name != $tempmemdata->user->position->name || $tempmemdata->branch->name != $tempmemdata->user->branch->name))
                                                             <tr>
                                                                 <td>নতুন পদবি/দপ্তর এ যোগদানের তারিখ:
@@ -160,6 +195,25 @@
                                                                 </td>
                                                             </tr>
                                                         @endif
+
+                                                        <tr>
+                                                            <td>রক্তের গ্রুপ:
+                                                                @if($tempmemdata->blood_group != $tempmemdata->user->blood_group)
+                                                                    {{ $tempmemdata->blood_group }}
+                                                                @else
+                                                                    <span class="text-muted">অপরিবর্তিত</span>
+                                                                @endif
+                                                        </tr>
+                                                        <tr>
+                                                            <td>জেলা:
+                                                                @if($tempmemdata->upazilla_id != $tempmemdata->user->upazilla_id)
+                                                                    {{ $tempmemdata->upazilla->name }}
+                                                                @else
+                                                                    <span class="text-muted">অপরিবর্তিত</span>
+                                                                @endif
+                                                        </tr>
+
+
                                                         <tr>
                                                             <td>মোবাইলঃ
                                                                 @if($tempmemdata->mobile != $tempmemdata->user->mobile)
@@ -188,10 +242,43 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
+                                                            <td>অবসরের তারিখ:
+                                                                @if($tempmemdata->prl_date != $tempmemdata->user->prl_date)
+                                                                    {{ date("F d, Y", strtotime($tempmemdata->prl_date)) }}
+                                                                @else
+                                                                    <span class="text-muted">অপরিবর্তিত</span>
+                                                                @endif
+                                                        </tr>
+
+
+                                                        <tr>
                                                             <td>
                                                                 ছবিঃ
                                                                 @if($tempmemdata->image)
                                                                     <img src="{{ asset('images/users/'. $tempmemdata->image)}}"
+                                                                         style="height: 120px; width: auto; padding: 5px;"/>
+                                                                @else
+                                                                    <span class="text-muted">অপরিবর্তিত</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                ছবিঃ
+                                                                @if($tempmemdata->digital_signature)
+                                                                    <img src="{{ asset('images/users/'. $tempmemdata->digital_signature)}}"
+                                                                         style="height: 120px; width: auto; padding: 5px;"/>
+                                                                @else
+                                                                    <span class="text-muted">অপরিবর্তিত</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                ছবিঃ
+                                                                @if($tempmemdata->application_hard_copy)
+                                                                    <img src="{{ asset('images/users/'. $tempmemdata->application_hard_copy)}}"
                                                                          style="height: 120px; width: auto; padding: 5px;"/>
                                                                 @else
                                                                     <span class="text-muted">অপরিবর্তিত</span>

@@ -28,7 +28,7 @@
           {!! Form::open(['route' => 'dashboard.member.complete.pdf', 'method' => 'POST', 'class' => 'form-default']) !!}
           <div class="modal-body">
             সদস্য বিস্তারিত রিপোর্টটি ডাউনলোড করুন
-            {!! Form::hidden('id', $member->id) !!}                      
+            {!! Form::hidden('id', $member->id) !!}
             {!! Form::hidden('member_id', $member->member_id) !!}
           </div>
           <div class="modal-footer">
@@ -242,8 +242,16 @@
                   <td>{{ $member->nid}}</td>
                 </tr>
                 <tr>
+                  <th>জেলা</th>
+                  <td>{{ ($member->upazilla_id != 0)? $member->upazilla->district_bangla: ""}}</td>
+                </tr>
+                <tr>
                   <th>জন্ম তারিখ</th>
                   <td>{{ date('F d, Y', strtotime($member->dob)) }}</td>
+                </tr>
+                <tr>
+                  <th>রক্তের গ্রুপ</th>
+                  <td>{{ ($member->blood_group != null)? $member->blood_group: "" }}</td>
                 </tr>
                 <tr>
                   <th>লিঙ্গ</th>
@@ -264,6 +272,19 @@
                 <tr>
                   <th>মাতার নাম</th>
                   <td>{{ $member->mother }}</td>
+                </tr>
+                <tr>
+                  <th>আবেদন ফর্মের হার্ড কপি</th>
+                  <td>
+                    <center>
+                      @if($member->application_hard_copy != null)
+                        <img src="{{ asset('images/users/'.$application->$member)}}"
+                             alt="application hard copy of {{ $application->name }}"
+                             class="img-responsive shadow"
+                             style="max-width: 200px; height: auto;"/>
+                      @endif
+                    </center>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -296,7 +317,13 @@
                     @else
                       N/A
                     @endif
-                    
+
+                  </td>
+                </tr>
+                <tr>
+                  <th>চাকুরি থেকে অবসরের তারিখ</th>
+                  <td>
+                    {{($member->prl_date != null)? date('F d, Y', strtotime($member->prl_date)): ""}}
                   </td>
                 </tr>
 
@@ -328,6 +355,20 @@
                 <tr>
                   <th>ইমেইল এড্রেস</th>
                   <td>{{ $member->email }}</td>
+                </tr>
+                <tr>
+                  <th>স্বাক্ষর</th>
+                  <td>
+                    <center>
+                      @if($member->digital_signature != null)
+                        <img src="{{ asset('images/users/'.$member->digital_signature)}}"
+                             alt="digital signature of {{ $member->name }}"
+                             alt="digital signature of {{ $member->name }}"
+                             class="img-responsive shadow"
+                             style="max-width: 200px; height: auto;"/>
+                      @endif
+                    </center>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -654,7 +695,7 @@
                   $leftmonths = $totalmonths - $fractionyearsmonthscount;
                   if($leftmonths > 0) {
                     $thisyear = $thisyear + 1;
-                    for ($j=1; $j <= $leftmonths; $j++) { 
+                    for ($j=1; $j <= $leftmonths; $j++) {
                       $thismonth = $j%12;
                       if($thismonth == 0) {
                         $thismonth = 12;
@@ -665,7 +706,7 @@
                       }
                     }
                   }
-                  
+
                 @endphp
                 @foreach($monthsarray as $month)
                   <tr>

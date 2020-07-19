@@ -481,7 +481,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group ">
-                                    <label><strong>আবেদনকারির স্বাক্ষর (সর্বোচ্চ ২ মেগাবাইট) </strong></label>
+                                    <label><strong>আবেদনকারির স্বাক্ষর (সর্বোচ্চ ২৫০ কিলোবাইট) </strong></label>
                                     <input type="file" id="digital_signature" name="digital_signature" required="">
                                 </div>
                             </div>

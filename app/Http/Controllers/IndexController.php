@@ -186,8 +186,7 @@ class IndexController extends Controller
     {
         $branches = Branch::where('id', '>', 0)->get();
         $positions = Position::where('id', '>', 0)->get();
-        $upazillas = Upazilla::groupBy('district_bangla')
-            ->get();
+        $upazillas = Upazilla::groupBy('district_bangla')->get();
 
         return view('index.membership.application')
                             ->withBranches($branches)

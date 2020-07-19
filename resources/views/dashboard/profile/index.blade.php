@@ -97,12 +97,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group invisible" id="start_time_input">
-                            {!! Form::label('start_time', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
-                            <input type="text" class="form-control" name="start_time" id="start_time" data-field="date"
+                        <div class="form-group invisible" id="start_date_input">
+                            {!! Form::label('start_date', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
+                            <input type="text" class="form-control" name="start_date" id="start_date" data-field="date"
                                    autocomplete="off"
                                    placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন">
-                            {{--                            {!! Form::text('start_time', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
+                            {{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
                         </div>
 
                         <div class="form-group ">
@@ -180,7 +180,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group ">
-                                    <label><strong>সদস্যের স্বাক্ষর (সর্বোচ্চ ২ মেগাবাইট)</strong></label>
+                                    <label><strong>সদস্যের স্বাক্ষর (সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
                                     <input value="" class="form-control" type="file" id="digital_signature"
                                            name="digital_signature">
                                 </div>
@@ -665,18 +665,18 @@
                 }
             });
 
-            function readURL(input) {
+            function readURL(input, image_upload_id) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        $('#img-upload').attr('src', e.target.result);
+                        $(`#${image_upload_id}`).attr('src', e.target.result);
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
             }
 
             $("#image").change(function () {
-                readURL(this);
+                readURL(this, 'image-upload');
                 var file, img;
 
                 if ((file = this.files[0])) {
@@ -712,7 +712,7 @@
                 }
             });
             $("#application_hard_copy").change(function () {
-                readURL(this);
+                readURL(this, 'application_hard_copy-upload');
                 var file, img;
 
                 if ((file = this.files[0])) {
@@ -748,7 +748,7 @@
                 }
             });
             $("#digital_signature").change(function () {
-                readURL(this);
+                readURL(this, 'digital_signature-upload');
                 var file, img;
 
                 if ((file = this.files[0])) {
@@ -790,8 +790,14 @@
 
         $('#position_id').change(function (e) {
             e.preventDefault();
-            $('#start_time_input').removeClass('invisible');
-            $('#start_time_input').addClass('visible');
+            $('#start_date_input').removeClass('invisible');
+            $('#start_date_input').addClass('visible');
+        });
+
+        $('#branch_id').change(function (e) {
+            e.preventDefault();
+            $('#start_date_input').removeClass('invisible');
+            $('#start_date_input').addClass('visible');
         });
     </script>
 

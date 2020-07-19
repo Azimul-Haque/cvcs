@@ -67,14 +67,13 @@
                 <td align="center">{{ $careerlog->start_time->format('F d, Y') }}</td>
             </tr>
         @endforeach
-        <tr>
-            <td align="center">{{ bangla($counter++) }}</td>
-            <td>{{ $member->branch->name }}</td>
-            <td>{{ $careerlog->position->name }}</td>
-            <td align="center">{{ ($member->joining_date != null)? date('F d, Y', strtotime($member->joining_date)): "N/A"}}</td>
-        </tr>
         @if($counter == 1)
-
+            <tr>
+                <td align="center">{{ bangla($counter++) }}</td>
+                <td>{{ $member->branch->name }}</td>
+                <td>{{ $careerlog->position->name }}</td>
+                <td align="center">{{ ($member->joining_date != null)? date('F d, Y', strtotime($member->joining_date)): "N/A"}}</td>
+            </tr>
         @endif
     </table>
 </div>
