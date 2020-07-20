@@ -7,7 +7,7 @@
     {!!Html::style('css/parsley.css')!!}
     <style type="text/css">
         input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
+        input[type=number]::-webkit-outer-spin-bdata-parsleyutton {
             -webkit-appearance: none;
             margin: 0;
         }
@@ -202,15 +202,15 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-group invisible" id="start_date_input">
-                        {!! Form::label('start_date', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
-                        <input type="text" class="form-control" name="start_date" id="start_date" data-field="date"
-                               autocomplete="off"
-                               placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ">
-                        {{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
-                    </div>
-
+                    @if($application->activation_status == 1)
+                        <div class="form-group invisible" id="start_date_input">
+                            {!! Form::label('start_date', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
+                            <input type="text" class="form-control" name="start_date" id="start_date" data-field="date"
+                                   autocomplete="off"
+                                   placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ">
+                            {{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
+                        </div>
+                    @endif
 
                     <div class="form-group ">
                         <label for="joining_date" class="">চাকুরীতে যোগদানের তারিখ (তথ্য না থাকলে ফাঁকা রাখুন)</label>
@@ -541,7 +541,7 @@
                                 <label><strong>@if($application->activation_status == 0)
                                             আবেদনকারীর @else সদস্যের @endif স্বাক্ষর (সর্বোচ্চ ২৫০
                                         কিলোবাইট) </strong></label>
-                                <input type="file" id="digital_signature" name="digital_signature" required="">
+                                <input type="file" id="digital_signature" name="digital_signature">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -704,6 +704,10 @@
             var $form = $(this);
 
             if ($form.find('input[required]').filter(function () {
+                // console.log(this);
+                // console.log(this.value);
+                // console.log('\n\n');
+
                 return this.value === ''
             }).length > 0) {
                 toastr.warning('* চিহ্নিত ঘরগুলো পূরন করুন').css('width', '400px;');

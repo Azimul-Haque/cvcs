@@ -278,8 +278,8 @@
                   <td>
                     <center>
                       @if($member->application_hard_copy != null)
-                        <img src="{{ asset('images/users/'.$application->$member)}}"
-                             alt="application hard copy of {{ $application->name }}"
+                        <img src="{{ asset('images/users/'.$member->application_hard_copy)}}"
+                             alt="application hard copy of {{ $member->name }}"
                              class="img-responsive shadow"
                              style="max-width: 200px; height: auto;"/>
                       @endif

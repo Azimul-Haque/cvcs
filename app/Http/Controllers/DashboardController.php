@@ -1314,7 +1314,15 @@ class DashboardController extends Controller
                 'nominee_two_identity_text' => 'sometimes|max:255',
                 'nominee_two_relation' => 'sometimes|max:255',
                 'nominee_two_percentage' => 'sometimes|max:255',
-                'nominee_two_image' => 'sometimes|image|max:250'
+                'nominee_two_image' => 'sometimes|image|max:250',
+
+                'start_date' => 'sometimes',
+                'blood_group' => 'sometimes',
+                'upazilla_id' => 'sometimes| numeric',
+                'prl_date' => 'sometimes',
+                'application_hard_copy' => 'sometimes|image|max:2048',
+                'digital_signature' => 'sometimes|image|max:250',
+
             ));
         }
 
@@ -1335,6 +1343,24 @@ class DashboardController extends Controller
                 return redirect()->route('dashboard.singleapplicationedit', $application->unique_key);
             }
         }
+
+        //career log entry for activated users
+        if ($application->activation_status == 1 && ($application->position_id != $request->position_id || $application->branch_id != $request->branch_id)) {
+
+            if (!$request->has('start_date') || DateTime::createFromFormat('d-m-Y', $request->start_date) == false) {
+                Session::flash('warning', 'আপনি নতুন পদবি/দপ্তর এ যোগদানের তারিখ দেননি!');
+                return redirect()->route('dashboard.singleapplicationedit', $application->unique_key);
+            }
+            $newCareerLog = new Careerlog();
+            $newCareerLog->user_id = $application->id;
+            $newCareerLog->branch_id = $request->branch_id;
+            $newCareerLog->position_id = $request->position_id;
+            $newCareerLog->start_date = Carbon::parse($request->start_date);
+            $newCareerLog->prev_branch_name = ($application->branch_id != 0) ? $application->branch->name : $application->office;
+            $newCareerLog->prev_position_name = ($application->position_id != 0) ? $application->position->name : $application->designation;
+            $newCareerLog->save();
+        }
+
 
         $application->name_bangla = htmlspecialchars(preg_replace("/\s+/", " ", $request->name_bangla));
         $application->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
@@ -1379,6 +1405,31 @@ class DashboardController extends Controller
             Image::make($image)->resize(200, 200)->save($location);
             $application->image = $filename;
         }
+
+        if ($request->hasFile('application_hard_copy')) {
+            $old_img = public_path('images/users/' . $application->application_hard_copy);
+            if (File::exists($old_img)) {
+                File::delete($old_img);
+            }
+            $image = $request->file('application_hard_copy');
+            $filename = 'application_hard_copy_' . str_replace(' ', '', $request->name) . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/users/' . $filename);
+            Image::make($image)->resize(200, 200)->save($location);
+            $application->application_hard_copy = $filename;
+        }
+
+        if ($request->hasFile('digital_signature')) {
+            $old_img = public_path('images/users/' . $application->digital_signature);
+            if (File::exists($old_img)) {
+                File::delete($old_img);
+            }
+            $image = $request->file('digital_signature');
+            $filename = 'digital_signature_' . str_replace(' ', '',  $request->name) . time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('/images/users/' . $filename);
+            Image::make($image)->resize(200, 200)->save($location);
+            $application->digital_signature = $filename;
+        }
+
 
         $application->nominee_one_name = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_name));
         $application->nominee_one_identity_type = htmlspecialchars(preg_replace("/\s+/", " ", $request->nominee_one_identity_type));
@@ -2198,13 +2249,13 @@ class DashboardController extends Controller
             $tempmemdata->mobile = $request->mobile;
             $tempmemdata->email = $request->email;
 
-            if($request->has('blood_group')){
+            if ($request->has('blood_group')) {
                 $tempmemdata->blood_group = $request->blood_group;
             }
-            if($request->has('upazilla_id')){
+            if ($request->has('upazilla_id')) {
                 $tempmemdata->upazilla_id = $request->upazilla_id;
             }
-            if($request->has('prl_date')){
+            if ($request->has('prl_date')) {
                 $tempmemdata->prl_date = Carbon::parse($request->prl_date);
             }
 
@@ -2270,7 +2321,6 @@ class DashboardController extends Controller
         } else {
 
 
-
             //check if career info changed and start_date not provided
             if (Auth::user()->position_id != $request->position_id || Auth::user()->branch_id != $request->branch_id) {
 
@@ -2293,17 +2343,16 @@ class DashboardController extends Controller
             }
 
 
-
             $member->position_id = $request->position_id;
             $member->branch_id = $request->branch_id;
             $member->present_address = $request->present_address;
             $member->mobile = $request->mobile;
             $member->email = $request->email;
 
-            if($request->has('blood_group')){
+            if ($request->has('blood_group')) {
                 $member->blood_group = $request->blood_group;
             }
-            if($request->has('upazilla_id')){
+            if ($request->has('upazilla_id')) {
                 $member->upazilla_id = $request->upazilla_id;
             }
 
