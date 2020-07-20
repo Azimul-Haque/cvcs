@@ -264,7 +264,7 @@ class IndexController extends Controller
             'district_id' => 'sometimes',
             'prl_date' => 'sometimes| max:255',
             'application_hard_copy'  => 'sometimes|image|max:2048',
-            'digital_signature'  => 'sometimes|image|max:2048',
+            'digital_signature'  => 'sometimes|image|max:250',
 
 
             // 'password'                     => 'required|min:8|same:password_confirmation'

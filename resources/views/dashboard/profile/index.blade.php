@@ -133,7 +133,7 @@
                                         <option value="" selected="" disabled="">রক্তের গ্রুপ নির্ধারণ করুন</option>
                                         @foreach(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $blood_group)
                                             <option value="{{ $blood_group }}"
-                                                    @if($member->$blood_group == $blood_group) selected="" @endif>{{ $blood_group }}</option>
+                                                    @if($member->blood_group == $blood_group) selected="" @endif>{{ $blood_group }}</option>
                                         @endforeach
                                     </select>
                                 </div>

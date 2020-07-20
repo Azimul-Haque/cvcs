@@ -188,10 +188,10 @@
                                                         </tr>
 
 
-                                                        @if($tempmemdata->start_time && ($tempmemdata->position->name != $tempmemdata->user->position->name || $tempmemdata->branch->name != $tempmemdata->user->branch->name))
+                                                        @if($tempmemdata->start_date && ($tempmemdata->position_id != $tempmemdata->user->position_id || $tempmemdata->branch_id != $tempmemdata->user->branch_id))
                                                             <tr>
                                                                 <td>নতুন পদবি/দপ্তর এ যোগদানের তারিখ:
-                                                                    {{ $tempmemdata->start_time }}
+                                                                    {{ date("F d, Y", strtotime($tempmemdata->start_date)) }}
                                                                 </td>
                                                             </tr>
                                                         @endif

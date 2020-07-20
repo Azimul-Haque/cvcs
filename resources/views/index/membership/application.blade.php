@@ -127,7 +127,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="gender" class="">লিঙ্গ</label>
+                                    <label for="gender" class="">লিঙ্গ *</label>
                                     <select name="gender" id="gender" class="form-control" required="">
                                         <option value="" selected="" disabled="">লিঙ্গ নির্ধারণ করুন</option>
                                         <option value="নারী">নারী</option>
@@ -214,12 +214,12 @@
                                    placeholder="চাকুরি থেকে অবসর গ্রহণের তারিখ">
                         </div>
                         <div class="form-group ">
-                            <label for="present_address" class="">বর্তমান ঠিকানা</label>
+                            <label for="present_address" class="">বর্তমান ঠিকানা *</label>
                             <input type="text" name="present_address" id="present_address" required=""
                                    class="text_bangla" placeholder="বাংলায় লিখুন">
                         </div>
                         <div class="form-group ">
-                            <label for="permanent_address" class="">স্থায়ী ঠিকানা</label>
+                            <label for="permanent_address" class="">স্থায়ী ঠিকানা *</label>
                             <input type="text" name="permanent_address" id="permanent_address" class="text_bangla"
                                    required="" placeholder="বাংলায় লিখুন">
                         </div>
@@ -482,7 +482,7 @@
                             <div class="col-md-8">
                                 <div class="form-group ">
                                     <label><strong>আবেদনকারির স্বাক্ষর (সর্বোচ্চ ২৫০ কিলোবাইট) </strong></label>
-                                    <input type="file" id="digital_signature" name="digital_signature" required="">
+                                    <input type="file" id="digital_signature" name="digital_signature">
                                 </div>
                             </div>
                             <div class="col-md-4">
