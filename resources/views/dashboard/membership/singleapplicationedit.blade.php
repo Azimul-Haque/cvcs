@@ -522,7 +522,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group ">
-                                <label><strong>সদস্য আবেদন ফর্মের হার্ড কপি (সর্বোচ্চ ২ মেগাবাইট)</strong></label>
+                                <label><strong>সদস্য আবেদন ফর্মের হার্ড কপি (সর্বোচ্চ ৪ মেগাবাইট)</strong></label>
                                 <input type="file" id="application_hard_copy"
                                        name="application_hard_copy">
                             </div>
@@ -970,9 +970,9 @@
             $("#application_hard_copy").change(function () {
                 readURLApplicationHardCopy(this);
                 var filesize = parseInt((this.files[0].size) / 1024);
-                if (filesize > 2048) {
+                if (filesize > 4096) {
                     $("#application_hard_copy").val('');
-                    toastr.warning('ফাইলের আকৃতি ' + filesize + ' কিলোবাইট. ২ মেগাবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
+                    toastr.warning('ফাইলের আকৃতি ' + filesize + ' কিলোবাইট. ৪ মেগাবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
                     setTimeout(function () {
                         $("#application_hard_copy-upload").attr('src', '{{ asset('images/800x500.png') }}');
                     }, 1000);
@@ -1007,14 +1007,14 @@
                                 $("#digital_signature-upload").attr('src', '{{ asset('images/800x500.png') }}');
                             }, 1000);
                         }
-                        console.log(nominee_two_image_width / nominee_two_image_height);
-                        if (((nominee_two_image_width / nominee_two_image_height) < 0.9375) || ((nominee_two_image_width / nominee_two_image_height) > 1.07142)) {
-                            $("#digital_signature").val('');
-                            toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:১ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');
-                            setTimeout(function () {
-                                $("#digital_signature-upload").attr('src', '{{ asset('images/800x500.png') }}');
-                            }, 1000);
-                        }
+                        {{--console.log(nominee_two_image_width / nominee_two_image_height);--}}
+                        {{--if (((nominee_two_image_width / nominee_two_image_height) < 0.9375) || ((nominee_two_image_width / nominee_two_image_height) > 1.07142)) {--}}
+                        {{--    $("#digital_signature").val('');--}}
+                        {{--    toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:১ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');--}}
+                        {{--    setTimeout(function () {--}}
+                        {{--        $("#digital_signature-upload").attr('src', '{{ asset('images/800x500.png') }}');--}}
+                        {{--    }, 1000);--}}
+                        {{--}--}}
                     };
                     img.onerror = function () {
                         $("#digital_signature").val('');

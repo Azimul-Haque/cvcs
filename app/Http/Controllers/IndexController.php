@@ -261,9 +261,9 @@ class IndexController extends Controller
             'application_payment_receipt'  => 'required|image|max:2048',
 
             'blood_group' => 'sometimes',
-            'district_id' => 'sometimes',
+            'upazilla_id' => 'sometimes',
             'prl_date' => 'sometimes| max:255',
-            'application_hard_copy'  => 'sometimes|image|max:2048',
+            'application_hard_copy'  => 'sometimes|image|max:4096',
             'digital_signature'  => 'sometimes|image|max:250',
 
 
@@ -283,8 +283,8 @@ class IndexController extends Controller
         $application->mother = htmlspecialchars(preg_replace("/\s+/", " ", $request->mother));
         $application->branch_id = $request->branch_id;
 
-        if($request->has('district_id')){
-            $application->district_id = $request->district_id;
+        if($request->has('upazilla_id')){
+            $application->upazilla_id = $request->upazilla_id;
         }
         $application->blood_group = htmlspecialchars(preg_replace("/\s+/", " ", $request->blood_group));
 
@@ -370,7 +370,7 @@ class IndexController extends Controller
             $application_hard_copy = $request->file('application_hard_copy');
             $filename   = 'application_hard_copy_' . str_replace(' ','',$request->name).time() .'.' . $application_hard_copy->getClientOriginalExtension();
             $location   = public_path('/images/users/'. $filename);
-            Image::make($application_hard_copy)->resize(200, 200)->save($location);
+            Image::make($application_hard_copy)->save($location);
             $application->application_hard_copy = $filename;
         }
 

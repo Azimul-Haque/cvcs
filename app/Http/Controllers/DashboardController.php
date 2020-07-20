@@ -58,9 +58,10 @@ class DashboardController extends Controller
     private function addToAdminLog($performedOn, $type, $description)
     {
         activity()
+            ->useLog($type)
             ->performedOn($performedOn)
             ->causedBy(Auth::user())
-            ->withProperties(['type' => $type])
+//            ->withProperties(['type' => $type])
             ->log($description);
     }
 
@@ -1320,7 +1321,7 @@ class DashboardController extends Controller
                 'blood_group' => 'sometimes',
                 'upazilla_id' => 'sometimes| numeric',
                 'prl_date' => 'sometimes',
-                'application_hard_copy' => 'sometimes|image|max:2048',
+                'application_hard_copy' => 'sometimes|image|max:4096',
                 'digital_signature' => 'sometimes|image|max:250',
 
             ));
@@ -1414,7 +1415,7 @@ class DashboardController extends Controller
             $image = $request->file('application_hard_copy');
             $filename = 'application_hard_copy_' . str_replace(' ', '', $request->name) . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('/images/users/' . $filename);
-            Image::make($image)->resize(200, 200)->save($location);
+            Image::make($image)->save($location);
             $application->application_hard_copy = $filename;
         }
 
@@ -1481,9 +1482,7 @@ class DashboardController extends Controller
                 $application_payment_receipt = $request->file('application_payment_receipt');
                 $filename = 'application_payment_receipt_' . str_replace(' ', '', $request->name) . time() . '.' . $application_payment_receipt->getClientOriginalExtension();
                 $location = public_path('/images/receipts/' . $filename);
-                Image::make($application_payment_receipt)->resize(800, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($location);
+                Image::make($application_payment_receipt)->save($location);
                 $application->application_payment_receipt = $filename;
             }
         }
@@ -2190,7 +2189,7 @@ class DashboardController extends Controller
             'upazilla_id' => 'sometimes| numeric',
             'prl_date' => 'sometimes',
             'image' => 'sometimes|image|max:250',
-            'application_hard_copy' => 'sometimes|image|max:2048',
+            'application_hard_copy' => 'sometimes|image|max:4096',
             'digital_signature' => 'sometimes|image|max:250',
         ));
 
@@ -2297,7 +2296,7 @@ class DashboardController extends Controller
                 $image = $request->file('application_hard_copy');
                 $filename = 'temp_application_hard_copy' . str_replace(' ', '', $member->name) . time() . '.' . $image->getClientOriginalExtension();
                 $location = public_path('/images/users/' . $filename);
-                Image::make($image)->resize(200, 200)->save($location);
+                Image::make($image)->save($location);
                 $tempmemdata->application_hard_copy = $filename;
             }
 
@@ -2415,7 +2414,7 @@ class DashboardController extends Controller
         $member = User::where('id', $request->user_id)->first();
 
         //create Career log entry if position/branch changes
-        if ($member->position_id != $tempmemdata->position_id || $member->branch_id != $tempmemdata->branch_id) {
+        if ($tempmemdata->start_date && ($member->position_id != $tempmemdata->position_id || $member->branch_id != $tempmemdata->branch_id)) {
             $newCareerLog = new Careerlog();
             $newCareerLog->user_id = $member->id;
             $newCareerLog->branch_id = $tempmemdata->branch_id;

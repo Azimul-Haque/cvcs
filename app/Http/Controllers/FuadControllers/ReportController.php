@@ -108,4 +108,25 @@ class ReportController extends Controller
         return $pdf->download($fileName);
     }
 
+
+
+    public function getPDFMemberApprovalAdminLogReport(Request $request){
+        $this->validate($request, array(
+            'id' => 'required',
+            'member_id' => 'required',
+            'log_year' => 'required| numeric'
+        ));
+
+        $member = User::where('id', $request->id)
+            ->where('member_id', $request->member_id)
+            ->first();
+
+
+        $adminLogsByMember =
+
+        $pdf = PDF::loadView('dashboard.profile.pdf.adminapprovalslog', []);
+//        dd($member->branch->name);
+        $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '.pdf';
+        return $pdf->download($fileName);
+    }
 }

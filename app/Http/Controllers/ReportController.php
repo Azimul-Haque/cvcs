@@ -31,7 +31,7 @@ class ReportController extends Controller
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->middleware('auth');
     }
 
@@ -39,13 +39,24 @@ class ReportController extends Controller
     {
         $branches = Branch::all();
     	$positions = Position::orderBy('id', 'asc')->where('id', '>', 0)->get();
+//        $superadmins = User::where('role', 'admin')
+//            ->whereNotIn('email', ['mannan@cvcsbd.com', 'dataentry@cvcsbd.com']) // jei email gula deoa hobe tader k dekhabe na!!!
+//            ->where('role_type', 'admin')
+//            ->get();
+
+        $admins = User::where('role', 'admin')
+            ->where('role_type', 'manager')
+            ->get();
+
 
         return view('dashboard.reports.index')
                         ->withBranches($branches)
-                        ->withPositions($positions);
+                        ->withPositions($positions)
+                        ->withAdmins($admins);
+//                        ->withSuperadmins($superadmins);
     }
 
-    public function getPDFAllPnedingAndPayments(Request $request) 
+    public function getPDFAllPnedingAndPayments(Request $request)
     {
     	//validation
     	$this->validate($request, array(
@@ -53,7 +64,7 @@ class ReportController extends Controller
     	));
 
     	$registeredmembers = User::where('activation_status', 1)
-    	                        ->where('role_type', '!=', 'admin')                
+    	                        ->where('role_type', '!=', 'admin')
     	                        ->get();
 
     	if($request->report_type == 1) {
@@ -96,7 +107,7 @@ class ReportController extends Controller
     			    }
     			}
     		}
-    		// dd($totalmontlydues); 
+    		// dd($totalmontlydues);
     		$pdf = PDF::loadView('dashboard.reports.pdf.allpaymentsandpendings', ['registeredmembers' => $registeredmembers, 'totalapproved' => $totalapproved, 'totalmontlydues' => $totalmontlydues]);
     		$fileName = 'CVCS_General_Report.pdf';
     		return $pdf->download($fileName); // stream
@@ -112,8 +123,8 @@ class ReportController extends Controller
     		$branch_array = [];
     		foreach ($branches as $branch) {
     			$branchmembers = User::where('activation_status', 1)
-			                         ->where('role_type', '!=', 'admin')                
-			                         ->where('branch_id', $branch->id)                
+			                         ->where('role_type', '!=', 'admin')
+			                         ->where('branch_id', $branch->id)
 			                         ->get();
 			    $branch_array[$branch->id]['name'] = $branch->name;
 			    $branch_array[$branch->id]['totalmembers'] = $branchmembers->count();
@@ -154,7 +165,7 @@ class ReportController extends Controller
 	    			}
 	    		}
     		}
-    		// dd($branch_array); 
+    		// dd($branch_array);
     		$pdf = PDF::loadView('dashboard.reports.pdf.branchdetails', ['branch_array' => $branch_array, 'totalapproved' => $totalapproved]);
     		$fileName = 'CVCS_Branch_Details_Report.pdf';
     		return $pdf->download($fileName); // stream
@@ -171,17 +182,17 @@ class ReportController extends Controller
         $branch = Branch::find($request->branch_id);
 
         $members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')                
-                       ->where('branch_id', $request->branch_id)           
+                       ->where('role_type', '!=', 'admin')
+                       ->where('branch_id', $request->branch_id)
                        ->with(['payments' => function ($query) {
                             $query->orderBy('created_at', 'desc');
                             $query->where('payment_status', '=', 1);
                             $query->where('is_archieved', '=', 0);
                             $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
-                        }])           
+                        }])
                        ->get();
 
-        
+
         $intotalmontlypaid = 0;
         $intotalmontlydues = 0;
 
@@ -230,9 +241,9 @@ class ReportController extends Controller
         $branch = Branch::find($request->branch_id);
 
         $members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')                
-                       ->where('branch_id', $request->branch_id)           
-                       ->orderBy('position_id', 'asc')           
+                       ->where('role_type', '!=', 'admin')
+                       ->where('branch_id', $request->branch_id)
+                       ->orderBy('position_id', 'asc')
                        ->get();
 
         $pdf = PDF::loadView('dashboard.reports.pdf.branchmemberslist', ['branch' => $branch, 'members' => $members]);
@@ -250,9 +261,9 @@ class ReportController extends Controller
     	$position = Position::find($request->position_id);
 
     	$members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')                
-                       ->where('position_id', $request->position_id)           
-                       ->orderBy('position_id', 'asc')           
+                       ->where('role_type', '!=', 'admin')
+                       ->where('position_id', $request->position_id)
+                       ->orderBy('position_id', 'asc')
                        ->get();
 
 		$pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members]);

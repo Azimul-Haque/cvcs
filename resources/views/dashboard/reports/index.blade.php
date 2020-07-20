@@ -84,6 +84,27 @@
           </div>
           <!-- /.box-body -->
         </div>
+        <div class="box box-success" id="beforedivheightcommodity">
+          <div class="box-header with-border text-green">
+            <i class="fa fa-fw fa-bar-chart"></i>
+            <h3 class="box-title">অ্যাডমিন লগ রিপোর্ট</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {!! Form::open(['route' => 'reports.getadminlogreport', 'method' => 'GET']) !!}
+              <div class="form-group">
+                <select name="member_id" class="form-control" required="">
+                  <option value="" selected="" disabled="">অ্যাডমিন নির্ধারণ করুন</option>
+                  @foreach($admins as $admin)
+                  <option value="{{$admin->unique_key}}">{{$admin->name}} ({{$admin->member_id}})</option>
+                  @endforeach
+                </select>
+              </div>
+              <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+            {!! Form::close() !!}
+          </div>
+          <!-- /.box-body -->
+        </div>
       </div>
       <div class="col-md-4">
         <div class="box box-warning" id="beforedivheightcommodity">

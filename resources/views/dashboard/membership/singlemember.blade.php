@@ -11,6 +11,7 @@
       সদস্য তথ্য
       <div class="pull-right">
         <button class="btn btn-success" data-toggle="modal" data-target="#downloadPDFModal" data-backdrop="static" title="সদস্য রিপোর্ট ডাউনলোড করুন" id="downloadPDFButton"><i class="fa fa-download"></i></button>
+        <button class="btn btn-info" data-toggle="modal" data-target="#downloadMemberApprovalLogPDFModal" data-backdrop="static" title="সদস্য অনুমোদন লগ রিপোর্ট ডাউনলোড করুন" id="downloadMemberApprovalLogPDFButton"><i class="fa fa-file-text-o"></i></button>
         <a class="btn btn-primary" href="{{ route('dashboard.singleapplicationedit', $member->unique_key) }}" title="সদস্য তথ্য সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
         <button class="btn btn-warning" data-toggle="modal" data-target="#sendMessageModal" data-backdrop="static" title="বার্তা পাঠান"><i class="fa fa-fw fa-envelope" aria-hidden="true"></i></button>
         <button class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" title="সদস্য মুছে ফেলুন" disabled=""><i class="fa fa-fw fa-trash" aria-hidden="true"></i></button>
@@ -41,6 +42,45 @@
     </div>
     <!-- Download Report PDF Modal -->
     <!-- Download Report PDF Modal -->
+
+
+
+    <!-- Download Member Approval Log Report PDF Modal -->
+    <!-- Download Member Approval Log Report PDF Modal -->
+    <div class="modal fade" id="downloadMemberApprovalLogPDFModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header modal-header-info">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-file-text-o"></i> সদস্য অনুমোদন লগ রিপোর্ট ডাউনলোড</h4>
+          </div>
+          {!! Form::open(['route' => 'dashboard.member.getmemberapprovaladminlogreport.pdf', 'method' => 'POST', 'class' => 'form-default']) !!}
+          <div class="modal-body">
+            সদস্য অনুমোদন লগ রিপোর্টটি ডাউনলোড করুন
+            {!! Form::hidden('id', $member->id) !!}
+            {!! Form::hidden('member_id', $member->member_id) !!}
+            <div class="row">
+              <div class="col-md-6 form-group">
+                {!! Form::label('log_year', 'লগ-এর সময়কাল *') !!}
+                <select name="log_year" class="form-control" required="">
+                  <option value="" selected="" disabled="">বছর নির্ধারণ করুন</option>
+                  @for($i = 2019; $i <= date('Y'); $i++)
+                    <option value="{{$i}}">{{$i}}</option>
+                  @endfor
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-info"><i class="fa fa-download"></i> ডাউনলোড করুন</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+          </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+    <!-- Download Member Approval Log Report PDF Modal -->
+    <!-- Download Member Approval Log Report PDF Modal -->
 
     <!-- Send Message Modal -->
     <!-- Send Message Modal -->
