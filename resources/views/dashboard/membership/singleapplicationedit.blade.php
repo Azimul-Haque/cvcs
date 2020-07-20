@@ -153,6 +153,18 @@
                                        placeholder="মাতার নাম বাংলায় লিখুন">
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label for="profession" class="">@if($application->activation_status == 0)
+                                        আবেদনকারীর @else সদস্যের @endif পেশা *</label>
+                                <input value="{{ $application->profession }}" type="text" name="profession"
+                                       id="profession" required="" class="text_bangla form-control"
+                                       placeholder="পেশা বাংলায় লিখুন">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="branch_id" class="">@if($application->activation_status == 0)
@@ -169,17 +181,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label for="profession" class="">@if($application->activation_status == 0)
-                                        আবেদনকারীর @else সদস্যের @endif পেশা *</label>
-                                <input value="{{ $application->profession }}" type="text" name="profession"
-                                       id="profession" required="" class="text_bangla form-control"
-                                       placeholder="পেশা বাংলায় লিখুন">
-                            </div>
-                        </div>
+
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="position_id" class="">@if($application->activation_status == 0)
@@ -200,6 +202,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group invisible" id="start_date_input">
+                        {!! Form::label('start_date', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
+                        <input type="text" class="form-control" name="start_date" id="start_date" data-field="date"
+                               autocomplete="off"
+                               placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ">
+                        {{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
+                    </div>
+
+
                     <div class="form-group ">
                         <label for="joining_date" class="">চাকুরীতে যোগদানের তারিখ (তথ্য না থাকলে ফাঁকা রাখুন)</label>
                         @if($application->joining_date != null)
@@ -1016,6 +1028,19 @@
             $(this).parents('.panel-primary').find('i').toggleClass('fa-plus fa-minus');
             $(this).parents('.panel-primary').siblings('.panel-primary').find('i').removeClass('fa-minus').addClass('fa-plus')
 
+        });
+
+
+        $('#position_id').change(function (e) {
+            e.preventDefault();
+            $('#start_date_input').removeClass('invisible');
+            $('#start_date_input').addClass('visible');
+        });
+
+        $('#branch_id').change(function (e) {
+            e.preventDefault();
+            $('#start_date_input').removeClass('invisible');
+            $('#start_date_input').addClass('visible');
         });
     </script>
 @endsection

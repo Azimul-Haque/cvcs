@@ -2274,7 +2274,7 @@ class DashboardController extends Controller
             //check if career info changed and start_date not provided
             if (Auth::user()->position_id != $request->position_id || Auth::user()->branch_id != $request->branch_id) {
 
-                if (!$request->has('start_date') || DateTime::createFromFormat('Y-m-d H:i:s', $request->start_date) == false) {
+                if (!$request->has('start_date') || DateTime::createFromFormat('d-m-Y', $request->start_date) == false) {
                     Session::flash('warning', 'আপনি নতুন পদবি/দপ্তর এ যোগদানের তারিখ দেননি!');
                     if ($member->id == Auth::user()->id) {
                         return redirect()->route('dashboard.profile');

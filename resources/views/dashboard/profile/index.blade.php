@@ -101,7 +101,7 @@
                             {!! Form::label('start_date', 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ *') !!}
                             <input type="text" class="form-control" name="start_date" id="start_date" data-field="date"
                                    autocomplete="off"
-                                   placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন">
+                                   placeholder="নতুন পদবি/দপ্তর এ যোগদানের তারিখ">
                             {{--                            {!! Form::text('start_date', null, array('class' => 'form-control', 'placeholder' => 'নতুন পদবি/দপ্তর এ যোগদানের তারিখ লিখুন', 'required')) !!}--}}
                         </div>
 
