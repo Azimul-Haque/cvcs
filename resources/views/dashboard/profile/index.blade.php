@@ -132,7 +132,8 @@
                                     <select name="blood_group" id="blood_group" class="form-control">
                                         <option value="" selected="" disabled="">রক্তের গ্রুপ নির্ধারণ করুন</option>
                                         @foreach(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $blood_group)
-                                            <option value="{{ $blood_group }}">{{ $blood_group }}</option>
+                                            <option value="{{ $blood_group }}"
+                                                    @if($member->$blood_group == $blood_group) selected="" @endif>{{ $blood_group }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -143,27 +144,27 @@
                                     <select name="upazilla_id" id="upazilla_id" class="form-control">
                                         <option value="" selected="" disabled="">জেলার নাম নির্ধারণ করুন</option>
                                         @foreach($upazillas as $upazilla)
-                                            <option value="{{ $upazilla->id }}">{{ $upazilla->district_bangla }}</option>
+                                            <option value="{{ $upazilla->id }}"
+                                                    @if($member->upazilla_id == $upazilla->id) selected="" @endif>{{ $upazilla->district_bangla }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-8">
 
-                                <div class="form-group ">
-                                    <label for="prl_date" class="">চাকুরি থেকে অবসর গ্রহণের তারিখ <b>(তথ্য না থাকলে
-                                            ফাঁকা
-                                            রাখুন)</b></label>
-                                    <input class="form-control" type="text" name="prl_date" id="prl_date"
-                                           data-field="date" autocomplete="off"
-                                           placeholder="চাকুরি থেকে অবসর গ্রহণের তারিখ">
-                                </div>
-                            </div>
+                        <div class="form-group ">
+                            <label for="prl_date" class="">চাকুরি থেকে অবসর গ্রহণের তারিখ <b>(তথ্য না থাকলে ফাঁকা
+                                    রাখুন)</b></label>
+
+
+                            <input @if($member->prl_date != null)  value="{{ date('d-m-Y', strtotime($member->prl_date)) }}"
+                                   @else value="" @endif
+                                   data-field="date"
+                                   autocomplete="off" type="text" name="prl_date" id="prl_date"
+                                   class="form-control" placeholder="চাকুরি থেকে অবসর গ্রহণের তারিখ">
+
                         </div>
-
 
                         <div class="row">
                             <div class="col-md-8">
@@ -177,33 +178,34 @@
                                      style="height: 120px; width: auto; padding: 5px;"/>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group ">
-                                    <label><strong>সদস্যের স্বাক্ষর (সর্বোচ্চ ২৫০ কিলোবাইট)</strong></label>
-                                    <input value="" class="form-control" type="file" id="digital_signature"
-                                           name="digital_signature">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <img src="{{ asset('images/users/'. $member->digital_signature)}}"
-                                     id='digital_signature-upload'
-                                     style="height: 120px; width: auto; padding: 5px;"/>
-                            </div>
-                        </div>
 
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group ">
-                                    <label><strong>সদস্যের আবেদন ফর্মের হার্ড কপি (সর্বোচ্চ ২ মেগাবাইট)</strong></label>
-                                    <input value="" class="form-control" type="file" id="application_hard_copy"
+                                    <label><strong>সদস্য আবেদন ফর্মের হার্ড কপি (সর্বোচ্চ ২ মেগাবাইট)</strong></label>
+                                    <input type="file" id="application_hard_copy"
                                            name="application_hard_copy">
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <img src="{{ asset('images/users/'. $member->application_hard_copy)}}"
+                                <img src="@if($member->application_hard_copy != null) {{ asset('images/users/' .$member->application_hard_copy)}} @else {{ asset('images/800x500.png')}} @endif"
                                      id='application_hard_copy-upload'
-                                     style="height: 120px; width: auto; padding: 5px;"/>
+                                     style="width: 250px; height: auto; padding: 5px;"/>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group ">
+                                    <label><strong>স্বাক্ষর (সর্বোচ্চ ২৫০
+                                            কিলোবাইট) </strong></label>
+                                    <input type="file" id="digital_signature" name="digital_signature">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="@if($member->digital_signature != null) {{ asset('images/users/' .$member->digital_signature)}} @else {{ asset('images/800x500.png')}} @endif"
+                                     id='digital_signature-upload' style="width: 250px; height: auto; padding: 5px;"/>
                             </div>
                         </div>
                     @endif
@@ -729,19 +731,19 @@
                             }, 1000);
                         }
                         console.log(imagewidth / imageheight);
-                        if (((imagewidth / imageheight) < 0.9375) || ((imagewidth / imageheight) > 1.07142)) {
-                            $("#application_hard_copy").val('');
-                            toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:১ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');
-                            setTimeout(function () {
-                                $("#application_hard_copy-upload").attr('src', '{{ asset('images/800x500.png') }}');
-                            }, 1000);
-                        }
+                        {{--if (((imagewidth / imageheight) < 0.9375) || ((imagewidth / imageheight) > 1.07142)) {--}}
+                        {{--    $("#application_hard_copy").val('');--}}
+                        {{--    toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:১ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');--}}
+                        {{--    setTimeout(function () {--}}
+                        {{--        $("#application_hard_copy-upload").attr('src', '{{ asset('images/800x500.png') }}');--}}
+                        {{--    }, 1000);--}}
+                        {{--}--}}
                     };
                     img.onerror = function () {
                         $("#application_hard_copy").val('');
                         toastr.warning('অনুগ্রহ করে ছবি সিলেক্ট করুন!', 'WARNING').css('width', '400px;');
                         setTimeout(function () {
-                            $("#application_hard_copy-upload").attr('src', '{{ asset('images/user.png') }}');
+                            $("#application_hard_copy-upload").attr('src', '{{ asset('images/800x500.png') }}');
                         }, 1000);
                     };
                     img.src = _URL.createObjectURL(file);

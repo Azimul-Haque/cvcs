@@ -185,7 +185,7 @@
                                 <label for="position_id" class="">@if($application->activation_status == 0)
                                         আবেদনকারীর @else সদস্যের @endif পদবি *</label>
 
-                                <div class="col-md-6">
+                                <div class="">
                                     <select name="position_id" id="position_id" class="form-control" required="">
                                         <option value="" selected="" disabled="">পদবি নির্ধারণ করুন</option>
                                         <option value="34" @if($application->position_id == 34) selected="" @endif>
@@ -215,14 +215,13 @@
                         <label for="prl_date" class="">চাকুরি থেকে অবসর গ্রহণের তারিখ <b>(তথ্য না থাকলে ফাঁকা
                                 রাখুন)</b></label>
 
-                        @if($application->prl_date != null)
-                            <input value="{{ date('d-m-Y', strtotime($application->prl_date)) }}" data-field="date"
-                                   autocomplete="off" type="text" name="prl_date" id="prl_date"
-                                   class="form-control" placeholder="চাকুরি থেকে অবসর গ্রহণের তারিখ">
-                        @else
-                            <input value="" data-field="date" autocomplete="off" type="text" name="prl_date"
-                                   id="prl_date" class="form-control" placeholder="চাকুরি থেকে অবসর গ্রহণের তারিখ">
-                        @endif
+
+                        <input @if($application->prl_date != null)  value="{{ date('d-m-Y', strtotime($application->prl_date)) }}"
+                               @else value="" @endif
+                               data-field="date"
+                               autocomplete="off" type="text" name="prl_date" id="prl_date"
+                               class="form-control" placeholder="চাকুরি থেকে অবসর গ্রহণের তারিখ">
+
                     </div>
 
 
@@ -989,7 +988,7 @@
                             $("#digital_signature").val('');
                             toastr.warning('ফাইলের আকৃতি ' + filesize + ' কিলোবাইট. ২৫০ কিলোবাইটের মধ্যে আপলোড করার চেস্টা করুন', 'WARNING').css('width', '400px;');
                             setTimeout(function () {
-                                $("#digital_signature-upload").attr('src', '{{ asset('images/user.png') }}');
+                                $("#digital_signature-upload").attr('src', '{{ asset('images/800x500.png') }}');
                             }, 1000);
                         }
                         console.log(nominee_two_image_width / nominee_two_image_height);
@@ -997,7 +996,7 @@
                             $("#digital_signature").val('');
                             toastr.warning('দৈর্ঘ্য এবং প্রস্থের অনুপাত ১:১ হওয়া বাঞ্ছনীয়!', 'WARNING').css('width', '400px;');
                             setTimeout(function () {
-                                $("#digital_signature-upload").attr('src', '{{ asset('images/user.png') }}');
+                                $("#digital_signature-upload").attr('src', '{{ asset('images/800x500.png') }}');
                             }, 1000);
                         }
                     };

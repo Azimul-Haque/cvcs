@@ -2140,7 +2140,7 @@ class DashboardController extends Controller
             'prl_date' => 'sometimes',
             'image' => 'sometimes|image|max:250',
             'application_hard_copy' => 'sometimes|image|max:2048',
-            'digital_signature' => 'sometimes|image|max:2048',
+            'digital_signature' => 'sometimes|image|max:250',
         ));
 
         $member = User::find($id);
@@ -2171,7 +2171,18 @@ class DashboardController extends Controller
         }
 
         // check if any data is changed...
-        if ((Auth::user()->position_id == $request->position_id) && (Auth::user()->branch_id == $request->branch_id) && (Auth::user()->present_address == $request->present_address) && (Auth::user()->mobile == $request->mobile) && (Auth::user()->email == $request->email) && !$request->hasFile('image')) {
+        if ((Auth::user()->position_id == $request->position_id) &&
+            (Auth::user()->branch_id == $request->branch_id) &&
+            (Auth::user()->present_address == $request->present_address) &&
+            (Auth::user()->mobile == $request->mobile) &&
+            (Auth::user()->email == $request->email) &&
+            ($request->has('blood_group') && Auth::user()->blood_group == $request->blood_group) &&
+            ($request->has('upazilla_id') && Auth::user()->upazilla_id == $request->upazilla_id) &&
+            ($request->has('prl_date') && Auth::user()->prl_date == $request->prl_date) &&
+            (Auth::user()->email == $request->email) &&
+            !$request->hasFile('image') &&
+            !$request->hasFile('application_hard_copy') &&
+            !$request->hasFile('digital_signature')) {
             Session::flash('info', 'আপনি কোন তথ্য পরিবর্তন করেননি!');
             return redirect()->route('dashboard.profile');
         }

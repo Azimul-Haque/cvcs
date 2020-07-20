@@ -142,10 +142,10 @@
                                         @else
                                             @php
                                                 $member = Auth::user();
-                                                $editableFields = [$member->upzilla_id, $member->blood_group, $member->prl_date, $member->application_hard_copy, $member->digital_signature];
+                                                $editableFields = [$member->upazilla_id, $member->blood_group, $member->prl_date, $member->application_hard_copy, $member->digital_signature];
                                                 $missingFieldCount = 0;
                                                 foreach ($editableFields as $editableField){
-                                                   if($editableField == null){
+                                                   if($editableField == null || $editableField == 0){
                                                        $missingFieldCount++;
                                                    }
                                                 }

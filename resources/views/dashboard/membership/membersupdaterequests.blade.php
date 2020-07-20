@@ -105,7 +105,7 @@
                                                             <td>রক্তের গ্রুপ: {{ ($tempmemdata->user->blood_group != null)? $tempmemdata->user->blood_group: "" }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>জেলা: {{ ($tempmemdata->user->upazilla != 0)? $tempmemdata->user->upazilla->district_bangla: "" }}</td>
+                                                            <td>জেলা: {{ ($tempmemdata->user->upazilla_id != 0)? $tempmemdata->user->upazilla->district_bangla: "" }}</td>
                                                         </tr>
 
                                                         <tr>
@@ -265,7 +265,7 @@
 
                                                         <tr>
                                                             <td>
-                                                                ছবিঃ
+                                                                স্বাক্ষর:
                                                                 @if($tempmemdata->digital_signature)
                                                                     <img src="{{ asset('images/users/'. $tempmemdata->digital_signature)}}"
                                                                          style="height: 120px; width: auto; padding: 5px;"/>
@@ -276,7 +276,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                ছবিঃ
+                                                                ফর্মের হার্ড কপি:
                                                                 @if($tempmemdata->application_hard_copy)
                                                                     <img src="{{ asset('images/users/'. $tempmemdata->application_hard_copy)}}"
                                                                          style="height: 120px; width: auto; padding: 5px;"/>
