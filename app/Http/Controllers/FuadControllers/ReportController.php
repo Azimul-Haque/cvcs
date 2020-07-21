@@ -102,6 +102,8 @@ class ReportController extends Controller
 
         $memberCareerlogs = Careerlog::where('user_id', $member->id)->orderBy("start_date")->get();
 
+
+
         $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard, 'totalmontlypaid' => $totalmontlypaid, 'careerlogs' => $memberCareerlogs]);
 //        dd($member->branch->name);
         $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '.pdf';

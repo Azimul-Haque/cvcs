@@ -362,37 +362,96 @@
             <th width="5%">#</th>
             <th width="30%">দপ্তর</th>
             <th>পদবি</th>
-            <th>যোগদানের তারিখ</th>
+            <th>সময়কাল</th>
         </tr>
 
         @php
             $counter = 1;
+            $logCount = count($careerlogs);
+            $positionLogs = [];
         @endphp
-        @if(count($careerlogs) > 0)
-          <tr>
-            <td align="center">{{ bangla($counter++) }}</td>
-            <td>{{ $careerlogs[0]->prev_branch_name }}</td>
-            <td>{{ $careerlogs[0]->prev_position_name }}</td>
-            <td>{{ ($member->joining_date != null)? date('F d, Y', strtotime($member->joining_date)): "N/A"}}</td>
-          </tr>
-        @endif
-        @foreach($careerlogs as $careerlog)
+        @if($logCount > 0)
             <tr>
                 <td align="center">{{ bangla($counter++) }}</td>
-                <td>{{ $careerlog->prev_branch_name }} @if($careerlog->branch->name != $careerlog->prev_branch_name)
-                        -> {{ $careerlog->branch->name }} @endif</td>
-                <td>{{ $careerlog->prev_position_name }} @if($careerlog->position->name != $careerlog->prev_position_name)
-                        -> {{ $careerlog->position->name }} @endif</td>
-                <td>{{ date('F d, Y', strtotime($careerlog->start_date)) }}</td>
+                <td>{{ $careerlogs[0]->prev_branch_name }}</td>
+                <td>{{ $careerlogs[0]->prev_position_name }}</td>
+                <td>{{ ($member->joining_date != null)? date('F d, Y', strtotime($member->joining_date)): "N/A"}}
+                    - {{ date('F d, Y', strtotime($careerlogs[0]->start_date)) }}</td>
             </tr>
-        @endforeach
+        @endif
+        @for($i=0; $i<$logCount; $i++)
+            <tr>
+                <td align="center">{{ bangla($counter++) }}</td>
+                <td>{{ $careerlogs[$i]->prev_branch_name }} @if($careerlogs[$i]->branch->name != $careerlogs[$i]->prev_branch_name)
+                        -> {{ $careerlogs[$i]->branch->name }} @endif</td>
+                <td>{{ $careerlogs[$i]->prev_position_name }} @if($careerlogs[$i]->position->name != $careerlogs[$i]->prev_position_name)
+                        -> {{ $careerlogs[$i]->position->name }} @endif</td>
+
+                @php
+                    if($careerlogs[$i]->position->name != $careerlogs[$i]->prev_position_name){
+                    $positionLogs[] = $careerlogs[$i];
+                }
+                @endphp
+                <td>{{ date('F d, Y', strtotime($careerlogs[$i]->start_date)) }}
+                    - {{ ($i == $logCount - 1)? "বর্তমান" : date('F d, Y', strtotime($careerlogs[$i+1]->start_date)) }}</td>
+            </tr>
+        @endfor
 
         @if($counter == 1)
             <tr>
                 <td align="center">{{ bangla($counter++) }}</td>
                 <td>{{ $member->branch->name }}</td>
                 <td>{{ $member->position->name }}</td>
-                <td>{{ ($member->joining_date != null)? date('F d, Y', strtotime($member->joining_date)): "N/A"}}</td>
+                <td>{{ ($member->joining_date != null)? date('F d, Y', strtotime($member->joining_date)): "N/A"}} -
+                    বর্তমান
+                </td>
+            </tr>
+        @endif
+    </table>
+</div>
+
+
+<div class="" style="padding-top: 0px;">
+    <table class="">
+        <tr>
+            <td colspan="3" style="background: rgba(192,192,192, 0.7);">পদবির লগ</td>
+        </tr>
+        <tr class="graybackground">
+            <th width="5%">#</th>
+            <th>পদবি</th>
+            <th>সময়কাল</th>
+        </tr>
+
+        @php
+            $counter = 1;
+            $positionLogCount = count($positionLogs);
+
+        @endphp
+        @if($positionLogCount > 0)
+            <tr>
+                <td align="center">{{ bangla($counter++) }}</td>
+                <td>{{ $positionLogs[0]->prev_position_name }}</td>
+                <td>{{ ($member->joining_date != null)? date('F d, Y', strtotime($member->joining_date)): "N/A"}}
+                    - {{ date('F d, Y', strtotime($positionLogs[0]->start_date)) }}</td>
+            </tr>
+        @endif
+        @for($i=0; $i<$positionLogCount; $i++)
+            <tr>
+                <td align="center">{{ bangla($counter++) }}</td>
+
+                <td>{{ $positionLogs[$i]->prev_position_name }} -> {{ $positionLogs[$i]->position->name }}</td>
+                <td>{{ date('F d, Y', strtotime($positionLogs[$i]->start_date)) }}
+                    - {{ ($i == $positionLogCount - 1)? "বর্তমান" : date('F d, Y', strtotime($positionLogs[$i+1]->start_date)) }}</td>
+            </tr>
+        @endfor
+
+        @if($counter == 1)
+            <tr>
+                <td align="center">{{ bangla($counter++) }}</td>
+                <td>{{ $member->position->name }}</td>
+                <td>{{ ($member->joining_date != null)? date('F d, Y', strtotime($member->joining_date)): "N/A"}} -
+                    বর্তমান
+                </td>
             </tr>
         @endif
     </table>
