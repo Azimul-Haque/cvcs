@@ -27,6 +27,7 @@
           <th>নাম</th>
           <th>যোগাযোগ</th>
           <th>ছবি</th>
+          <th width="10%">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -42,6 +43,41 @@
             @else
               <img src="{{ asset('images/user.png')}}" style="height: 50px; width: auto;" />
             @endif
+          </td>
+          <td>
+            <button class="btn btn-info" data-toggle="modal" data-target="#downloadAdminLogPDFModal" data-backdrop="static" title="অ্যাডমিন লগ রিপোর্ট ডাউনলোড করুন" id="downloadAdminLogPDFButton"><i class="fa fa-file-text-o"></i></button>
+            <div class="modal fade" id="downloadAdminLogPDFModal" role="dialog">
+              <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                  <div class="modal-header modal-header-info">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-file-text-o"></i> অ্যাডমিন লগ রিপোর্ট ডাউনলোড</h4>
+                  </div>
+                  {!! Form::open(['route' => 'reports.getadminlogreport', 'method' => 'POST', 'class' => 'form-default']) !!}
+                  <div class="modal-body">
+                    অ্যাডমিন লগ রিপোর্টটি ডাউনলোড করুন
+                    {!! Form::hidden('unique_key', $superadmin->unique_key) !!}
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        {!! Form::label('log_year', 'লগ-এর সময়কাল *') !!}
+                        <select name="log_year" class="form-control" required="">
+                          <option value="" selected="" disabled="">বছর নির্ধারণ করুন</option>
+                          @for($i = date('Y'); $i >= 2020 ; $i--)
+                            <option value="{{$i}}">{{$i}}</option>
+                          @endfor
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-info"><i class="fa fa-download"></i> ডাউনলোড করুন</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                  </div>
+                  {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+
           </td>
         </tr>
         @endforeach

@@ -236,7 +236,7 @@ Route::get('/dashboard/reports/export/members/{member_id}/careerlog/pdf', ['as'=
 Route::post('/dashboard/member/complete/report/download/pdf', ['as'=>'dashboard.member.complete.pdf','uses'=>'FuadControllers\ReportController@getMemberCompleteReport']);
 Route::post('/dashboard/member/adminlog/pdf', ['as'=>'dashboard.member.getmemberapprovaladminlogreport.pdf','uses'=>'FuadControllers\ReportController@getPDFMemberApprovalAdminLogReport']);
 
-Route::get('/dashboard/reports/export/admin/adminlog/pdf', ['as'=>'reports.getadminlogreport','uses'=>'ReportController@getPDFAdminLogReport']);
+Route::post('/dashboard/reports/export/admin/adminlog/pdf', ['as'=>'reports.getadminlogreport','uses'=>'FuadControllers\ReportController@getPDFAdminLogReport']);
 
 //-----------------
 

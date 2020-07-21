@@ -20,7 +20,7 @@
     <!-- Download Report PDF Modal -->
     <!-- Download Report PDF Modal -->
     <div class="modal fade" id="downloadPDFModal" role="dialog">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header modal-header-success">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -48,7 +48,7 @@
     <!-- Download Member Approval Log Report PDF Modal -->
     <!-- Download Member Approval Log Report PDF Modal -->
     <div class="modal fade" id="downloadMemberApprovalLogPDFModal" role="dialog">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header modal-header-info">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -64,7 +64,7 @@
                 {!! Form::label('log_year', 'লগ-এর সময়কাল *') !!}
                 <select name="log_year" class="form-control" required="">
                   <option value="" selected="" disabled="">বছর নির্ধারণ করুন</option>
-                  @for($i = 2019; $i <= date('Y'); $i++)
+                  @for($i = date('Y'); $i >= 2020 ; $i--)
                     <option value="{{$i}}">{{$i}}</option>
                   @endfor
                 </select>
