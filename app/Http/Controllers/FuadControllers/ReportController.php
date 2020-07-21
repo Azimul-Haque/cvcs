@@ -104,7 +104,6 @@ class ReportController extends Controller
         $memberCareerlogs = Careerlog::where('user_id', $member->id)->orderBy("start_date")->get();
 
 
-
         $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard, 'totalmontlypaid' => $totalmontlypaid, 'careerlogs' => $memberCareerlogs]);
 //        dd($member->branch->name);
         $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '.pdf';
@@ -112,8 +111,8 @@ class ReportController extends Controller
     }
 
 
-
-    public function getPDFMemberApprovalAdminLogReport(Request $request){
+    public function getPDFMemberApprovalAdminLogReport(Request $request)
+    {
         $this->validate($request, array(
             'id' => 'required',
             'member_id' => 'required',
@@ -125,12 +124,15 @@ class ReportController extends Controller
             ->first();
 
 
-        $adminLogsByMember = Activity::on($member)->get();
-        dd($adminLogsByMember);
+        $adminLogsByMember = Activity::where('subject_type', "App\User")
+            ->where('subject_id', $member->id)
+            ->whereYear('created_at', '=', $request->log_year)
+            ->get();
+//        dd($adminLogsByMember);
 
-        $pdf = PDF::loadView('dashboard.profile.pdf.adminapprovalslog', []);
+        $pdf = PDF::loadView('dashboard.profile.pdf.adminapprovalslog', ['member' => $member, 'activitylogs' => $adminLogsByMember]);
 //        dd($member->branch->name);
-        $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '.pdf';
+        $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '_Admin_Approval_Log_' . $request->log_year .'.pdf';
         return $pdf->download($fileName);
     }
 }

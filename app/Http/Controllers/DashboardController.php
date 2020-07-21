@@ -55,13 +55,13 @@ class DashboardController extends Controller
         $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
     }
 
-    private function addToAdminLog($performedOn, $type, $description)
+    private function addToAdminLog($performedOn, $type, $description, $properties)
     {
         activity()
             ->useLog($type)
             ->performedOn($performedOn)
             ->causedBy(Auth::user())
-//            ->withProperties(['type' => $type])
+            ->withProperties($properties)
             ->log($description);
     }
 
@@ -1486,7 +1486,7 @@ class DashboardController extends Controller
                 $application->application_payment_receipt = $filename;
             }
         }
-
+        $this->addToAdminLog($application, 'update_member', 'সদস্য তথ্য দাখিল');
         $application->save();
 
         if ($application->activation_status == 0 || $application->activation_status == 202) {
@@ -1633,7 +1633,7 @@ class DashboardController extends Controller
                 $payment->payment_type = 1; // single payment
                 $payment->payment_key = random_string(10);
                 $payment->save();
-                $this->addToAdminLog($payment, 'approve_payment', 'পেমেন্ট অনুমোদন');
+                $this->addToAdminLog($newmembercheck, 'approve_single_payment', 'পেমেন্ট অনুমোদন', ['payment_id' => $payment->id]);
 
                 // receipt upload
                 if ($newmembercheck->application_payment_receipt != '') {
@@ -1655,7 +1655,7 @@ class DashboardController extends Controller
                     $payment->payment_type = 1; // single payment (2 means bulk)
                     $payment->payment_key = random_string(10);
                     $payment->save();
-                    $this->addToAdminLog($payment, 'approve_payment', 'পেমেন্ট অনুমোদন');
+                    $this->addToAdminLog($newmembercheck, 'approve_single_payment', 'পেমেন্ট অনুমোদন', ['payment_id' => $payment->id]);
 
                     // receipt upload
                     if ($newmembercheck->application_payment_receipt != '') {
@@ -2596,6 +2596,7 @@ class DashboardController extends Controller
         $payment->payment_key = $payment_key;
         $payment->save();
 
+
         // receipt upload
         if ($request->hasFile('image')) {
             $receipt = $request->file('image');
@@ -3018,7 +3019,7 @@ class DashboardController extends Controller
 
         $payment->payment_status = 1;
         $payment->save();
-        $this->addToAdminLog($payment, 'approve_single_payment', 'সিঙ্গেল পেমেন্ট অনুমোদন');
+        $this->addToAdminLog($payment->user, 'approve_single_payment', 'সিঙ্গেল পেমেন্ট অনুমোদন', ['payment_id' => $payment->id]);
 
         // send pending SMS ... aro kichu kaaj baki ache...
         // send sms
@@ -3086,6 +3087,8 @@ class DashboardController extends Controller
             $payment->payment_type = 2; // bulk payment
             $payment->payment_key = $bulkpayment->payment_key;
             $payment->save();
+
+            $this->addToAdminLog($payment->user, 'bulk_payment_individual', 'বাল্ক পেমেন্ট', ['payment_id' => $payment->id]);
 
 
             // receipt upload
