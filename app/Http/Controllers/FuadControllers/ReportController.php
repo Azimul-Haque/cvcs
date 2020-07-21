@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use Spatie\Activitylog\Models\Activity;
 
 class ReportController extends Controller
 {
@@ -124,7 +125,8 @@ class ReportController extends Controller
             ->first();
 
 
-        $adminLogsByMember =
+        $adminLogsByMember = Activity::on($member)->get();
+        dd($adminLogsByMember);
 
         $pdf = PDF::loadView('dashboard.profile.pdf.adminapprovalslog', []);
 //        dd($member->branch->name);
