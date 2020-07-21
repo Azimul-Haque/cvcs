@@ -232,7 +232,7 @@ class DashboardController extends Controller
         $member->role = 'admin';
         $member->role_type = 'manager';
         $member->save();
-        $this->addToAdminLog($member, 'add_admin', 'নতুন এডমিন যোগদান');
+        $this->addToAdminLog($member, 'add_admin', 'নতুন এডমিন যোগদান', []);
 
 
         Session::flash('success', 'সফলভাবে অ্যাডমিন বানানো হয়েছে!');
@@ -245,7 +245,7 @@ class DashboardController extends Controller
         $member->role = 'member';
         $member->role_type = 'member';
         $member->save();
-        $this->addToAdminLog($member, 'remove_admin', 'এডমিন অব্যহতি');
+        $this->addToAdminLog($member, 'remove_admin', 'এডমিন অব্যহতি', []);
 
         Session::flash('success', 'সফলভাবে অ্যাডমিন থেকে অব্যহতি দেওয়া হয়েছে!');
         return redirect()->route('dashboard.admins');
@@ -282,7 +282,7 @@ class DashboardController extends Controller
         $member = User::where('member_id', $request->member_id)->first();
         $member->role_type = 'bulkpayer';
         $member->save();
-        $this->addToAdminLog($member, 'add_bulkpayer', 'একাধিক পরিশোধকারী যোগদান');
+        $this->addToAdminLog($member, 'add_bulkpayer', 'একাধিক পরিশোধকারী যোগদান', []);
 
         Session::flash('success', 'সফলভাবে একাধিক পরিশোধকারী বানানো হয়েছে!');
         return redirect()->route('dashboard.bulkpayers');
@@ -293,7 +293,7 @@ class DashboardController extends Controller
         $member = User::find($id);
         $member->role_type = 'member';
         $member->save();
-        $this->addToAdminLog($member, 'remove_bulkpayer', 'একাধিক পরিশোধকারী অব্যহতি');
+        $this->addToAdminLog($member, 'remove_bulkpayer', 'একাধিক পরিশোধকারী অব্যহতি', []);
 
         Session::flash('success', 'সফলভাবে একাধিক পরিশোধকারী থেকে অব্যহতি দেওয়া হয়েছে!');
         return redirect()->route('dashboard.bulkpayers');
@@ -495,7 +495,7 @@ class DashboardController extends Controller
         $branch->address = $request->address;
         $branch->phone = $request->phone;
         $branch->save();
-        $this->addToAdminLog($branch, 'add_branch', 'ব্রাঞ্চ সংরক্ষন');
+        $this->addToAdminLog($branch, 'add_branch', 'ব্রাঞ্চ সংরক্ষন', []);
 
         Session::flash('success', 'সফলভাবে ব্রাঞ্চ সংরক্ষন হয়েছে!');
         return redirect()->route('dashboard.branches');
@@ -514,7 +514,7 @@ class DashboardController extends Controller
         $branch->address = $request->address;
         $branch->phone = $request->phone;
         $branch->save();
-        $this->addToAdminLog($branch, 'update_branch', 'ব্রাঞ্চ হালনাগাদ');
+        $this->addToAdminLog($branch, 'update_branch', 'ব্রাঞ্চ হালনাগাদ', []);
 
         Session::flash('success', 'সফলভাবে ব্রাঞ্চ হালনাগাদ হয়েছে!');
         return redirect()->route('dashboard.branches');
@@ -557,7 +557,7 @@ class DashboardController extends Controller
             $branchpayment->image = $filename;
         }
         $branchpayment->save();
-        $this->addToAdminLog($branchpayment, 'add_branchpayment', 'ব্রাঞ্চ পরিশোধ সংরক্ষণ');
+        $this->addToAdminLog($branchpayment, 'add_branchpayment', 'ব্রাঞ্চ পরিশোধ সংরক্ষণ', []);
 
 
         Session::flash('success', 'সফলভাবে ব্রাঞ্চ পরিশোধ সংরক্ষণ');
@@ -569,7 +569,7 @@ class DashboardController extends Controller
         $branchpayment = Branchpayment::find($id);
         $branchpayment->payment_status = 1;
         $branchpayment->save();
-        $this->addToAdminLog($branchpayment, 'approve_branchpayment', 'ব্রাঞ্চ পরিশোধ অনুমোদন');
+        $this->addToAdminLog($branchpayment, 'approve_branchpayment', 'ব্রাঞ্চ পরিশোধ অনুমোদন', []);
 
         Session::flash('success', 'অনুমোদন সফল হয়েছে!');
         return redirect()->route('dashboard.branches.payments');
@@ -1486,7 +1486,7 @@ class DashboardController extends Controller
                 $application->application_payment_receipt = $filename;
             }
         }
-        $this->addToAdminLog($application, 'update_member', 'সদস্য তথ্য দাখিল');
+        $this->addToAdminLog($application, 'update_member', 'সদস্য তথ্য দাখিল', []);
         $application->save();
 
         if ($application->activation_status == 0 || $application->activation_status == 202) {
@@ -1612,7 +1612,7 @@ class DashboardController extends Controller
             return redirect()->route('dashboard.applications');
         } else {
             $application->save();
-            $this->addToAdminLog($application, 'activate_member', 'সদস্য অনুমোদন');
+            $this->addToAdminLog($application, 'activate_member', 'সদস্য অনুমোদন', []);
 
             $newmembercheck = User::where('activation_status', 1)
                 ->where('member_id', $application->member_id)
@@ -1733,7 +1733,7 @@ class DashboardController extends Controller
             File::delete($nominee_two_path);
         }
         $application->delete();
-//        $this->addToAdminLog($application, 'delete_application', 'সদস্য আবেদন বাতিল');
+//        $this->addToAdminLog($application, 'delete_application', 'সদস্য আবেদন বাতিল', []);
 
         return redirect()->route('dashboard.applications');
     }
@@ -2461,7 +2461,7 @@ class DashboardController extends Controller
             $member->digital_signature = $tempmemdata->digital_signature;
         }
         $member->save();
-        $this->addToAdminLog($member, 'update_member', 'সদস্য তথ্য দাখিল');
+        $this->addToAdminLog($member, 'update_member', 'সদস্য তথ্য দাখিল', []);
 
         $tempmemdata->delete();
 
@@ -3104,7 +3104,7 @@ class DashboardController extends Controller
 
         $bulkpayment->is_archieved = 1;
         $bulkpayment->save();
-        $this->addToAdminLog($bulkpayment, 'approve_bulk_payment', 'বাল্ক পেমেন্ট অনুমোদন');
+        $this->addToAdminLog($bulkpayment, 'approve_bulk_payment', 'বাল্ক পেমেন্ট অনুমোদন', []);
 
 
         // send sms

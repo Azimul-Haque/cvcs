@@ -97,7 +97,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        {!! Form::open(['route' => 'reports.getadminlogreport', 'method' => 'GET']) !!}
+                        {!! Form::open(['route' => 'reports.getadminlogreport', 'method' => 'POST']) !!}
                         <div class="form-group">
                             <select name="member_id" class="form-control" required="">
                                 <option value="" selected="" disabled="">অ্যাডমিন নির্ধারণ করুন</option>
