@@ -41,7 +41,7 @@
 
 </h2>
 <p align="center" style="padding-top: -20px;">
-    <span style="font-size: 20px;">অ্যাডমিন লগ রিপোর্ট<br/> <b>{{$admin->name}} ({{$admin->member_id}})</b> - {{date('Y')}}</span><br/>
+    <span style="font-size: 20px;">অ্যাডমিন লগ রিপোর্ট</span><br/>
 </p>
 
 
