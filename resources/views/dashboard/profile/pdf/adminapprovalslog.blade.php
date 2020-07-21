@@ -35,14 +35,16 @@
 <body>
 <h2 align="center">
     <img src="{{ public_path('images/custom2.png') }}" style="height: 80px; width: auto;"><br/>
-    কাস্টমস এন্ড ভ্যাট কো-অপারেটিভ সোসাইটি
+    কাস্টমস এন্ড ভ্যাট কো অপারেটিভ সোসাইটি (সিভিসিএস) লিমিটেড
+    <br/> নিবন্ধন নং - ০০০৩১
 </h2>
 <p align="center" style="padding-top: -20px;">
-    <span style="font-size: 20px;">সদস্য অনুমোদন লগ রিপোর্ট</span><br/>
+    <span style="font-size: 20px;">সদস্য অনুমোদন লগ রিপোর্ট <br/> </span><br/>
 </p>
 
 
 <div class="" style="padding-top: 0px;">
+    <b>{{$member->name}} ({{$member->member_id}})</b> - {{date('Y')}}
     <table class="">
         <thead>
         <tr>
@@ -50,7 +52,7 @@
         </tr>
         <tr>
             <th style="background: rgba(124,252,0, 0.5);">#</th>
-            <th style="background: rgba(124,252,0, 0.5);">অ্যাডমিন</th>
+            <th style="background: rgba(124,252,0, 0.5);">মেম্বার</th>
             <th style="background: rgba(124,252,0, 0.5);">কার্যক্রম ধরণ</th>
             <th style="background: rgba(124,252,0, 0.5);">বর্ণনা</th>
             <th style="background: rgba(124,252,0, 0.5);">সময়কাল</th>
@@ -64,18 +66,20 @@
         @foreach($activitylogs as $activitylog)
             @php
                 $admin = \App\User::findOrFail($activitylog->causer_id);
-
+                $payment = null;
                 $logDetail = $activitylog->description;
-                if ('approve_single_payment'){
-                    $payment = \App\Payment::find(json_decode($activitylog->properties)['payment_id']);
+                if ($activitylog->log_name == 'approve_single_payment'){
+                    $properties = $activitylog->properties->toArray();
+                    $payment = \App\Payment::find($properties['payment_id']);
                     if($payment){
-                       $logDetail = "সিঙ্গেল পেমেন্ট অনুমোদন ({$payment->payment_key})<br> পরিমান: {$payment->amount} <br> ব্যাংক: {$payment->bank} ({$payment->branch})";
+                       $logDetail = "সিঙ্গেল পেমেন্ট অনুমোদন ({$payment->payment_key}) \nপরিমান: {$payment->amount} [{$payment->bank} ({$payment->branch})]";
                     }
 
-                } elseif('bulk_payment_individual'){
-                    $payment = \App\Payment::find(json_decode($activitylog->properties)['payment_id']);
+                } elseif($activitylog->log_name == 'bulk_payment_individual'){
+                    $properties = $activitylog->properties->toArray();
+                    $payment = \App\Payment::find($properties['payment_id']);
                     if($payment){
-                       $logDetail = "বাল্ক পেমেন্ট ({$payment->payment_key}) জমাদানকারীঃ {$payment->payee->name}({$payment->payee->member_id})<br> পরিমান: {$payment->amount} <br> ব্যাংক: {$payment->bank} ({$payment->branch})";
+                       $logDetail = "বাল্ক পেমেন্ট অনুমোদন ({$payment->payment_key})\nজমাদানকারীঃ {$payment->payee->name}({$payment->payee->member_id}) \nপরিমান: {$payment->amount} [ব্যাংক: {$payment->bank} ({$payment->branch})]";
                     }
 
                 }

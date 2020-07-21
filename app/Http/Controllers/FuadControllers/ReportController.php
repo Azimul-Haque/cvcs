@@ -128,11 +128,34 @@ class ReportController extends Controller
             ->where('subject_id', $member->id)
             ->whereYear('created_at', '=', $request->log_year)
             ->get();
-//        dd($adminLogsByMember);
+//        dd($adminLogsByMember[1]->properties->toArray()['payment_id']);
 
         $pdf = PDF::loadView('dashboard.profile.pdf.adminapprovalslog', ['member' => $member, 'activitylogs' => $adminLogsByMember]);
 //        dd($member->branch->name);
         $fileName = str_replace(' ', '_', $member->name) . '_' . $member->member_id . '_Admin_Approval_Log_' . $request->log_year .'.pdf';
+        return $pdf->download($fileName);
+    }
+
+
+
+    public function getPDFAdminLogReport(Request $request)
+    {
+        $this->validate($request, array(
+            'unique_key' => 'required',
+            'log_year' => 'required| numeric'
+        ));
+
+        $admin = User::where('unique_key', $request->unique_key)->first();
+
+
+        $adminLogs = Activity::where('causer_type', "App\User")
+            ->where('causer_id', $admin->id)
+            ->whereYear('created_at', '=', $request->log_year)
+            ->get();
+
+        $pdf = PDF::loadView('dashboard.reports.pdf.adminlogs', ['admin' => $admin, 'activitylogs' => $adminLogs]);
+//        dd($member->branch->name);
+        $fileName = str_replace(' ', '_', $admin->name) . '_' . $admin->member_id . '_Admin_Log_' . $request->log_year .'.pdf';
         return $pdf->download($fileName);
     }
 }
