@@ -99,7 +99,7 @@
                     <div class="box-body">
                         {!! Form::open(['route' => 'reports.getadminlogreport', 'method' => 'POST']) !!}
                         <div class="form-group">
-                            <select name="member_id" class="form-control" required="">
+                            <select name="unique_key" class="form-control" required="">
                                 <option value="" selected="" disabled="">অ্যাডমিন নির্ধারণ করুন</option>
                                 @foreach($admins as $admin)
                                     <option value="{{$admin->unique_key}}">{{$admin->name}} ({{$admin->member_id}})
