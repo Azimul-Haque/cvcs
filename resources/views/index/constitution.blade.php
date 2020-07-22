@@ -23,7 +23,7 @@
                 <div class="col-md-6 col-sm-6 xs-margin-bottom-four">
                     <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">গঠনতন্ত্র <a class="btn btn-warning btn-sm"
                                                                                                                                   href="{{ asset('files/সিভিসিএস_এর_উপ-আইণ.pdf') }}"
-                                                                                                                                  title="উপ-আইণ ডাউনলোড করুন" download="">download</i></a></span>
+                                                                                                                                  title="উপ-আইণ ডাউনলোড করুন" download="">ডাউনলোড</a></span>
                 </div>
                 <!-- end section title -->
             </div>
