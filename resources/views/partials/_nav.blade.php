@@ -65,10 +65,13 @@
                                     <a href="{{ route('index.about') }}" class="text-large">সিভিসিএস সম্পর্কে</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('index.previouscommittee') }}" class="text-large">পূর্বতন কমিটি</a>
+                                    <a href="{{ route('index.constitution') }}" class="text-large">গঠনতন্ত্র</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('index.currentcommittee') }}" class="text-large">বর্তমান কমিটি</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('index.previouscommittee') }}" class="text-large">পূর্বতন কমিটি</a>
                                 </li>
                             </ul>
                         </li>

@@ -44,7 +44,7 @@
 
 
 <div class="" style="padding-top: 0px;">
-    <b>{{$member->name}} ({{$member->member_id}})</b> - {{date('Y')}}
+    <p style="font-size: 15px; padding-bottom: 5px;"><b>{{$member->name}} ({{$member->member_id}})</b> - {{date('Y')}}</p>
     <table class="">
         <thead>
         <tr>

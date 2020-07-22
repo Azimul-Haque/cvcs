@@ -410,8 +410,7 @@
     </table>
 </div>
 
-
-<div class="" style="padding-top: 0px;">
+<div class="" style="padding-top: 25px;">
     <table class="">
         <tr>
             <td colspan="3" style="background: rgba(192,192,192, 0.7);">পদবির লগ</td>
