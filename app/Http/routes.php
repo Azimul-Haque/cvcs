@@ -229,6 +229,11 @@ Route::get('/dashboard/reports/export/branch/members/pdf', ['as'=>'reports.getbr
 Route::get('/dashboard/reports/export/branch/members/list/pdf', ['as'=>'reports.branchmemberslist','uses'=>'ReportController@getPDFBranchMembersList']);
 Route::get('/dashboard/reports/export/designation/members/list/pdf', ['as'=>'reports.designationsmemberslist','uses'=>'ReportController@getPDFDesignationMembersList']);
 
+//Fuads reports----
+Route::get('/dashboard/reports/export/designation/members/count/pdf', ['as'=>'reports.designationsmemberscountlist','uses'=>'FuadControllers\ReportController@getDesignationMemberCounts']);
+
+//-----------------
+
 // PAYMENTS BY ADMIN
 Route::get('/dashboard/members/payments/pending', ['as'=>'dashboard.memberspendingpayments','uses'=>'DashboardController@getMembersPendingPayments']);
 Route::get('/dashboard/members/payments/approved', ['as'=>'dashboard.membersapprovedpayments','uses'=>'DashboardController@getMembersApprovedPayments']);

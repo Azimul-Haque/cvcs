@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56edb9fc-834c-4cd7-962a-95d05808ce81" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/adminsandothers/positions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/adminsandothers/positions.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FuadControllers/ReportController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +94,9 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1d32Gap8Hact6fFDW2KK19pHhot" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -103,12 +105,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/dashboard/reports/pdf" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/dashboard/reports/pdf" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/FuadControllers" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -134,7 +138,10 @@
       <workItem from="1592029425639" duration="647000" />
       <workItem from="1592130956630" duration="3950000" />
       <workItem from="1592570624277" duration="6289000" />
-      <workItem from="1592587167319" duration="7167000" />
+      <workItem from="1592587167319" duration="7736000" />
+      <workItem from="1592631715787" duration="32000" />
+      <workItem from="1592897437660" duration="879000" />
+      <workItem from="1592921382371" duration="939000" />
     </task>
     <servers />
   </component>
@@ -162,17 +169,17 @@
       <screen x="58" y="27" width="1308" height="741" />
     </state>
     <state x="447" y="312" width="520" height="175" key="ComposerInitDialogKey/58.27.1308.741@58.27.1308.741" timestamp="1591640486563" />
-    <state x="495" y="155" width="424" height="488" key="FileChooserDialogImpl" timestamp="1592135489394">
+    <state x="495" y="155" width="424" height="488" key="FileChooserDialogImpl" timestamp="1592631743838">
       <screen x="58" y="27" width="1308" height="741" />
     </state>
-    <state x="495" y="155" width="424" height="488" key="FileChooserDialogImpl/58.27.1308.741@58.27.1308.741" timestamp="1592135489394" />
+    <state x="495" y="155" width="424" height="488" key="FileChooserDialogImpl/58.27.1308.741@58.27.1308.741" timestamp="1592631743838" />
     <state width="636" height="446" key="SwitcherDM" timestamp="1592587116595">
       <screen x="58" y="27" width="1308" height="741" />
     </state>
     <state width="636" height="446" key="SwitcherDM/58.27.1308.741@58.27.1308.741" timestamp="1592587116595" />
-    <state x="375" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1592590107499">
+    <state x="375" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1592595918909">
       <screen x="58" y="27" width="1308" height="741" />
     </state>
-    <state x="375" y="89" width="672" height="678" key="search.everywhere.popup/58.27.1308.741@58.27.1308.741" timestamp="1592590107499" />
+    <state x="375" y="89" width="672" height="678" key="search.everywhere.popup/58.27.1308.741@58.27.1308.741" timestamp="1592595918909" />
   </component>
 </project>
