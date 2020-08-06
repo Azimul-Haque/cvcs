@@ -36,18 +36,16 @@ class PositionController extends Controller
             'name' => 'required|  unique:positions,name,'.$request->position_id.'| max:255',
         ));
 
-            $position = Position::findOrFail($request->position_id);
+        $position = Position::findOrFail($request->position_id);
 
-            if($position){
-                $position->name = $request->name;
-                $position->save();
-                Session::flash('success', 'সফলভাবে পদবি হালনাগাদ করা হয়েছে!');
-            } else{
-                Session::flash('warning', 'সঠিক পদবি প্রদান করুন!');
-            }
-
-
-            return redirect()->route('dashboard.designations');
+        if($position){
+            $position->name = $request->name;
+            $position->save();
+            Session::flash('success', 'সফলভাবে পদবি হালনাগাদ করা হয়েছে!');
+        } else{
+            Session::flash('warning', 'সঠিক পদবি প্রদান করুন!');
+        }
+        return redirect()->route('dashboard.designations');
     }
 
 }
