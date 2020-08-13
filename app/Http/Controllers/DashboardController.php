@@ -2962,8 +2962,8 @@ class DashboardController extends Controller
         echo 'Total: ' . count($all5000s) . '<br/><br/>';
         echo 'Total: ' . count($all5000s) * 2000 . '<br/><br/>';
         foreach($all5000s as $payment) {
-            // echo $payment->user->name;
-            // echo '<br/>';
+            echo $payment->user->name;
+            echo '<br/>';
         }
     }
     // operation
