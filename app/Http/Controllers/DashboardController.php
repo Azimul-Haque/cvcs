@@ -2954,8 +2954,16 @@ class DashboardController extends Controller
     // operation
     public function getAll5000() 
     {
-        $all5000 = Payment::where('payment_category', 0)
+        $all5000s = Payment::where('payment_category', 0)
                           ->where('amount', 5000)
+                          ->where('amount', 5000)
+                          ->get();
+
+        echo 'Total: ' . $all5000s->count . '<br/><br/>';
+        foreach($all5000s as $payment) {
+            echo $payment->user->name;
+            echo '<br/>';
+        }
     }
     // operation
     // operation
