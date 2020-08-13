@@ -235,8 +235,8 @@
           <td colspan="3" style="background: rgba(192,192,192, 0.7);">মাসিক পরিশোধের বিবরণ</td>
         </tr>
         <tr>
-          <th>মাস</th>
-          <th>পরিশোধ</th>
+          <th>হতে</th>
+          <th>পর্যন্ত</th>
           <th>পরিমাণ</th>
         </tr>
       </thead>
@@ -246,43 +246,55 @@
               $startyear = 2019;
               $today = date("Y-m-d H:i:s");
               $approvedcash = $totalmontlypaid->totalamount; // without the membership money;
-              $totalyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
+              $totalyear = $startyear + ceil($approvedcash/(300 * 12)) - 1; // get total year
               if(date('Y') > $totalyear) {
                   $totalyear = date('Y');
               }
           @endphp
-          @for($i=$startyear; $i <= $totalyear; $i++)
-            @for($j=1; $j <= 12; $j++) {{--  strtotime("11-12-10") --}}
+          {{-- @for($i=$startyear; $i <= $totalyear; $i++)
+            @for($j=1; $j <= 12; $j++)
               @php
                 $thismonth = '01-'.$j.'-'.$i;
               @endphp
               <tr>
                 <td>{{ date('F Y', strtotime($thismonth)) }}</td>
                 <td>
-                  @if($approvedcash/500 > 0)
+                  @if(floor($approvedcash/300) > 0)
                     <span>পরিশোধিত</span>
                   @elseif(date('Y-m-d H:i:s', strtotime($thismonth)) < $today)
                     <span style="color: red;">প্রদেয়</span>
                   @endif
                 </td>
                 <td>
-                  @if($approvedcash/500 > 0)
-                    ৳ 500
+                  @if(floor($approvedcash/300) > 0)
+                    ৳ {{ $totalmontlypaid->totalamount }}
                   @endif
                 </td>
               </tr>
               @php
-                $approvedcash = $approvedcash - 500;
+                $approvedcash = $approvedcash - 300;
               @endphp
             @endfor
-          @endfor
+          @endfor --}}
+          <tr>
+            <td>Januray 2019</td> {{-- hard coded --}}
+            <td>
+              @php
+                  $startmonth = date("F Y", strtotime('2020-01-01'));
+                  $monthstotal = floor($totalmontlypaid->totalamount/300) - 1;
+                  $lastmonth = date('F Y', strtotime("+" . $monthstotal . " months", strtotime($startmonth))); 
+                  echo $lastmonth;
+              @endphp
+            </td>
+            <td>৳ {{ $totalmontlypaid->totalamount }}</td>
+          </tr>
         @else
           @php
               $startyear = date('Y', strtotime($member->joining_date));
               $startmonth = date('m', strtotime($member->joining_date));
               $today = date("Y-m-d H:i:s");
               $approvedcash = $totalmontlypaid->totalamount; // without the membership money;
-              $endyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
+              $endyear = $startyear + ceil($approvedcash/(300 * 12)) - 1; // get total year
               if(date('Y') > $endyear) {
                   $endyear = date('Y');
               }
@@ -318,28 +330,40 @@
                 }
               }
             }
-            
           @endphp
-          @foreach($monthsarray as $month)
+          {{-- @foreach($monthsarray as $month)
             <tr>
               <td>{{ date('F Y', strtotime($month)) }}</td>
               <td>
-                @if($approvedcash/500 > 0)
+                @if(floor($approvedcash/300) > 0)
                   <span>পরিশোধিত</span>
                 @elseif(date('Y-m-d H:i:s', strtotime($month)) < $today)
                   <span style="color: red;">প্রদেয়</span>
                 @endif
               </td>
               <td>
-                @if($approvedcash/500 > 0)
-                  ৳ 500
+                @if(floor($approvedcash/300) > 0)
+                  ৳ {{ $totalmontlypaid->totalamount }}
                 @endif
               </td>
             </tr>
             @php
-              $approvedcash = $approvedcash - 500;
+              $approvedcash = $approvedcash - 300;
             @endphp
-          @endforeach
+          @endforeach --}}
+
+          <tr>
+            <td>{{ date('F Y', strtotime($monthsarray[0])) }}</td> {{-- hard coded --}}
+            <td>
+              @php
+                  $startmonth = date('F Y', strtotime($monthsarray[0]));
+                  $monthstotal = floor($totalmontlypaid->totalamount/300) - 1;
+                  $lastmonth = date('F Y', strtotime("+" . $monthstotal . " months", strtotime($startmonth))); 
+                  echo $lastmonth;
+              @endphp
+            </td>
+            <td>৳ {{ $totalmontlypaid->totalamount }}</td>
+          </tr>
         @endif
         
       </tbody>

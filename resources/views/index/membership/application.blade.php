@@ -545,8 +545,8 @@
         }, 500);
       }
 
-      if($('#application_payment_amount').val() < 5000) {
-        toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
+      if($('#application_payment_amount').val() < 2000) {
+        toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
         event.preventDefault();
         $('#submitApplicationModal').modal('hide');
         $('html, body').animate({
@@ -570,8 +570,8 @@
           toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
         }
 
-        if(value < 5000) {
-          toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
+        if(value < 2000) {
+          toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
         }
       })
     });

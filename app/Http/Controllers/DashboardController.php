@@ -1542,7 +1542,7 @@ class DashboardController extends Controller
                 $payment = new Payment;
                 $payment->member_id = $newmembercheck->member_id;
                 $payment->payer_id = $newmembercheck->member_id;
-                $payment->amount = 5000; // hard coded
+                $payment->amount = 2000; // hard coded; Membership 2000, monthly 300 >>>>>> August 13, 2020
                 $payment->bank = $newmembercheck->application_payment_bank;
                 $payment->branch = $newmembercheck->application_payment_branch;
                 $payment->pay_slip = $newmembercheck->application_payment_pay_slip;
@@ -1559,11 +1559,17 @@ class DashboardController extends Controller
                     $paymentreceipt->image = $newmembercheck->application_payment_receipt;
                     $paymentreceipt->save();
                 }
-                if($newmembercheck->application_payment_amount > 5000) {
+
+                // Membership 2000, monthly 300 >>>>>> August 13, 2020
+                // Membership 2000, monthly 300 >>>>>> August 13, 2020
+                // Membership 2000, monthly 300 >>>>>> August 13, 2020
+                // Membership 2000, monthly 300 >>>>>> August 13, 2020
+                // Membership 2000, monthly 300 >>>>>> August 13, 2020
+                if($newmembercheck->application_payment_amount > 2000) {
                     $payment = new Payment;
                     $payment->member_id = $newmembercheck->member_id;
                     $payment->payer_id = $newmembercheck->member_id;
-                    $payment->amount = $newmembercheck->application_payment_amount - 5000; // IMPORTANT
+                    $payment->amount = $newmembercheck->application_payment_amount - 2000; // IMPORTANT
                     $payment->bank = $newmembercheck->application_payment_bank;
                     $payment->branch = $newmembercheck->application_payment_branch;
                     $payment->pay_slip = $newmembercheck->application_payment_pay_slip;
@@ -2482,7 +2488,7 @@ class DashboardController extends Controller
 
         $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard, 'totalmontlypaid' => $totalmontlypaid]);
         $fileName = str_replace(' ', '_', $member->name).'_'. $member->member_id .'.pdf';
-        return $pdf->download($fileName);
+        return $pdf->stream($fileName);
     }
 
     public function getMemberTransactionSummary() 

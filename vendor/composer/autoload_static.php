@@ -358,6 +358,8 @@ class ComposerStaticInit5ba844acaeab7533148c65467b83a279
         'App\\Http\\Controllers\\BlogController' => __DIR__ . '/../..' . '/app/Http/Controllers/BlogController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
+        'App\\Http\\Controllers\\FuadControllers\\PositionController' => __DIR__ . '/../..' . '/app/Http/Controllers/FuadControllers/PositionController.php',
+        'App\\Http\\Controllers\\FuadControllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/FuadControllers/ReportController.php',
         'App\\Http\\Controllers\\IndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/IndexController.php',
         'App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php',
         'App\\Http\\Controllers\\SMSController' => __DIR__ . '/../..' . '/app/Http/Controllers/SMSController.php',

@@ -29,6 +29,8 @@ return array(
     'App\\Http\\Controllers\\BlogController' => $baseDir . '/app/Http/Controllers/BlogController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DashboardController' => $baseDir . '/app/Http/Controllers/DashboardController.php',
+    'App\\Http\\Controllers\\FuadControllers\\PositionController' => $baseDir . '/app/Http/Controllers/FuadControllers/PositionController.php',
+    'App\\Http\\Controllers\\FuadControllers\\ReportController' => $baseDir . '/app/Http/Controllers/FuadControllers/ReportController.php',
     'App\\Http\\Controllers\\IndexController' => $baseDir . '/app/Http/Controllers/IndexController.php',
     'App\\Http\\Controllers\\ReportController' => $baseDir . '/app/Http/Controllers/ReportController.php',
     'App\\Http\\Controllers\\SMSController' => $baseDir . '/app/Http/Controllers/SMSController.php',
