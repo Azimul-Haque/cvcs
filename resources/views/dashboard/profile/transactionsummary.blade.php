@@ -62,7 +62,7 @@
               $startyear = 2019;
               $today = date("Y-m-d H:i:s");
               $approvedcash = $membertotalmontlypaid->totalamount; // without the membership money;
-              $totalyear = $startyear + ceil($approvedcash/(500 * 12)) - 1; // get total year
+              $totalyear = $startyear + ceil($approvedcash/(300 * 12)) - 1; // get total year
               if(date('Y') > $totalyear) {
                   $totalyear = date('Y');
               }
@@ -85,20 +85,20 @@
                 <tr>
                   <td>{{ date('F Y', strtotime($thismonth)) }}</td>
                   <td>
-                    @if($approvedcash/500 > 0)
+                    @if(floor($approvedcash/300) > 0)
                       <span class="badge badge-success"><i class="fa fa-check"></i>পরিশোধিত</span>
                     @elseif(date('Y-m-d H:i:s', strtotime($thismonth)) < $today)
                       <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রদেয়</span>
                     @endif
                   </td>
                   <td>
-                    @if($approvedcash/500 > 0)
-                      ৳ 500
+                    @if(floor($approvedcash/300) > 0)
+                      ৳ 300
                     @endif
                   </td>
                 </tr>
                 @php
-                  $approvedcash = $approvedcash - 500;
+                  $approvedcash = $approvedcash - 300;
                 @endphp
             @endfor
           @endfor
@@ -112,7 +112,7 @@
               $startmonth = date('m', strtotime(Auth()->user()->joining_date));
               $today = date("Y-m-d H:i:s");
               $approvedcash = $membertotalmontlypaid->totalamount; // without the membership money;
-              $endyear = $startyear + ceil($approvedcash/(500 * 12)); // get total year
+              $endyear = $startyear + ceil($approvedcash/(300 * 12)); // get total year
               if(date('Y') > $endyear) {
                   $endyear = date('Y');
               }
@@ -164,20 +164,20 @@
                   <tr>
                     <td>{{ date('F Y', strtotime($month)) }}</td>
                     <td>
-                      @if($approvedcash/500 > 0)
+                      @if(floor($approvedcash/300) > 0)
                         <span class="badge badge-success"><i class="fa fa-check"></i>পরিশোধিত</span>
                       @elseif(date('Y-m-d H:i:s', strtotime($month)) < $today)
                         <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রদেয়</span>
                       @endif
                     </td>
                     <td>
-                      @if($approvedcash/500 > 0)
-                        ৳ 500
+                      @if(floor($approvedcash/300) > 0)
+                        ৳ 300
                       @endif
                     </td>
                   </tr>
                   @php
-                    $approvedcash = $approvedcash - 500;
+                    $approvedcash = $approvedcash - 300;
                   @endphp
                 @endforeach
               </tbody>

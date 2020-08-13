@@ -253,3 +253,10 @@ Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsa
 
 // dashboard routes
 // dashboard routes
+
+// operation
+// operation
+Route::get('/dashboard/get5000', ['as'=>'dashboard.get5000','uses'=>'DashboardController@getAll5000']);
+
+// operation
+// operation

@@ -2488,7 +2488,7 @@ class DashboardController extends Controller
 
         $pdf = PDF::loadView('dashboard.profile.pdf.completereport', ['payments' => $payments, 'member' => $member, 'pendingfordashboard' => $pendingfordashboard, 'approvedfordashboard' => $approvedfordashboard, 'pendingcountdashboard' => $pendingcountdashboard, 'approvedcountdashboard' => $approvedcountdashboard, 'totalmontlypaid' => $totalmontlypaid]);
         $fileName = str_replace(' ', '_', $member->name).'_'. $member->member_id .'.pdf';
-        return $pdf->stream($fileName);
+        return $pdf->download($fileName);
     }
 
     public function getMemberTransactionSummary() 
@@ -2946,4 +2946,16 @@ class DashboardController extends Controller
     {
         return view('dashboard.notifications');
     }
+
+
+
+
+    // operation
+    // operation
+    public function getAll5000() 
+    {
+        $all5000 = Payment::where('')
+    }
+    // operation
+    // operation
 }

@@ -60,7 +60,7 @@
         <tr>
           <td>{{ $branch['name'] }}</td>
           <td align="center">{{ bangla($branch['totalmembers']) }} জন</td>
-          <td align="center">৳ {{ bangla($branch['totalmembers'] * 5000) }}</td>
+          <td align="center">৳ {{ bangla($branch['totalmembers'] * 2000) }}</td>
           <td align="center">৳ {{ bangla($branch['totalmontlypaid']) }}</td>
           <td align="center">৳ {{ bangla($branch['totalmontlydues']) }}</td>
         </tr>
@@ -74,7 +74,7 @@
       <tr>
         <th class="graybackground" align="right">মোট</th>
         <th class="graybackground">{{ bangla($intotalmembers) }} জন</th>
-        <th class="graybackground">৳ {{ bangla($intotalmembers * 5000) }}</th>
+        <th class="graybackground">৳ {{ bangla($intotalmembers * 2000) }}</th>
         <th class="graybackground">৳ {{-- {{ bangla($intotalmontlypaid) }} --}} {{ bangla($totalapproved->totalamount) }}</th>
         <th class="graybackground">৳ {{ bangla($intotalmontlydues) }}</th>
       </tr>

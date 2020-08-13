@@ -80,8 +80,8 @@ class ReportController extends Controller
     			    $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
     			    $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
     			    $totalmonthsformember = $to->diffInMonths($from) + 1;
-    			    if(($totalmonthsformember * 500) > $approvedcashformontly) {
-    			    	$totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+    			    if(($totalmonthsformember * 300) > $approvedcashformontly) {
+    			    	$totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
     			    	$totalmontlydues = $totalmontlydues + $totalpendingmonthly;
     			    }
     			} else {
@@ -90,8 +90,8 @@ class ReportController extends Controller
     			    $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
     			    $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
     			    $totalmonthsformember = $to->diffInMonths($from) + 1;
-    			    if(($totalmonthsformember * 500) > $approvedcashformontly) {
-    			    	$totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+    			    if(($totalmonthsformember * 300) > $approvedcashformontly) {
+    			    	$totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
     			    	$totalmontlydues = $totalmontlydues + $totalpendingmonthly;
     			    }
     			}
@@ -137,8 +137,8 @@ class ReportController extends Controller
 	    			    $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
 	    			    $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
 	    			    $totalmonthsformember = $to->diffInMonths($from) + 1;
-	    			    if(($totalmonthsformember * 500) > $approvedcashformontly) {
-	    			    	$totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+	    			    if(($totalmonthsformember * 300) > $approvedcashformontly) {
+	    			    	$totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
 	    			    	$branch_array[$branch->id]['totalmontlydues'] = $branch_array[$branch->id]['totalmontlydues'] + $totalpendingmonthly;
 	    			    }
 	    			} else {
@@ -147,8 +147,8 @@ class ReportController extends Controller
 	    			    $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
 	    			    $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
 	    			    $totalmonthsformember = $to->diffInMonths($from) + 1;
-	    			    if(($totalmonthsformember * 500) > $approvedcashformontly) {
-	    			    	$totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+	    			    if(($totalmonthsformember * 300) > $approvedcashformontly) {
+	    			    	$totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
 	    			    	$branch_array[$branch->id]['totalmontlydues'] = $branch_array[$branch->id]['totalmontlydues'] + $totalpendingmonthly;
 	    			    }
 	    			}
@@ -195,8 +195,8 @@ class ReportController extends Controller
                 $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
                 $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
-                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
                   $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
                 }
             } else {
@@ -205,8 +205,8 @@ class ReportController extends Controller
                 $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
                 $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
-                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
                   $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
                 }
             }

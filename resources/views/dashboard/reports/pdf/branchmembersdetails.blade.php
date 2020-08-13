@@ -69,7 +69,7 @@
               <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
             @endif
           </td>
-          <td align="center">৳ ৫০০০</td>
+          <td align="center">৳ ২০০০</td>
           <td align="center">
             @if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
               {{ bangla(date('F, Y', strtotime('31-01-2019'))) }}
@@ -89,7 +89,7 @@
         <th width="5%"></th>
         <th></th>
         <th align="right">মোট</th>
-        <th>৳ {{ bangla($members->count() * 5000) }}</th>
+        <th>৳ {{ bangla($members->count() * 2000) }}</th>
         <th></th>
         <th>৳ {{ bangla($intotalmontlypaid) }}</th>
         <th>৳ {{ bangla($intotalmontlydues) }}</th>
