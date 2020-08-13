@@ -2960,10 +2960,10 @@ class DashboardController extends Controller
                           ->get();
 
         echo 'Total: ' . count($all5000s) . '<br/><br/>';
-        echo 'Total: ' . count($all5000s) * 5000 . '<br/><br/>';
+        echo 'Total: ' . count($all5000s) * 3000 . '<br/><br/>';
         foreach($all5000s as $payment) {
             // echo $payment->user->name;
-            echo '<br/>';
+            // echo '<br/>';
         }
     }
     // operation
