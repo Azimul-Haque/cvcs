@@ -2959,7 +2959,7 @@ class DashboardController extends Controller
                           ->where('amount', 5000)
                           ->get();
 
-        echo 'Total: ' . $all5000s->count . '<br/><br/>';
+        echo 'Total: ' . $all5000s->count() . '<br/><br/>';
         foreach($all5000s as $payment) {
             echo $payment->user->name;
             echo '<br/>';
