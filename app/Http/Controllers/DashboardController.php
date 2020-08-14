@@ -2964,6 +2964,30 @@ class DashboardController extends Controller
         foreach($all5000s as $payment) {
             $payment->amount = 2000;
             $payment->save();
+
+            $paymentthreeth = new Payment;
+            $paymentthreeth->member_id = $request->member_id;
+            $paymentthreeth->payer_id = $request->member_id;
+            $paymentthreeth->amount = $request->amount;
+            $paymentthreeth->bank = $request->bank;
+            $paymentthreeth->branch = $request->branch;
+            $paymentthreeth->pay_slip = $request->pay_slip;
+            $paymentthreeth->payment_status = 0;
+            $paymentthreeth->payment_category = 1; // monthly payment, if 0 then membership payment
+            $paymentthreeth->payment_type = 1; // single payment, if 2 then bulk payment
+            // generate payment_key
+            $payment_key_length = 10;
+            $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+            // generate payment_key
+            $paymentthreeth->payment_key = $payment_key;
+            $paymentthreeth->save();
+
+            // receipt upload
+            $paymentreceiptthreeth = new Paymentreceipt;
+            $paymentreceiptthreeth->payment_id = $paymentthreeth->id;
+            $paymentreceiptthreeth->image = $filename;
+            $paymentreceiptthreeth->save();
         }
     }
     // operation
