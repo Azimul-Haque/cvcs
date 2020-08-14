@@ -446,7 +446,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($member->payments as $payment)
+              @foreach($member->payments->sortBy('created_at') as $payment)
                 @if($payment->is_archieved == 0)
                   <tr>
                     <td>
