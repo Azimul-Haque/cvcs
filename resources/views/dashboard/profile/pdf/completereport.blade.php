@@ -280,7 +280,7 @@
             <td>Januray 2019</td> {{-- hard coded --}}
             <td>
               @php
-                  $startmonth = date("F Y", strtotime('2019-01-01'));
+                  $startmonth = date("F Y", strtotime('2020-01-01'));
                   $monthstotal = floor($totalmontlypaid->totalamount/300) - 1;
                   $lastmonth = date('F Y', strtotime("+" . $monthstotal . " months", strtotime($startmonth))); 
                   echo $lastmonth;
