@@ -2962,32 +2962,29 @@ class DashboardController extends Controller
         echo 'Total: ' . count($all5000s) . '<br/><br/>';
         echo 'Total: ' . count($all5000s) * 2000 . '<br/><br/>';
         foreach($all5000s as $payment) {
+            $payment->amount = 2000;
+            $payment->save();
 
-            if($payment->member_id == 197700004) {
-                $payment->amount = 2000;
-                $payment->save();
+            $paymentthreeth = new Payment;
+            $paymentthreeth->member_id = $payment->member_id;
+            $paymentthreeth->payer_id = $payment->member_id;
+            $paymentthreeth->payment_status = 1; // approved
+            $paymentthreeth->payment_category = 1; // monthly payment, if 0 then membership payment
+            $paymentthreeth->payment_type = 1; // single payment, if 2 then bulk payment
+            $paymentthreeth->payment_key = random_string(10);
+            $paymentthreeth->amount = 3000; // hard coded
+            $paymentthreeth->bank = $payment->bank;
+            $paymentthreeth->branch = $payment->branch;
+            $paymentthreeth->pay_slip = $payment->pay_slip;
+            $paymentthreeth->created_at = date('Y-m-d H:i:s', strtotime($payment->created_at . '+ 1 minute'));
+            $paymentthreeth->updated_at = date('Y-m-d', strtotime($payment->updated_at . '+ 1 minute'));
+            $paymentthreeth->save();
 
-                $paymentthreeth = new Payment;
-                $paymentthreeth->member_id = $payment->member_id;
-                $paymentthreeth->payer_id = $payment->member_id;
-                $paymentthreeth->payment_status = 1; // approved
-                $paymentthreeth->payment_category = 1; // monthly payment, if 0 then membership payment
-                $paymentthreeth->payment_type = 1; // single payment, if 2 then bulk payment
-                $paymentthreeth->payment_key = random_string(10);
-                $paymentthreeth->amount = 3000; // hard coded
-                $paymentthreeth->bank = $payment->bank;
-                $paymentthreeth->branch = $payment->branch;
-                $paymentthreeth->pay_slip = $payment->pay_slip;
-                $paymentthreeth->created_at = date('Y-m-d H:i:s', strtotime($payment->created_at . '+ 1 minute'));
-                $paymentthreeth->updated_at = date('Y-m-d', strtotime($payment->updated_at . '+ 1 minute'));
-                $paymentthreeth->save();
-
-                // receipt upload
-                $paymentreceiptthreeth = new Paymentreceipt;
-                $paymentreceiptthreeth->payment_id = $paymentthreeth->id;
-                $paymentreceiptthreeth->image = $payment->paymentreceipts[0]->image;
-                $paymentreceiptthreeth->save();
-            }
+            // receipt upload
+            $paymentreceiptthreeth = new Paymentreceipt;
+            $paymentreceiptthreeth->payment_id = $paymentthreeth->id;
+            $paymentreceiptthreeth->image = $payment->paymentreceipts[0]->image;
+            $paymentreceiptthreeth->save();
         }
 
         echo 'Works fine...';
