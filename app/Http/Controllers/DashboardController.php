@@ -2963,7 +2963,7 @@ class DashboardController extends Controller
         echo 'Total: ' . count($all5000s) * 2000 . '<br/><br/>';
         foreach($all5000s as $payment) {
 
-            if($payment->member_id == 198600002) {
+            if($payment->member_id == 197700004) {
                 $payment->amount = 2000;
                 $payment->save();
 
