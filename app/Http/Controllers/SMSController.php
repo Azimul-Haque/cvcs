@@ -134,8 +134,8 @@ class SMSController extends Controller
 	                $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
 	                $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
 	                $totalmonthsformember = $to->diffInMonths($from) + 1;
-	                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-	                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+	                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+	                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
 	                }
 	            } else {
 	                $startmonth = date('Y-m-', strtotime($member->joining_date));
@@ -143,8 +143,8 @@ class SMSController extends Controller
 	                $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
 	                $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
 	                $totalmonthsformember = $to->diffInMonths($from) + 1;
-	                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-	                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+	                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+	                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
 	                }
 	            }
 
@@ -157,11 +157,10 @@ class SMSController extends Controller
 	            	        $mobile_number = substr($member->mobile, -11);
 	            	    }
 	            	}
-                    $pendingmonths = (int) $member->totalpendingmonthly / 500;
-                    if($pendingmonths == 1) {
+                    $pendingmonths = (int) $member->totalpendingmonthly / 300;
+                    if($pendingmonths == 1 || 0) {
                         $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is due, you are requested to pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                     } else {
-                        
                         $text = 'Dear ' . $member->name . ', your monthly payments from ' . date("F, Y", strtotime("-". $pendingmonths + 1 ." months"))  . ' to ' . date('F, Y') . ' are due, you are requested to pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                     }
 	            	
