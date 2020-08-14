@@ -2955,9 +2955,9 @@ class DashboardController extends Controller
     public function getAll5000() 
     {
         $all5000s = Payment::where('payment_category', 0)
-                          ->where('amount', 5000)
-                          ->where('amount', 5000)
-                          ->get();
+                           ->where('payment_status', 1)
+                           ->where('amount', 5000)
+                           ->get();
 
         echo 'Total: ' . count($all5000s) . '<br/><br/>';
         echo 'Total: ' . count($all5000s) * 2000 . '<br/><br/>';
