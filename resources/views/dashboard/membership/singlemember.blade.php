@@ -482,7 +482,7 @@
                     </td>
                     <td align="right">৳ {{ $payment->amount }}</td>
                     <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
-                    <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
+                    <td>{{ date('F d, Y h:i A', strtotime($payment->created_at)) }}</td>
                     <td>
                       @if(($payment->payment_type == 2) && ($payment->payment_status == 0))
                         <button class="btn btn-sm btn-info btn-with-count" data-toggle="modal" data-target="#seeMembersWiseModal{{ $payment->id }}" data-backdrop="static" title="সদস্য অনুযায়ী বিস্তারিত দেখুন"><i class="fa fa-eye"></i></button>

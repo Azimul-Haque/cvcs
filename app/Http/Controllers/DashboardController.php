@@ -2962,34 +2962,35 @@ class DashboardController extends Controller
         echo 'Total: ' . count($all5000s) . '<br/><br/>';
         echo 'Total: ' . count($all5000s) * 2000 . '<br/><br/>';
         foreach($all5000s as $payment) {
-            echo $payment->paymentreceipts[0]->image . '<br/>';
-            // $payment->amount = 2000;
-            // $payment->save();
 
-            // $paymentthreeth = new Payment;
-            // $paymentthreeth->member_id = $request->member_id;
-            // $paymentthreeth->payer_id = $request->member_id;
-            // $paymentthreeth->amount = $request->amount;
-            // $paymentthreeth->bank = $request->bank;
-            // $paymentthreeth->branch = $request->branch;
-            // $paymentthreeth->pay_slip = $request->pay_slip;
-            // $paymentthreeth->payment_status = 0;
-            // $paymentthreeth->payment_category = 1; // monthly payment, if 0 then membership payment
-            // $paymentthreeth->payment_type = 1; // single payment, if 2 then bulk payment
-            // // generate payment_key
-            // $payment_key_length = 10;
-            // $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            // $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
-            // // generate payment_key
-            // $paymentthreeth->payment_key = $payment_key;
-            // $paymentthreeth->save();
+            if($payment->member_id == 198600002) {
+                $payment->amount = 2000;
+                $payment->save();
 
-            // receipt upload
-            // $paymentreceiptthreeth = new Paymentreceipt;
-            // $paymentreceiptthreeth->payment_id = $paymentthreeth->id;
-            // $paymentreceiptthreeth->image = $payment->paymentreceipts[0]->image;
-            // $paymentreceiptthreeth->save();
+                $paymentthreeth = new Payment;
+                $paymentthreeth->member_id = $payment->member_id;
+                $paymentthreeth->payer_id = $payment->member_id;
+                $paymentthreeth->payment_status = 1; // approved
+                $paymentthreeth->payment_category = 1; // monthly payment, if 0 then membership payment
+                $paymentthreeth->payment_type = 1; // single payment, if 2 then bulk payment
+                $paymentthreeth->payment_key = random_string(10);
+                $paymentthreeth->amount = 3000; // hard coded
+                $paymentthreeth->bank = $payment->bank;
+                $paymentthreeth->branch = $payment->branch;
+                $paymentthreeth->pay_slip = $payment->pay_slip;
+                $paymentthreeth->created_at = date('Y-m-d H:i:s', strtotime($payment->created_at . '+ 1 minute'));
+                $paymentthreeth->updated_at = date('Y-m-d', strtotime($payment->updated_at . '+ 1 minute'));
+                $paymentthreeth->save();
+
+                // receipt upload
+                $paymentreceiptthreeth = new Paymentreceipt;
+                $paymentreceiptthreeth->payment_id = $paymentthreeth->id;
+                $paymentreceiptthreeth->image = $payment->paymentreceipts[0]->image;
+                $paymentreceiptthreeth->save();
+            }
         }
+
+        echo 'Works fine...';
     }
     // operation
     // operation
