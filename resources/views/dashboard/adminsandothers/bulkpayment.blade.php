@@ -261,9 +261,9 @@
         var value = $('#amount').val();
         if(value == '') {
           if($(window).width() > 768) {
-            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি', 'INFO').css('width', '400px');
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', '400px');
           } else {
-            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি', 'INFO').css('width', ($(window).width()-25)+'px');
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', ($(window).width()-25)+'px');
           }
           $('#submitBtn').attr('disabled', false);
         } else {
@@ -320,7 +320,7 @@
           $('.add_separate_amounts').each(function(){
               add_separate_amounts += parseFloat(this.value);
           });
-          // console.log(add_separate_amounts);
+          console.log(add_separate_amounts);
           if(add_separate_amounts != $('#amount').val()) {
             toastr.warning('মোট টাকার পরিমাণ এবং সদস্যদের আলাদা করে দেওয়া টাকার পরিমাণ সমান হওয়া বাঞ্ছনীয়!', 'Warning');
             event.preventDefault();
