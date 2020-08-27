@@ -155,7 +155,7 @@
           <div class="box-body">
             <div class="form-group">
               {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
             </div>
             <div class="form-group">
               {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
@@ -261,19 +261,19 @@
         var value = $('#amount').val();
         if(value == '') {
           if($(window).width() > 768) {
-            toastr.info('পরিমাণ ৫০০ এর গুণিতক', 'INFO').css('width', '400px');
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি', 'INFO').css('width', '400px');
           } else {
-            toastr.info('পরিমাণ ৫০০ এর গুণিতক', 'INFO').css('width', ($(window).width()-25)+'px');
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি', 'INFO').css('width', ($(window).width()-25)+'px');
           }
           $('#submitBtn').attr('disabled', false);
         } else {
           $('#submitBtn').attr('disabled', true);
         }
-        if(value % 500 != 0) {
+        if(value < 300) {
           if($(window).width() > 768) {
-            toastr.info('পরিমাণ ৫০০ এর গুণিতকে দিন', 'INFO').css('width', '400px');
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', '400px');
           } else {
-            toastr.info('পরিমাণ ৫০০ এর গুণিতকে দিন', 'INFO').css('width', ($(window).width()-25)+'px');
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', ($(window).width()-25)+'px');
           }
           $('#submitBtn').attr('disabled', true);
         } else {
