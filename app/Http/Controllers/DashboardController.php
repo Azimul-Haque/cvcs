@@ -2789,7 +2789,7 @@ class DashboardController extends Controller
                            ->where('is_archieved', 0)
                            ->orderBy('id', 'desc')
                            ->paginate(10);
-        return view('dashboard.payments.approved')
+        return view('dashboard.payments.disputed')
                     ->withPayments($payments);
     }
 
