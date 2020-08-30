@@ -2989,6 +2989,22 @@ class DashboardController extends Controller
 
         echo 'Works fine...';
     }
+    public function delExPay() 
+    {
+        $allpays = Payment::all();
+
+        $cosnsd = 0;
+        foreach($allpays as $payment) {
+            // search user
+            if(empty($payment->payee) || empty($payment->user)) {
+                $payment->delete();
+                $cosnsd++;
+                echo $cosnsd;
+                echo '. Done.';
+                
+            }
+        }
+    }
     // operation
     // operation
     
