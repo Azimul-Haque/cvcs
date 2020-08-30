@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'CVCS | অনুমোদিত পরিশোধ')
+@section('title', 'CVCS | অনিষ্পন্ন পরিশোধ')
 
 @section('css')
 
@@ -8,7 +8,7 @@
 
 @section('content_header')
     <h1>
-      অনুমোদিত পরিশোধসমূহ
+      অনিষ্পন্ন পরিশোধসমূহ
       <div class="pull-right">
         
       </div>

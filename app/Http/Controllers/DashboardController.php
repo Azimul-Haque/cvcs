@@ -2860,7 +2860,7 @@ class DashboardController extends Controller
         // PAYMENT STATUS 0 MEANS UNAPPROVED, 1 MEANS APPROVED, 2 MEANS DISPUTED
         // PAYMENT STATUS 0 MEANS UNAPPROVED, 1 MEANS APPROVED, 2 MEANS DISPUTED
         $payment->save();
-        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        Session::flash('success', 'অনিষ্পন্ন সফল হয়েছে!');
         return redirect()->route('dashboard.memberspendingpayments');
     }
 

@@ -200,6 +200,7 @@
               <!-- Approve Payment Modal -->
               <!-- Approve Payment Modal -->
             @endif
+            
             <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#disputePaymentModal{{ $payment->id }}" data-backdrop="static" title="অনিষ্পন্ন করুন"><i class="fa fa-exclamation-triangle"></i></button>
             <!-- Dispute Payment Modal -->
             <!-- Dispute Payment Modal -->
