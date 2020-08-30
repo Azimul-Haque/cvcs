@@ -2785,7 +2785,7 @@ class DashboardController extends Controller
 
     public function getMembersDisputedPayments() 
     {
-        $payments = Payment::where('payment_status', 1)
+        $payments = Payment::where('payment_status', 2) // 2 Means Disputed
                            ->where('is_archieved', 0)
                            ->orderBy('id', 'desc')
                            ->paginate(10);
