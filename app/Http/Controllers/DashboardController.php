@@ -2839,6 +2839,64 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
+    public function disputePayment(Request $request, $id) 
+    {
+        $payment = Payment::find($id);
+
+        $payment->payment_status = 2;
+
+        // PAYMENT STATUS 0 MEANS
+        $payment->save();
+
+        // send pending SMS ... aro kichu kaaj baki ache...
+        // send sms
+        $mobile_number = 0;
+        if(strlen($payment->user->mobile) == 11) {
+            $mobile_number = $payment->user->mobile;
+        } elseif(strlen($payment->user->mobile) > 11) {
+            if (strpos($payment->user->mobile, '+') !== false) {
+                $mobile_number = substr($payment->user->mobile, -11);
+            }
+        }
+        $url = config('sms.url');
+        $number = $mobile_number;
+        $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+        $data= array(
+            'username'=>config('sms.username'),
+            'password'=>config('sms.password'),
+            // 'apicode'=>"1",
+            'number'=>"$number",
+            // 'msisdn'=>"$number",
+            // 'countrycode'=>"880",
+            // 'cli'=>"CVCS",
+            // 'messagetype'=>"1",
+            'message'=>"$text",
+            // 'messageid'=>"1"
+        );
+        // initialize send status
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+        $smsresult = curl_exec($ch);
+
+        // $sendstatus = $result = substr($smsresult, 0, 3);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        // send sms
+        if($sendstatus == 1101) {
+            Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } elseif($sendstatus == 1006) {
+            Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+        } else {
+            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        }
+
+        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        return redirect()->route('dashboard.membersapprovedpayments');
+    }
+
     public function approveBulkPayment(Request $request, $id) 
     {
         $bulkpayment = Payment::find($id);
@@ -3000,8 +3058,7 @@ class DashboardController extends Controller
                 $payment->delete();
                 $cosnsd++;
                 echo $cosnsd;
-                echo '. Done.';
-                
+                echo '. Done.<br/>';
             }
         }
     }
