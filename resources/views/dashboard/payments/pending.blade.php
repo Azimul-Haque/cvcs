@@ -54,7 +54,7 @@
           <td>{{ $payment->pay_slip }}<br/>{{ $payment->payment_key }}</td>
           <td>
             @if($payment->payment_status == 0)
-              <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
+              <span class="badge badge-danger"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন</span>
             @else
               <span class="badge badge-success"><i class="fa fa-check"></i>অনুমোদিত</span>
             @endif
