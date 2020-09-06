@@ -2704,8 +2704,8 @@ class DashboardController extends Controller
                 $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
                 $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
-                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
                 }
             } else {
                 $startmonth = date('Y-m-', strtotime($member->joining_date));
@@ -2713,8 +2713,8 @@ class DashboardController extends Controller
                 $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
                 $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
-                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
                 }
             }
         }
@@ -2744,8 +2744,8 @@ class DashboardController extends Controller
             $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
             $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
             $totalmonthsformember = $to->diffInMonths($from) + 1;
-            if(($totalmonthsformember * 500) > $approvedcashformontly) {
-              $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+            if(($totalmonthsformember * 300) > $approvedcashformontly) {
+              $response->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
             }
         } else {
             $startmonth = date('Y-m-', strtotime($response->joining_date));
@@ -2753,8 +2753,8 @@ class DashboardController extends Controller
             $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
             $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
             $totalmonthsformember = $to->diffInMonths($from) + 1;
-            if(($totalmonthsformember * 500) > $approvedcashformontly) {
-              $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+            if(($totalmonthsformember * 300) > $approvedcashformontly) {
+              $response->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
             }
         }
 
