@@ -2704,8 +2704,8 @@ class DashboardController extends Controller
                 $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
                 $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
-                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
                 }
             } else {
                 $startmonth = date('Y-m-', strtotime($member->joining_date));
@@ -2713,8 +2713,8 @@ class DashboardController extends Controller
                 $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
                 $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
-                if(($totalmonthsformember * 500) > $approvedcashformontly) {
-                  $member->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
                 }
             }
         }
@@ -2744,8 +2744,8 @@ class DashboardController extends Controller
             $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
             $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
             $totalmonthsformember = $to->diffInMonths($from) + 1;
-            if(($totalmonthsformember * 500) > $approvedcashformontly) {
-              $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+            if(($totalmonthsformember * 300) > $approvedcashformontly) {
+              $response->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
             }
         } else {
             $startmonth = date('Y-m-', strtotime($response->joining_date));
@@ -2753,8 +2753,8 @@ class DashboardController extends Controller
             $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
             $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
             $totalmonthsformember = $to->diffInMonths($from) + 1;
-            if(($totalmonthsformember * 500) > $approvedcashformontly) {
-              $response->totalpendingmonthly = ($totalmonthsformember * 500) - $approvedcashformontly;
+            if(($totalmonthsformember * 300) > $approvedcashformontly) {
+              $response->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
             }
         }
 
@@ -2780,6 +2780,16 @@ class DashboardController extends Controller
                            ->orderBy('id', 'desc')
                            ->paginate(10);
         return view('dashboard.payments.approved')
+                    ->withPayments($payments);
+    }
+
+    public function getMembersDisputedPayments() 
+    {
+        $payments = Payment::where('payment_status', 2) // 2 Means Disputed
+                           ->where('is_archieved', 0)
+                           ->orderBy('id', 'desc')
+                           ->paginate(10);
+        return view('dashboard.payments.disputed')
                     ->withPayments($payments);
     }
 
@@ -2837,6 +2847,21 @@ class DashboardController extends Controller
 
         Session::flash('success', 'অনুমোদন সফল হয়েছে!');
         return redirect()->route('dashboard.membersapprovedpayments');
+    }
+
+    public function disputePayment(Request $request, $id) 
+    {
+        $payment = Payment::find($id);
+        // PAYMENT STATUS 0 MEANS UNAPPROVED, 1 MEANS APPROVED, 2 MEANS DISPUTED
+        // PAYMENT STATUS 0 MEANS UNAPPROVED, 1 MEANS APPROVED, 2 MEANS DISPUTED
+        // PAYMENT STATUS 0 MEANS UNAPPROVED, 1 MEANS APPROVED, 2 MEANS DISPUTED
+        $payment->payment_status = 2;
+        // PAYMENT STATUS 0 MEANS UNAPPROVED, 1 MEANS APPROVED, 2 MEANS DISPUTED
+        // PAYMENT STATUS 0 MEANS UNAPPROVED, 1 MEANS APPROVED, 2 MEANS DISPUTED
+        // PAYMENT STATUS 0 MEANS UNAPPROVED, 1 MEANS APPROVED, 2 MEANS DISPUTED
+        $payment->save();
+        Session::flash('success', 'অনিষ্পন্ন সফল হয়েছে!');
+        return redirect()->route('dashboard.memberspendingpayments');
     }
 
     public function approveBulkPayment(Request $request, $id) 
@@ -2989,6 +3014,22 @@ class DashboardController extends Controller
 
         echo 'Works fine...';
     }
+    public function delExPay() 
+    {
+        $allpays = Payment::all();
+
+        $cosnsd = 0;
+        foreach($allpays as $payment) {
+            // search user
+            if(empty($payment->payee) || empty($payment->user)) {
+                $payment->delete();
+                $cosnsd++;
+                echo $cosnsd;
+                echo '. Done.<br/>';
+            }
+        }
+    }
     // operation
     // operation
+    
 }

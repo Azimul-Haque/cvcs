@@ -54,7 +54,7 @@
           <td>{{ $payment->pay_slip }}<br/>{{ $payment->payment_key }}</td>
           <td>
             @if($payment->payment_status == 0)
-              <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
+              <span class="badge badge-danger"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন</span>
             @else
               <span class="badge badge-success"><i class="fa fa-check"></i>অনুমোদিত</span>
             @endif
@@ -200,6 +200,62 @@
               <!-- Approve Payment Modal -->
               <!-- Approve Payment Modal -->
             @endif
+            
+            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#disputePaymentModal{{ $payment->id }}" data-backdrop="static" title="অনিষ্পন্ন করুন"><i class="fa fa-exclamation-triangle"></i></button>
+            <!-- Dispute Payment Modal -->
+            <!-- Dispute Payment Modal -->
+            <div class="modal fade" id="disputePaymentModal{{ $payment->id }}" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> পরিশোধ অনিষ্পন্ন</h4>
+                  </div>
+                  <div class="modal-body">
+                    <big>আপনি কী নিশ্চিতভাবে এই পরিশোধটি অনিষ্পন্ন করতে চান?</big><br/>
+                    <strong>জমাদানকারীঃ</strong> {{ $payment->user->name_bangla }}<br/>
+                    <strong>পরিমাণঃ</strong> ৳ {{ $payment->amount }}<br/>
+                    <strong>ব্যাংকঃ</strong> {{ $payment->bank }}<br/>
+                    <strong>ব্রাঞ্চঃ</strong> {{ $payment->branch }}<br/>
+                    <strong>পে স্লিপ</strong> {{ $payment->pay_slip }}<br/>
+                    <strong>সময়কালঃ</strong> {{ date('F d, Y h:i A', strtotime($payment->created_at)) }}<br/><br/>
+                    @if($payment->payment_type == 2)
+                      <big>সদস্য অনুযায়ী পরিশোধের হিসাবঃ</big>
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>সদস্য</th>
+                              <th>সদস্য আইডি</th>
+                              <th>ছবি</th>
+                              <th>পরিমাণ</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach(json_decode($payment->bulk_payment_member_ids) as $member_id => $amount)
+                              <tr>
+                                <td>{{ $members->where('member_id', $member_id)->first()->name_bangla }}</td>
+                                <td><big><b>{{ $member_id }}</b></big></td>
+                                <td><img src="{{ asset('images/users/'.$members->where('member_id', $member_id)->first()->image) }}" class="img-responsive" style="max-height: 70px; width: auto;"></td>
+                                <td>{{ $amount }}/-</td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                    @endif
+                  </div>
+                  <div class="modal-footer">
+                        {!! Form::model($payment, ['route' => ['dashboard.disputepayment', $payment->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
+                        {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-danger')) !!}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                    {!! Form::close() !!}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Dispute Payment Modal -->
+            <!-- Dispute Payment Modal -->
             {{-- <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteMemberModal{{ $payment->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
           </td>
         </tr>

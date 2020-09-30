@@ -475,7 +475,11 @@ class IndexController extends Controller
             }
             $url = config('sms.url');
             $number = $mobile_number;
+<<<<<<< HEAD
             $text = 'https://cvcsbd.com, your password reset security code is ' . $securuty_code . '. Thanks.';
+=======
+            $text = 'Your password reset security code is ' . $securuty_code . '. Thanks, https://cvcsbd.com';
+>>>>>>> 0c6501749cd4af1146e400bd433804ff6fa49248
             $data= array(
                 'username'=>config('sms.username'),
                 'password'=>config('sms.password'),

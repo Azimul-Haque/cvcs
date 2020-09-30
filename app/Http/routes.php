@@ -237,8 +237,10 @@ Route::get('/dashboard/reports/export/designation/members/count/pdf', ['as'=>'re
 // PAYMENTS BY ADMIN
 Route::get('/dashboard/members/payments/pending', ['as'=>'dashboard.memberspendingpayments','uses'=>'DashboardController@getMembersPendingPayments']);
 Route::get('/dashboard/members/payments/approved', ['as'=>'dashboard.membersapprovedpayments','uses'=>'DashboardController@getMembersApprovedPayments']);
+Route::get('/dashboard/members/payments/disputed', ['as'=>'dashboard.membersdisputedpayments','uses'=>'DashboardController@getMembersDisputedPayments']);
 Route::patch('/dashboard/members/payments/single/{id}/approve', ['as'=>'dashboard.approvesinglepayment','uses'=>'DashboardController@approveSinglePayment']);
 Route::patch('/dashboard/members/payments/bulk/{id}/approve', ['as'=>'dashboard.approvebulkpayment','uses'=>'DashboardController@approveBulkPayment']);
+Route::patch('/dashboard/members/payments/{id}/dispute', ['as'=>'dashboard.disputepayment','uses'=>'DashboardController@disputePayment']);
 
 // NOTIFICATION PAGE
 Route::get('/dashboard/notifications', ['as'=>'dashboard.notifications','uses'=>'DashboardController@getNotifications']);
@@ -257,6 +259,7 @@ Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsa
 // operation
 // operation
 Route::get('/dashboard/get5000', ['as'=>'dashboard.get5000','uses'=>'DashboardController@getAll5000']);
+// Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
 
 // operation
 // operation
