@@ -323,7 +323,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     {!! Form::label('application_payment_amount', 'পরিমাণ *') !!}
-                    {!! Form::text('application_payment_amount', $application->application_payment_amount, array('class' => 'form-control', 'id' => 'application_payment_amount', 'placeholder' => 'পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required' => '')) !!}
+                    {!! Form::text('application_payment_amount', $application->application_payment_amount, array('class' => 'form-control', 'id' => 'application_payment_amount', 'placeholder' => 'পরিমাণ লিখুন', 'required' => '')) !!}
                   </div>
                 </div>
                 <div class="col-md-6">
