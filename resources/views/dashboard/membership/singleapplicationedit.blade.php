@@ -516,21 +516,21 @@
       if($('#application_payment_amount').val() % 500 == 0) {
 
       } else {
-        toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
-        event.preventDefault();
-        $('#submitApplicationModal').modal('hide');
-        $('html, body').animate({
-            scrollTop: $('#name').offset().top - 170
-        }, 500);
+        // toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
+        // event.preventDefault();
+        // $('#submitApplicationModal').modal('hide');
+        // $('html, body').animate({
+        //     scrollTop: $('#name').offset().top - 170
+        // }, 500);
       }
 
       if($('#application_payment_amount').val() < 5000) {
-        toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
-        event.preventDefault();
-        $('#submitApplicationModal').modal('hide');
-        $('html, body').animate({
-            scrollTop: $('#name').offset().top - 170
-        }, 500);
+        // toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
+        // event.preventDefault();
+        // $('#submitApplicationModal').modal('hide');
+        // $('html, body').animate({
+        //     scrollTop: $('#name').offset().top - 170
+        // }, 500);
       }
       @endif
       deferred.success(function () {
@@ -540,23 +540,22 @@
       
   </script>
   <script type="text/javascript">
-    $(document).ready( function() {
-      @if($application->activation_status == 0)
-      $('#application_payment_amount').blur(function() {
-        var value = $('#application_payment_amount').val();
-        if(value % 500 == 0) {
+    // $(document).ready( function() {
+    //   @if($application->activation_status == 0)
+    //   $('#application_payment_amount').blur(function() {
+    //     var value = $('#application_payment_amount').val();
+    //     if(value % 500 == 0) {
 
-        } else {
-          toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
-        }
+    //     } else {
+    //       toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
+    //     }
 
-        if(value < 5000) {
-          toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
-        }
-      })
-      @endif
-      
-    });
+    //     if(value < 5000) {
+    //       toastr.warning('পরিমাণ কমপক্ষে ৫০০০ হতে হবে', 'WARNING').css('width', '400px');
+    //     }
+    //   })
+    //   @endif
+    // });
   </script>
   <script type="text/javascript">
     var _URL = window.URL || window.webkitURL;
