@@ -65,7 +65,7 @@
               <small>Member ID: <span style="font-family: Calibri; font-size: 10px;"><b>{{ $member['member_id'] }}</b></span></small>
             </td>
             <td align="center"><span style="font-family: Calibri; font-size: 10px;">{{ $member['to'] }}</span></td>
-            <td align="left"><span style="font-family: Calibri; font-size: 10px;">{{ $member['message'] }}</span></td>
+            <td align="left"><span style="font-family: Calibri; font-size: 9px;">{{ $member['message'] }}</span></td>
             <td align="center">
               @if(strtotime('31-01-2019') > strtotime($member['joining_date']))
                 <span span style="font-family: Calibri; font-size: 10px;">Before <b>January, 2019</b> or did not provide joining date</span>
