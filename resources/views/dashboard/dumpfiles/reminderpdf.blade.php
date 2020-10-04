@@ -61,7 +61,7 @@
             <td align="center">{{ bangla($counter++) }}</td>
             <td>
               {{ $member['name_bangla'] }}<br/>
-              <span style="font-family: Calibri; font-size: 12px;">{{ $member['name'] }}</span><br/>
+              <span style="font-family: Calibri; font-size: 9px;">{{ $member['name'] }}</span><br/>
               <small>Member ID: <span style="font-family: Calibri;"><b>{{ $member['member_id'] }}</b></span></small>
             </td>
             <td align="center"><span style="font-family: Calibri;">{{ $member['to'] }}</span></td>
