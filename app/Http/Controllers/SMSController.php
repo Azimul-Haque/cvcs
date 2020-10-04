@@ -205,7 +205,7 @@ class SMSController extends Controller
             ini_set("pcre.backtrack_limit", "5000000");
             $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => $smsdata]);
             $fileName = 'Reminder_SMS_List.pdf';
-            return $pdf->download($fileName);
+            return $pdf->stream($fileName);
             // TEST CODE
             // TEST CODE
 
