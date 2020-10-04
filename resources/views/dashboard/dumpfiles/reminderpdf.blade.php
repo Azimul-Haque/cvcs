@@ -45,11 +45,11 @@
     <table class="">
       <tr class="graybackground">
         <th width="5%">#</th>
-        <th width="30%">সদস্য</th>
-        <th width="13%">মেম্বার আইডি</th>
+        <th width="20%">সদস্য</th>
         <th>যোগাযোগ</th>
-        <th width="20%">অফিস তথ্য</th>
-        <th>ছবি</th>
+        <th width="35%">এসএমএস</th>
+        <th>যোগদানের তারিখ</th>
+        <th>মোট পাওনা</th>
       </tr>
       @php
         $counter = 1;
@@ -57,17 +57,21 @@
       @foreach($smsdata as $member)
         <tr>
           <td align="center">{{ bangla($counter++) }}</td>
-          <td>{{ $member->name_bangla }}<br/><span style="font-family: Calibri; font-size: 12px;">{{ $member->name }}</span></td>
-          <td align="center"><span style="font-family: Calibri;"><b>{{ $member->member_id }}</b></span></td>
-          <td style="font-family: Calibri;">{{ $member->mobile }}<br/><small>{{ $member->email }}</small></td>
-          <td align="center"><small><span style="color: #074EA2;">{{ $member->position->name }}</span><br/>{{ $member->branch->name }}</small></td>
+          <td>
+            {{ $member['name_bangla'] }}<br/>
+            <span style="font-family: Calibri; font-size: 12px;">{{ $member['name'] }}</span><br/>
+            <small>Member ID: <span style="font-family: Calibri;"><b>{{ $member['member_id'] }}</b></span></small>
+          </td>
+          <td align="center"><span style="font-family: Calibri;">{{ $member['to'] }}</span></td>
+          <td align="left">{{ $member['message'] }}</td>
           <td align="center">
-            @if($member->image != null && file_exists(public_path('images/users/'.$member->image)))
-              <img src="{{ public_path('images/users/'.$member->image)}}" style="height: 50px; width: auto;" />
+            @if(strtotime('31-01-2019') > strtotime($member['joining_date']))
+              Before January, 2019
             @else
-              <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
+              <span style="font-family: Calibri;"><b>{{ date('F d, Y', strtotime($member['joining_date'])) }}</b></span>
             @endif
           </td>
+          <td align="center">{{ $member['due'] }}/-</td>
         </tr>
       @endforeach      
     </table>

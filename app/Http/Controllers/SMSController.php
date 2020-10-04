@@ -165,13 +165,13 @@ class SMSController extends Controller
                     }
 	            	
 
-	            	$text = rawurlencode($text);
+	            	$encodedtext = rawurlencode($text);
 	            	$smsdata[$i] = array(
                         'name'=>"$member->name",
                         'name_bangla'=>"$member->name_bangla",
                         'member_id'=>"$member->member_id",
 	            	    'to'=>"$mobile_number",
-                        'message'=>"$text",
+                        'message'=>"$text", // $encodedtext
                         'joining_date'=>"$member->joining_date",
 	            	    'due'=>"$member->totalpendingmonthly",
 	            	);
@@ -186,13 +186,13 @@ class SMSController extends Controller
                     }
                     $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is already paid. Thank you. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
 
-                    $text = rawurlencode($text);
+                    $encodedtext = rawurlencode($text);
                     $smsdata[$i] = array(
                         'name'=>"$member->name",
                         'name_bangla'=>"$member->name_bangla",
                         'member_id'=>"$member->member_id",
                         'to'=>"$mobile_number",
-                        'message'=>"$text",
+                        'message'=>"$text", // $encodedtext
                         'joining_date'=>"$member->joining_date",
                         'due'=>"$member->totalpendingmonthly",
                     );
