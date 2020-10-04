@@ -167,6 +167,9 @@ class SMSController extends Controller
 
 	            	$text = rawurlencode($text);
 	            	$smsdata[$i] = array(
+                        'name'=>"$member->name",
+                        'name_bangla'=>"$member->name_bangla",
+                        'member_id'=>"$member->member_id",
 	            	    'to'=>"$mobile_number",
                         'message'=>"$text",
                         'joining_date'=>"$member->joining_date",
@@ -185,6 +188,9 @@ class SMSController extends Controller
 
                     $text = rawurlencode($text);
                     $smsdata[$i] = array(
+                        'name'=>"$member->name",
+                        'name_bangla'=>"$member->name_bangla",
+                        'member_id'=>"$member->member_id",
                         'to'=>"$mobile_number",
                         'message'=>"$text",
                         'joining_date'=>"$member->joining_date",
@@ -193,7 +199,15 @@ class SMSController extends Controller
                 }
 	        }
 
-	        $smsdata = array_values($smsdata);
+            // TEST CODE
+            // TEST CODE
+            $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => $smsdata]);
+            $fileName = 'Reminder_SMS_List.pdf';
+            return $pdf->stream($fileName);
+            // TEST CODE
+            // TEST CODE
+
+	        /*$smsdata = array_values($smsdata);
 	        $smsjsondata = json_encode($smsdata);
         	// echo $smsjsondata;
             // dd($smsjsondata);
@@ -230,7 +244,7 @@ class SMSController extends Controller
 	        } else {
 	            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
 	        }
-	        return redirect()->route('dashboard.smsmodule');
+	        return redirect()->route('dashboard.smsmodule');*/
         } else {
         	Session::flash('warning', 'Confirm শব্দটি ঠিকমতো লিখুন!');
             return redirect()->route('dashboard.smsmodule');
