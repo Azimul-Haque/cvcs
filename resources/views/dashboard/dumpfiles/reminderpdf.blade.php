@@ -56,24 +56,26 @@
         $counter = 1;
       @endphp
       @foreach($smsdata as $member)
-        <tr>
-          <td align="center">{{ bangla($counter++) }}</td>
-          <td>
-            {{ $member['name_bangla'] }}<br/>
-            <span style="font-family: Calibri; font-size: 12px;">{{ $member['name'] }}</span><br/>
-            <small>Member ID: <span style="font-family: Calibri;"><b>{{ $member['member_id'] }}</b></span></small>
-          </td>
-          <td align="center"><span style="font-family: Calibri;">{{ $member['to'] }}</span></td>
-          <td align="left"><span style="font-family: Calibri;">{{ $member['message'] }}</span></td>
-          <td align="center">
-            @if(strtotime('31-01-2019') > strtotime($member['joining_date']))
-              <span span style="font-family: Calibri;">Before <b>January, 2019</b> or did not provide joining date</span>
-            @else
-              <span style="font-family: Calibri;"><b>{{ date('F d, Y', strtotime($member['joining_date'])) }}</b></span>
-            @endif
-          </td>
-          <td align="center">{{ $member['due'] }}/-</td>
-        </tr>
+        @if($member['due'] > 0)
+          <tr>
+            <td align="center">{{ bangla($counter++) }}</td>
+            <td>
+              {{ $member['name_bangla'] }}<br/>
+              <span style="font-family: Calibri; font-size: 12px;">{{ $member['name'] }}</span><br/>
+              <small>Member ID: <span style="font-family: Calibri;"><b>{{ $member['member_id'] }}</b></span></small>
+            </td>
+            <td align="center"><span style="font-family: Calibri;">{{ $member['to'] }}</span></td>
+            <td align="left"><span style="font-family: Calibri;">{{ $member['message'] }}</span></td>
+            <td align="center">
+              @if(strtotime('31-01-2019') > strtotime($member['joining_date']))
+                <span span style="font-family: Calibri;">Before <b>January, 2019</b> or did not provide joining date</span>
+              @else
+                <span style="font-family: Calibri;"><b>{{ date('F d, Y', strtotime($member['joining_date'])) }}</b></span>
+              @endif
+            </td>
+            <td align="center">{{ $member['due'] }}/-</td>
+          </tr>
+        @endif
       @endforeach      
     </table>
   </div>
