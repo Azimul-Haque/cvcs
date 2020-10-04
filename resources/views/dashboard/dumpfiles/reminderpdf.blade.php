@@ -19,14 +19,15 @@
     font-family: 'kalpurush', sans-serif;
     font-size: 13px;
   }
-  @page {
+  /*
+  page@ {
     header: page-header;
     footer: page-footer;
     background-image: url({{ public_path('images/cvcs_background.png') }});
     background-size: cover;              
     background-repeat: no-repeat;
     background-position: center center;
-  }
+  }*/
   .graybackground {
     background: rgba(192,192,192, 0.7);
   }
