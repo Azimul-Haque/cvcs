@@ -168,7 +168,9 @@ class SMSController extends Controller
 	            	$text = rawurlencode($text);
 	            	$smsdata[$i] = array(
 	            	    'to'=>"$mobile_number",
-	            	    'message'=>"$text",
+                        'message'=>"$text",
+                        'joining_date'=>"$member->joining_date",
+	            	    'due'=>"$member->totalpendingmonthly",
 	            	);
 	            } else {
                     $mobile_number = 0;
@@ -185,6 +187,8 @@ class SMSController extends Controller
                     $smsdata[$i] = array(
                         'to'=>"$mobile_number",
                         'message'=>"$text",
+                        'joining_date'=>"$member->joining_date",
+                        'due'=>"$member->totalpendingmonthly",
                     );
                 }
 	        }
