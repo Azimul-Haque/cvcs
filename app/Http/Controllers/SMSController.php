@@ -132,7 +132,7 @@ class SMSController extends Controller
 	            {
 	                $thismonth = Carbon::now()->format('Y-m-');
 	                $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
-	                $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+	                $to = Carbon::createFromFormat('Y-m-d', $thismonth . date('t', strtotime($thismonth))); // t returns the number of days of the month
 	                $totalmonthsformember = $to->diffInMonths($from) + 1;
 	                if(($totalmonthsformember * 300) > $approvedcashformontly) {
 	                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
@@ -141,7 +141,7 @@ class SMSController extends Controller
 	                $startmonth = date('Y-m-', strtotime($member->joining_date));
 	                $thismonth = Carbon::now()->format('Y-m-');
 	                $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
-	                $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+	                $to = Carbon::createFromFormat('Y-m-d', $thismonth . date('t', strtotime($thismonth))); // t returns the number of days of the month
 	                $totalmonthsformember = $to->diffInMonths($from) + 1;
 	                if(($totalmonthsformember * 300) > $approvedcashformontly) {
 	                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
