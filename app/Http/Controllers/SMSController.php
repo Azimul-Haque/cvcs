@@ -161,7 +161,7 @@ class SMSController extends Controller
                     if($pendingmonths == 1 || 0) {
                         $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is due, you are requested to pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                     } else {
-                        $text = 'Dear ' . $member->name . ', your monthly payments from ' . date("F, Y", strtotime("-". $pendingmonths + 1 ." months"))  . ' to ' . date('F, Y') . ' are due, you are requested to pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                        $text = $pendingmonths . ' Dear ' . $member->name . ', your monthly payments from ' . date("F, Y", strtotime("-". $pendingmonths + 1 ." months"))  . ' to ' . date('F, Y') . ' are due, you are requested to pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                     }
 	            	
 
@@ -203,7 +203,7 @@ class SMSController extends Controller
             // TEST CODE
             ini_set('max_execution_time', '300');
             ini_set("pcre.backtrack_limit", "5000000");
-            $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => array_slice($smsdata, 1000, 2000)]);
+            $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => array_slice($smsdata, 0, 500)]);
             $fileName = 'Reminder_SMS_List.pdf';
             return $pdf->stream($fileName);
             // TEST CODE
