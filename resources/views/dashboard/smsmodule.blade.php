@@ -33,7 +33,7 @@
           <big>Total Recipients: {{ $notifregisteredmember }}</big>
           {!! Form::open(['route' => ['dashboard.sms.sendbulk'], 'method' => 'POST', 'id' => 'sendBulkForm']) !!}
             <div class="form-group">
-              <input type="hidden" name="smsbalance" value="{{ $notifsmsbalance / 0.20 }}">
+              <input type="hidden" name="smsbalance" value="{{ $notifsmsbalance / 0.30 }}">
               <label for="singlemessage">Message:</label>
               <textarea type="text" name="message" id="singlemessage" class="form-control textarea" required="" placeholder="Write message"></textarea>
             </div>
@@ -78,7 +78,7 @@
           {!! Form::open(['route' => 'dashboard.sms.sendreminder', 'method' => 'POST', 'class' => 'form-default', 'id' => 'sendOneToManyForm']) !!}
             <b>SMS Template: </b><br/>
             Dear [Member Name], your montly payment for [Months Count] month(s) is due, please pay it. Total due: [Total Due Amount]/-.Login: https://cvcsbd.com/login<br/><br/>
-            {!! Form::hidden('hiddengbbalance', (int) ($notifgbsmsbalance / 0.30)) !!}
+            {!! Form::hidden('hiddengbbalance', (int) ($notifgbsmsbalance / 0.20)) !!}
             {!! Form::text('confirmation', null, array('class' => 'form-control', 'placeholder' => 'Type "Confirm"', 'required' => '', 'id' => 'confirmation')) !!}<br/>
             <button type="submit" class="btn btn-info" id="sendOneToManyBtn"><i class="fa fa-paper-plane"></i> বার্তা পাঠান</button>
           {!! Form::close() !!}
