@@ -33,7 +33,7 @@
           <big>Total Recipients: {{ $notifregisteredmember }}</big>
           {!! Form::open(['route' => ['dashboard.sms.sendbulk'], 'method' => 'POST', 'id' => 'sendBulkForm']) !!}
             <div class="form-group">
-              <input type="hidden" name="smsbalance" value="{{ $notifsmsbalance / 0.30 }}">
+              <input type="hidden" name="smsbalance" value="{{ $notifsmsbalance / 0.20 }}">
               <label for="singlemessage">Message:</label>
               <textarea type="text" name="message" id="singlemessage" class="form-control textarea" required="" placeholder="Write message"></textarea>
             </div>
