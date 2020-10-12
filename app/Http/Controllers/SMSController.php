@@ -167,13 +167,13 @@ class SMSController extends Controller
 
 	            	$encodedtext = rawurlencode($text);
 	            	$smsdata[$i] = array(
-                        'name'=>"$member->name",
-                        'name_bangla'=>"$member->name_bangla",
-                        'member_id'=>"$member->member_id",
+                        // 'name'=>"$member->name",
+                        // 'name_bangla'=>"$member->name_bangla",
+                        // 'member_id'=>"$member->member_id",
 	            	    'to'=>"$mobile_number",
-                        'message'=>"$text", // $encodedtext
-                        'joining_date'=>"$member->joining_date",
-	            	    'due'=>"$member->totalpendingmonthly",
+                        'message'=>"$encodedtext", // $encodedtext
+                        // 'joining_date'=>"$member->joining_date",
+	            	    // 'due'=>"$member->totalpendingmonthly",
 	            	);
 	            } else {
                     $mobile_number = 0;
@@ -188,28 +188,28 @@ class SMSController extends Controller
 
                     $encodedtext = rawurlencode($text);
                     $smsdata[$i] = array(
-                        'name'=>"$member->name",
-                        'name_bangla'=>"$member->name_bangla",
-                        'member_id'=>"$member->member_id",
+                        // 'name'=>"$member->name",
+                        // 'name_bangla'=>"$member->name_bangla",
+                        // 'member_id'=>"$member->member_id",
                         'to'=>"$mobile_number",
-                        'message'=>"$text", // $encodedtext
-                        'joining_date'=>"$member->joining_date",
-                        'due'=>"$member->totalpendingmonthly",
+                        'message'=>"$encodedtext", // $encodedtext
+                        // 'joining_date'=>"$member->joining_date",
+                        // 'due'=>"$member->totalpendingmonthly",
                     );
                 }
 	        }
 
             // TEST CODE
             // TEST CODE
-            ini_set('max_execution_time', '300');
-            ini_set("pcre.backtrack_limit", "5000000");
-            $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => array_slice($smsdata, 0, 500)]);
-            $fileName = 'Reminder_SMS_List.pdf';
-            return $pdf->stream($fileName);
+            // ini_set('max_execution_time', '300');
+            // ini_set("pcre.backtrack_limit", "5000000");
+            // $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => array_slice($smsdata, 0, 500)]);
+            // $fileName = 'Reminder_SMS_List.pdf';
+            // return $pdf->stream($fileName);
             // TEST CODE
             // TEST CODE
 
-	        /*$smsdata = array_values($smsdata);
+	        $smsdata = array_values($smsdata);
 	        $smsjsondata = json_encode($smsdata);
         	// echo $smsjsondata;
             // dd($smsjsondata);
@@ -246,7 +246,7 @@ class SMSController extends Controller
 	        } else {
 	            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
 	        }
-	        return redirect()->route('dashboard.smsmodule');*/
+	        return redirect()->route('dashboard.smsmodule');
         } else {
         	Session::flash('warning', 'Confirm শব্দটি ঠিকমতো লিখুন!');
             return redirect()->route('dashboard.smsmodule');
