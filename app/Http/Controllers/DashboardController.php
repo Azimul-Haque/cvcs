@@ -2340,6 +2340,11 @@ class DashboardController extends Controller
         return view('dashboard.profile.selfpayment');
     }
 
+    public function getSelfPaymentOnlinePage() 
+    {
+        return view('dashboard.profile.onlinepayment');
+    }
+
     public function storeSelfPayment(Request $request) 
     {
         $this->validate($request,array(
