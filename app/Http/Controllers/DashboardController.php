@@ -2476,33 +2476,34 @@ class DashboardController extends Controller
 
     public function paymentCancelledPost(Request $request)
     {
-        // $donation_id = $request->get('opt_a');
+        $payment_key = $request->get('opt_a');
         
-        // if($request->get('pay_status') == 'Failed') {
-        //     Session::flash('info', 'Something went wrong, please try again!');
-        //     return redirect(Route('index.index'));
-        // }
+        if($request->get('pay_status') == 'Failed') {
+            Session::flash('info', 'Something went wrong, please try again!');
+            return redirect(Route('dashboard.memberpaymentselfonline'));
+        }
         
-        // $amount_request = $request->get('opt_b');
-        // $amount_paid = $request->get('amount');
+        $amount_request = $request->get('opt_b');
+        $amount_paid = $request->get('amount');
         
-        // if($amount_paid == $amount_request)
-        // {
-        //   $donation = Donation::where('donation_id', $donation_id)->first();
-        //   // $donation->trxid = $request->get('pg_txnid');
-        //   $donation->payment_status = 1;
-        //   $donation->card_type = $request->get('card_type');
-        //   $donation->save();
+        if($amount_paid == $amount_request)
+        {
+          // $donation = Donation::where('payment_key', $payment_key)->first();
+          // // $donation->trxid = $request->get('pg_txnid');
+          // $donation->payment_status = 1;
+          // $donation->card_type = $request->get('card_type');
+          // $donation->save();
 
-        //   Session::flash('success','Donation is complete!');
-        // } else {
-        //    // Something went wrong.
-        //   Session::flash('info', 'Something went wrong, please try again!');
-        //   return redirect(Route('index.index'));
-        // }
+          Session::flash('success','Donation is complete!');
+          return redirect(Route('dashboard.memberpayment'));
+        } else {
+           // Something went wrong.
+          Session::flash('info', 'Something went wrong, please try again!');
+          return redirect(Route('dashboard.memberpaymentselfonline'));
+        }
         
-        // //return $request->all();
-        // return redirect()->route('index.donatenext', $donation->donation_id);
+        //return $request->all();
+        return redirect()->route('index.donatenext', $donation->payment_key);
     }
 
     public function paymentCancelled()
