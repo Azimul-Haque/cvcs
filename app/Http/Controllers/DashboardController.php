@@ -50,7 +50,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'nextSelfPaymentOnline', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
     }
 
     /**
@@ -2342,11 +2342,6 @@ class DashboardController extends Controller
         return view('dashboard.profile.selfpayment');
     }
 
-    public function getSelfPaymentOnlinePage() 
-    {
-        return view('dashboard.profile.onlinepayment');
-    }
-
     public function storeSelfPayment(Request $request) 
     {
         $this->validate($request,array(
@@ -2429,6 +2424,11 @@ class DashboardController extends Controller
         
         Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
         return redirect()->route('dashboard.memberpayment');
+    }
+
+    public function getSelfPaymentOnlinePage() 
+    {
+        return view('dashboard.profile.onlinepayment');
     }
 
     public function nextSelfPaymentOnline(Request $request) 
