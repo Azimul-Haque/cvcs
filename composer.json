@@ -11,7 +11,8 @@
         "laravelcollective/html": "5.2.*",
         "niklasravnsborg/laravel-pdf": "^2.0",
         "intervention/image": "^2.4",
-        "mews/purifier": "^2.0"
+        "mews/purifier": "^2.0",
+        "shipu/php-aamarpay-payment": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
