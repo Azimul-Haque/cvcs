@@ -214,10 +214,10 @@ Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.m
 Route::get('/dashboard/member/payment/self/online', ['as'=>'dashboard.memberpaymentselfonline','uses'=>'DashboardController@getSelfPaymentOnlinePage']);
 Route::post('/dashboard/member/payment/self/online', ['as'=>'dashboard.storememberonlinepaymentself','uses'=>'DashboardController@nextSelfPaymentOnline']);
 
-Route::post('payment/success', 'DashboardController@paymentSuccessOrFailed')->name('payment.success');
-Route::get('payment/failed', 'DashboardController@paymentSuccessOrFailed')->name('payment.failed');
-Route::post('payment/cancel', 'DashboardController@paymentCancelledPost')->name('payment.cancel');
-Route::get('payment/cancel', 'DashboardController@paymentCancelled')->name('payment.cancel');
+Route::post('/payment/success', 'DashboardController@paymentSuccessOrFailed')->name('payment.success');
+Route::get('/payment/failed', 'DashboardController@paymentSuccessOrFailed')->name('payment.failed');
+Route::post('/payment/cancel', 'DashboardController@paymentCancelledPost')->name('payment.cancel');
+Route::get('/payment/cancel', 'DashboardController@paymentCancelled')->name('payment.cancel');
 // ONLINE PAYMENT
 // ONLINE PAYMENT
 // ONLINE PAYMENT
