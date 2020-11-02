@@ -289,7 +289,7 @@
                     
                     @if((Auth::user()->role == 'admin') || (Auth::user()->role == 'member'))
                       {{-- <li class="header">একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</li> --}}
-                      <li class="{{ Request::is('dashboard/profile') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/transaction/summary') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/change/password') ? 'active menu-open' : '' }} treeview">
+                      <li class="{{ Request::is('dashboard/profile') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/payment/self/online') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/transaction/summary') ? 'active menu-open' : '' }} {{ Request::is('dashboard/member/change/password') ? 'active menu-open' : '' }} treeview">
                         <a href="#">
                             <i class="fa fa-fw fa-wrench"></i>
                             <span>একাউন্ট ম্যানেজমেন্ট (ব্যক্তিগত)</span>
@@ -304,7 +304,7 @@
                                   <span>ব্যক্তিগত প্রোফাইল</span>
                               </a>
                           </li>
-                          <li class="{{ Request::is('dashboard/member/payment') ? 'active' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active' : '' }}">
+                          <li class="{{ Request::is('dashboard/member/payment') ? 'active' : '' }} {{ Request::is('dashboard/member/payment/self') ? 'active' : '' }} {{ Request::is('dashboard/member/payment/self/online') ? 'active' : '' }}">
                               <a href="{{ route('dashboard.memberpayment') }}">
                                   <i class="fa fa-fw fa-handshake-o"></i>
                                   <span>পরিশোধ</span>
