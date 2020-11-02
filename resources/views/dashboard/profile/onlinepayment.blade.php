@@ -38,6 +38,23 @@
               {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
             {!! Form::close() !!}
           @endif
+
+          <center>
+              <h3 class="margin-two">Please pay Tk. 500/- following the process in the Next page, Click the button below.</h3>
+              <div style="border: 2px solid #ddd; padding: 0px; width: 100%">
+                  <img src="{{ asset('images/aamarpay.png') }}" class="img-responsive margin-two">
+                  {!! 
+                  aamarpay_post_button([
+                      'tran_id'  => 321321,
+                      'cus_name'  => 'ASD',
+                      'cus_email' => 'asdasd@iitdualumni.com',
+                      'cus_phone' => 012,
+                      'desc' => 'Registration Fee',
+                      'opt_a' => 132,
+                      'opt_b' => 500
+                  ], 500, '<i class="fa fa-money"></i> Pay Through AamarPay', 'highlight-button btn btn-medium button margin-five text-center center-col') !!}
+              </div>
+          </center>
         </div>
         <!-- /.box-body -->
       </div>

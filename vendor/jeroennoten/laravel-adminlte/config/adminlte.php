@@ -41,7 +41,7 @@ return [
     |
     | Choose a skin color for your admin panel. The available skin colors:
     | blue, black, purple, yellow, red, and green. Each skin also has a
-    | ligth variant: blue-light, purple-light, purple-light, etc.
+    | light variant: blue-light, purple-light, purple-light, etc.
     |
     */
 
@@ -101,63 +101,66 @@ return [
     |--------------------------------------------------------------------------
     |
     | Specify your menu items to display in the left sidebar. Each menu item
-    | should have a text and and a URL. You can also specify an icon from
-    | Font Awesome. A string instead of an array represents a header in sidebar
+    | should have a text and a URL. You can also specify an icon from Font
+    | Awesome. A string instead of an array represents a header in sidebar
     | layout. The 'can' is a filter on Laravel's built in Gate functionality.
-    |
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
         [
-            'text' => 'Blog',
+            'text' => 'search',
+            'search' => true,
+        ],
+        ['header' => 'main_navigation'],
+        [
+            'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'Pages',
+            'text'        => 'pages',
             'url'         => 'admin/pages',
-            'icon'        => 'file',
+            'icon'        => 'far fa-file',
             'label'       => 4,
             'label_color' => 'success',
         ],
-        'ACCOUNT SETTINGS',
+        ['header' => 'account_settings'],
         [
-            'text' => 'Profile',
+            'text' => 'profile',
             'url'  => 'admin/settings',
-            'icon' => 'user',
+            'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'Change Password',
+            'text' => 'change_password',
             'url'  => 'admin/settings',
-            'icon' => 'lock',
+            'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text'    => 'Multilevel',
-            'icon'    => 'share',
+            'text'    => 'multilevel',
+            'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Level One',
+                    'text' => 'level_one',
                     'url'  => '#',
                 ],
                 [
-                    'text'    => 'Level One',
+                    'text'    => 'level_one',
                     'url'     => '#',
                     'submenu' => [
                         [
-                            'text' => 'Level Two',
+                            'text' => 'level_two',
                             'url'  => '#',
                         ],
                         [
-                            'text'    => 'Level Two',
+                            'text'    => 'level_two',
                             'url'     => '#',
                             'submenu' => [
                                 [
-                                    'text' => 'Level Three',
+                                    'text' => 'level_three',
                                     'url'  => '#',
                                 ],
                                 [
-                                    'text' => 'Level Three',
+                                    'text' => 'level_three',
                                     'url'  => '#',
                                 ],
                             ],
@@ -165,22 +168,22 @@ return [
                     ],
                 ],
                 [
-                    'text' => 'Level One',
+                    'text' => 'level_one',
                     'url'  => '#',
                 ],
             ],
         ],
-        'LABELS',
+        ['header' => 'labels'],
         [
-            'text'       => 'Important',
+            'text'       => 'important',
             'icon_color' => 'red',
         ],
         [
-            'text'       => 'Warning',
+            'text'       => 'warning',
             'icon_color' => 'yellow',
         ],
         [
-            'text'       => 'Information',
+            'text'       => 'information',
             'icon_color' => 'aqua',
         ],
     ],
@@ -199,10 +202,12 @@ return [
 
     'filters' => [
         JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
+        JeroenNoten\LaravelAdminLte\Menu\Filters\SearchFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
+        JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
     ],
 
     /*
@@ -210,15 +215,85 @@ return [
     | Plugins Initialization
     |--------------------------------------------------------------------------
     |
-    | Choose which JavaScript plugins should be included. At this moment,
-    | only DataTables is supported as a plugin. Set the value to true
-    | to include the JavaScript file from a CDN via a script tag.
+    | Configure which JavaScript plugins should be included. At this moment,
+    | DataTables, Select2, Chartjs and SweetAlert are added out-of-the-box,
+    | including the Javascript and CSS files from a CDN via script and link tag.
+    | Plugin Name, active status and files array (even empty) are required.
+    | Files, when added, need to have type (js or css), asset (true or false) and location (string).
+    | When asset is set to true, the location will be output using asset() function.
     |
     */
 
     'plugins' => [
-        'datatables' => true,
-        'select2'    => true,
-        'chartjs'    => true,
+        [
+            'name' => 'Datatables',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css',
+                ],
+            ],
+        ],
+        [
+            'name' => 'Select2',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
+                ],
+            ],
+        ],
+        [
+            'name' => 'Chartjs',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                ],
+            ],
+        ],
+        [
+            'name' => 'Sweetalert2',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//unpkg.com/sweetalert/dist/sweetalert.min.js',
+                ],
+            ],
+        ],
+        [
+            'name' => 'Pace',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
     ],
 ];
