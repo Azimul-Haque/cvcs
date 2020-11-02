@@ -212,7 +212,7 @@ Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.m
 // ONLINE PAYMENT
 // ONLINE PAYMENT
 Route::get('/dashboard/member/payment/self/online', ['as'=>'dashboard.memberpaymentselfonline','uses'=>'DashboardController@getSelfPaymentOnlinePage']);
-Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberonlinepaymentself','uses'=>'DashboardController@storeSelfPaymentOnline']);
+Route::post('/dashboard/member/payment/self/online', ['as'=>'dashboard.storememberonlinepaymentself','uses'=>'DashboardController@nextSelfPaymentOnline']);
 
 Route::post('payment/success', 'DashboardController@paymentSuccessOrFailed')->name('payment.success');
 Route::get('payment/failed', 'DashboardController@paymentSuccessOrFailed')->name('payment.failed');

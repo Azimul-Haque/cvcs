@@ -14,8 +14,8 @@
           
         @else
           @if(Auth::user()->role_type != 'admin')
-          <a class="btn btn-primary" href="{{ route('dashboard.memberpaymentself') }}" title="টাকা পরিশোধ করুন"><i class="fa fa-fw fa-user" aria-hidden="true"></i> পরিশোধ করুন</a>
-          <a class="btn btn-success" href="{{ route('dashboard.memberpaymentselfonline') }}" title="টাকা পরিশোধ করুন"><i class="fa fa-fw fa-usd" aria-hidden="true"></i> অনলাইনে পরিশোধ করুন</a>
+          <a class="btn btn-primary" href="{{ route('dashboard.memberpaymentself') }}" title="ম্যানুয়ালি টাকা পরিশোধ করুন"><i class="fa fa-fw fa-user" aria-hidden="true"></i> ম্যানুয়ালি পরিশোধ করুন</a>
+          <a class="btn btn-success" href="{{ route('dashboard.memberpaymentselfonline') }}" title="অনলাইনে টাকা পরিশোধ করুন"><i class="fa fa-fw fa-usd" aria-hidden="true"></i> অনলাইনে পরিশোধ করুন</a>
           @endif
         @endif
       </div>

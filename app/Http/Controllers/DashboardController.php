@@ -50,7 +50,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'storeSelfPaymentOnline', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'nextSelfPaymentOnline', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
     }
 
     /**
@@ -2431,12 +2431,84 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.memberpayment');
     }
 
-    public function storeSelfPaymentOnline(Request $request) 
+    public function nextSelfPaymentOnline(Request $request) 
     {
         $this->validate($request,array(
             'member_id'   =>   'required',
             'amount'      =>   'required|integer',
-        ));        
+        ));
+
+        return view('dashboard.profile.nextpaymentpage')
+                    ->withMemberid($request->member_id)
+                    ->withAmount($request->amount);
+    }
+
+    public function paymentSuccessOrFailed(Request $request)
+    {
+        // $donation_id = $request->get('opt_a');
+        
+        // if($request->get('pay_status') == 'Failed') {
+        //     Session::flash('info', $donation_id.': You need to make the payment!');
+        //     return redirect(Route('index.donatenext', $donation_id));
+        // }
+        
+        // $amount_request = $request->get('opt_b');
+        // $amount_paid = $request->get('amount');
+        
+        // if($amount_paid == $amount_request)
+        // {
+        //   $donation = Donation::where('donation_id', $donation_id)->first();
+        //   // $donation->trxid = $request->get('pg_txnid');
+        //   $donation->payment_status = 1;
+        //   $donation->card_type = $request->get('card_type');
+        //   $donation->save();
+
+        //   Session::flash('success','Donation is complete!');
+        // } else {
+        //    // Something went wrong.
+        //   Session::flash('info', $donation_id.': Something went wrong, please reload this page!');
+        //   return redirect(Route('index.donatenext', $donation_id));
+        // }
+        
+        // //return $request->all();
+        // return redirect()->route('index.donatenext', $donation->donation_id);
+    }
+
+    public function paymentCancelledPost(Request $request)
+    {
+        // $donation_id = $request->get('opt_a');
+        
+        // if($request->get('pay_status') == 'Failed') {
+        //     Session::flash('info', 'Something went wrong, please try again!');
+        //     return redirect(Route('index.index'));
+        // }
+        
+        // $amount_request = $request->get('opt_b');
+        // $amount_paid = $request->get('amount');
+        
+        // if($amount_paid == $amount_request)
+        // {
+        //   $donation = Donation::where('donation_id', $donation_id)->first();
+        //   // $donation->trxid = $request->get('pg_txnid');
+        //   $donation->payment_status = 1;
+        //   $donation->card_type = $request->get('card_type');
+        //   $donation->save();
+
+        //   Session::flash('success','Donation is complete!');
+        // } else {
+        //    // Something went wrong.
+        //   Session::flash('info', 'Something went wrong, please try again!');
+        //   return redirect(Route('index.index'));
+        // }
+        
+        // //return $request->all();
+        // return redirect()->route('index.donatenext', $donation->donation_id);
+    }
+
+    public function paymentCancelled()
+    {
+        Session::flash('info','Payment is cancelled!');
+        return redirect()->back();
     }
 
     public function downloadMemberPaymentPDF(Request $request)
