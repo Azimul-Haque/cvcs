@@ -34,6 +34,8 @@ use Session, Config;
 use Hash;
 use PDF;
 use Illuminate\Pagination\LengthAwarePaginator;
+
+use \Shipu\Aamarpay\Aamarpay;
 // use BanglaDate;
 
 class DashboardController extends Controller
@@ -48,7 +50,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'storeSelfPaymentOnline', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
     }
 
     /**
@@ -2434,79 +2436,7 @@ class DashboardController extends Controller
         $this->validate($request,array(
             'member_id'   =>   'required',
             'amount'      =>   'required|integer',
-        ));
-
-        // $payment = new Payment;
-        // $payment->member_id = $request->member_id;
-        // $payment->payer_id = $request->member_id;
-        // $payment->amount = $request->amount;
-        // $payment->bank = $request->bank;
-        // $payment->branch = $request->branch;
-        // $payment->pay_slip = $request->pay_slip;
-        // $payment->payment_status = 0;
-        // $payment->payment_category = 1; // monthly payment, if 0 then membership payment
-        // $payment->payment_type = 1; // single payment, if 2 then bulk payment
-        // // generate payment_key
-        // $payment_key_length = 10;
-        // $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        // $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
-        // // generate payment_key
-        // $payment->payment_key = $payment_key;
-        // $payment->save();
-
-        // // receipt upload
-        // if($request->hasFile('image')) {
-        //     $receipt      = $request->file('image');
-        //     $filename   = $payment->member_id.'_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
-        //     $location   = public_path('/images/receipts/'. $filename);
-        //     Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
-        //     $paymentreceipt = new Paymentreceipt;
-        //     $paymentreceipt->payment_id = $payment->id;
-        //     $paymentreceipt->image = $filename;
-        //     $paymentreceipt->save();
-        // }
-
-        // // send pending SMS ... aro kichu kaaj baki ache...
-        // // send sms
-        // $mobile_number = 0;
-        // if(strlen(Auth::user()->mobile) == 11) {
-        //     $mobile_number = Auth::user()->mobile;
-        // } elseif(strlen(Auth::user()->mobile) > 11) {
-        //     if (strpos(Auth::user()->mobile, '+') !== false) {
-        //         $mobile_number = substr(Auth::user()->mobile, -11);
-        //     }
-        // }
-        // $url = config('sms.url');
-        // $number = $mobile_number;
-        // $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-        // $data= array(
-        //     'username'=>config('sms.username'),
-        //     'password'=>config('sms.password'),
-        //     'number'=>"$number",
-        //     'message'=>"$text"
-        // );
-        // // initialize send status
-        // $ch = curl_init(); // Initialize cURL
-        // curl_setopt($ch, CURLOPT_URL,$url);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
-        // $smsresult = curl_exec($ch);
-
-        // // $sendstatus = $result = substr($smsresult, 0, 3);
-        // $p = explode("|",$smsresult);
-        // $sendstatus = $p[0];
-        // // send sms
-        // if($sendstatus == 1101) {
-        //     // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        // } elseif($sendstatus == 1006) {
-        //     // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
-        // } else {
-        //     // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
-        // }
-        
-        // Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
-        // return redirect()->route('dashboard.memberpayment');
+        ));        
     }
 
     public function downloadMemberPaymentPDF(Request $request)

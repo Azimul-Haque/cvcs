@@ -208,8 +208,19 @@ Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);
 Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.member.payment.pdf','uses'=>'DashboardController@downloadMemberPaymentPDF']);
 
+// ONLINE PAYMENT
+// ONLINE PAYMENT
+// ONLINE PAYMENT
 Route::get('/dashboard/member/payment/self/online', ['as'=>'dashboard.memberpaymentselfonline','uses'=>'DashboardController@getSelfPaymentOnlinePage']);
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberonlinepaymentself','uses'=>'DashboardController@storeSelfPaymentOnline']);
+
+Route::post('payment/success', 'DashboardController@paymentSuccessOrFailed')->name('payment.success');
+Route::get('payment/failed', 'DashboardController@paymentSuccessOrFailed')->name('payment.failed');
+Route::post('payment/cancel', 'DashboardController@paymentCancelledPost')->name('payment.cancel');
+Route::get('payment/cancel', 'DashboardController@paymentCancelled')->name('payment.cancel');
+// ONLINE PAYMENT
+// ONLINE PAYMENT
+// ONLINE PAYMENT
 
 Route::post('/dashboard/member/complete/report/download/pdf', ['as'=>'dashboard.member.complete.pdf','uses'=>'DashboardController@downloadMemberCompletePDF']);
 Route::get('/dashboard/members/for/all', ['as'=>'dashboard.membersforall','uses'=>'DashboardController@getMembersForAll']);
