@@ -2508,7 +2508,7 @@ class DashboardController extends Controller
     public function paymentCancelled()
     {
         Session::flash('info','Payment is cancelled!');
-        return redirect()->back();
+        return redirect()->route('dashboard.memberpaymentselfonline');
     }
 
     public function downloadMemberPaymentPDF(Request $request)
