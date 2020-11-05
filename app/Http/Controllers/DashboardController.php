@@ -2474,7 +2474,7 @@ class DashboardController extends Controller
             $payment->payment_type = 1; // single payment, if 2 then bulk payment
             $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
             $payment->card_type = $request->get('card_type');
-            $payment->payment_key = $request->get('tran_id'); // SAME TRXID FOR BOTH METHOD
+            $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
             $payment->save();
 
             // send sms
