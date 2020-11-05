@@ -33,7 +33,7 @@
           <tr>
             <th>নাম</th>
             <th>ধরণ</th>
-            <th>পে স্লিপ<br/>পেমেন্ট আইডি</th>
+            <th>পে স্লিপ/ পেমেন্ট-মেথড<br/>পেমেন্ট আইডি/ ট্রানজেকশন আইডি</th>
             <th>পেমেন্ট স্ট্যাটাস<br/>পেমেন্ট টাইপ</th>
             <th>পরিমাণ</th>
             <th>ব্যাংক<br/>ব্রাঞ্চ</th>
@@ -61,7 +61,14 @@
                 মাসিক পরিশোধ
               @endif
             </td>
-            <td>{{ $payment->pay_slip }}<br/>{{ $payment->payment_key }}</td>
+            <td>
+              @if($payment->payment_method == 1)
+                <span style="color: green;"><b>Payment Gateway</b></span><br/>
+              @else
+                {{ $payment->pay_slip }}<br/>
+              @endif
+              {{ $payment->payment_key }}
+            </td>
             <td>
               @if($payment->payment_status == 0)
                 <span class="badge badge-danger"><i class="fa fa-hourglass-start"></i> প্রক্রিয়াধীন</span>
@@ -78,7 +85,14 @@
               @endif
             </td>
             <td align="right">৳ {{ $payment->amount }}</td>
-            <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
+            <td>
+              {{ $payment->bank }}<br/>
+              @if($payment->payment_method == 1)
+                <span style="color: #3949AB;"><b>{{ $payment->card_type }}</b></span><br/>
+              @else
+                {{ $payment->branch }}
+              @endif
+            </td>
             <td>{{ date('F d, Y H:i A', strtotime($payment->created_at)) }}</td>
             <td>
               @if(($payment->payment_type == 2) && ($payment->payment_status == 0))
