@@ -27,19 +27,19 @@
         <!-- /.box-header -->
         <div class="box-body">
           <center>
-              <h3 class="margin-two">Please pay Tk. {{ $amount }} following the process in the Next page, Click the button below.</h3>
-              <div style="border: 2px solid #ddd; padding: 0px; width: 100%">
+              <h3 class="margin-two">অনুগ্রহ করে <b><u>৳{{ $amount }}</u></b> পেমেন্ট গেটওয়ের মাধ্যমে পরিশোধ করুন</h3>
+              <div style="border: 2px solid #ddd; padding: 0px; width: 100%; padding: 10px;">
                   <img src="{{ asset('images/aamarpay.png') }}" class="img-responsive margin-two">
                   {!! 
                   aamarpay_post_button([
-                      'tran_id'  => 321321,
-                      'cus_name'  => 'ASD',
-                      'cus_email' => 'asdasd@iitdualumni.com',
-                      'cus_phone' => 012,
-                      'desc' => 'Registration Fee',
-                      'opt_a' => 132,
+                      'tran_id'  => 'CVCS' . strtotime('now') . random_string(5),
+                      'cus_name'  => $member->name,
+                      'cus_email' => $member->email,
+                      'cus_phone' => $member->mobile,
+                      'desc' => 'Monthly Fee',
+                      'opt_a' => $member->member_id,
                       'opt_b' => $amount
-                  ], $amount, '<i class="fa fa-money"></i> Pay Through AamarPay', 'highlight-button btn btn-medium button margin-five text-center center-col') !!}
+                  ], $amount, '<i class="fa fa-money"></i> Pay Through AamarPay', 'btn btn-success') !!}
               </div>
           </center>
         </div>

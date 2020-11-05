@@ -2438,8 +2438,10 @@ class DashboardController extends Controller
             'amount'      =>   'required|integer',
         ));
 
+        $member = User::where('member_id', $request->member_id)->first();
+        
         return view('dashboard.profile.nextpaymentpage')
-                    ->withMemberid($request->member_id)
+                    ->withMember($member)
                     ->withAmount($request->amount);
     }
 

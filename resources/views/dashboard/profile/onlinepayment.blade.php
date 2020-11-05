@@ -68,7 +68,10 @@
         } else {
           $('#submitBtn').attr('disabled', true);
         }
-        if(value < 300) {
+        //EDIT HOBE EKHANE
+        //EDIT HOBE EKHANE
+        //EDIT HOBE EKHANE
+        if(value < 5) {
           if($(window).width() > 768) {
             toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', '400px');
           } else {
