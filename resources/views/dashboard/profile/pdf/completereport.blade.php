@@ -220,7 +220,14 @@
           @endif
         </td>
         <td><big>৳ {{ $payment->amount }}</big></td>
-        <td>{{ $payment->bank }}, {{ $payment->branch }}</td>
+        <td>
+          {{ $payment->bank }},
+          @if($payment->payment_method == 1)
+            <span style="color: #3949AB;"><b>{{ $payment->card_type }}</b></span><br/>
+          @else
+            {{ $payment->branch }}
+          @endif
+        </td>
         <td>{{ date('F d, Y, h:m:i A', strtotime($payment->created_at)) }}</td>
       </tr>
       @endforeach

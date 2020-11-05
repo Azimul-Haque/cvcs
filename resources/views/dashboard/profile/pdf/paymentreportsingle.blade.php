@@ -76,12 +76,20 @@
         </td>
       </tr>
       <tr>
-        <th>পে স্লিপ</th>
-        <td>{{ $payment->pay_slip }}</td>
+        <th>পে স্লিপ/ পেমেন্ট মেথড</th>
+        <td>
+          @if($payment->payment_method == 1)
+            <span style="color: green;"><b>Payment Gateway</b></span>
+          @else
+            {{ $payment->pay_slip }}
+          @endif
+        </td>
       </tr>
       <tr>
-        <th>পেমেন্ট আইডি</th>
-        <td>{{ $payment->payment_key }}</td>
+        <th>পেমেন্ট আইডি/ ট্রানজেকশন আইডি</th>
+        <td>
+          {{ $payment->payment_key }}
+        </td>
       </tr>
       <tr>
         <th>পেমেন্ট টাইপ</th>
@@ -99,7 +107,14 @@
       </tr>
       <tr>
         <th>ব্যাংক ও ব্রাঞ্চ</th>
-        <td>{{ $payment->bank }}, {{ $payment->branch }}</td>
+        <td>
+          {{ $payment->bank }}, 
+          @if($payment->payment_method == 1)
+            <span style="color: #3949AB;"><b>{{ $payment->card_type }}</b></span><br/>
+          @else
+            {{ $payment->branch }}
+          @endif
+        </td>
       </tr>
       <tr>
         <th>সময়কাল</th>
