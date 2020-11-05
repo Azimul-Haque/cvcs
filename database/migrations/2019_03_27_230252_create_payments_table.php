@@ -21,6 +21,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('payment_category')->unsigned();
             $table->string('payment_type');
             $table->string('payment_key');
+            $table->integer('payment_method')->nullable();
             $table->string('amount');
             $table->string('bank');
             $table->string('branch');

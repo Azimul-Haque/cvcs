@@ -2463,53 +2463,36 @@ class DashboardController extends Controller
 
             // SAVE THE PAYMENT
             $payment = new Payment;
-            $payment->member_id = $request->member_id;
-            $payment->payer_id = $request->member_id;
-            $payment->amount = $request->amount;
-            $payment->bank = $request->bank;
-            $payment->branch = $request->branch;
-            $payment->pay_slip = $request->pay_slip;
-            $payment->payment_status = 0;
+            $payment->member_id = $member->member_id;
+            $payment->payer_id = $member->member_id;
+            $payment->amount = $amount_paid;
+            $payment->bank = 'aamarPay Payment Gateway';
+            $payment->branch = 'N/A';
+            $payment->pay_slip = '00';
+            $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
             $payment->payment_category = 1; // monthly payment, if 0 then membership payment
             $payment->payment_type = 1; // single payment, if 2 then bulk payment
-            // generate payment_key
-            $payment_key_length = 10;
-            $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
-            // generate payment_key
-            $payment->payment_key = $payment_key;
+            $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+            $payment_key = $request->get('pg_txnid'); // SAME JINIS FOR BOTH METHOD
             $payment->save();
 
-            // receipt upload
-            if($request->hasFile('image')) {
-                $receipt      = $request->file('image');
-                $filename   = $payment->member_id.'_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
-                $location   = public_path('/images/receipts/'. $filename);
-                Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
-                $paymentreceipt = new Paymentreceipt;
-                $paymentreceipt->payment_id = $payment->id;
-                $paymentreceipt->image = $filename;
-                $paymentreceipt->save();
-            }
-
-            // send pending SMS ... aro kichu kaaj baki ache...
             // send sms
             $mobile_number = 0;
-            if(strlen(Auth::user()->mobile) == 11) {
-                $mobile_number = Auth::user()->mobile;
-            } elseif(strlen(Auth::user()->mobile) > 11) {
-                if (strpos(Auth::user()->mobile, '+') !== false) {
-                    $mobile_number = substr(Auth::user()->mobile, -11);
+            if(strlen($payment->user->mobile) == 11) {
+                $mobile_number = $payment->user->mobile;
+            } elseif(strlen($payment->user->mobile) > 11) {
+                if (strpos($payment->user->mobile, '+') !== false) {
+                    $mobile_number = substr($payment->user->mobile, -11);
                 }
             }
             $url = config('sms.url');
             $number = $mobile_number;
-            $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+            $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
             $data= array(
                 'username'=>config('sms.username'),
                 'password'=>config('sms.password'),
                 'number'=>"$number",
-                'message'=>"$text"
+                'message'=>"$text",
             );
             // initialize send status
             $ch = curl_init(); // Initialize cURL
@@ -2524,14 +2507,13 @@ class DashboardController extends Controller
             $sendstatus = $p[0];
             // send sms
             if($sendstatus == 1101) {
-                // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+                Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
             } elseif($sendstatus == 1006) {
-                // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+                Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
-                // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
             }
             // SAVE THE PAYMENT
-
             Session::flash('success','আপনার পেমেন্ট সফল হয়েছে!');
         } else {
             // Something went wrong.
@@ -2539,7 +2521,6 @@ class DashboardController extends Controller
             return redirect(Route('dashboard.memberpaymentselfonline'));
         }
         
-        //return $request->all();
         return redirect()->route('dashboard.memberpayment');
     }
 
@@ -2957,7 +2938,6 @@ class DashboardController extends Controller
         $payment->payment_status = 1;
         $payment->save();
 
-        // send pending SMS ... aro kichu kaaj baki ache...
         // send sms
         $mobile_number = 0;
         if(strlen($payment->user->mobile) == 11) {
