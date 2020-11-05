@@ -2473,7 +2473,8 @@ class DashboardController extends Controller
             $payment->payment_category = 1; // monthly payment, if 0 then membership payment
             $payment->payment_type = 1; // single payment, if 2 then bulk payment
             $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-            $payment_key = $request->get('pg_txnid'); // SAME JINIS FOR BOTH METHOD
+            $payment->card_type = $request->get('card_type');
+            $payment->payment_key = $request->get('tran_id'); // SAME TRXID FOR BOTH METHOD
             $payment->save();
 
             // send sms

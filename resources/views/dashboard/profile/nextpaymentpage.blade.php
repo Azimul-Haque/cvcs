@@ -30,9 +30,12 @@
               <h3 class="margin-two">অনুগ্রহ করে <b><u>৳{{ $amount }}</u></b> পেমেন্ট গেটওয়ের মাধ্যমে পরিশোধ করুন</h3>
               <div style="border: 2px solid #ddd; padding: 0px; width: 100%; padding: 10px;">
                   <img src="{{ asset('images/aamarpay.png') }}" class="img-responsive margin-two">
+                  @php
+                    $trxid = 'CVCS' . strtotime('now') . random_string(5);
+                  @endphp
                   {!! 
                   aamarpay_post_button([
-                      'tran_id'  => 'CVCS' . strtotime('now') . random_string(5),
+                      'tran_id'  => $trxid,
                       'cus_name'  => $member->name,
                       'cus_email' => $member->email,
                       'cus_phone' => $member->mobile,
