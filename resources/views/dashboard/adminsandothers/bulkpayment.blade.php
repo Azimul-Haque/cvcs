@@ -658,8 +658,7 @@
       });
     })
 
-    // $('#onlinecollapse').hide();
-    // $('#offlinecollapse').hide();
+
     // $('#offlinecollapsebtn').click(function() {
     //   $('#onlinecollapse').hide();
     //   $('#offlinecollapse').show();
