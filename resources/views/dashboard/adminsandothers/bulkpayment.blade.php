@@ -148,13 +148,13 @@
       <div class="col-md-6">
         <div class="box box-warning">
           <div class="box-header with-border text-orange">
-            <a data-toggle="collapse" href="#offlinecollapse" id="offlinecollapsebtn">
+            <a data-toggle="" href="#offlinecollapse" id="offlinecollapsebtn">
               <i class="fa fa-fw fa-file-text-o"></i>
               <h3 class="box-title">ম্যানুয়াল পরিশোধ ফরম</h3>
             </a>
           </div>
           <!-- /.box-header -->
-          <div class="collapse" id="offlinecollapse">
+          <div class="" id="offlinecollapse">
             <div class="box-body">
               <div class="form-group">
                 {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
@@ -255,14 +255,14 @@
       <div class="col-md-6">
         <div class="box box-warning">
           <div class="box-header with-border text-orange">
-            <a data-toggle="collapse" href="#onlinecollapse" id="onlinecollapsebtn">
+            <a data-toggle="" href="#onlinecollapse" id="onlinecollapsebtn">
               <i class="fa fa-fw fa-file-text-o"></i>
               <h3 class="box-title">অনলাইন পরিশোধ ফরম</h3>
             </a>
           </div>
           <!-- /.box-header -->
-          <div>
-            <div class="box-body collapse" id="onlinecollapse">
+          <div class="" id="onlinecollapse">
+            <div class="box-body">
               <div class="form-group">
                 {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
                 {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
@@ -662,10 +662,12 @@
       });
     })
 
-
+    $('#offlinecollapse').hide();
+    $('#onlinecollapse').hide();
+    
     $('#offlinecollapsebtn').click(function() {
-      $('#onlinecollapse').hide();
       $('#offlinecollapse').show();
+      $('#onlinecollapse').hide();
     });
 
     $('#onlinecollapsebtn').click(function() {
