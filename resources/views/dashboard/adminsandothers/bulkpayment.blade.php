@@ -520,16 +520,12 @@
         preview_html += '   <thead><tr>';
         preview_html += '     <th>জমাদানকারী</th>';
         preview_html += '     <th>মোট টাকার পরিমাণ (৳)</th>';
-        preview_html += '     <th>ব্যাংক</th>';
-        preview_html += '     <th>ব্রাঞ্চ/শাখা</th>';
-        preview_html += '     <th>পে স্লিপ নম্বর</th>';
+        preview_html += '     <th>পেমেন্ট মেথড</th>';
         preview_html += '   </tr></thead>';
         preview_html += '   <tbody><tr>';
         preview_html += '     <td>{{ Auth::user()->name_bangla }}</td>';
         preview_html += '     <td>৳ '+ $('#amount').val() +'</td>';
-        preview_html += '     <td>'+ $('#bank').val() +'</td>';
-        preview_html += '     <td>'+ $('#branch').val() +'</td>';
-        preview_html += '     <td>'+ $('#pay_slip').val() +'</td>';
+        preview_html += '     <td>aamarPay Payment Gateway</td>';
         preview_html += '   </tr></tbody>';
         preview_html += '  </table>';
         preview_html += '</div>';
@@ -555,17 +551,6 @@
 
           preview_html += '  </tbody></table>';
           preview_html += '</div>';
-        }
-        
-
-        if(!$('#img-upload1').attr('src').includes('images/800x500.png')) {
-          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload1').attr('src')+ '">';
-        }
-        if(!$('#img-upload2').attr('src').includes('images/800x500.png')) {
-          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload2').attr('src')+ '">';
-        }
-        if(!$('#img-upload3').attr('src').includes('images/800x500.png')) {
-          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload3').attr('src')+ '">';
         }
 
         document.getElementById('previewFormModalBodyOnline').innerHTML = preview_html;
