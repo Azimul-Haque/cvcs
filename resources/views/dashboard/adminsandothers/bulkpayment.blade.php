@@ -179,7 +179,7 @@
                       <div class="input-group">
                           <span class="input-group-btn">
                               <span class="btn btn-default btn-file">
-                                  Browse <input type="file" id="image1" name="image1" required="">
+                                  Browse <input type="file" id="image1" name="image1">
                               </span>
                           </span>
                           <input type="text" class="form-control text-blue" readonly>
@@ -265,7 +265,7 @@
             <div class="box-body">
               <div class="form-group">
                 {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-                {!! Form::text('amountonline', null, array('class' => 'form-control', 'id' => 'amountonline', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+                {!! Form::text('amountonline', null, array('class' => 'form-control', 'id' => 'amountonline', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
               </div>
               <div class="form-group">
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOnline" data-backdrop="static" id="previewFormButtonOnline"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
@@ -384,9 +384,11 @@
           if(member_ids_before_submit.length == 0) {
             toastr.warning('অন্তত একজন সদস্য নির্বাচন করুন!', 'Warning');
             event.preventDefault();
-            $('#submitBtn').attr('disabled', false);
+            $('#submitBtnOffline').attr('disabled', false);
+            $('#submitBtnOnline').attr('disabled', false);
           } else {
-            $('#submitBtn').attr('disabled', true);
+            $('#submitBtnOffline').attr('disabled', true);
+            $('#submitBtnOnline').attr('disabled', true);
           }
           // console.log(member_ids_before_submit);
 
@@ -395,12 +397,20 @@
               add_separate_amounts += parseFloat(this.value);
           });
           console.log(add_separate_amounts);
-          if(add_separate_amounts != $('#amount').val()) {
+          if((add_separate_amounts != $('#amountoffline').val()) && (add_separate_amounts != $('#amountonline').val())) {
             toastr.warning('মোট টাকার পরিমাণ এবং সদস্যদের আলাদা করে দেওয়া টাকার পরিমাণ সমান হওয়া বাঞ্ছনীয়!', 'Warning');
             event.preventDefault();
-            $('#submitBtn').attr('disabled', false);
+            $('#submitBtnOffline').attr('disabled', false);
           } else {
-            $('#submitBtn').attr('disabled', true);
+            $('#submitBtnOffline').attr('disabled', true);
+          }
+
+          if((add_separate_amounts != $('#amountoffline').val()) && (add_separate_amounts != $('#amountonline').val())) {
+            toastr.warning('মোট টাকার পরিমাণ এবং সদস্যদের আলাদা করে দেওয়া টাকার পরিমাণ সমান হওয়া বাঞ্ছনীয়!', 'Warning');
+            event.preventDefault();
+            $('#submitBtnOnline').attr('disabled', false);
+          } else {
+            $('#submitBtnOnline').attr('disabled', true);
           }
       });
       
