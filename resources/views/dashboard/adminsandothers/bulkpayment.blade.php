@@ -220,31 +220,34 @@
               </div>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOffline" data-backdrop="static" id="previewFormButton"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
-              <!-- Preview Modal -->
-              <!-- Preview Modal -->
-              <div class="modal fade" id="previewFormModalOffline" role="dialog">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
-                    </div>
-                    <div class="modal-body" id="previewFormModalBody">
-                      
-                    </div>
-                    <div class="modal-footer">
-                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
-                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Preview Modal -->
-              <!-- Preview Modal -->
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOffline" data-backdrop="static" id="previewFormButtonOffline"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
             </div>
           </div>
           <!-- /.box-body -->
+
+          <!-- Preview Modal -->
+          <!-- Preview Modal -->
+          <div class="modal fade" id="previewFormModalOffline" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
+                </div>
+                <div class="modal-body" id="previewFormModalBody">
+                  
+                </div>
+                <div class="modal-footer">
+                      {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+                      <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Preview Modal -->
+          <!-- Preview Modal -->
+
+
         </div>
       </div>
       <div class="col-md-6">
@@ -262,7 +265,7 @@
               {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOnline" data-backdrop="static" id="previewFormButton"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOnline" data-backdrop="static" id="previewFormButtonOnline"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
               <!-- Preview Modal -->
               <!-- Preview Modal -->
               <div class="modal fade" id="previewFormModalOnline" role="dialog">
@@ -451,7 +454,66 @@
     }
 
     $(document).ready(function() {
-      $('#previewFormButton').click(function() {
+      $('#previewFormButtonOffline').click(function() {
+        var preview_html = '';
+        preview_html += '<div class="table-responsive">';
+        preview_html += ' <table class="table">';
+        preview_html += '   <thead><tr>';
+        preview_html += '     <th>জমাদানকারী</th>';
+        preview_html += '     <th>মোট টাকার পরিমাণ (৳)</th>';
+        preview_html += '     <th>ব্যাংক</th>';
+        preview_html += '     <th>ব্রাঞ্চ/শাখা</th>';
+        preview_html += '     <th>পে স্লিপ নম্বর</th>';
+        preview_html += '   </tr></thead>';
+        preview_html += '   <tbody><tr>';
+        preview_html += '     <td>{{ Auth::user()->name_bangla }}</td>';
+        preview_html += '     <td>৳ '+ $('#amount').val() +'</td>';
+        preview_html += '     <td>'+ $('#bank').val() +'</td>';
+        preview_html += '     <td>'+ $('#branch').val() +'</td>';
+        preview_html += '     <td>'+ $('#pay_slip').val() +'</td>';
+        preview_html += '   </tr></tbody>';
+        preview_html += '  </table>';
+        preview_html += '</div>';
+
+        
+
+        var selected_members_preview = $("input[name='amountids[]']").map(function(){return $(this).val();}).get();
+
+        if(selected_members_preview.length > 0) {
+          preview_html += '<div class="table-responsive">';
+          preview_html += ' <table class="table">';
+          preview_html += '   <thead><tr>';
+          preview_html += '     <th>সদস্য</th>';
+          preview_html += '     <th>টাকার পরিমাণ (৳)</th>';
+          preview_html += '   </tr></thead><tbody>';
+          
+          selected_members_preview.forEach(function(item) {
+              preview_html += '   <tr>';
+              preview_html += '     <td>' + $('#member_name_preview'+item).text() + '</td>';
+              preview_html += '     <td>৳ ' + $('#member_amount_preview'+item).val() + '</td>';
+              preview_html += '   </tr>';
+          });
+
+          preview_html += '  </tbody></table>';
+          preview_html += '</div>';
+        }
+        
+
+        if(!$('#img-upload1').attr('src').includes('images/800x500.png')) {
+          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload1').attr('src')+ '">';
+        }
+        if(!$('#img-upload2').attr('src').includes('images/800x500.png')) {
+          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload2').attr('src')+ '">';
+        }
+        if(!$('#img-upload3').attr('src').includes('images/800x500.png')) {
+          preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload3').attr('src')+ '">';
+        }
+
+        document.getElementById('previewFormModalBody').innerHTML = preview_html;
+
+      })
+
+      $('#previewFormButtonOnline').click(function() {
         var preview_html = '';
         preview_html += '<div class="table-responsive">';
         preview_html += ' <table class="table">';
