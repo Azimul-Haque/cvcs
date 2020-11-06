@@ -3199,105 +3199,82 @@ class DashboardController extends Controller
 
     public function paymentBulkSuccessOrFailed(Request $request, $id) 
     {
-        // $bulkpayment = Payment::find($id);
+        // $member_id = $request->get('opt_a');
+        
+        // if($request->get('pay_status') == 'Failed') {
+        //     Session::flash('info', 'পেমেন্ট সম্পন্ন হয়নি, আবার চেষ্টা করুন!');
+        //     return redirect(Route('dashboard.memberpaymentselfonline'));
+        // }
+        
+        // $amount_request = $request->get('opt_b');
+        // $amount_paid = $request->get('amount');
+        
+        // if($amount_paid == $amount_request)
+        // {
+        //     $member = User::where('member_id', $member_id)->first();
 
-        // foreach(json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+        //     // SAVE THE PAYMENT
         //     $payment = new Payment;
-        //     $payment->member_id = $member_id;
-        //     $payment->payer_id = $bulkpayment->payer_id;
-        //     $payment->amount = $amount;
-        //     $payment->bank = $bulkpayment->bank;
-        //     $payment->branch = $bulkpayment->branch;
-        //     $payment->pay_slip = $bulkpayment->pay_slip;
-        //     $payment->payment_status = 1; // approved
-        //     $payment->payment_category = 1; // monthly payment
-        //     $payment->payment_type = 2; // bulk payment
-        //     $payment->payment_key = $bulkpayment->payment_key;
+        //     $payment->member_id = $member->member_id;
+        //     $payment->payer_id = $member->member_id;
+        //     $payment->amount = $amount_paid;
+        //     $payment->bank = 'aamarPay Payment Gateway';
+        //     $payment->branch = 'N/A';
+        //     $payment->pay_slip = '00';
+        //     $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
+        //     $payment->payment_category = 1; // monthly payment, if 0 then membership payment
+        //     $payment->payment_type = 1; // single payment, if 2 then bulk payment
+        //     $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+        //     $payment->card_type = $request->get('card_type');
+        //     $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
         //     $payment->save();
 
-        //     // receipt upload
-        //     if(count($bulkpayment->paymentreceipts) > 0) {
-        //         foreach($bulkpayment->paymentreceipts as $paymentreceipt) {
-        //             $newpaymentreceipt = new Paymentreceipt;
-        //             $newpaymentreceipt->payment_id = $payment->id;
-        //             $newpaymentreceipt->image = $paymentreceipt->image;
-        //             $newpaymentreceipt->save();
-        //         }
-        //     }
-        // }
-
-        // $bulkpayment->is_archieved = 1;
-        // $bulkpayment->save();
-
-
-        // // send sms
-        // // $mobile_numbers = [];
-        // $smssuccesscount = 0;
-        // $url = config('sms.url');
-        
-        // $multiCurl = array();
-        // // data to be returned
-        // $result = array();
-        // // multi handle
-        // $mh = curl_multi_init();
-        // // sms data
-        // $smsdata = [];
-
-        // foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
-        //     $member = User::where('member_id', $member_id)->first();
+        //     // send sms
         //     $mobile_number = 0;
-        //     if(strlen($member->mobile) == 11) {
-        //         $mobile_number = $member->mobile;
-        //     } elseif(strlen($member->mobile) > 11) {
-        //         if (strpos($member->mobile, '+') !== false) {
-        //             $mobile_number = substr($member->mobile, -11);
+        //     if(strlen($payment->user->mobile) == 11) {
+        //         $mobile_number = $payment->user->mobile;
+        //     } elseif(strlen($payment->user->mobile) > 11) {
+        //         if (strpos($payment->user->mobile, '+') !== false) {
+        //             $mobile_number = substr($payment->user->mobile, -11);
         //         }
         //     }
-        //     // if($mobile_number != 0) {
-        //     //   array_push($mobile_numbers, $mobile_number);
-        //     // }
-        //     $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-        //     $smsdata[$member_id] = array(
+        //     $url = config('sms.url');
+        //     $number = $mobile_number;
+        //     $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+        //     $data= array(
         //         'username'=>config('sms.username'),
         //         'password'=>config('sms.password'),
-        //         // 'apicode'=>"1",
-        //         'number'=>"$mobile_number",
-        //         // 'msisdn'=>"$mobile_number",
-        //         // 'countrycode'=>"880",
-        //         // 'cli'=>"CVCS",
-        //         // 'messagetype'=>"1",
+        //         'number'=>"$number",
         //         'message'=>"$text",
-        //         // 'messageid'=>"2"
         //     );
-        //     $multiCurl[$member_id] = curl_init(); // Initialize cURL
-        //     curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
-        //     curl_setopt($multiCurl[$member_id], CURLOPT_HEADER, 0);
-        //     curl_setopt($multiCurl[$member_id], CURLOPT_POSTFIELDS, http_build_query($smsdata[$member_id]));
-        //     curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
-        //     curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
-        //     curl_multi_add_handle($mh, $multiCurl[$member_id]);
-        // }
+        //     // initialize send status
+        //     $ch = curl_init(); // Initialize cURL
+        //     curl_setopt($ch, CURLOPT_URL,$url);
+        //     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+        //     $smsresult = curl_exec($ch);
 
-        // $index=null;
-        // do {
-        //   curl_multi_exec($mh, $index);
-        // } while($index > 0);
-        // // get content and remove handles
-        // foreach($multiCurl as $k => $ch) {
-        //   $result[$k] = curl_multi_getcontent($ch);
-        //   curl_multi_remove_handle($mh, $ch);
-        //   $smsresult = $result[$k];
-        //   $p = explode("|",$smsresult);
-        //   $sendstatus = $p[0];
-        //   if($sendstatus == 1101) {
-        //       $smssuccesscount++;
-        //   }
+        //     // $sendstatus = $result = substr($smsresult, 0, 3);
+        //     $p = explode("|",$smsresult);
+        //     $sendstatus = $p[0];
+        //     // send sms
+        //     if($sendstatus == 1101) {
+        //         Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        //     } elseif($sendstatus == 1006) {
+        //         Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+        //     } else {
+        //         Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        //     }
+        //     // SAVE THE PAYMENT
+        //     Session::flash('success','আপনার পেমেন্ট সফল হয়েছে!');
+        // } else {
+        //     // Something went wrong.
+        //     Session::flash('info', 'Something went wrong, please reload this page!');
+        //     return redirect(Route('dashboard.memberpaymentselfonline'));
         // }
-        // // close
-        // curl_multi_close($mh);
-
-        // Session::flash('success', 'অনুমোদন সফল হয়েছে!');
-        // return redirect()->route('dashboard.membersapprovedpayments');
+        
+        // return redirect()->route('dashboard.memberpayment');
     }
 
     public function paymentBulkCancelledPost(Request $request)
