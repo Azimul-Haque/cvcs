@@ -158,19 +158,19 @@
             <div class="box-body">
               <div class="form-group">
                 {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-                {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+                {!! Form::text('amountoffline', null, array('class' => 'form-control', 'id' => 'amountoffline', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
               </div>
               <div class="form-group">
                 {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
-                {!! Form::text('bank', 'ডাচ বাংলা ব্যাংক', array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
+                {!! Form::text('bank', 'ডাচ বাংলা ব্যাংক', array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
               </div>
               <div class="form-group">
                 {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
-                {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+                {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন')) !!}
               </div>
               <div class="form-group">
                 {{-- {!! Form::label('pay_slip', 'ব্রাঞ্চের নাম') !!} --}}
-                {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
+                {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন')) !!}
               </div>
               <label>রিসিটের ছবি (সর্বোচ্চ ৩টি, ৫০০ কিলোবাইট এর মধ্যে প্রতিটি)</label>
               <div class="row">
@@ -240,7 +240,7 @@
                   
                 </div>
                 <div class="modal-footer">
-                      {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+                      {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtnOffline')) !!}
                       <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                 </div>
               </div>
@@ -265,7 +265,7 @@
             <div class="box-body">
               <div class="form-group">
                 {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-                {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+                {!! Form::text('amountonline', null, array('class' => 'form-control', 'id' => 'amountonline', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
               </div>
               <div class="form-group">
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOnline" data-backdrop="static" id="previewFormButtonOnline"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
@@ -282,7 +282,7 @@
                         
                       </div>
                       <div class="modal-footer">
-                            {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+                            {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtnOnline')) !!}
                             <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                       </div>
                     </div>
@@ -307,17 +307,17 @@
   {!!Html::script('js/parsley.min.js')!!}
   <script type="text/javascript">
     $(document).ready( function() {
-      $('#amount').blur(function() {
-        var value = $('#amount').val();
+      $('#amountoffline').blur(function() {
+        var value = $('#amountoffline').val();
         if(value == '') {
           if($(window).width() > 768) {
             toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', '400px');
           } else {
             toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', ($(window).width()-25)+'px');
           }
-          $('#submitBtn').attr('disabled', false);
+          $('#submitBtnOffline').attr('disabled', false);
         } else {
-          $('#submitBtn').attr('disabled', true);
+          $('#submitBtnOffline').attr('disabled', true);
         }
         if(value < 300) {
           if($(window).width() > 768) {
@@ -325,9 +325,33 @@
           } else {
             toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', ($(window).width()-25)+'px');
           }
-          $('#submitBtn').attr('disabled', true);
+          $('#submitBtnOffline').attr('disabled', true);
         } else {
-          $('#submitBtn').attr('disabled', false);
+          $('#submitBtnOffline').attr('disabled', false);
+        }
+      })
+
+      $('#amountonline').blur(function() {
+        var value = $('#amountonline').val();
+        if(value == '') {
+          if($(window).width() > 768) {
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', '400px');
+          } else {
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', ($(window).width()-25)+'px');
+          }
+          $('#submitBtnOnline').attr('disabled', false);
+        } else {
+          $('#submitBtnOnline').attr('disabled', true);
+        }
+        if(value < 300) {
+          if($(window).width() > 768) {
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', '400px');
+          } else {
+            toastr.info('পরিমাণ ৩০০ বা এর থেকে বেশি দিন', 'INFO').css('width', ($(window).width()-25)+'px');
+          }
+          $('#submitBtnOnline').attr('disabled', true);
+        } else {
+          $('#submitBtnOnline').attr('disabled', false);
         }
       })
     });
@@ -664,7 +688,7 @@
 
     $('#offlinecollapse').hide();
     $('#onlinecollapse').hide();
-    
+
     $('#offlinecollapsebtn').click(function() {
       $('#offlinecollapse').show();
       $('#onlinecollapse').hide();
