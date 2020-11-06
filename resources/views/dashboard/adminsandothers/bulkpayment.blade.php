@@ -145,14 +145,16 @@
           <!-- /.box-body -->
         </div>
       </div><br/>
-      <div class="col-md-7">
+      <div class="col-md-6">
         <div class="box box-warning">
           <div class="box-header with-border text-orange">
-            <i class="fa fa-fw fa-file-text-o"></i>
-            <h3 class="box-title">পরিশোধ ফরম</h3>
+            <a data-toggle="collapse" href="#offlinecollape">
+              <i class="fa fa-fw fa-file-text-o"></i>
+              <h3 class="box-title">ম্যানুয়াল পরিশোধ ফরম</h3>
+            </a>
           </div>
           <!-- /.box-header -->
-          <div class="box-body">
+          <div class="box-body collapse" id="offlinecollape">
             <div class="form-group">
               {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
               {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
@@ -241,6 +243,48 @@
               <!-- Preview Modal -->
               <!-- Preview Modal -->
               
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="box box-warning">
+          <div class="box-header with-border text-orange">
+            <a data-toggle="collapse" href="#onlinecollapse">
+              <i class="fa fa-fw fa-file-text-o"></i>
+              <h3 class="box-title">অনলাইন পরিশোধ ফরম</h3>
+            </a>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body collapse" id="onlinecollapse">
+            <div class="form-group">
+              {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
+              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModal" data-backdrop="static" id="previewFormButton"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
+              <!-- Preview Modal -->
+              <!-- Preview Modal -->
+              <div class="modal fade" id="previewFormModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
+                    </div>
+                    <div class="modal-body" id="previewFormModalBody">
+                      
+                    </div>
+                    <div class="modal-footer">
+                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Preview Modal -->
+              <!-- Preview Modal -->
             </div>
           </div>
           <!-- /.box-body -->
