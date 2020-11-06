@@ -702,11 +702,25 @@
     $('#offlinecollapsebtn').click(function() {
       $('#offlinecollapse').show();
       $('#onlinecollapse').hide();
+
+      $('#amountoffline').attr('required', 'true');
+      $('#bank').attr('required', 'true');
+      $('#pay_slip').attr('required', 'true');
+      $('#image1').attr('required', 'true');
+
+      $('#amountonline').removeAttr('required');
     });
 
     $('#onlinecollapsebtn').click(function() {
       $('#offlinecollapse').hide();
       $('#onlinecollapse').show();
+
+      $('#amountoffline').removeAttr('required');
+      $('#bank').removeAttr('required');
+      $('#pay_slip').removeAttr('required');
+      $('#image1').removeAttr('required');
+
+      $('#amountonline').attr('required', 'true');
     });
   </script>
 @stop
