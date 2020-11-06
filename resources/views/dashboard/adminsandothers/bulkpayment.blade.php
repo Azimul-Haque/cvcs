@@ -611,12 +611,14 @@
       });
     })
 
-    $('#offlinecollapsebtn').click(function() {
-      $('#onlinecollapse').hide();
-    });
+    // $('#offlinecollapsebtn').click(function() {
+    //   $('#onlinecollapse').hide();
+    //   $('#offlinecollapse').show();
+    // });
 
-    $('#onlinecollapsebtn').click(function() {
-      $('#offlinecollapse').hide();
-    });
+    // $('#onlinecollapsebtn').click(function() {
+    //   $('#offlinecollapse').hide();
+    //   $('#onlinecollapse').show();
+    // });
   </script>
 @stop
