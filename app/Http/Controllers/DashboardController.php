@@ -2832,7 +2832,7 @@ class DashboardController extends Controller
             return view('dashboard.adminsandothers.bulknext')
                         ->withMemberid(Auth::user()->member_id)
                         ->withAmount($request->amountonline)
-                        ->withAmount($request->amountonline);
+                        ->withPaymentids($request->bulk_payment_member_ids);
             // ONLINE TRANSACTION
             // ONLINE TRANSACTION
         }
