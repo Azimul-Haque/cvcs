@@ -208,9 +208,9 @@ Route::get('/dashboard/member/payment/self', ['as'=>'dashboard.memberpaymentself
 Route::post('/dashboard/member/payment/self', ['as'=>'dashboard.storememberpaymentself','uses'=>'DashboardController@storeSelfPayment']);
 Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.member.payment.pdf','uses'=>'DashboardController@downloadMemberPaymentPDF']);
 
-// ONLINE PAYMENT
-// ONLINE PAYMENT
-// ONLINE PAYMENT
+// SINGLE ONLINE PAYMENT
+// SINGLE ONLINE PAYMENT
+// SINGLE ONLINE PAYMENT
 Route::get('/dashboard/member/payment/self/online', ['as'=>'dashboard.memberpaymentselfonline','uses'=>'DashboardController@getSelfPaymentOnlinePage']);
 Route::post('/dashboard/member/payment/self/online', ['as'=>'dashboard.storememberonlinepaymentself','uses'=>'DashboardController@nextSelfPaymentOnline']);
 
@@ -218,9 +218,9 @@ Route::post('/payment/success', 'DashboardController@paymentSuccessOrFailed')->n
 Route::get('/payment/failed', 'DashboardController@paymentSuccessOrFailed')->name('payment.failed');
 Route::post('/payment/cancel', 'DashboardController@paymentCancelledPost')->name('payment.cancel');
 Route::get('/payment/cancel', 'DashboardController@paymentCancelled')->name('payment.cancel');
-// ONLINE PAYMENT
-// ONLINE PAYMENT
-// ONLINE PAYMENT
+// SINGLE ONLINE PAYMENT
+// SINGLE ONLINE PAYMENT
+// SINGLE ONLINE PAYMENT
 
 Route::post('/dashboard/member/complete/report/download/pdf', ['as'=>'dashboard.member.complete.pdf','uses'=>'DashboardController@downloadMemberCompletePDF']);
 Route::get('/dashboard/members/for/all', ['as'=>'dashboard.membersforall','uses'=>'DashboardController@getMembersForAll']);
@@ -236,6 +236,19 @@ Route::get('/dashboard/member/payment/bulk', ['as'=>'dashboard.memberpaymentbulk
 Route::get('/dashboard/member/payment/bulk/search/api', ['as'=>'dashboard.searchmembersforbulkpayment','uses'=>'DashboardController@searchMemberForBulkPaymentAPI']);
 Route::get('/dashboard/member/payment/bulk/search/single/member/api/{member_id}', ['as'=>'dashboard.searchmemberforbulkpaymentsingle','uses'=>'DashboardController@searchMemberForBulkPaymentSingleAPI']);
 Route::post('/dashboard/member/payment/bulk', ['as'=>'dashboard.storememberpaymentbulk','uses'=>'DashboardController@storeBulkPayment']);
+
+// BULK ONLINE PAYMENT
+// BULK ONLINE PAYMENT
+// BULK ONLINE PAYMENT
+Route::post('/dashboard/member/payment/self/online', ['as'=>'dashboard.storememberonlinepaymentself','uses'=>'DashboardController@nextSelfPaymentOnline']);
+
+Route::post('/payment/bulk/success', 'DashboardController@paymentBulkSuccessOrFailed')->name('payment.bulksuccess');
+Route::get('/payment/bulk/failed', 'DashboardController@paymentBulkSuccessOrFailed')->name('payment.bulkfailed');
+Route::post('/payment/bulk/cancel', 'DashboardController@paymentBulkCancelledPost')->name('payment.bulkcancel');
+Route::get('/payment/bulk/cancel', 'DashboardController@paymentBulkCancelled')->name('payment.bulkcancel');
+// BULK ONLINE PAYMENT
+// BULK ONLINE PAYMENT
+// BULK ONLINE PAYMENT
 
 // REPORTS
 Route::get('/dashboard/reports', ['as'=>'dashboard.reports','uses'=>'ReportController@getReportsPage']);

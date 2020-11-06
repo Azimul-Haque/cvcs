@@ -2826,13 +2826,11 @@ class DashboardController extends Controller
                 $amount_id[$amountid] = $request['amount'.$amountid];
             }
             $bulk_payment_member_ids = json_encode($amount_id);
-
-            dd($bulk_payment_member_ids);
+            // dd($bulk_payment_member_ids);
 
             return view('dashboard.adminsandothers.bulknext')
-                        ->withMemberid(Auth::user()->member_id)
                         ->withAmount($request->amountonline)
-                        ->withPaymentids($request->bulk_payment_member_ids);
+                        ->withPaymentids($bulk_payment_member_ids);
             // ONLINE TRANSACTION
             // ONLINE TRANSACTION
         }

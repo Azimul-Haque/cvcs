@@ -507,7 +507,7 @@
         preview_html += '   </tr></thead>';
         preview_html += '   <tbody><tr>';
         preview_html += '     <td>{{ Auth::user()->name_bangla }}</td>';
-        preview_html += '     <td>৳ '+ $('#amount').val() +'</td>';
+        preview_html += '     <td>৳ '+ $('#amountoffline').val() +'</td>';
         preview_html += '     <td>'+ $('#bank').val() +'</td>';
         preview_html += '     <td>'+ $('#branch').val() +'</td>';
         preview_html += '     <td>'+ $('#pay_slip').val() +'</td>';
@@ -564,7 +564,7 @@
         preview_html += '   </tr></thead>';
         preview_html += '   <tbody><tr>';
         preview_html += '     <td>{{ Auth::user()->name_bangla }}</td>';
-        preview_html += '     <td>৳ '+ $('#amount').val() +'</td>';
+        preview_html += '     <td>৳ '+ $('#amountonline').val() +'</td>';
         preview_html += '     <td>aamarPay Payment Gateway</td>';
         preview_html += '   </tr></tbody>';
         preview_html += '  </table>';

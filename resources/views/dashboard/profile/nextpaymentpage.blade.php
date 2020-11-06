@@ -55,7 +55,7 @@
 @stop
 
 @section('js')
-  {!!Html::script('js/parsley.min.js')!!}
+  {{-- {!!Html::script('js/parsley.min.js')!!}
   <script type="text/javascript">
     $(document).ready( function() {
 
@@ -87,5 +87,5 @@
         }
       })
     });
-  </script>
+  </script> --}}
 @stop

@@ -26,20 +26,26 @@
         <!-- /.box-header -->
         <div class="box-body">
           <center>
+              @php
+                $trxid = 'CVCS' . strtotime('now') . random_string(5);
+              @endphp
               <h3 class="margin-two">অনুগ্রহ করে <b><u>৳{{ $amount }}</u></b> পেমেন্ট গেটওয়ের মাধ্যমে পরিশোধ করুন</h3>
               <div style="border: 2px solid #ddd; padding: 0px; width: 100%; padding: 10px;">
                   <img src="{{ asset('images/aamarpay.png') }}" class="img-responsive margin-two">
-                  @php
-                    $trxid = 'CVCS' . strtotime('now') . random_string(5);
-                  @endphp
+                  
                   {!! 
                   aamarpay_post_button([
                       'tran_id'  => $trxid,
                       'cus_name'  => 'CVCS Bulk Entry',
-                      'cus_email' => 'bulk@cvcsbd.com',
-                      'cus_phone' => 'asd',
+                      'cus_email' => Auth::user()->email,
+                      'cus_phone' => Auth::user()->mobile,
+                      
+                      'success_url' => route('payment.bulksuccess'),
+                      'fail_url' => route('payment.bulkfailed'),
+                      'cancel_url' => route('payment.bulkcancel'),
+
                       'desc' => 'Monthly Fee',
-                      'opt_a' => $member->member_id,
+                      'opt_a' => $paymentids,
                       'opt_b' => $amount
                   ], $amount, '<i class="fa fa-money"></i> Pay Through AamarPay', 'btn btn-success') !!}
               </div>
@@ -53,7 +59,7 @@
 @stop
 
 @section('js')
-  {!!Html::script('js/parsley.min.js')!!}
+  {{-- {!!Html::script('js/parsley.min.js')!!}
   <script type="text/javascript">
     $(document).ready( function() {
 
@@ -85,5 +91,5 @@
         }
       })
     });
-  </script>
+  </script> --}}
 @stop
