@@ -154,73 +154,75 @@
             </a>
           </div>
           <!-- /.box-header -->
-          <div class="box-body collapse" id="offlinecollapse">
-            <div class="form-group">
-              {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
-            </div>
-            <div class="form-group">
-              {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
-              {!! Form::text('bank', 'ডাচ বাংলা ব্যাংক', array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
-            </div>
-            <div class="form-group">
-              {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
-              {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
-            </div>
-            <div class="form-group">
-              {{-- {!! Form::label('pay_slip', 'ব্রাঞ্চের নাম') !!} --}}
-              {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
-            </div>
-            <label>রিসিটের ছবি (সর্বোচ্চ ৩টি, ৫০০ কিলোবাইট এর মধ্যে প্রতিটি)</label>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default btn-file">
-                                Browse <input type="file" id="image1" name="image1" required="">
-                            </span>
-                        </span>
-                        <input type="text" class="form-control text-blue" readonly>
-                    </div>
-                    <center>
-                      <img src="{{ asset('images/800x500.png')}}" id='img-upload1' style="height: 100px; width: auto; padding: 5px;" />
-                    </center>
+          <div class="collapse" id="offlinecollapse">
+            <div class="box-body">
+              <div class="form-group">
+                {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
+                {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+              </div>
+              <div class="form-group">
+                {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
+                {!! Form::text('bank', 'ডাচ বাংলা ব্যাংক', array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
+              </div>
+              <div class="form-group">
+                {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
+                {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+              </div>
+              <div class="form-group">
+                {{-- {!! Form::label('pay_slip', 'ব্রাঞ্চের নাম') !!} --}}
+                {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
+              </div>
+              <label>রিসিটের ছবি (সর্বোচ্চ ৩টি, ৫০০ কিলোবাইট এর মধ্যে প্রতিটি)</label>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <div class="input-group">
+                          <span class="input-group-btn">
+                              <span class="btn btn-default btn-file">
+                                  Browse <input type="file" id="image1" name="image1" required="">
+                              </span>
+                          </span>
+                          <input type="text" class="form-control text-blue" readonly>
+                      </div>
+                      <center>
+                        <img src="{{ asset('images/800x500.png')}}" id='img-upload1' style="height: 100px; width: auto; padding: 5px;" />
+                      </center>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <div class="input-group">
+                          <span class="input-group-btn">
+                              <span class="btn btn-default btn-file">
+                                  Browse <input type="file" id="image2" name="image2">
+                              </span>
+                          </span>
+                          <input type="text" class="form-control text-blue" readonly>
+                      </div>
+                      <center>
+                        <img src="{{ asset('images/800x500.png')}}" id='img-upload2' style="height: 100px; width: auto; padding: 5px;" />
+                      </center>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <div class="input-group">
+                          <span class="input-group-btn">
+                              <span class="btn btn-default btn-file">
+                                  Browse <input type="file" id="image3" name="image3">
+                              </span>
+                          </span>
+                          <input type="text" class="form-control text-blue" readonly>
+                      </div>
+                      <center>
+                        <img src="{{ asset('images/800x500.png')}}" id='img-upload3' style="height: 100px; width: auto; padding: 5px;" />
+                      </center>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default btn-file">
-                                Browse <input type="file" id="image2" name="image2">
-                            </span>
-                        </span>
-                        <input type="text" class="form-control text-blue" readonly>
-                    </div>
-                    <center>
-                      <img src="{{ asset('images/800x500.png')}}" id='img-upload2' style="height: 100px; width: auto; padding: 5px;" />
-                    </center>
-                </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOffline" data-backdrop="static" id="previewFormButtonOffline"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default btn-file">
-                                Browse <input type="file" id="image3" name="image3">
-                            </span>
-                        </span>
-                        <input type="text" class="form-control text-blue" readonly>
-                    </div>
-                    <center>
-                      <img src="{{ asset('images/800x500.png')}}" id='img-upload3' style="height: 100px; width: auto; padding: 5px;" />
-                    </center>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOffline" data-backdrop="static" id="previewFormButtonOffline"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
             </div>
           </div>
           <!-- /.box-body -->
@@ -259,34 +261,36 @@
             </a>
           </div>
           <!-- /.box-header -->
-          <div class="box-body collapse" id="onlinecollapse">
-            <div class="form-group">
-              {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOnline" data-backdrop="static" id="previewFormButtonOnline"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
-              <!-- Preview Modal -->
-              <!-- Preview Modal -->
-              <div class="modal fade" id="previewFormModalOnline" role="dialog">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
-                    </div>
-                    <div class="modal-body" id="previewFormModalBodyOnline">
-                      
-                    </div>
-                    <div class="modal-footer">
-                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
-                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+          <div>
+            <div class="box-body collapse" id="onlinecollapse">
+              <div class="form-group">
+                {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
+                {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'মোট টাকার পরিমাণ লিখুন (৩০০ বা এর থেকে বেশি)', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#previewFormModalOnline" data-backdrop="static" id="previewFormButtonOnline"><i class="fa fa-arrow-right"></i> পরবর্তী পাতা</button>
+                <!-- Preview Modal -->
+                <!-- Preview Modal -->
+                <div class="modal fade" id="previewFormModalOnline" role="dialog">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header modal-header-primary">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
+                      </div>
+                      <div class="modal-body" id="previewFormModalBodyOnline">
+                        
+                      </div>
+                      <div class="modal-footer">
+                            {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary', 'id' => 'submitBtn')) !!}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <!-- Preview Modal -->
+                <!-- Preview Modal -->
               </div>
-              <!-- Preview Modal -->
-              <!-- Preview Modal -->
             </div>
           </div>
           <!-- /.box-body -->
@@ -659,14 +663,14 @@
     })
 
 
-    // $('#offlinecollapsebtn').click(function() {
-    //   $('#onlinecollapse').hide();
-    //   $('#offlinecollapse').show();
-    // });
+    $('#offlinecollapsebtn').click(function() {
+      $('#onlinecollapse').hide();
+      $('#offlinecollapse').show();
+    });
 
-    // $('#onlinecollapsebtn').click(function() {
-    //   $('#offlinecollapse').hide();
-    //   $('#onlinecollapse').show();
-    // });
+    $('#onlinecollapsebtn').click(function() {
+      $('#offlinecollapse').hide();
+      $('#onlinecollapse').show();
+    });
   </script>
 @stop
