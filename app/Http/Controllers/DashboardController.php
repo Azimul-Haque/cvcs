@@ -50,7 +50,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'paymentSuccessOrFailed', 'paymentCancelledPost', 'paymentCancelled', 'getBulkPaymentPage', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'paymentSuccessOrFailed', 'paymentCancelledPost', 'paymentCancelled', 'getBulkPaymentPage', 'paymentBulkSuccessOrFailed', 'paymentBulkCancelledPost', 'paymentBulkCancelled', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
     }
 
     /**
@@ -3124,6 +3124,109 @@ class DashboardController extends Controller
             curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
             curl_multi_add_handle($mh, $multiCurl[$member_id]);
+        }
+
+        $index=null;
+        do {
+          curl_multi_exec($mh, $index);
+        } while($index > 0);
+        // get content and remove handles
+        foreach($multiCurl as $k => $ch) {
+          $result[$k] = curl_multi_getcontent($ch);
+          curl_multi_remove_handle($mh, $ch);
+          $smsresult = $result[$k];
+          $p = explode("|",$smsresult);
+          $sendstatus = $p[0];
+          if($sendstatus == 1101) {
+              $smssuccesscount++;
+          }
+        }
+        // close
+        curl_multi_close($mh);
+
+        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        return redirect()->route('dashboard.membersapprovedpayments');
+    }
+
+    public function paymentBulkSuccessOrFailed(Request $request, $id) 
+    {
+        // $bulkpayment = Payment::find($id);
+
+        // foreach(json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+        //     $payment = new Payment;
+        //     $payment->member_id = $member_id;
+        //     $payment->payer_id = $bulkpayment->payer_id;
+        //     $payment->amount = $amount;
+        //     $payment->bank = $bulkpayment->bank;
+        //     $payment->branch = $bulkpayment->branch;
+        //     $payment->pay_slip = $bulkpayment->pay_slip;
+        //     $payment->payment_status = 1; // approved
+        //     $payment->payment_category = 1; // monthly payment
+        //     $payment->payment_type = 2; // bulk payment
+        //     $payment->payment_key = $bulkpayment->payment_key;
+        //     $payment->save();
+
+        //     // receipt upload
+        //     if(count($bulkpayment->paymentreceipts) > 0) {
+        //         foreach($bulkpayment->paymentreceipts as $paymentreceipt) {
+        //             $newpaymentreceipt = new Paymentreceipt;
+        //             $newpaymentreceipt->payment_id = $payment->id;
+        //             $newpaymentreceipt->image = $paymentreceipt->image;
+        //             $newpaymentreceipt->save();
+        //         }
+        //     }
+        // }
+
+        // $bulkpayment->is_archieved = 1;
+        // $bulkpayment->save();
+
+
+        // // send sms
+        // // $mobile_numbers = [];
+        // $smssuccesscount = 0;
+        // $url = config('sms.url');
+        
+        // $multiCurl = array();
+        // // data to be returned
+        // $result = array();
+        // // multi handle
+        // $mh = curl_multi_init();
+        // // sms data
+        // $smsdata = [];
+
+        // foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+        //     $member = User::where('member_id', $member_id)->first();
+        //     $mobile_number = 0;
+        //     if(strlen($member->mobile) == 11) {
+        //         $mobile_number = $member->mobile;
+        //     } elseif(strlen($member->mobile) > 11) {
+        //         if (strpos($member->mobile, '+') !== false) {
+        //             $mobile_number = substr($member->mobile, -11);
+        //         }
+        //     }
+        //     // if($mobile_number != 0) {
+        //     //   array_push($mobile_numbers, $mobile_number);
+        //     // }
+        //     $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+        //     $smsdata[$member_id] = array(
+        //         'username'=>config('sms.username'),
+        //         'password'=>config('sms.password'),
+        //         // 'apicode'=>"1",
+        //         'number'=>"$mobile_number",
+        //         // 'msisdn'=>"$mobile_number",
+        //         // 'countrycode'=>"880",
+        //         // 'cli'=>"CVCS",
+        //         // 'messagetype'=>"1",
+        //         'message'=>"$text",
+        //         // 'messageid'=>"2"
+        //     );
+        //     $multiCurl[$member_id] = curl_init(); // Initialize cURL
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_HEADER, 0);
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_POSTFIELDS, http_build_query($smsdata[$member_id]));
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
+        //     curl_multi_add_handle($mh, $multiCurl[$member_id]);
         }
 
         $index=null;
