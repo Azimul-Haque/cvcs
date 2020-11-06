@@ -2670,128 +2670,173 @@ class DashboardController extends Controller
 
     public function storeBulkPayment(Request $request) 
     {
-        $this->validate($request,array(
-            'amount'      =>   'required|integer',
-            'bank'        =>   'required',
-            'branch'      =>   'required',
-            'pay_slip'    =>   'required',
-            'image1'      =>   'required|image|max:500',
-            'image2'      =>   'sometimes|image|max:500',
-            'image3'      =>   'sometimes|image|max:500'
-        ));
+        if($request->payment_type == 'offline') {
+            // OFFLINE TRANSACTION
+            // OFFLINE TRANSACTION
+            $this->validate($request,array(
+                'amountoffline'      =>   'required|integer',
+                'bank'        =>   'required',
+                'branch'      =>   'required',
+                'pay_slip'    =>   'required',
+                'image1'      =>   'required|image|max:500',
+                'image2'      =>   'sometimes|image|max:500',
+                'image3'      =>   'sometimes|image|max:500'
+            ));
 
-        // dd($request->all());
-        $payment = new Payment;
-        $payment->member_id = Auth::user()->member_id;
-        $payment->payer_id = Auth::user()->member_id;
-        $payment->amount = $request->amount;
-        $payment->bank = $request->bank;
-        $payment->branch = $request->branch;
-        $payment->pay_slip = $request->pay_slip;
-        $payment->payment_status = 0;
-        $payment->payment_category = 1; // monthly payment
-        $payment->payment_type = 2; // bulk payment
-        // generate payment_key
-        $payment_key_length = 10;
-        $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
-        // generate payment_key
-        $payment->payment_key = $payment_key;
+            // dd($request->all());
+            $payment = new Payment;
+            $payment->member_id = Auth::user()->member_id;
+            $payment->payer_id = Auth::user()->member_id;
+            $payment->amount = $request->amountoffline;
+            $payment->bank = $request->bank;
+            $payment->branch = $request->branch;
+            $payment->pay_slip = $request->pay_slip;
+            $payment->payment_status = 0;
+            $payment->payment_category = 1; // monthly payment
+            $payment->payment_type = 2; // bulk payment
+            // generate payment_key
+            $payment_key_length = 10;
+            $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+            // generate payment_key
+            $payment->payment_key = $payment_key;
 
-        // storing bulk ids and amounts
-        $amountids = $request->amountids;
-        $amount_id = [];
-        foreach ($amountids as $amountid) {
-            $amount_id[$amountid] = $request['amount'.$amountid];
-        }
-        $payment->bulk_payment_member_ids = json_encode($amount_id);
-
-        $payment->save();
-
-        // receipt upload
-        for($itrt=1; $itrt<4;$itrt++) {
-            if($request->hasFile('image'.$itrt)) {
-                $receipt      = $request->file('image'.$itrt);
-                $filename   = $payment->member_id . $itrt . '_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
-                $location   = public_path('/images/receipts/'. $filename);
-                Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
-                $paymentreceipt = new Paymentreceipt;
-                $paymentreceipt->payment_id = $payment->id;
-                $paymentreceipt->image = $filename;
-                $paymentreceipt->save();
+            // storing bulk ids and amounts
+            $amountids = $request->amountids;
+            $amount_id = [];
+            foreach ($amountids as $amountid) {
+                $amount_id[$amountid] = $request['amount'.$amountid];
             }
-        }
+            $payment->bulk_payment_member_ids = json_encode($amount_id);
 
+            $payment->save();
 
-        // send sms
-        // $mobile_numbers = [];
-        $smssuccesscount = 0;
-        $url = config('sms.url');
-        
-        $multiCurl = array();
-        // data to be returned
-        $result = array();
-        // multi handle
-        $mh = curl_multi_init();
-        // sms data
-        $smsdata = [];
-
-        $members = User::whereIn('member_id', $amountids)->get();
-        foreach ($members as $i => $member) {
-            $mobile_number = 0;
-            if(strlen($member->mobile) == 11) {
-                $mobile_number = $member->mobile;
-            } elseif(strlen($member->mobile) > 11) {
-                if (strpos($member->mobile, '+') !== false) {
-                    $mobile_number = substr($member->mobile, -11);
+            // receipt upload
+            for($itrt=1; $itrt<4;$itrt++) {
+                if($request->hasFile('image'.$itrt)) {
+                    $receipt      = $request->file('image'.$itrt);
+                    $filename   = $payment->member_id . $itrt . '_receipt_' . time() .'.' . $receipt->getClientOriginalExtension();
+                    $location   = public_path('/images/receipts/'. $filename);
+                    Image::make($receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+                    $paymentreceipt = new Paymentreceipt;
+                    $paymentreceipt->payment_id = $payment->id;
+                    $paymentreceipt->image = $filename;
+                    $paymentreceipt->save();
                 }
             }
-            // if($mobile_number != 0) {
-            //   array_push($mobile_numbers, $mobile_number);
-            // }
-            $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-            $smsdata[$i] = array(
-                'username'=>config('sms.username'),
-                'password'=>config('sms.password'),
-                // 'apicode'=>"1",
-                'number'=>"$mobile_number",
-                // 'msisdn'=>"$mobile_number",
-                // 'countrycode'=>"880",
-                // 'cli'=>"CVCS",
-                // 'messagetype'=>"1",
-                'message'=>"$text",
-                // 'messageid'=>"1"
-            );
-            $multiCurl[$i] = curl_init(); // Initialize cURL
-            curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
-            curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
-            curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
-            curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
-            curl_multi_add_handle($mh, $multiCurl[$i]);
-        }
 
-        $index=null;
-        do {
-          curl_multi_exec($mh, $index);
-        } while($index > 0);
-        // get content and remove handles
-        foreach($multiCurl as $k => $ch) {
-          $result[$k] = curl_multi_getcontent($ch);
-          curl_multi_remove_handle($mh, $ch);
-          // $sendstatus = substr($result[$k], 0, 3);
-          $p = explode("|",$result[$k]);
-          $sendstatus = $p[0];
-          if($sendstatus == 1101) {
-              $smssuccesscount++;
-          }
+            // send sms
+            // $mobile_numbers = [];
+            $smssuccesscount = 0;
+            $url = config('sms.url');
+            
+            $multiCurl = array();
+            // data to be returned
+            $result = array();
+            // multi handle
+            $mh = curl_multi_init();
+            // sms data
+            $smsdata = [];
+
+            $members = User::whereIn('member_id', $amountids)->get();
+            foreach ($members as $i => $member) {
+                $mobile_number = 0;
+                if(strlen($member->mobile) == 11) {
+                    $mobile_number = $member->mobile;
+                } elseif(strlen($member->mobile) > 11) {
+                    if (strpos($member->mobile, '+') !== false) {
+                        $mobile_number = substr($member->mobile, -11);
+                    }
+                }
+                // if($mobile_number != 0) {
+                //   array_push($mobile_numbers, $mobile_number);
+                // }
+                $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                $smsdata[$i] = array(
+                    'username'=>config('sms.username'),
+                    'password'=>config('sms.password'),
+                    // 'apicode'=>"1",
+                    'number'=>"$mobile_number",
+                    // 'msisdn'=>"$mobile_number",
+                    // 'countrycode'=>"880",
+                    // 'cli'=>"CVCS",
+                    // 'messagetype'=>"1",
+                    'message'=>"$text",
+                    // 'messageid'=>"1"
+                );
+                $multiCurl[$i] = curl_init(); // Initialize cURL
+                curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
+                curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
+                curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
+                curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
+                curl_multi_add_handle($mh, $multiCurl[$i]);
+            }
+
+            $index=null;
+            do {
+              curl_multi_exec($mh, $index);
+            } while($index > 0);
+            // get content and remove handles
+            foreach($multiCurl as $k => $ch) {
+              $result[$k] = curl_multi_getcontent($ch);
+              curl_multi_remove_handle($mh, $ch);
+              // $sendstatus = substr($result[$k], 0, 3);
+              $p = explode("|",$result[$k]);
+              $sendstatus = $p[0];
+              if($sendstatus == 1101) {
+                  $smssuccesscount++;
+              }
+            }
+            // close
+            curl_multi_close($mh);
+            
+            
+            Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
+            return redirect()->route('dashboard.memberpayment');
+            // OFFLINE TRANSACTION
+            // OFFLINE TRANSACTION
+        } else {
+            // ONLINE TRANSACTION
+            // ONLINE TRANSACTION
+            $this->validate($request,array(
+                'amountonline'      =>   'required|integer'
+            ));
+
+            // $payment->member_id = Auth::user()->member_id;
+            // $payment->payer_id = Auth::user()->member_id;
+            // $payment->amount = $request->amountoffline;
+            // $payment->bank = $request->bank;
+            // $payment->branch = $request->branch;
+            // $payment->pay_slip = $request->pay_slip;
+            // $payment->payment_status = 0;
+            // $payment->payment_category = 1; // monthly payment
+            // $payment->payment_type = 2; // bulk payment
+            // // generate payment_key
+            // $payment_key_length = 10;
+            // $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            // $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
+            // // generate payment_key
+            // $payment->payment_key = $payment_key;
+
+            // storing bulk ids and amounts
+            $amountids = $request->amountids;
+            $amount_id = [];
+            foreach ($amountids as $amountid) {
+                $amount_id[$amountid] = $request['amount'.$amountid];
+            }
+            $bulk_payment_member_ids = json_encode($amount_id);
+
+            dd($bulk_payment_member_ids);
+
+            return view('dashboard.adminsandothers.bulknext')
+                        ->withMemberid(Auth::user()->member_id)
+                        ->withAmount($request->amountonline)
+                        ->withAmount($request->amountonline);
+            // ONLINE TRANSACTION
+            // ONLINE TRANSACTION
         }
-        // close
-        curl_multi_close($mh);
         
-        
-        Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
-        return redirect()->route('dashboard.memberpayment');
     }
 
     public function getBulkPaymentPage() 
