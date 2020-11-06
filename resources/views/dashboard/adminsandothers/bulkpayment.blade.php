@@ -234,7 +234,7 @@
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
                 </div>
-                <div class="modal-body" id="previewFormModalBody">
+                <div class="modal-body" id="previewFormModalBodyOnlineOffline">
                   
                 </div>
                 <div class="modal-footer">
@@ -275,7 +275,7 @@
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
                     </div>
-                    <div class="modal-body" id="previewFormModalBody">
+                    <div class="modal-body" id="previewFormModalBodyOnline">
                       
                     </div>
                     <div class="modal-footer">
@@ -509,7 +509,7 @@
           preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload3').attr('src')+ '">';
         }
 
-        document.getElementById('previewFormModalBody').innerHTML = preview_html;
+        document.getElementById('previewFormModalBodyOffline').innerHTML = preview_html;
 
       })
 
@@ -568,7 +568,7 @@
           preview_html += '<br/><img class="img-responsive" src="' +$('#img-upload3').attr('src')+ '">';
         }
 
-        document.getElementById('previewFormModalBody').innerHTML = preview_html;
+        document.getElementById('previewFormModalBodyOnline').innerHTML = preview_html;
 
       })
     })
