@@ -2871,10 +2871,14 @@ class DashboardController extends Controller
             // storing bulk ids and amounts
             $amountids = $request->amountids;
             $amount_id = [];
+            // foreach ($amountids as $amountid) {
+            //     $amount_id[$amountid] = $request['amount'.$amountid];
+            // }
+            // $bulk_payment_member_ids = json_encode($amount_id);
             foreach ($amountids as $amountid) {
-                $amount_id[$amountid] = $request['amount'.$amountid];
+                $amount_id[] = $amountid . ":" . $request['amount'.$amountid];
             }
-            $bulk_payment_member_ids = json_encode($amount_id);
+            $bulk_payment_member_ids = implode(',', $amount_id);
             // dd($bulk_payment_member_ids);
 
             return view('dashboard.adminsandothers.bulknext')
@@ -3197,8 +3201,9 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.membersapprovedpayments');
     }
 
-    public function paymentBulkSuccessOrFailed(Request $request, $id) 
+    public function paymentBulkSuccessOrFailed(Request $request) 
     {
+        dd($request->all());
         // $member_id = $request->get('opt_a');
         
         // if($request->get('pay_status') == 'Failed') {
@@ -3274,7 +3279,7 @@ class DashboardController extends Controller
         //     return redirect(Route('dashboard.memberpaymentselfonline'));
         // }
         
-        // return redirect()->route('dashboard.memberpayment');
+        return redirect()->route('dashboard.memberpaymentbulk');
     }
 
     public function paymentBulkCancelledPost(Request $request)

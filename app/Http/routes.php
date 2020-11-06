@@ -240,8 +240,6 @@ Route::post('/dashboard/member/payment/bulk', ['as'=>'dashboard.storememberpayme
 // BULK ONLINE PAYMENT
 // BULK ONLINE PAYMENT
 // BULK ONLINE PAYMENT
-Route::post('/dashboard/member/payment/self/online', ['as'=>'dashboard.storememberonlinepaymentself','uses'=>'DashboardController@nextSelfPaymentOnline']);
-
 Route::post('/payment/bulk/success', 'DashboardController@paymentBulkSuccessOrFailed')->name('payment.bulksuccess');
 Route::get('/payment/bulk/failed', 'DashboardController@paymentBulkSuccessOrFailed')->name('payment.bulkfailed');
 Route::post('/payment/bulk/cancel', 'DashboardController@paymentBulkCancelledPost')->name('payment.bulkcancel');
