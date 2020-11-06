@@ -296,6 +296,8 @@
           <!-- /.box-body -->
         </div>
       </div>
+
+      <input type="hidden" name="payment_type" id="payment_type">
       {!! Form::close() !!}
     </div>
   @else
@@ -705,10 +707,13 @@
 
       $('#amountoffline').attr('required', 'true');
       $('#bank').attr('required', 'true');
+      $('#branch').attr('required', 'true');
       $('#pay_slip').attr('required', 'true');
       $('#image1').attr('required', 'true');
 
       $('#amountonline').removeAttr('required');
+
+      $('#payment_type').val('offline');
     });
 
     $('#onlinecollapsebtn').click(function() {
@@ -717,10 +722,13 @@
 
       $('#amountoffline').removeAttr('required');
       $('#bank').removeAttr('required');
+      $('#branch').removeAttr('required');
       $('#pay_slip').removeAttr('required');
       $('#image1').removeAttr('required');
 
       $('#amountonline').attr('required', 'true');
+
+      $('#payment_type').val('online');
     });
   </script>
 @stop
