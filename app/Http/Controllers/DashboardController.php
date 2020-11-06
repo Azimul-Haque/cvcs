@@ -2527,7 +2527,7 @@ class DashboardController extends Controller
 
     public function paymentCancelledPost(Request $request)
     {
-        $payment_key = $request->get('opt_a');
+        $member_id = $request->get('opt_a');
         
         if($request->get('pay_status') == 'Failed') {
             Session::flash('info', 'Something went wrong, please try again!');
@@ -2539,14 +2539,63 @@ class DashboardController extends Controller
         
         if($amount_paid == $amount_request)
         {
-          // $donation = Donation::where('payment_key', $payment_key)->first();
-          // // $donation->trxid = $request->get('pg_txnid');
-          // $donation->payment_status = 1;
-          // $donation->card_type = $request->get('card_type');
-          // $donation->save();
+          $member = User::where('member_id', $member_id)->first();
 
-          Session::flash('success','Donation is complete!');
-          return redirect(Route('dashboard.memberpayment'));
+          // SAVE THE PAYMENT
+          $payment = new Payment;
+          $payment->member_id = $member->member_id;
+          $payment->payer_id = $member->member_id;
+          $payment->amount = $amount_paid;
+          $payment->bank = 'aamarPay Payment Gateway';
+          $payment->branch = 'N/A';
+          $payment->pay_slip = '00';
+          $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
+          $payment->payment_category = 1; // monthly payment, if 0 then membership payment
+          $payment->payment_type = 1; // single payment, if 2 then bulk payment
+          $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+          $payment->card_type = $request->get('card_type');
+          $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
+          $payment->save();
+
+          // send sms
+          $mobile_number = 0;
+          if(strlen($payment->user->mobile) == 11) {
+              $mobile_number = $payment->user->mobile;
+          } elseif(strlen($payment->user->mobile) > 11) {
+              if (strpos($payment->user->mobile, '+') !== false) {
+                  $mobile_number = substr($payment->user->mobile, -11);
+              }
+          }
+          $url = config('sms.url');
+          $number = $mobile_number;
+          $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+          $data= array(
+              'username'=>config('sms.username'),
+              'password'=>config('sms.password'),
+              'number'=>"$number",
+              'message'=>"$text",
+          );
+          // initialize send status
+          $ch = curl_init(); // Initialize cURL
+          curl_setopt($ch, CURLOPT_URL,$url);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+          $smsresult = curl_exec($ch);
+
+          // $sendstatus = $result = substr($smsresult, 0, 3);
+          $p = explode("|",$smsresult);
+          $sendstatus = $p[0];
+          // send sms
+          if($sendstatus == 1101) {
+              Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+          } elseif($sendstatus == 1006) {
+              Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+          } else {
+              Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+          }
+          // SAVE THE PAYMENT
+          Session::flash('success','আপনার পেমেন্ট সফল হয়েছে!');
         } else {
            // Something went wrong.
           Session::flash('info', 'Something went wrong, please try again!');
@@ -2554,7 +2603,7 @@ class DashboardController extends Controller
         }
         
         //return $request->all();
-        return redirect()->route('index.donatenext', $donation->payment_key);
+        return redirect(Route('dashboard.memberpayment'));
     }
 
     public function paymentCancelled()
@@ -3227,37 +3276,121 @@ class DashboardController extends Controller
         //     curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
         //     curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
         //     curl_multi_add_handle($mh, $multiCurl[$member_id]);
-        }
+        // }
 
-        $index=null;
-        do {
-          curl_multi_exec($mh, $index);
-        } while($index > 0);
-        // get content and remove handles
-        foreach($multiCurl as $k => $ch) {
-          $result[$k] = curl_multi_getcontent($ch);
-          curl_multi_remove_handle($mh, $ch);
-          $smsresult = $result[$k];
-          $p = explode("|",$smsresult);
-          $sendstatus = $p[0];
-          if($sendstatus == 1101) {
-              $smssuccesscount++;
-          }
-        }
-        // close
-        curl_multi_close($mh);
+        // $index=null;
+        // do {
+        //   curl_multi_exec($mh, $index);
+        // } while($index > 0);
+        // // get content and remove handles
+        // foreach($multiCurl as $k => $ch) {
+        //   $result[$k] = curl_multi_getcontent($ch);
+        //   curl_multi_remove_handle($mh, $ch);
+        //   $smsresult = $result[$k];
+        //   $p = explode("|",$smsresult);
+        //   $sendstatus = $p[0];
+        //   if($sendstatus == 1101) {
+        //       $smssuccesscount++;
+        //   }
+        // }
+        // // close
+        // curl_multi_close($mh);
 
-        Session::flash('success', 'অনুমোদন সফল হয়েছে!');
-        return redirect()->route('dashboard.membersapprovedpayments');
+        // Session::flash('success', 'অনুমোদন সফল হয়েছে!');
+        // return redirect()->route('dashboard.membersapprovedpayments');
+    }
+
+    public function paymentBulkCancelledPost(Request $request)
+    {
+        // $member_id = $request->get('opt_a');
+        
+        // if($request->get('pay_status') == 'Failed') {
+        //     Session::flash('info', 'Something went wrong, please try again!');
+        //     return redirect(Route('dashboard.memberpaymentbulk'));
+        // }
+        
+        // $amount_request = $request->get('opt_b');
+        // $amount_paid = $request->get('amount');
+        
+        // if($amount_paid == $amount_request)
+        // {
+        //   $member = User::where('member_id', $member_id)->first();
+
+        //   // SAVE THE PAYMENT
+        //   $payment = new Payment;
+        //   $payment->member_id = $member->member_id;
+        //   $payment->payer_id = $member->member_id;
+        //   $payment->amount = $amount_paid;
+        //   $payment->bank = 'aamarPay Payment Gateway';
+        //   $payment->branch = 'N/A';
+        //   $payment->pay_slip = '00';
+        //   $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
+        //   $payment->payment_category = 1; // monthly payment, if 0 then membership payment
+        //   $payment->payment_type = 1; // single payment, if 2 then bulk payment
+        //   $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+        //   $payment->card_type = $request->get('card_type');
+        //   $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
+        //   $payment->save();
+
+        //   // send sms
+        //   $mobile_number = 0;
+        //   if(strlen($payment->user->mobile) == 11) {
+        //       $mobile_number = $payment->user->mobile;
+        //   } elseif(strlen($payment->user->mobile) > 11) {
+        //       if (strpos($payment->user->mobile, '+') !== false) {
+        //           $mobile_number = substr($payment->user->mobile, -11);
+        //       }
+        //   }
+        //   $url = config('sms.url');
+        //   $number = $mobile_number;
+        //   $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+        //   $data= array(
+        //       'username'=>config('sms.username'),
+        //       'password'=>config('sms.password'),
+        //       'number'=>"$number",
+        //       'message'=>"$text",
+        //   );
+        //   // initialize send status
+        //   $ch = curl_init(); // Initialize cURL
+        //   curl_setopt($ch, CURLOPT_URL,$url);
+        //   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        //   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+        //   $smsresult = curl_exec($ch);
+
+        //   // $sendstatus = $result = substr($smsresult, 0, 3);
+        //   $p = explode("|",$smsresult);
+        //   $sendstatus = $p[0];
+        //   // send sms
+        //   if($sendstatus == 1101) {
+        //       Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        //   } elseif($sendstatus == 1006) {
+        //       Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+        //   } else {
+        //       Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        //   }
+        //   // SAVE THE PAYMENT
+        //   Session::flash('success','আপনার পেমেন্ট সফল হয়েছে!');
+        // } else {
+        //    // Something went wrong.
+        //   Session::flash('info', 'Something went wrong, please try again!');
+        //   return redirect(Route('dashboard.memberpaymentbulk'));
+        // }
+        
+        // //return $request->all();
+        // return redirect(Route('dashboard.memberpayment'));
+    }
+
+    public function paymentBulkCancelled()
+    {
+        Session::flash('info','Payment is cancelled!');
+        return redirect()->route('dashboard.memberpaymentbulk');
     }
 
     public function getNotifications() 
     {
         return view('dashboard.notifications');
     }
-
-
-
 
     // operation
     // operation
