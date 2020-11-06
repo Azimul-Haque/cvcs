@@ -234,7 +234,7 @@
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Preview (প্রাকদর্শন)</h4>
                 </div>
-                <div class="modal-body" id="previewFormModalBodyOnlineOffline">
+                <div class="modal-body" id="previewFormModalBodyOffline">
                   
                 </div>
                 <div class="modal-footer">
