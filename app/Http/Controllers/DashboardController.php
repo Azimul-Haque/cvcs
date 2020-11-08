@@ -2447,6 +2447,7 @@ class DashboardController extends Controller
 
     public function paymentSuccessOrFailed(Request $request)
     {
+        dd($request->all());
         $member_id = $request->get('opt_a');
         
         if($request->get('pay_status') == 'Failed') {
