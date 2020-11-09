@@ -2870,7 +2870,7 @@ class DashboardController extends Controller
             // $payment->payment_key = $payment_key;
 
             // storing bulk ids and amounts
-            $amountids = $request->amountids;
+            $amountids = $request->amountidsandphn; // amountids chilo aage, pore mobile number add kora hoise
             $amount_id = [];
             // foreach ($amountids as $amountid) {
             //     $amount_id[$amountid] = $request['amount'.$amountid];
