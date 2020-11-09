@@ -3218,7 +3218,7 @@ class DashboardController extends Controller
         
         if($amount_paid == $amount_request)
         {
-            dd($request->all());
+            // dd($request->all());
 
             $payers = (explode(",",$member_data));
 
@@ -3226,7 +3226,9 @@ class DashboardController extends Controller
             // INSERT DATA TO DATABASE
             foreach ($payers as $payer)
             {
-                $payer_id = (explode(":",$payer));
+                $payer_id = (explode(":",$payer)); 
+                // [0]->memebr_id, [1]->mobile, [2]->amount
+                // [0]->memebr_id, [1]->mobile, [2]->amount
 
                 $payment = new Payment;
                 $payment->member_id = $member_id;
