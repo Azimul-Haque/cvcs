@@ -51,7 +51,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'paymentSuccessOrFailed', 'paymentCancelledPost', 'paymentCancelled', 'getBulkPaymentPage', 'paymentBulkSuccessOrFailed', 'paymentBulkCancelledPost', 'paymentBulkCancelled', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'paymentSuccessOrFailed', 'paymentCancelledPost', 'paymentCancelled', 'getBulkPaymentPage', 'paymentBulkSuccessOrFailed', 'paymentBulkCancelledPost', 'paymentBulkCancelled', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI', 'curlAamarpay', 'paymentVerification');
     }
 
     /**
@@ -2452,6 +2452,46 @@ class DashboardController extends Controller
                     ->withTrxid($trxid)
                     ->withMember($member)
                     ->withAmount($request->amount);
+    }
+
+    public function curlAamarpay($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+    }
+
+    public function paymentVerification()
+    {
+        $temppayments = Temppayment::all();
+        foreach ($temppayments as $temppayment)
+        {
+            $store_id = config('aamarpay.store_id');
+            $signature_key = config('aamarpay.signature_key');
+            $api = "http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=" . $temppayment->trxid . "&store_id=$store_id&signature_key=$signature_key&type=json";
+            // http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=TGA2020D00465350&store_id=sererl&signature_key=3c831409a577666bd9c49b6a46473acc&type=json
+            $reply_json = $this->curlAamarpay($api);
+            $decode_reply = json_decode($reply_json, true);
+            // print_r($reply_json);
+            if(!empty($decode_reply['pay_status'])) {
+                $pay_status = $decode_reply['pay_status'];
+            } else {
+                $pay_status = '';
+            }
+            
+            if($pay_status == 'Successful')
+            {
+                // INSERT NEW DATA
+
+                // DELETE TEMPPAYMENT
+                $temppayment->delete();
+                Session::flash('info', 'Deleted!');
+                return redirect(Route('dashboard.memberpaymentselfonline'));
+            }
+        }
+        
     }
 
     public function paymentSuccessOrFailed(Request $request)

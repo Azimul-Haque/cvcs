@@ -212,6 +212,7 @@ Route::post('/dashboard/member/payment/report/download/pdf', ['as'=>'dashboard.m
 // SINGLE ONLINE PAYMENT
 // SINGLE ONLINE PAYMENT
 Route::get('/dashboard/member/payment/self/online', ['as'=>'dashboard.memberpaymentselfonline','uses'=>'DashboardController@getSelfPaymentOnlinePage']);
+Route::get('/dashboard/member/payment/verification', ['as'=>'dashboard.payment.verification','uses'=>'DashboardController@paymentVerification']);
 Route::post('/dashboard/member/payment/self/online', ['as'=>'dashboard.storememberonlinepaymentself','uses'=>'DashboardController@nextSelfPaymentOnline']);
 
 Route::post('/payment/success', 'DashboardController@paymentSuccessOrFailed')->name('payment.success');
