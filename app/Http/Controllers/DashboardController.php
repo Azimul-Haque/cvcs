@@ -24,6 +24,7 @@ use App\Branch;
 use App\Branchpayment;
 use App\Tempmemdata;
 use App\Position;
+use App\Temppayment;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -2440,7 +2441,13 @@ class DashboardController extends Controller
 
         $member = User::where('member_id', $request->member_id)->first();
         $trxid = 'CVCS' . strtotime('now') . random_string(5);
-        
+
+        $temppayment = new Temppayment;
+        $temppayment->member_id = $member->member_id;
+        $temppayment->trxid = $trxid;
+        $temppayment->amount = $request->amount;
+        $temppayment->save();
+
         return view('dashboard.profile.nextpaymentpage')
                     ->withTrxid($trxid)
                     ->withMember($member)
