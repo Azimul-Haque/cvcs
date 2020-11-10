@@ -64,7 +64,8 @@ class CreateUsersTable extends Migration
 
             $table->integer('position_id')->unsigned();
             $table->integer('office_id')->unsigned();
-
+            $table->integer('branch_id')->unsigned();
+            
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
