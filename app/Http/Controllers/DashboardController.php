@@ -2439,8 +2439,9 @@ class DashboardController extends Controller
         ));
 
         $member = User::where('member_id', $request->member_id)->first();
-
+        $trxid = 'CVCS' . strtotime('now') . random_string(5);
         return view('dashboard.profile.nextpaymentpage')
+                    ->withTrxid($trxid)
                     ->withMember($member)
                     ->withAmount($request->amount);
     }
