@@ -2619,7 +2619,11 @@ class DashboardController extends Controller
                     $p = explode("|",$smsresult);
                     $sendstatus = $p[0];
                     // send sms
+
+                    // DELETE TEMPPAYMENT
+                    $temppayment->delete();
                     // SINGLE PAYMENT CODE
+                    
                 } elseif ($temppayment->payment_type == 2) {
                     // BULK PAYMENT CODE
                     // dd($request->all());
@@ -2707,12 +2711,11 @@ class DashboardController extends Controller
 
                     // INSERT DATA TO DATABASE
                     // INSERT DATA TO DATABASE
-                    
+                    // DELETE TEMPPAYMENT
+                    $temppayment->delete();
                     // BULK PAYMENT CODE
                 }
-                
-                // DELETE TEMPPAYMENT
-                $temppayment->delete();
+
                 // Session::flash('info', 'Deleted!');
                 // return redirect(Route('dashboard.memberpaymentselfonline'));
             } else {
