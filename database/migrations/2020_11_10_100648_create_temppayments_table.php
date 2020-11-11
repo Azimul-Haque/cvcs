@@ -17,6 +17,7 @@ class CreateTemppaymentsTable extends Migration
             $table->integer('member_id');
             $table->string('trxid');
             $table->integer('amount');
+            $table->integer('payment_type');
             $table->string('bulkdata')->nullable();
             $table->timestamps();
         });

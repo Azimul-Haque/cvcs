@@ -2443,9 +2443,10 @@ class DashboardController extends Controller
         $trxid = 'CVCS' . strtotime('now') . random_string(5);
 
         $temppayment = new Temppayment;
-        $temppayment->member_id = $member->member_id;
+        $temppayment->member_id = $member->member_id; // IN CASE OF SINGLE, THIS WILL BE
         $temppayment->trxid = $trxid;
         $temppayment->amount = $request->amount;
+        $temppayment->payment_type = 1; // 1 == single, 2 == bulk
         $temppayment->save();
 
         return view('dashboard.profile.nextpaymentpage')
@@ -2569,53 +2570,60 @@ class DashboardController extends Controller
             
             if($pay_status == 'Successful')
             {
-                // INSERT NEW DATA
-                $member = User::where('member_id', $temppayment->member_id)->first();
-                $payment = new Payment;
-                $payment->member_id = $member->member_id;
-                $payment->payer_id = $member->member_id;
-                $payment->amount = $temppayment->amount;
-                $payment->bank = 'aamarPay Payment Gateway';
-                $payment->branch = 'N/A';
-                $payment->pay_slip = '00';
-                $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
-                $payment->payment_category = 1; // monthly payment, if 0 then membership payment
-                $payment->payment_type = 1; // single payment, if 2 then bulk payment
-                $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-                $payment->card_type = $decode_reply['payment_type']; // card_type
-                $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
-                $payment->save();
+                if($temppayment->payment_type == 1) {
+                    // SINGLE PAYMENT CODE
+                    // INSERT NEW DATA
+                    $member = User::where('member_id', $temppayment->member_id)->first();
+                    $payment = new Payment;
+                    $payment->member_id = $member->member_id;
+                    $payment->payer_id = $member->member_id;
+                    $payment->amount = $temppayment->amount;
+                    $payment->bank = 'aamarPay Payment Gateway';
+                    $payment->branch = 'N/A';
+                    $payment->pay_slip = '00';
+                    $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
+                    $payment->payment_category = 1; // monthly payment, if 0 then membership payment
+                    $payment->payment_type = 1; // single payment, if 2 then bulk payment
+                    $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+                    $payment->card_type = $decode_reply['payment_type']; // card_type
+                    $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
+                    $payment->save();
 
-                // send sms
-                $mobile_number = 0;
-                if(strlen($payment->user->mobile) == 11) {
-                    $mobile_number = $payment->user->mobile;
-                } elseif(strlen($payment->user->mobile) > 11) {
-                    if (strpos($payment->user->mobile, '+') !== false) {
-                        $mobile_number = substr($payment->user->mobile, -11);
+                    // send sms
+                    $mobile_number = 0;
+                    if(strlen($payment->user->mobile) == 11) {
+                        $mobile_number = $payment->user->mobile;
+                    } elseif(strlen($payment->user->mobile) > 11) {
+                        if (strpos($payment->user->mobile, '+') !== false) {
+                            $mobile_number = substr($payment->user->mobile, -11);
+                        }
                     }
-                }
-                $url = config('sms.url');
-                $number = $mobile_number;
-                $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-                $data= array(
-                    'username'=>config('sms.username'),
-                    'password'=>config('sms.password'),
-                    'number'=>"$number",
-                    'message'=>"$text",
-                );
-                // initialize send status
-                $ch = curl_init(); // Initialize cURL
-                curl_setopt($ch, CURLOPT_URL,$url);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
-                $smsresult = curl_exec($ch);
+                    $url = config('sms.url');
+                    $number = $mobile_number;
+                    $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                    $data= array(
+                        'username'=>config('sms.username'),
+                        'password'=>config('sms.password'),
+                        'number'=>"$number",
+                        'message'=>"$text",
+                    );
+                    // initialize send status
+                    $ch = curl_init(); // Initialize cURL
+                    curl_setopt($ch, CURLOPT_URL,$url);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+                    $smsresult = curl_exec($ch);
 
-                // $sendstatus = $result = substr($smsresult, 0, 3);
-                $p = explode("|",$smsresult);
-                $sendstatus = $p[0];
-                // send sms
+                    // $sendstatus = $result = substr($smsresult, 0, 3);
+                    $p = explode("|",$smsresult);
+                    $sendstatus = $p[0];
+                    // send sms
+                    // SINGLE PAYMENT CODE
+                } elseif ($temppayment->payment_type == 2) {
+                    // BULK PAYMENT CODE
+                    // BULK PAYMENT CODE
+                }
                 
                 // DELETE TEMPPAYMENT
                 $temppayment->delete();
@@ -2822,7 +2830,7 @@ class DashboardController extends Controller
 
     public function storeBulkPayment(Request $request) 
     {
-        if($request->payment_type == 'offline') {
+        if($request->payment_method == 'offline') {
             // OFFLINE TRANSACTION
             // OFFLINE TRANSACTION
             $this->validate($request,array(
@@ -2966,6 +2974,15 @@ class DashboardController extends Controller
             // dd($bulk_payment_member_ids);
 
             // VERIFICATION & TEMPPAYMENTTABLE ER JONNO KAAJ BAKI ACHE
+            $member = User::where('member_id', $request->member_id)->first();
+            $trxid = 'CVCS' . strtotime('now') . random_string(5);
+
+            $temppayment = new Temppayment;
+            $temppayment->member_id = Auth::user()->id; // IN CASE OF BULK, THIS WILL BE PAYER'S ID
+            $temppayment->trxid = $trxid;
+            $temppayment->amount = $request->amount;
+            $temppayment->payment_type = 1; // 1 == single, 2 == bulk
+            $temppayment->save();
 
             return view('dashboard.adminsandothers.bulknext')
                         ->withAmount($request->amountonline)

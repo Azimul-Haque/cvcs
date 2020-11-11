@@ -297,7 +297,7 @@
         </div>
       </div>
 
-      <input type="hidden" name="payment_type" id="payment_type">
+      <input type="hidden" name="payment_method" id="payment_method">
       {!! Form::close() !!}
     </div>
   @else
@@ -713,7 +713,7 @@
 
       $('#amountonline').removeAttr('required');
 
-      $('#payment_type').val('offline');
+      $('#payment_method').val('offline');
     });
 
     $('#onlinecollapsebtn').click(function() {
@@ -728,7 +728,7 @@
 
       $('#amountonline').attr('required', 'true');
 
-      $('#payment_type').val('online');
+      $('#payment_method').val('online');
     });
   </script>
 @stop
