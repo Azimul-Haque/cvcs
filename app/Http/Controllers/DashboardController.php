@@ -2622,7 +2622,7 @@ class DashboardController extends Controller
                 // Session::flash('info', 'Deleted!');
                 // return redirect(Route('dashboard.memberpaymentselfonline'));
             } else {
-                $temppayment=>delete();
+                $temppayment->delete();
             }
         }
         
