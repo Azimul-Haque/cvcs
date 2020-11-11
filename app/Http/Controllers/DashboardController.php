@@ -3319,8 +3319,6 @@ class DashboardController extends Controller
         }
 
         $member_data = $request->get('opt_a');
-        
-        
         $amount_request = $request->get('opt_b');
         $amount_paid = $request->get('amount');
         
