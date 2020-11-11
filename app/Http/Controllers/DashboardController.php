@@ -2979,12 +2979,12 @@ class DashboardController extends Controller
             $temppayment = new Temppayment;
             $temppayment->member_id = Auth::user()->member_id; // IN CASE OF BULK, THIS WILL BE PAYER'S MEMBER_ID
             $temppayment->trxid = $trxid;
-            $temppayment->amount = $request->amount;
+            $temppayment->amount = $request->amountonline;
             $temppayment->payment_type = 2; // 1 == single, 2 == bulk
             $temppayment->bulkdata = $bulk_payment_member_ids;
             $temppayment->save();
             // TEMPPAYMENT DATA
-            
+
             return view('dashboard.adminsandothers.bulknext')
                         ->withTrxid($trxid)
                         ->withAmount($request->amountonline)
@@ -3303,7 +3303,12 @@ class DashboardController extends Controller
         curl_multi_close($mh);
 
         Session::flash('success', 'অনুমোদন সফল হয়েছে!');
-        return redirect()->route('dashboard.membersapprovedpayments');
+
+        if(Auth::user()->role_type == 'bulkpayer') {
+            return redirect()->route('dashboard.memberpaymentbulk');
+        } else {
+            return redirect()->route('dashboard.membersapprovedpayments');
+        }
     }
 
     public function paymentBulkSuccessOrFailed(Request $request) 
@@ -3407,12 +3412,17 @@ class DashboardController extends Controller
             // INSERT DATA TO DATABASE
             // INSERT DATA TO DATABASE
 
+            // DELETE TEMPPAYMENT
+            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
+            $temppayment->delete();
+            // DELETE TEMPPAYMENT
+
             Session::flash('success', 'পেমেন্ট সফলভাবে সম্পন্ন হয়েছে!');
-            return redirect(Route('dashboard.membersapprovedpayments'));
+            return redirect(Route('dashboard.memberpaymentbulk'));
         } else {
             // Something went wrong.
             Session::flash('info', 'Something went wrong, please reload this page!');
-            return redirect(Route('dashboard.memberpaymentselfonline'));
+            return redirect(Route('dashboard.memberpaymentbulk'));
         }
         
         return redirect()->route('dashboard.memberpaymentbulk');
