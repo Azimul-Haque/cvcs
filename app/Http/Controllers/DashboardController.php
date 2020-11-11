@@ -2443,7 +2443,7 @@ class DashboardController extends Controller
         $trxid = 'CVCS' . strtotime('now') . random_string(5);
 
         $temppayment = new Temppayment;
-        $temppayment->member_id = $member->member_id; // IN CASE OF SINGLE, THIS WILL BE
+        $temppayment->member_id = $member->member_id; // IN CASE OF SINGLE, THIS WILL BE THE MEMBER'S MEMBER_ID
         $temppayment->trxid = $trxid;
         $temppayment->amount = $request->amount;
         $temppayment->payment_type = 1; // 1 == single, 2 == bulk
@@ -2973,18 +2973,20 @@ class DashboardController extends Controller
             $bulk_payment_member_ids = implode(',', $amount_id);
             // dd($bulk_payment_member_ids);
 
-            // VERIFICATION & TEMPPAYMENTTABLE ER JONNO KAAJ BAKI ACHE
-            $member = User::where('member_id', $request->member_id)->first();
+            // TEMPPAYMENT DATA
             $trxid = 'CVCS' . strtotime('now') . random_string(5);
 
             $temppayment = new Temppayment;
-            $temppayment->member_id = Auth::user()->id; // IN CASE OF BULK, THIS WILL BE PAYER'S ID
+            $temppayment->member_id = Auth::user()->member_id; // IN CASE OF BULK, THIS WILL BE PAYER'S MEMBER_ID
             $temppayment->trxid = $trxid;
             $temppayment->amount = $request->amount;
-            $temppayment->payment_type = 1; // 1 == single, 2 == bulk
+            $temppayment->payment_type = 2; // 1 == single, 2 == bulk
+            $temppayment->bulkdata = $bulk_payment_member_ids;
             $temppayment->save();
-
+            // TEMPPAYMENT DATA
+            
             return view('dashboard.adminsandothers.bulknext')
+                        ->withTrxid($trxid)
                         ->withAmount($request->amountonline)
                         ->withPaymentids($bulk_payment_member_ids);
             // ONLINE TRANSACTION

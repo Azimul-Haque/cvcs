@@ -37,9 +37,6 @@
         <!-- /.box-header -->
         <div class="box-body">
           <center>
-              @php
-                $trxid = 'CVCS' . strtotime('now') . random_string(5);
-              @endphp
               <h3 class="margin-two">অনুগ্রহ করে <b><u>৳{{ $amount }}</u></b> পেমেন্ট গেটওয়ের মাধ্যমে পরিশোধ করুন</h3>
               <h4>
                 CVCS Trx_ID: <span style="color: #008D4C;"><b>{{ $trxid }}</b></span>
