@@ -3313,6 +3313,7 @@ class DashboardController extends Controller
 
     public function paymentBulkSuccessOrFailed(Request $request) 
     {
+        dd($request->all());
         if($request->get('pay_status') == 'Failed') {
             Session::flash('info', 'পেমেন্ট সম্পন্ন হয়নি, আবার চেষ্টা করুন!');
             return redirect(Route('dashboard.memberpaymentselfonline'));
