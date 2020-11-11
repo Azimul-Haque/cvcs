@@ -3273,107 +3273,88 @@ class DashboardController extends Controller
 
             // INSERT DATA TO DATABASE
             // INSERT DATA TO DATABASE
+
+            // partial SMS data
+            $smssuccesscount = 0;
+            $url = config('sms.url');
+            
+            $multiCurl = array();
+            // data to be returned
+            $result = array();
+            // multi handle
+            $mh = curl_multi_init();
+            // sms data
+            $smsdata = [];
+            // partial SMS data
+
             foreach ($payers as $payer)
             {
-                $payer_id = (explode(":",$payer)); 
-                // [0]->memebr_id, [1]->mobile, [2]->amount
-                // [0]->memebr_id, [1]->mobile, [2]->amount
+                $payerdata = (explode(":",$payer)); 
+                // [0] = memebr_id, [1] = mobile, [2] = amount
+                // [0] = memebr_id, [1] = mobile, [2] = amount
 
                 $payment = new Payment;
-                $payment->member_id = $member_id;
-                $payment->payer_id = $bulkpayment->payer_id;
-                $payment->amount = $amount;
-                $payment->bank = $bulkpayment->bank;
-                $payment->branch = $bulkpayment->branch;
-                $payment->pay_slip = $bulkpayment->pay_slip;
+                $payment->member_id = $payerdata[0];
+                $payment->payer_id = Auth::user()->id;
+                $payment->amount = $payerdata[2];
+                $payment->bank = 'aamarPay Payment Gateway';
+                $payment->branch = 'N/A';
+                $payment->pay_slip = '00';
                 $payment->payment_status = 1; // approved
                 $payment->payment_category = 1; // monthly payment
                 $payment->payment_type = 2; // bulk payment
-                $payment->payment_key = $bulkpayment->payment_key;
+                $payment->card_type = $request->get('card_type');
+                $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
                 $payment->save();
 
-                // receipt upload
-                if(count($bulkpayment->paymentreceipts) > 0) {
-                    foreach($bulkpayment->paymentreceipts as $paymentreceipt) {
-                        $newpaymentreceipt = new Paymentreceipt;
-                        $newpaymentreceipt->payment_id = $payment->id;
-                        $newpaymentreceipt->image = $paymentreceipt->image;
-                        $newpaymentreceipt->save();
-                    }
-                }
+                // input member SMS into array
+                // input member SMS into array
+                $member = User::where('member_id', $payerdata[0])->first();
+                $mobile_number = $payerdata[1];
 
-
-                // send sms
-                // $mobile_numbers = [];
-                $smssuccesscount = 0;
-                $url = config('sms.url');
-                
-                $multiCurl = array();
-                // data to be returned
-                $result = array();
-                // multi handle
-                $mh = curl_multi_init();
-                // sms data
-                $smsdata = [];
-
-                foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
-                    $member = User::where('member_id', $member_id)->first();
-                    $mobile_number = 0;
-                    if(strlen($member->mobile) == 11) {
-                        $mobile_number = $member->mobile;
-                    } elseif(strlen($member->mobile) > 11) {
-                        if (strpos($member->mobile, '+') !== false) {
-                            $mobile_number = substr($member->mobile, -11);
-                        }
-                    }
-                    // if($mobile_number != 0) {
-                    //   array_push($mobile_numbers, $mobile_number);
-                    // }
-                    $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-                    $smsdata[$member_id] = array(
-                        'username'=>config('sms.username'),
-                        'password'=>config('sms.password'),
-                        // 'apicode'=>"1",
-                        'number'=>"$mobile_number",
-                        // 'msisdn'=>"$mobile_number",
-                        // 'countrycode'=>"880",
-                        // 'cli'=>"CVCS",
-                        // 'messagetype'=>"1",
-                        'message'=>"$text",
-                        // 'messageid'=>"2"
-                    );
-                    $multiCurl[$member_id] = curl_init(); // Initialize cURL
-                    curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
-                    curl_setopt($multiCurl[$member_id], CURLOPT_HEADER, 0);
-                    curl_setopt($multiCurl[$member_id], CURLOPT_POSTFIELDS, http_build_query($smsdata[$member_id]));
-                    curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
-                    curl_multi_add_handle($mh, $multiCurl[$member_id]);
-                }
-
-                $index=null;
-                do {
-                  curl_multi_exec($mh, $index);
-                } while($index > 0);
-                // get content and remove handles
-                foreach($multiCurl as $k => $ch) {
-                  $result[$k] = curl_multi_getcontent($ch);
-                  curl_multi_remove_handle($mh, $ch);
-                  $smsresult = $result[$k];
-                  $p = explode("|",$smsresult);
-                  $sendstatus = $p[0];
-                  if($sendstatus == 1101) {
-                      $smssuccesscount++;
-                  }
-                }
-                // close
-                curl_multi_close($mh);
+                $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                $smsdata[$payerdata[0]] = array(
+                    'username'=>config('sms.username'),
+                    'password'=>config('sms.password'),
+                    'number'=>"$mobile_number",
+                    'message'=>"$text",
+                );
+                $multiCurl[$payerdata[0]] = curl_init(); // Initialize cURL
+                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_URL, $url);
+                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_HEADER, 0);
+                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_POSTFIELDS, http_build_query($smsdata[$payerdata[0]]));
+                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_SSL_VERIFYPEER, false); // this is important
+                curl_multi_add_handle($mh, $multiCurl[$payerdata[0]]);
+                // input member SMS into array
+                // input member SMS into array
             }
 
+            // partial SMS data
+            $index=null;
+            do {
+              curl_multi_exec($mh, $index);
+            } while($index > 0);
+            // get content and remove handles
+            foreach($multiCurl as $k => $ch) {
+              $result[$k] = curl_multi_getcontent($ch);
+              curl_multi_remove_handle($mh, $ch);
+              $smsresult = $result[$k];
+              $p = explode("|",$smsresult);
+              $sendstatus = $p[0];
+              if($sendstatus == 1101) {
+                  $smssuccesscount++;
+              }
+            }
+            // close
+            curl_multi_close($mh);
+            // partial SMS data
+
             // INSERT DATA TO DATABASE
             // INSERT DATA TO DATABASE
 
-            
+            Session::flash('success', 'পেমেন্ট সফলভাবে সম্পন্ন হয়েছে!');
+            return redirect(Route('dashboard.memberpaymentselfonline'));
         } else {
             // Something went wrong.
             Session::flash('info', 'Something went wrong, please reload this page!');
