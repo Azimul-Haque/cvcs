@@ -2955,35 +2955,17 @@ class DashboardController extends Controller
                 'amountonline'      =>   'required|integer'
             ));
 
-            // $payment->member_id = Auth::user()->member_id;
-            // $payment->payer_id = Auth::user()->member_id;
-            // $payment->amount = $request->amountoffline;
-            // $payment->bank = $request->bank;
-            // $payment->branch = $request->branch;
-            // $payment->pay_slip = $request->pay_slip;
-            // $payment->payment_status = 0;
-            // $payment->payment_category = 1; // monthly payment
-            // $payment->payment_type = 2; // bulk payment
-            // // generate payment_key
-            // $payment_key_length = 10;
-            // $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            // $payment_key = substr(str_shuffle(str_repeat($pool, 10)), 0, $payment_key_length);
-            // // generate payment_key
-            // $payment->payment_key = $payment_key;
-
             // storing bulk ids and amounts
             $amountidsandphn = $request->amountidsandphn; // amountids chilo aage, pore mobile number add kora hoise
             $amount_id = [];
-            // foreach ($amountids as $amountid) {
-            //     $amount_id[$amountid] = $request['amount'.$amountid];
-            // }
-            // $bulk_payment_member_ids = json_encode($amount_id);
             foreach ($amountidsandphn as $amountidandphn) {
                 $amountid = substr($amountidandphn, 0, 9);
                 $amount_id[] = $amountidandphn . ":" . $request['amount'.$amountid];
             }
             $bulk_payment_member_ids = implode(',', $amount_id);
             // dd($bulk_payment_member_ids);
+
+            // VERIFICATION & TEMPPAYMENTTABLE ER JONNO KAAJ BAKI ACHE
 
             return view('dashboard.adminsandothers.bulknext')
                         ->withAmount($request->amountonline)
@@ -3322,7 +3304,7 @@ class DashboardController extends Controller
         {
             // dd($request->all());
             $payers = (explode(",",$member_data));
-            
+
             // INSERT DATA TO DATABASE
             // INSERT DATA TO DATABASE
 
