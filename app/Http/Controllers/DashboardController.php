@@ -2487,6 +2487,11 @@ class DashboardController extends Controller
             $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
             $payment->save();
 
+            // DELETE TEMPPAYMENT
+            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
+            $temppayment->delete();
+            // DELETE TEMPPAYMENT
+
             // send sms
             $mobile_number = 0;
             if(strlen($payment->user->mobile) == 11) {
@@ -2555,7 +2560,7 @@ class DashboardController extends Controller
             // http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=TGA2020D00465350&store_id=sererl&signature_key=3c831409a577666bd9c49b6a46473acc&type=json
             $reply_json = $this->curlAamarpay($api);
             $decode_reply = json_decode($reply_json, true);
-            // print_r($reply_json);
+            dd($reply_json);
             if(!empty($decode_reply['pay_status'])) {
                 $pay_status = $decode_reply['pay_status'];
             } else {
@@ -2565,12 +2570,12 @@ class DashboardController extends Controller
             if($pay_status == 'Successful')
             {
                 // INSERT NEW DATA
-                $member = User::where('member_id', $member_id)->first();
+                $member = User::where('member_id', $temppayment->member_id)->first();
 
                 $payment = new Payment;
                 $payment->member_id = $member->member_id;
                 $payment->payer_id = $member->member_id;
-                $payment->amount = $amount_paid;
+                $payment->amount = $temppayment->amount_paid;
                 $payment->bank = 'aamarPay Payment Gateway';
                 $payment->branch = 'N/A';
                 $payment->pay_slip = '00';
@@ -2578,8 +2583,8 @@ class DashboardController extends Controller
                 $payment->payment_category = 1; // monthly payment, if 0 then membership payment
                 $payment->payment_type = 1; // single payment, if 2 then bulk payment
                 $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-                $payment->card_type = $request->get('card_type');
-                $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
+                $payment->card_type = $decode_reply['payment_type']; // card_type
+                $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
                 $payment->save();
 
                 // send sms
