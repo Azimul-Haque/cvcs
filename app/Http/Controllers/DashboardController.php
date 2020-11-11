@@ -50,7 +50,7 @@ class DashboardController extends Controller
     {
         parent::__construct();
         
-        $this->middleware('auth');
+        $this->middleware('auth')->except('paymentVerification');
         $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'paymentSuccessOrFailed', 'paymentCancelledPost', 'paymentCancelled', 'getBulkPaymentPage', 'paymentBulkSuccessOrFailed', 'paymentBulkCancelledPost', 'paymentBulkCancelled', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI', 'curlAamarpay', 'paymentVerification');
     }
 
@@ -2456,7 +2456,7 @@ class DashboardController extends Controller
 
     public function paymentSuccessOrFailed(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $member_id = $request->get('opt_a');
         
         if($request->get('pay_status') == 'Failed') {
@@ -2571,7 +2571,6 @@ class DashboardController extends Controller
             {
                 // INSERT NEW DATA
                 $member = User::where('member_id', $temppayment->member_id)->first();
-                dd($member);
                 $payment = new Payment;
                 $payment->member_id = $member->member_id;
                 $payment->payer_id = $member->member_id;
@@ -2620,8 +2619,8 @@ class DashboardController extends Controller
                 
                 // DELETE TEMPPAYMENT
                 $temppayment->delete();
-                Session::flash('info', 'Deleted!');
-                return redirect(Route('dashboard.memberpaymentselfonline'));
+                // Session::flash('info', 'Deleted!');
+                // return redirect(Route('dashboard.memberpaymentselfonline'));
             }
         }
         
