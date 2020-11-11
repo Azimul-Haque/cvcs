@@ -50,7 +50,7 @@ class DashboardController extends Controller
     {
         parent::__construct();
         
-        $this->middleware('auth');
+        $this->middleware('auth')->except('paymentVerification');
         $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'paymentSuccessOrFailed', 'paymentCancelledPost', 'paymentCancelled', 'getBulkPaymentPage', 'paymentBulkSuccessOrFailed', 'paymentBulkCancelledPost', 'paymentBulkCancelled', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI', 'curlAamarpay', 'paymentVerification');
     }
 
@@ -2454,49 +2454,9 @@ class DashboardController extends Controller
                     ->withAmount($request->amount);
     }
 
-    public function curlAamarpay($url) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        $data = curl_exec($ch);
-        curl_close($ch);
-        return $data;
-    }
-
-    public function paymentVerification()
-    {
-        $temppayments = Temppayment::all();
-        foreach ($temppayments as $temppayment)
-        {
-            $store_id = config('aamarpay.store_id');
-            $signature_key = config('aamarpay.signature_key');
-            $api = "http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=" . $temppayment->trxid . "&store_id=$store_id&signature_key=$signature_key&type=json";
-            // http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=TGA2020D00465350&store_id=sererl&signature_key=3c831409a577666bd9c49b6a46473acc&type=json
-            $reply_json = $this->curlAamarpay($api);
-            $decode_reply = json_decode($reply_json, true);
-            // print_r($reply_json);
-            if(!empty($decode_reply['pay_status'])) {
-                $pay_status = $decode_reply['pay_status'];
-            } else {
-                $pay_status = '';
-            }
-            
-            if($pay_status == 'Successful')
-            {
-                // INSERT NEW DATA
-
-                // DELETE TEMPPAYMENT
-                $temppayment->delete();
-                Session::flash('info', 'Deleted!');
-                return redirect(Route('dashboard.memberpaymentselfonline'));
-            }
-        }
-        
-    }
-
     public function paymentSuccessOrFailed(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $member_id = $request->get('opt_a');
         
         if($request->get('pay_status') == 'Failed') {
@@ -2526,6 +2486,11 @@ class DashboardController extends Controller
             $payment->card_type = $request->get('card_type');
             $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
             $payment->save();
+
+            // DELETE TEMPPAYMENT
+            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
+            $temppayment->delete();
+            // DELETE TEMPPAYMENT
 
             // send sms
             $mobile_number = 0;
@@ -2573,6 +2538,94 @@ class DashboardController extends Controller
         }
         
         return redirect()->route('dashboard.memberpayment');
+    }
+
+    public function curlAamarpay($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+    }
+
+    public function paymentVerification()
+    {
+        $temppayments = Temppayment::all();
+        foreach ($temppayments as $temppayment)
+        {
+            $store_id = config('aamarpay.store_id');
+            $signature_key = config('aamarpay.signature_key');
+            $api = "http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=" . $temppayment->trxid . "&store_id=$store_id&signature_key=$signature_key&type=json";
+            // http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=TGA2020D00465350&store_id=sererl&signature_key=3c831409a577666bd9c49b6a46473acc&type=json
+            $reply_json = $this->curlAamarpay($api);
+            $decode_reply = json_decode($reply_json, true);
+            // dd($reply_json);
+            if(!empty($decode_reply['pay_status'])) {
+                $pay_status = $decode_reply['pay_status'];
+            } else {
+                $pay_status = '';
+            }
+            
+            if($pay_status == 'Successful')
+            {
+                // INSERT NEW DATA
+                $member = User::where('member_id', $temppayment->member_id)->first();
+                $payment = new Payment;
+                $payment->member_id = $member->member_id;
+                $payment->payer_id = $member->member_id;
+                $payment->amount = $temppayment->amount;
+                $payment->bank = 'aamarPay Payment Gateway';
+                $payment->branch = 'N/A';
+                $payment->pay_slip = '00';
+                $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
+                $payment->payment_category = 1; // monthly payment, if 0 then membership payment
+                $payment->payment_type = 1; // single payment, if 2 then bulk payment
+                $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+                $payment->card_type = $decode_reply['payment_type']; // card_type
+                $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
+                $payment->save();
+
+                // send sms
+                $mobile_number = 0;
+                if(strlen($payment->user->mobile) == 11) {
+                    $mobile_number = $payment->user->mobile;
+                } elseif(strlen($payment->user->mobile) > 11) {
+                    if (strpos($payment->user->mobile, '+') !== false) {
+                        $mobile_number = substr($payment->user->mobile, -11);
+                    }
+                }
+                $url = config('sms.url');
+                $number = $mobile_number;
+                $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                $data= array(
+                    'username'=>config('sms.username'),
+                    'password'=>config('sms.password'),
+                    'number'=>"$number",
+                    'message'=>"$text",
+                );
+                // initialize send status
+                $ch = curl_init(); // Initialize cURL
+                curl_setopt($ch, CURLOPT_URL,$url);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+                $smsresult = curl_exec($ch);
+
+                // $sendstatus = $result = substr($smsresult, 0, 3);
+                $p = explode("|",$smsresult);
+                $sendstatus = $p[0];
+                // send sms
+                
+                // DELETE TEMPPAYMENT
+                $temppayment->delete();
+                // Session::flash('info', 'Deleted!');
+                // return redirect(Route('dashboard.memberpaymentselfonline'));
+            } else {
+                $temppayment->delete();
+            }
+        }
+        
     }
 
     public function paymentCancelledPost(Request $request)
@@ -3307,6 +3360,7 @@ class DashboardController extends Controller
                 $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
                 $payment->save();
 
+<<<<<<< HEAD
                 // input member SMS into array
                 // input member SMS into array
                 $member = User::where('member_id', $payerdata[0])->first();
@@ -3329,6 +3383,65 @@ class DashboardController extends Controller
                 // input member SMS into array
                 // input member SMS into array
             }
+=======
+                // receipt upload
+                if(count($bulkpayment->paymentreceipts) > 0) {
+                    foreach($bulkpayment->paymentreceipts as $paymentreceipt) {
+                        $newpaymentreceipt = new Paymentreceipt;
+                        $newpaymentreceipt->payment_id = $payment->id;
+                        $newpaymentreceipt->image = $paymentreceipt->image;
+                        $newpaymentreceipt->save();
+                    }
+                }
+
+                // send sms
+                // $mobile_numbers = [];
+                $smssuccesscount = 0;
+                $url = config('sms.url');
+                
+                $multiCurl = array();
+                // data to be returned
+                $result = array();
+                // multi handle
+                $mh = curl_multi_init();
+                // sms data
+                $smsdata = [];
+
+                foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+                    $member = User::where('member_id', $member_id)->first();
+                    $mobile_number = 0;
+                    if(strlen($member->mobile) == 11) {
+                        $mobile_number = $member->mobile;
+                    } elseif(strlen($member->mobile) > 11) {
+                        if (strpos($member->mobile, '+') !== false) {
+                            $mobile_number = substr($member->mobile, -11);
+                        }
+                    }
+                    // if($mobile_number != 0) {
+                    //   array_push($mobile_numbers, $mobile_number);
+                    // }
+                    $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                    $smsdata[$member_id] = array(
+                        'username'=>config('sms.username'),
+                        'password'=>config('sms.password'),
+                        // 'apicode'=>"1",
+                        'number'=>"$mobile_number",
+                        // 'msisdn'=>"$mobile_number",
+                        // 'countrycode'=>"880",
+                        // 'cli'=>"CVCS",
+                        // 'messagetype'=>"1",
+                        'message'=>"$text",
+                        // 'messageid'=>"2"
+                    );
+                    $multiCurl[$member_id] = curl_init(); // Initialize cURL
+                    curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
+                    curl_setopt($multiCurl[$member_id], CURLOPT_HEADER, 0);
+                    curl_setopt($multiCurl[$member_id], CURLOPT_POSTFIELDS, http_build_query($smsdata[$member_id]));
+                    curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
+                    curl_multi_add_handle($mh, $multiCurl[$member_id]);
+                }
+>>>>>>> 09e2ad2f92f186ba46cd76d859aef445490fbf7c
 
             // partial SMS data
             $index=null;
