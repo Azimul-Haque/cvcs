@@ -3329,7 +3329,7 @@ class DashboardController extends Controller
 
                 $payment = new Payment;
                 $payment->member_id = $payerdata[0];
-                $payment->payer_id = Auth::user()->id;
+                $payment->payer_id = Auth::user()->member_id; // payers member_id
                 $payment->amount = $payerdata[2];
                 $payment->bank = 'aamarPay Payment Gateway';
                 $payment->branch = 'N/A';
