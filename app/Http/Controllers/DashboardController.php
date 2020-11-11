@@ -2621,6 +2621,8 @@ class DashboardController extends Controller
                 $temppayment->delete();
                 // Session::flash('info', 'Deleted!');
                 // return redirect(Route('dashboard.memberpaymentselfonline'));
+            } else {
+                $temppayment=>delete();
             }
         }
         
@@ -3352,7 +3354,6 @@ class DashboardController extends Controller
                         $newpaymentreceipt->save();
                     }
                 }
-
 
                 // send sms
                 // $mobile_numbers = [];
