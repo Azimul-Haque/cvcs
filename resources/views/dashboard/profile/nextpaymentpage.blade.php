@@ -42,7 +42,10 @@
                 $trxid = 'CVCS' . strtotime('now') . random_string(5);
               @endphp --}}
               <h3 class="margin-two">অনুগ্রহ করে <b><u>৳{{ $amount }}</u></b> পেমেন্ট গেটওয়ের মাধ্যমে পরিশোধ করুন</h3>
-              <h4>CVCS Trx_ID: <span style="color: #008D4C;"><b>{{ $trxid }}</b></span> <span class="blinking_trx_id_text">(পেমেন্টজনিত জটিলতা এড়াতে নম্বরটি সংরক্ষণ করুন)</span></h4>
+              <h4>
+                CVCS Trx_ID: <span style="color: #008D4C;"><b>{{ $trxid }}</b></span>
+                {{-- <span class="blinking_trx_id_text">(পেমেন্টজনিত জটিলতা এড়াতে নম্বরটি সংরক্ষণ করুন)</span> --}}
+              </h4>
               {{-- <h4>কারিগরি সমস্যার কারণে সাময়িক সময়ের জন্য বিকাশ পেমেন্ট করতে গ্রাহককে নিরুৎসাহিত করা হচ্ছে</h4> --}}
               <div style="border: 2px solid #ddd; padding: 0px; width: 100%; padding: 10px;">
                   <img src="{{ asset('images/aamarpay.png') }}" class="img-responsive margin-two">
