@@ -2623,7 +2623,7 @@ class DashboardController extends Controller
                     // DELETE TEMPPAYMENT
                     $temppayment->delete();
                     // SINGLE PAYMENT CODE
-                    
+
                 } elseif ($temppayment->payment_type == 2) {
                     // BULK PAYMENT CODE
                     // dd($request->all());
@@ -2719,7 +2719,8 @@ class DashboardController extends Controller
                 // Session::flash('info', 'Deleted!');
                 // return redirect(Route('dashboard.memberpaymentselfonline'));
             } else {
-                $temppayment->delete();
+                // DELETE PORE KORANO HOBE, AAGE CHECK KORTE THAKUK...
+                // $temppayment->delete();
             }
         }
         
