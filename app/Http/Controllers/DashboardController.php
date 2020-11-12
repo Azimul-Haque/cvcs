@@ -2661,6 +2661,7 @@ class DashboardController extends Controller
                         $payment->payment_status = 1; // approved
                         $payment->payment_category = 1; // monthly payment
                         $payment->payment_type = 2; // bulk payment
+                        $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
                         $payment->card_type = $decode_reply['payment_type']; // card_type
                         $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
                         $payment->save();
@@ -3451,6 +3452,7 @@ class DashboardController extends Controller
                 $payment->payment_status = 1; // approved
                 $payment->payment_category = 1; // monthly payment
                 $payment->payment_type = 2; // bulk payment
+                $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
                 $payment->card_type = $request->get('card_type');
                 $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
                 $payment->save();

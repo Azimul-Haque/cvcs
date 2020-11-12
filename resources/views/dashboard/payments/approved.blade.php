@@ -3,7 +3,7 @@
 @section('title', 'CVCS | অনুমোদিত পরিশোধ')
 
 @section('css')
-
+  <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 @stop
 
 @section('content_header')
@@ -66,9 +66,17 @@
             @endif
           </td>
           <td align="right">৳ {{ $payment->amount }}</td>
-          <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
+          <td>
+            {{ $payment->bank }}<br/>
+            @if($payment->payment_method == 1)
+              <span style="color: #3949AB;"><b>{{ $payment->card_type }}</b></span><br/>
+            @else
+              {{ $payment->branch }}
+            @endif
+          </td>
           <td>{{ date('F d, Y h:i A', strtotime($payment->created_at)) }}</td>
           <td>
+            @if($payment->payment_method != 1)
             <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal{{ $payment->id }}" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-paperclip"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
             <!-- See Receipts Modal -->
             <!-- See Receipts Modal -->
@@ -95,6 +103,41 @@
             </div>
             <!-- See Receipts Modal -->
             <!-- See Receipts Modal -->
+            @endif
+
+            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#downloadPDF{{ $payment->id }}" data-backdrop="static" title="রিপোর্ট ডাউনলোড করুন" id="downloadPDFButton{{ $payment->id }}"><i class="fa fa-download"></i></button>
+            <!-- Download PDF Modal -->
+            <!-- Download PDF Modal -->
+            <div class="modal fade" id="downloadPDF{{ $payment->id }}" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header modal-header-success">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-download"></i> পরিশোধ রিপোর্ট ডাউনলোড</h4>
+                  </div>
+                  {!! Form::open(['route' => 'dashboard.member.payment.pdf', 'method' => 'POST', 'class' => 'form-default']) !!}
+                  <div class="modal-body">
+                    পরিশোধ রিপোর্টটি ডাউনলোড করুন
+                    {!! Form::hidden('id', $payment->id) !!}                      
+                    {!! Form::hidden('payment_key', $payment->payment_key) !!}                      
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-download"></i> ডাউনলোড করুন</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                  </div>
+                  {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+            <!-- Download PDF Modal -->
+            <!-- Download PDF Modal -->
+            <script type="text/javascript">
+              $('#downloadPDFButton{{ $payment->id }}').click(function() {
+                setTimeout(function () {
+                  $('#downloadPDF{{ $payment->id }}').modal('hide');
+                }, 3500);
+              })
+            </script>
             {{-- <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteMemberModal{{ $payment->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
           </td>
         </tr>
