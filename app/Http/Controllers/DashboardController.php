@@ -2562,7 +2562,7 @@ class DashboardController extends Controller
             $reply_json = $this->curlAamarpay($api);
             $decode_reply = json_decode($reply_json, true);
             // dd($reply_json);
-            if(!empty($decode_reply['pay_status'])) {
+            if(!empty($decode_reply['pay_status']) || isset($decode_reply['pay_status'])) {
                 $pay_status = $decode_reply['pay_status'];
             } else {
                 $pay_status = '';
@@ -2662,7 +2662,7 @@ class DashboardController extends Controller
                         $payment->payment_category = 1; // monthly payment
                         $payment->payment_type = 2; // bulk payment
                         $payment->card_type = $decode_reply['payment_type']; // card_type
-                        $payment->payment_key = $decode_reply('mer_txnid'); // SAME TRXID FOR BOTH METHOD
+                        $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
                         $payment->save();
 
 
@@ -3087,6 +3087,7 @@ class DashboardController extends Controller
 
     public function getBulkPaymentPage() 
     {
+        // dd(Auth::user()->branch->id);
         $branch = Branch::find(Auth::user()->branch->id);
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
