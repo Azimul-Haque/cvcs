@@ -2562,7 +2562,7 @@ class DashboardController extends Controller
             $reply_json = $this->curlAamarpay($api);
             $decode_reply = json_decode($reply_json, true);
             // dd($reply_json);
-            if(!empty($decode_reply['pay_status'])) {
+            if(!empty($decode_reply['pay_status']) || isset($decode_reply['pay_status'])) {
                 $pay_status = $decode_reply['pay_status'];
             } else {
                 $pay_status = '';
@@ -2653,7 +2653,7 @@ class DashboardController extends Controller
 
                         $payment = new Payment;
                         $payment->member_id = $payerdata[0];
-                        $payment->payer_id = Auth::user()->member_id; // payers member_id
+                        $payment->payer_id = $temppayment->member_id; // payers member_id
                         $payment->amount = $payerdata[2];
                         $payment->bank = 'aamarPay Payment Gateway';
                         $payment->branch = 'N/A';
@@ -2661,8 +2661,9 @@ class DashboardController extends Controller
                         $payment->payment_status = 1; // approved
                         $payment->payment_category = 1; // monthly payment
                         $payment->payment_type = 2; // bulk payment
+                        $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
                         $payment->card_type = $decode_reply['payment_type']; // card_type
-                        $payment->payment_key = $decode_reply('mer_txnid'); // SAME TRXID FOR BOTH METHOD
+                        $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
                         $payment->save();
 
 
@@ -3087,6 +3088,7 @@ class DashboardController extends Controller
 
     public function getBulkPaymentPage() 
     {
+        // dd(Auth::user()->branch->id);
         $branch = Branch::find(Auth::user()->branch->id);
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
@@ -3450,6 +3452,7 @@ class DashboardController extends Controller
                 $payment->payment_status = 1; // approved
                 $payment->payment_category = 1; // monthly payment
                 $payment->payment_type = 2; // bulk payment
+                $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
                 $payment->card_type = $request->get('card_type');
                 $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
                 $payment->save();
