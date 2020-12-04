@@ -2538,7 +2538,11 @@ class DashboardController extends Controller
             return redirect(Route('dashboard.memberpaymentselfonline'));
         }
         
-        return redirect()->route('dashboard.memberpayment');
+        if(Auth::guest()) {
+            return redirect()->route('index.index');
+        } else {
+            return redirect()->route('dashboard.memberpayment');
+        }
     }
 
     public function curlAamarpay($url) {
@@ -3514,10 +3518,18 @@ class DashboardController extends Controller
         } else {
             // Something went wrong.
             Session::flash('info', 'Something went wrong, please reload this page!');
-            return redirect(Route('dashboard.memberpaymentbulk'));
+            if(Auth::guest()) {
+                return redirect()->route('index.index');
+            } else {
+                return redirect(Route('dashboard.memberpaymentbulk'));
+            }
         }
         
-        return redirect()->route('dashboard.memberpaymentbulk');
+        if(Auth::guest()) {
+            return redirect()->route('index.index');
+        } else {
+            return redirect()->route('dashboard.memberpaymentbulk');
+        }
     }
 
     public function paymentBulkCancelledPost(Request $request)

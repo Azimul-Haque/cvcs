@@ -463,8 +463,10 @@ class IndexController extends Controller
             
 
             // DELETE TEMPPAYMENT
+            // DELETE TEMPPAYMENT
             // $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
             // $temppayment->delete();
+            // DELETE TEMPPAYMENT
             // DELETE TEMPPAYMENT
 
             // send sms
@@ -511,10 +513,14 @@ class IndexController extends Controller
             Session::flash('info', 'Something went wrong, please reload this page!');
         }
 
-        if(Auth::user()->role == 'admin') {
-            return redirect()->route('dashboard.applications');
+        if(Auth::guest()) {
+            return redirect()->route('index.index');
         } else {
-            return redirect()->route('dashboard.profile');
+            if(Auth::user()->role == 'admin') {
+                return redirect()->route('dashboard.applications');
+            } else {
+                return redirect()->route('dashboard.profile');
+            }
         }
     }
 
