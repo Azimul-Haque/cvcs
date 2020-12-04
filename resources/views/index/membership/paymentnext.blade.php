@@ -36,7 +36,7 @@
                       'cancel_url' => route('payment.regcancel', $member->id),
 
                       'desc' => 'Registration Fee',
-                      'opt_a' => $member->member_id,
+                      'opt_a' => $member->id,
                       'opt_b' => $member->application_payment_amount
                   ], $member->application_payment_amount, '<i class="fa fa-money"></i> Pay Through AamarPay', 'btn btn-success') !!}
               </div>

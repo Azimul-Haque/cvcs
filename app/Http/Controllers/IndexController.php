@@ -417,7 +417,7 @@ class IndexController extends Controller
             Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে আবেদনটি গৃহীত হওয়া পর্যন্ত অপেক্ষা করুন।');
             if(Auth::guest()) {
                 Auth::login($application);
-                return redirect()->route('index.profile', $unique_key);
+                return redirect()->route('dashboard.profile');
             } else {
                 if(Auth::user()->role == 'admin') {
                     return redirect()->route('dashboard.applications');
@@ -441,6 +441,87 @@ class IndexController extends Controller
     {
         $member = User::find($id);
         return view('index.membership.paymentnext')->withMember($member);
+    }
+
+    public function paymentRegSuccessOrFailed(Request $request)
+    {
+        $member_id = $request->get('opt_a'); // member's original ID, not Member_ID, okay???
+        
+        if($request->get('pay_status') == 'Failed') {
+            Session::flash('info', 'পেমেন্ট সম্পন্ন হয়নি, আবার চেষ্টা করুন!');
+            return redirect()->route('index.application.payment', $member_id);
+        }
+        
+        $amount_request = $request->get('opt_b');
+        $amount_paid = $request->get('amount');
+        
+        if($amount_paid == $amount_request)
+        {
+            $member = User::where('id', $member_id)->first();
+            $member->payment_status = 'Paid';
+            $member->save();
+            
+
+            // DELETE TEMPPAYMENT
+            // $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
+            // $temppayment->delete();
+            // DELETE TEMPPAYMENT
+
+            // send sms
+            $mobile_number = 0;
+            if(strlen($member->mobile) == 11) {
+                $mobile_number = $member->mobile;
+            } elseif(strlen($member->mobile) > 11) {
+                if (strpos($member->mobile, '+') !== false) {
+                    $mobile_number = substr($member->mobile, -11);
+                }
+            }
+            $url = config('sms.url');
+            $number = $mobile_number;
+            $text = 'Dear ' . $member->name . ', payment of tk. '. $amount_paid .' is received successfully, TrxID: ' . $member->trxid . '. Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+            $data= array(
+                'username'=>config('sms.username'),
+                'password'=>config('sms.password'),
+                'number'=>"$number",
+                'message'=>"$text",
+            );
+            // initialize send status
+            $ch = curl_init(); // Initialize cURL
+            curl_setopt($ch, CURLOPT_URL,$url);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+            $smsresult = curl_exec($ch);
+
+            // $sendstatus = $result = substr($smsresult, 0, 3);
+            $p = explode("|",$smsresult);
+            $sendstatus = $p[0];
+            // // send sms
+            // if($sendstatus == 1101) {
+            //     Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+            // } elseif($sendstatus == 1006) {
+            //     Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+            // } else {
+            //     Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+            // }
+            // SAVE THE PAYMENT
+            Session::flash('success','আপনার পরিশোধ সফল হয়েছে!');
+        } else {
+            // Something went wrong.
+            Session::flash('info', 'Something went wrong, please reload this page!');
+        }
+
+        if(Auth::user()->role == 'admin') {
+            return redirect()->route('dashboard.applications');
+        } else {
+            return redirect()->route('dashboard.profile');
+        }
+    }
+
+    public function paymentRegCancelledPost(Request $request)
+    {
+        // $member = User::find($id);
+        // return view('index.membership.paymentnext')->withMember($member);
     }
 
     public function paymentRegCancelled($id)
