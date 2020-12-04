@@ -62,6 +62,10 @@ class CreateUsersTable extends Migration
             $table->string('application_payment_pay_slip');
             $table->string('application_payment_receipt');
 
+            $table->string('payment_method')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->string('trxid')->nullable();
+
             $table->integer('position_id')->unsigned();
             $table->integer('office_id')->unsigned();
             $table->integer('branch_id')->unsigned();
