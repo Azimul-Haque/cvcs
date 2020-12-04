@@ -580,7 +580,16 @@
         }, 500);
       }
 
-      if($('#amountoffline').val() < 2000 && $('#amountonline').val() < 2000) {
+      if($('#amountoffline').val() < 5 && $('#amountonline').val() < 5) {
+        toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
+        event.preventDefault();
+        $('#submitApplicationModal').modal('hide');
+        $('html, body').animate({
+            scrollTop: $('#name').offset().top - 170
+        }, 500);
+      }
+
+      if($('#amountoffline').val() == null && $('#amountonline').val() == null) {
         toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
         event.preventDefault();
         $('#submitApplicationModal').modal('hide');
@@ -600,7 +609,7 @@
       $('#amountoffline').blur(function() {
         var value = $('#amountoffline').val();
 
-        if(value < 2000) {
+        if(value < 5) {
           toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
         }
       });
@@ -608,7 +617,7 @@
       $('#amountonline').blur(function() {
         var value = $('#amountonline').val();
 
-        if(value < 2000) {
+        if(value < 5) {
           toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
         }
       });

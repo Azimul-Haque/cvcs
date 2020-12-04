@@ -36,6 +36,12 @@ Route::get('/gallery/{id}/single', ['as'=>'index.gallery.single','uses'=>'IndexC
 Route::get('/members', ['as'=>'index.members','uses'=>'IndexController@getMembers']);
 Route::get('/contact', ['as'=>'index.contact','uses'=>'IndexController@getContact']);
 Route::get('/application', ['as'=>'index.application','uses'=>'IndexController@getApplication']);
+
+Route::get('/application/payment/{id}', ['as'=>'index.application.payment','uses'=>'IndexController@getApplicationPaymentPage']);
+Route::post('/application/payment/success', 'IndexController@paymentRegSuccessOrFailed')->name('payment.regsuccess');
+Route::post('/application/payment/cancel/{id}', 'IndexController@paymentRegCancelledPost')->name('payment.regcancel');
+Route::get('/application/payment/cancel/{id}', 'IndexController@paymentRegCancelled')->name('payment.regcancel');
+
 Route::get('/member/login', ['as'=>'index.login','uses'=>'IndexController@getLogin']);
 Route::get('/member/profile/{unique_key}', ['as'=>'index.profile','uses'=>'IndexController@getProfile']);
 Route::post('/member/application/store', ['as'=>'index.storeapplication','uses'=>'IndexController@storeApplication']);

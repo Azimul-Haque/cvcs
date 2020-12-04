@@ -347,6 +347,12 @@ class IndexController extends Controller
             $application->application_payment_bank = 'aamarPay Payment Gateway';
             $application->application_payment_branch = 'N/A';
             $application->application_payment_pay_slip = '00';
+
+            $application->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+            $application->payment_status = 'Unpaid';
+
+            $trxid = 'CVCS' . strtotime('now') . random_string(5);
+            $application->trxid = $trxid;
         }
 
         $application->password = Hash::make('cvcs12345');
@@ -405,11 +411,10 @@ class IndexController extends Controller
         } else {
             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
-        
-        Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে আবেদনটি গৃহীত হওয়া পর্যন্ত অপেক্ষা করুন।');
 
         if($request->payment_method == "offline")
         {
+            Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে আবেদনটি গৃহীত হওয়া পর্যন্ত অপেক্ষা করুন।');
             if(Auth::guest()) {
                 Auth::login($application);
                 return redirect()->route('index.profile', $unique_key);
@@ -423,16 +428,27 @@ class IndexController extends Controller
         }
         elseif($request->payment_method == "online")
         {
-            $trxid = 'CVCS' . strtotime('now') . random_string(5);
-
-            return view('index.membership.paymentnext')
-                        ->withTrxid($trxid)
-                        ->withApplication($application)
-                        ->withAmount($request->amountonline);
+            // return view('index.membership.paymentnext')
+            //             ->withTrxid($trxid)
+            //             ->withApplication($application)
+            //             ->withAmount($request->amountonline);
+            Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে পরিশোধ করুন।');
+            return redirect()->route('index.application.payment', $application->id);
         }
-        
-        
     }
+
+    public function getApplicationPaymentPage($id)
+    {
+        $member = User::find($id);
+        return view('index.membership.paymentnext')->withMember($member);
+    }
+
+    public function paymentRegCancelled($id)
+    {
+        Session::flash('info','Payment is cancelled!');
+        return redirect()->route('index.application.payment', $id);
+    }
+    
 
     public function storeFormMessage(Request $request)
     {
