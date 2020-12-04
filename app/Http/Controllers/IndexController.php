@@ -251,11 +251,12 @@ class IndexController extends Controller
             'nominee_two_percentage'       => 'sometimes|max:255',
             'nominee_two_image'            => 'sometimes|image|max:250',
 
-            'application_payment_amount'   => 'required|max:255',
-            'application_payment_bank'     => 'required|max:255',
-            'application_payment_branch'   => 'required|max:255',
-            'application_payment_pay_slip' => 'required|max:255',
-            'application_payment_receipt'  => 'required|image|max:2048'
+            'amountoffline'                => 'sometimes|max:255',
+            'amountonline'                 => 'sometimes|max:255',
+            'application_payment_bank'     => 'sometimes|max:255',
+            'application_payment_branch'   => 'sometimes|max:255',
+            'application_payment_pay_slip' => 'sometimes|max:255',
+            'application_payment_receipt'  => 'sometimes|image|max:2048'
 
             // 'password'                     => 'required|min:8|same:password_confirmation'
         ));
@@ -328,17 +329,24 @@ class IndexController extends Controller
             $application->nominee_two_image = $filename;
         }
         
-        $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_amount));
-        $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
-        $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
-        $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));
-        // application payment receipt's image upload
-        if($request->hasFile('application_payment_receipt')) {
-            $application_payment_receipt      = $request->file('application_payment_receipt');
-            $filename   = 'application_payment_receipt_' . str_replace(' ','',$request->name).time() .'.' . $application_payment_receipt->getClientOriginalExtension();
-            $location   = public_path('/images/receipts/'. $filename);
-            Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
-            $application->application_payment_receipt = $filename;
+        if($request->payment_method == "offline") {
+            $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->amountoffline));
+            $application->application_payment_bank = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_bank));
+            $application->application_payment_branch = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_branch));
+            $application->application_payment_pay_slip = htmlspecialchars(preg_replace("/\s+/", " ", $request->application_payment_pay_slip));
+            // application payment receipt's image upload
+            if($request->hasFile('application_payment_receipt')) {
+                $application_payment_receipt      = $request->file('application_payment_receipt');
+                $filename   = 'application_payment_receipt_' . str_replace(' ','',$request->name).time() .'.' . $application_payment_receipt->getClientOriginalExtension();
+                $location   = public_path('/images/receipts/'. $filename);
+                Image::make($application_payment_receipt)->resize(800, null, function ($constraint) { $constraint->aspectRatio(); })->save($location);
+                $application->application_payment_receipt = $filename;
+            }
+        } elseif($request->payment_method == "online") {
+            $application->application_payment_amount = htmlspecialchars(preg_replace("/\s+/", " ", $request->amountonline));
+            $application->application_payment_bank = 'aamarPay Payment Gateway';
+            $application->application_payment_branch = 'N/A';
+            $application->application_payment_pay_slip = '00';
         }
 
         $application->password = Hash::make('cvcs12345');
@@ -400,16 +408,29 @@ class IndexController extends Controller
         
         Session::flash('success', 'আপনার আবেদন সফল হয়েছে! অনুগ্রহ করে আবেদনটি গৃহীত হওয়া পর্যন্ত অপেক্ষা করুন।');
 
-        if(Auth::guest()) {
-            Auth::login($application);
-            return redirect()->route('index.profile', $unique_key);
-        } else {
-            if(Auth::user()->role == 'admin') {
-                return redirect()->route('dashboard.applications');
+        if($request->payment_method == "offline")
+        {
+            if(Auth::guest()) {
+                Auth::login($application);
+                return redirect()->route('index.profile', $unique_key);
             } else {
-                return redirect()->route('index.index');
+                if(Auth::user()->role == 'admin') {
+                    return redirect()->route('dashboard.applications');
+                } else {
+                    return redirect()->route('index.index');
+                }
             }
         }
+        elseif($request->payment_method == "online")
+        {
+            $trxid = 'CVCS' . strtotime('now') . random_string(5);
+
+            return view('index.membership.paymentnext')
+                        ->withTrxid($trxid)
+                        ->withApplication($application)
+                        ->withAmount($request->amountonline);
+        }
+        
         
     }
 

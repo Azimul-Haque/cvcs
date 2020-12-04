@@ -241,7 +241,7 @@ class SMSController extends Controller
             } elseif($resultstr == 'Error:' && strpos($smsresult, 'Invalid Number !') !== false) {
                 Session::flash('success', bangla(count($smsdata) - substr_count($smsresult, 'Invalid Number !')) . ' জন সদস্যকে SMS সফলভাবে পাঠানো হয়েছে! মোট ' . bangla(substr_count($smsresult, 'Invalid Number !')) . ' টি অকার্যকর নম্বর।');
 	        } elseif($resultstr == 'Error:' && strpos($smsresult, 'Invalid Number !') == false) {
-	            Session::flash('info', 'দুঃখিত! SMS পাঠানো যায়নি!!!');
+	            Session::flash('info', 'দুঃখিত! SMS পাঠানো যায়নি!');
 	            // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
 	        } else {
 	            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');

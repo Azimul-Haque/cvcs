@@ -28,7 +28,7 @@
                     <li><i class="fa fa-check-square-o"></i> আপনার নিজের অত্যাবশ্যক তথ্যগুলো একত্র করুন</li>
                     <li><i class="fa fa-check-square-o"></i> আপনার নিজের এক কপি ৩০০x৩০০ সাইজের রঙিন ছবির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
                     <li><i class="fa fa-check-square-o"></i> দুজন নমিনির ৩০০x৩০০ সাইজের রঙিন ছবির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
-                    <li><i class="fa fa-check-square-o"></i> মেম্বারশিপ ফি বাবদ ৫০০০ টাকার ব্যাংক ডিপোজিট রিসিটটির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
+                    <li><i class="fa fa-check-square-o"></i> মেম্বারশিপ ফি বাবদ ২০০০ টাকার ব্যাংক ডিপোজিট রিসিটটির সফট/ স্ক্যান কপি প্রস্তুত রাখুন</li>
                     <li><i class="fa fa-check-square-o"></i> <b>মোবাইল নম্বর</b> ঘরে ১১ ডিজিটের সক্রিয় একটি নম্বর দিন; এ নম্বরেই যাবতীয় তথ্য SMS আকারে পাঠানো হবে</li>
                     <li><i class="fa fa-check-square-o"></i> নমিনি একজন হলে শতকরা হার ঘরের মান 100 রাখুন</li>
                     <li><i class="fa fa-check-square-o"></i> নমিনি দুইজন হলে দুই নমিনির শতকরা হারের যোগফল যেন 100 হয় সেদিকে খেয়াল রাখুন</li>
@@ -320,45 +320,89 @@
                         
 
                         <h3 class="agency-title margin-two">পরিশোধ সংক্রান্ত</h3>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              {!! Form::label('application_payment_amount', 'পরিমাণ *') !!}
-                              {!! Form::text('application_payment_amount', null, array('class' => '', 'id' => 'application_payment_amount', 'placeholder' => 'পরিমাণ লিখুন (৫০০ এর গুণিতকে)', 'required' => '')) !!}
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              {!! Form::label('application_payment_pay_slip', 'পে-স্লিপ নম্বর *') !!}
-                              {!! Form::text('application_payment_pay_slip', null, array('class' => '', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে-স্লিপ নম্বর লিখুন', 'required' => '')) !!}
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              {!! Form::label('application_payment_bank', 'ব্যাংকের নাম *') !!}
-                              {!! Form::text('application_payment_bank', 'ডাচ বাংলা ব্যাংক', array('class' => 'text_bangla', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি বাংলায় লিখুন')) !!}
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              {!! Form::label('application_payment_branch', 'ব্রাঞ্চের নাম *') !!}
-                              {!! Form::text('application_payment_branch', null, array('class' => 'text_bangla', 'id' => 'application_payment_branch', 'placeholder' => 'ব্রাঞ্চের নাম বাংলায় লিখুন', 'required' => '')) !!}
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-8">
-                              <div class="form-group ">
-                                  <label><strong>টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
-                                  <input type="file" id="application_payment_receipt" name="application_payment_receipt" required="">
+
+                        <div class="panel-group toggles-style1 no-border">
+                            <div class="panel panel-default" id="collapse-paymanual">
+                              <div role="tablist" id="headingnominee2" class="panel-heading">
+                                  <a data-toggle="" data-parent="#collapse-paymanual" href="#!">
+                                      <h4 class="panel-title">ম্যানুয়ালি পরিশোধ করুন
+                                          <span class="pull-right">
+                                              <i class="fa fa-plus"></i>
+                                          </span>
+                                      </h4>
+                                  </a>
+                              </div>
+                              <div id="collapse-paymanual-link1" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                    <h3 class="agency-title margin-two">ম্যানুয়াল পরিশোধ ফর্ম</h3>
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          {!! Form::label('amountoffline', 'পরিমাণ *') !!}
+                                          {!! Form::text('amountoffline', null, array('class' => '', 'id' => 'amountoffline', 'placeholder' => 'পরিমাণ লিখুন (২০০০/- এর বেশি)')) !!}
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          {!! Form::label('application_payment_pay_slip', 'পে-স্লিপ নম্বর *') !!}
+                                          {!! Form::text('application_payment_pay_slip', null, array('class' => '', 'id' => 'application_payment_pay_slip', 'placeholder' => 'পে-স্লিপ নম্বর লিখুন')) !!}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          {!! Form::label('application_payment_bank', 'ব্যাংকের নাম *') !!}
+                                          {!! Form::text('application_payment_bank', 'ডাচ বাংলা ব্যাংক', array('class' => 'text_bangla', 'id' => 'application_payment_bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'data-parsley-required-message' => 'ব্যাংকের নামটি বাংলায় লিখুন')) !!}
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          {!! Form::label('application_payment_branch', 'ব্রাঞ্চের নাম *') !!}
+                                          {!! Form::text('application_payment_branch', null, array('class' => 'text_bangla', 'id' => 'application_payment_branch', 'placeholder' => 'ব্রাঞ্চের নাম বাংলায় লিখুন')) !!}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-8">
+                                          <div class="form-group ">
+                                              <label><strong>টাকা পরিশোধের রিসিট (সর্বোচ্চ ২ মেগাবাইট) *</strong></label>
+                                              <input type="file" id="application_payment_receipt" name="application_payment_receipt">
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <img src="{{ asset('images/800x500.png')}}" id='application_payment_receipt-upload' style="width: 250px; height: auto; padding: 5px;" />
+                                      </div>
+                                    </div>
+                                  </div>
                               </div>
                           </div>
-                          <div class="col-md-4">
-                            <img src="{{ asset('images/800x500.png')}}" id='application_payment_receipt-upload' style="width: 250px; height: auto; padding: 5px;" />
+                        </div><br/>
+
+                        <div class="panel-group toggles-style1 no-border">
+                            <div class="panel panel-default" id="collapse-payonline">
+                              <div role="tablist" id="headingnominee2" class="panel-heading">
+                                  <a data-toggle="" data-parent="#collapse-payonline" href="#!">
+                                      <h4 class="panel-title">অনলাইনে পরিশোধ করুন
+                                          <span class="pull-right">
+                                              <i class="fa fa-plus"></i>
+                                          </span>
+                                      </h4>
+                                  </a>
+                              </div>
+                              <div id="collapse-payonline-link1" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                    <h3 class="agency-title margin-two">অনলাইন পরিশোধ ফর্ম</h3>
+                                    <div class="form-group">
+                                      {!! Form::label('amountonline', 'পরিমাণ *') !!}
+                                      {!! Form::text('amountonline', null, array('class' => '', 'id' => 'amountonline', 'placeholder' => 'পরিমাণ লিখুন (২০০০/- এর বেশি)')) !!}
+                                    </div>
+                                  </div>
+                              </div>
                           </div>
-                        </div>
+                        </div><br/>
+
+                        
 
                         {{-- <h3 class="agency-title margin-two">অনলাইন একাউন্ট সংক্রান্ত</h3>
                         <div class="row">
@@ -375,6 +419,8 @@
                             </div>
                           </div>
                         </div> --}}
+
+                        <input type="hidden" name="payment_method" id="payment_method">
 
                         <button type="button" class="btn highlight-button-royal-blue btn-bg margin-five no-margin-right" data-toggle="modal" data-target="#submitApplicationModal" data-backdrop="static">আবেদন জমা দিন</button>
                 </div>
@@ -534,18 +580,7 @@
         }, 500);
       }
 
-      if($('#application_payment_amount').val() % 500 == 0) {
-
-      } else {
-        toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
-        event.preventDefault();
-        $('#submitApplicationModal').modal('hide');
-        $('html, body').animate({
-            scrollTop: $('#name').offset().top - 170
-        }, 500);
-      }
-
-      if($('#application_payment_amount').val() < 2000) {
+      if($('#amountoffline').val() < 2000 && $('#amountonline').val() < 2000) {
         toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
         event.preventDefault();
         $('#submitApplicationModal').modal('hide');
@@ -562,18 +597,21 @@
   </script>
   <script type="text/javascript">
     $(document).ready( function() {
-      $('#application_payment_amount').blur(function() {
-        var value = $('#application_payment_amount').val();
-        if(value % 500 == 0) {
-
-        } else {
-          toastr.warning('পরিমাণ ৫০০ এর গুণিতকে দিন', 'WARNING').css('width', '400px');
-        }
+      $('#amountoffline').blur(function() {
+        var value = $('#amountoffline').val();
 
         if(value < 2000) {
           toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
         }
-      })
+      });
+
+      $('#amountonline').blur(function() {
+        var value = $('#amountonline').val();
+
+        if(value < 2000) {
+          toastr.warning('পরিমাণ কমপক্ষে ২০০০ হতে হবে', 'WARNING').css('width', '400px');
+        }
+      });
     });
   </script>
   <script type="text/javascript">
@@ -756,5 +794,41 @@
       });
 
     });
+
+    $('#collapse-paymanual-link1').hide();
+    $('#collapse-payonline-link1').hide();
+
+    $('#collapse-paymanual').click(function() {
+      $('#collapse-payonline-link1').hide();
+      $('#collapse-paymanual-link1').show();
+
+      $('#amountoffline').attr('required', 'true');
+      $('#application_payment_bank').attr('required', 'true');
+      $('#application_payment_branch').attr('required', 'true');
+      $('#application_payment_pay_slip').attr('required', 'true');
+      $('#application_payment_receipt').attr('required', 'true');
+
+      $('#amountonline').removeAttr('required');
+
+      $('#payment_method').val('offline');
+    });
+
+
+    $('#collapse-payonline').click(function() {
+      $('#collapse-paymanual-link1').hide();
+      $('#collapse-payonline-link1').show();
+
+      $('#amountonline').attr('required', 'true');
+      $('#application_payment_bank').removeAttr('required');
+      $('#application_payment_branch').removeAttr('required');
+      $('#application_payment_pay_slip').removeAttr('required');
+      $('#application_payment_receipt').removeAttr('required');
+
+      $('#amountoffline').removeAttr('required');
+
+      $('#payment_method').val('online');
+    });
+
+
   </script>
 @endsection
