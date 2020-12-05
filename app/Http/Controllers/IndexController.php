@@ -716,6 +716,11 @@ class IndexController extends Controller
         echo 'Config and Route Cached. All Cache Cleared';
     }
 
+    public function getTest()
+    {
+        echo 'kaj kore!';
+    }
+
 
     public function testMultiGPSMSAPI() 
     {

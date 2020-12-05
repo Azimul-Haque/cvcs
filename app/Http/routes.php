@@ -47,6 +47,8 @@ Route::get('/member/profile/{unique_key}', ['as'=>'index.profile','uses'=>'Index
 Route::post('/member/application/store', ['as'=>'index.storeapplication','uses'=>'IndexController@storeApplication']);
 Route::post('/contact/form/message/store', ['as'=>'index.storeformmessage','uses'=>'IndexController@storeFormMessage']);
 Route::get('/tutorial/video', ['as'=>'index.videotutorial','uses'=>'IndexController@getVideoTutorials']);
+
+Route::get('/test', ['as'=>'index.test','uses'=>'IndexController@getTest']);
 // index routes
 // index routes
 
