@@ -65,8 +65,7 @@ class Controller extends BaseController
       $actualbalance = 0;
       try {
           // $url = 'http://66.45.237.70/balancechk.php?username='. config('sms.username') .'&password=' . config('sms.password') . '';
-          $SMSbalance = file_get_contents('http://66.45.237.70/balancechk.php?username='. config('sms.username') .'&password=' . config('sms.password'));
-          // echo $SMSbalance;
+
           // //  Initiate curl
           // $ch = curl_init();
           // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -74,7 +73,7 @@ class Controller extends BaseController
           // $result=curl_exec($ch);
           // curl_close($ch);
 
-          $actualbalance = number_format((float) $SMSbalance, 2, '.', '');
+          // $actualbalance = number_format((float) $result, 2, '.', '');
           
       } catch (\Exception $e) {
 
