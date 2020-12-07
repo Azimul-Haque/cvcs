@@ -4,6 +4,18 @@
 
 @section('css')
   {!!Html::style('css/parsley.css')!!}
+  <style type="text/css">
+    .blink_unpaid {
+      animation: blinker 1s linear infinite;
+      color: red;
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
 @stop
 
 @section('content_header')
@@ -134,9 +146,12 @@
 @stop
 
 @section('content')
-  <div class="row">
-    
-  </div>
+  @if(Auth::user()->payment_status == 'Unpaid')
+    <center>
+      <big class="blink_unpaid"><b>আপনার সদস্যপদ বাবদ পরিশোধটি বাকি আছে, অনুগ্রহ করে পরিশোধ করুন!</b></big><br/>
+      <a class="btn btn-sm btn-warning" href="{{ route('index.application.payment', Auth::user()->id) }}" title="অনলাইনে পেমেন্ট করুন"><i class="fa fa-money"></i> অনলাইনে পরিশোধ করুন</a><br/><br/>
+    </center>
+  @endif
   <div class="row">
     <div class="col-lg-3 col-xs-6">
       <!-- small box -->
