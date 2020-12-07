@@ -3,7 +3,18 @@
 @section('title', 'CVCS | আবেদনসমূহ')
 
 @section('css')
+  <style type="text/css">
+    .blink_unpaid {
+      animation: blinker 0.75s linear infinite;
+      color: red;
+    }
 
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
 @stop
 
 @section('content_header')
@@ -73,7 +84,14 @@
               <a href="{{ route('dashboard.branch.members', $application->branch->id) }}" title="সদস্য তালিকা দেখুন">{{ $application->branch->name }}</a>
               <br/>{{ $application->profession }} (<a href="{{ route('dashboard.designation.members', $application->position->id) }}" title="পদবির সদস্য তালিকা দেখুন">{{ $application->position->name }}</a>)
             </td>
-            <td>৳ {{ $application->application_payment_amount }}<br/>{{ $application->application_payment_bank }} ({{ $application->application_payment_branch }})</td>
+            <td>
+              @if($application->payment_status == 'Unpaid')
+                <span style="color: red;">৳ {{ $application->application_payment_amount }}</span>
+                <span class="blink_unpaid"!><b>Unpaid!</b></span>
+              @else
+                ৳ {{ $application->application_payment_amount }}
+              @endif
+              <br/>{{ $application->application_payment_bank }} ({{ $application->application_payment_branch }})</td>
             <td>
               @if($application->image != null)
                 <img src="{{ asset('images/users/'.$application->image)}}" style="height: 50px; width: auto;" />
@@ -82,6 +100,9 @@
               @endif
             </td>
             <td>
+              @if($application->payment_status == 'Unpaid')
+                <a class="btn btn-sm btn-warning" href="{{ route('index.application.payment', $application->id) }}" title="অনলাইনে পেমেন্ট করুন" target="_blank"><i class="fa fa-money"></i></a>
+              @endif
               <a class="btn btn-sm btn-success" href="{{ route('dashboard.singleapplication', $application->unique_key) }}" title="আবেদনটি দেখুন"><i class="fa fa-eye"></i></a>
               <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="অসম্পূর্ণ আবেদনের তালিকায় পাঠান"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i></a>
               <a class="btn btn-sm btn-primary" href="{{ route('dashboard.singleapplicationedit', $application->unique_key) }}" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
