@@ -64,16 +64,16 @@ class Controller extends BaseController
       // }
       $actualbalance = 0;
       try {
-          // $url = 'http://66.45.237.70/balancechk.php?username='. config('sms.username') .'&password=' . config('sms.password') . '';
+          $url = 'http://66.45.237.70/balancechk.php?username='. config('sms.username') .'&password=' . config('sms.password') . '';
 
-          // //  Initiate curl
-          // $ch = curl_init();
-          // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-          // curl_setopt($ch, CURLOPT_URL,$url);
-          // $result=curl_exec($ch);
-          // curl_close($ch);
+          //  Initiate curl
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_URL,$url);
+          $result=curl_exec($ch);
+          curl_close($ch);
 
-          // $actualbalance = number_format((float) $result, 2, '.', '');
+          $actualbalance = number_format((float) $result, 2, '.', '');
           
       } catch (\Exception $e) {
 
