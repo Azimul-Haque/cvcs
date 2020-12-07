@@ -1525,7 +1525,7 @@ class DashboardController extends Controller
             array_push($ordered_member_ids, (int) substr($member->member_id, -5));
         }
         rsort($ordered_member_ids); // descending order to get the last value
-
+        // dd($ordered_member_ids);
         $application->member_id = date('Y', strtotime($application->dob)).str_pad(($ordered_member_ids[0]+1), 5, '0', STR_PAD_LEFT);
         // check if the id already exists...
         $ifexists = User::where('member_id', $application->member_id)->first();
@@ -1557,8 +1557,11 @@ class DashboardController extends Controller
                 $payment->payment_type = 1; // single payment
                 if($newmembercheck->payment_method == 1) {
                     $payment->payment_method = 1;
+                    $payment->payment_key = $newmembercheck->trxid;
+                } else {
+                    $payment->payment_key = random_string(10);
                 }
-                $payment->payment_key = random_string(10);
+                
                 $payment->save();
 
                 // receipt upload
@@ -1587,8 +1590,10 @@ class DashboardController extends Controller
                     $payment->payment_type = 1; // single payment (2 means bulk)
                     if($newmembercheck->payment_method == 1) {
                         $payment->payment_method = 1;
+                        $payment->payment_key = $newmembercheck->trxid;
+                    } else {
+                        $payment->payment_key = random_string(10);
                     }
-                    $payment->payment_key = random_string(10);
                     $payment->save();
 
                     // receipt upload
