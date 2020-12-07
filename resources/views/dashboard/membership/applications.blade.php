@@ -101,7 +101,7 @@
             </td>
             <td>
               @if($application->payment_status == 'Unpaid')
-                <a class="btn btn-sm btn-warning" href="{{ route('index.application.payment', $application->id) }}" title="অনলাইনে পেমেন্ট করুন" target="_blank"><i class="fa fa-money"></i></a>
+                <a class="btn btn-sm btn-warning" href="{{ route('index.application.payment', $application->id) }}" title="অনলাইনে পেমেন্ট করুন"><i class="fa fa-money"></i></a>
               @endif
               <a class="btn btn-sm btn-success" href="{{ route('dashboard.singleapplication', $application->unique_key) }}" title="আবেদনটি দেখুন"><i class="fa fa-eye"></i></a>
               <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="অসম্পূর্ণ আবেদনের তালিকায় পাঠান"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i></a>
