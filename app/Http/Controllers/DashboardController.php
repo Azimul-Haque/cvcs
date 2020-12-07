@@ -1549,9 +1549,15 @@ class DashboardController extends Controller
                 $payment->bank = $newmembercheck->application_payment_bank;
                 $payment->branch = $newmembercheck->application_payment_branch;
                 $payment->pay_slip = $newmembercheck->application_payment_pay_slip;
+                $payment->bank = $newmembercheck->application_payment_bank;
+                $payment->branch = $newmembercheck->application_payment_branch;
+                $payment->pay_slip = $newmembercheck->application_payment_pay_slip;
                 $payment->payment_status = 1; // approved
                 $payment->payment_category = 0; // membership payment
                 $payment->payment_type = 1; // single payment
+                if($newmembercheck->payment_method == 1) {
+                    $payment->payment_method = 1;
+                }
                 $payment->payment_key = random_string(10);
                 $payment->save();
 
@@ -1579,6 +1585,9 @@ class DashboardController extends Controller
                     $payment->payment_status = 1; // approved (0 means pending)
                     $payment->payment_category = 1; // monthly payment (0 means membership)
                     $payment->payment_type = 1; // single payment (2 means bulk)
+                    if($newmembercheck->payment_method == 1) {
+                        $payment->payment_method = 1;
+                    }
                     $payment->payment_key = random_string(10);
                     $payment->save();
 
