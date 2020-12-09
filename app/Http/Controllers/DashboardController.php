@@ -1992,7 +1992,6 @@ class DashboardController extends Controller
             <tr>
              <td>'. $row->name_bangla .'<br/> '. $row->name .'</td>
              <td><big><b>'.$row->member_id.'</big></b></td>
-             <td>'.$row->mobile.'<br/>'.$row->email.'</td>
              <td>'.$row->branch->name.'<br/>'.$row->profession.' ('. $row->position->name .')</td>
             ';
             if($row->image != null) {

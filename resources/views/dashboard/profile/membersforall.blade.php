@@ -32,7 +32,7 @@
           <tr>
             <th>নাম</th>
             <th>মেম্বার আইডি</th>
-            <th>যোগাযোগ</th>
+            {{-- <th>যোগাযোগ</th> --}}
             <th>অফিস তথ্য</th>
             <th>ছবি</th>
           </tr>
@@ -49,7 +49,7 @@
           <tr>
             <th>নাম</th>
             <th>মেম্বার আইডি</th>
-            <th>যোগাযোগ</th>
+            {{-- <th>যোগাযোগ</th> --}}
             <th>অফিস তথ্য</th>
             <th>ছবি</th>
           </tr>
@@ -59,7 +59,7 @@
           <tr>
             <td>{{ $member->name_bangla }}<br/>{{ $member->name }}</td>
             <td><big><b>{{ $member->member_id }}</b></big></td>
-            <td>{{ $member->mobile }}<br/>{{ $member->email }}</td>
+            {{-- <td>{{ $member->mobile }}<br/>{{ $member->email }}</td> --}}
             <td>{{ $member->branch->name }}<br/>{{ $member->profession }} ({{ $member->position->name }})</td>
             <td>
               @if($member->image != null)
