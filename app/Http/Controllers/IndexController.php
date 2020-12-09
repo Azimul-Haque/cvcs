@@ -536,7 +536,7 @@ class IndexController extends Controller
         }
     }
 
-    public function paymentRegCancelledPost(Request $request)
+    public function paymentRegCancelledPost(Request $request, $id)
     {
         $member_id = $request->get('opt_a'); // member's original ID, not Member_ID, okay???
         
