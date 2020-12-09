@@ -172,6 +172,7 @@ Route::delete('/dashboard/faq/{id}/delete', ['as'=>'dashboard.deletefaq','uses'=
 
 // FORM MESSAGE
 Route::get('/dashboard/form/messages', ['as'=>'dashboard.formmessage','uses'=>'DashboardController@getFormMessages']);
+Route::get('/dashboard/form/messages/archives', ['as'=>'dashboard.formmessage.archive','uses'=>'DashboardController@getArchivedFormMessages']);
 Route::delete('/dashboard/form/message/{id}/archive', ['as'=>'dashboard.archiveformmessage','uses'=>'DashboardController@archiveFormMessage']);
 Route::delete('/dashboard/form/message/{id}/delete', ['as'=>'dashboard.deleteformmessage','uses'=>'DashboardController@deleteFormMessage']);
 

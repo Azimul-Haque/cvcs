@@ -2078,6 +2078,14 @@ class DashboardController extends Controller
                     ->withMessages($messages);
     }
 
+    public function getArchivedFormMessages() 
+    {
+        $messages = Formmessage::orderBy('id', 'desc')->paginate(10);
+
+        return view('dashboard.archivedformmessage')
+                        ->withMessages($messages);
+    }
+
     public function archiveFormMessage($id) 
     {
         $messages = Formmessage::find($id);
@@ -2094,7 +2102,7 @@ class DashboardController extends Controller
         $messages->delete();
 
         Session::flash('success', 'সফলভাবে ডিলেট ক্রয়া হয়েছে!');
-        return redirect()->route('dashboard.formmessage');
+        return redirect()->back();
     }
 
     public function getProfile() 
