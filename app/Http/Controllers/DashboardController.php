@@ -2078,6 +2078,14 @@ class DashboardController extends Controller
                     ->withMessages($messages);
     }
 
+    public function archiveFormMessage($id) 
+    {
+        $messages = Formmessage::find($id);
+        $messages->delete();
+
+        Session::flash('success', 'Deleted Successfully!');
+        return redirect()->route('dashboard.formmessage');
+    }
 
     public function deleteFormMessage($id) 
     {

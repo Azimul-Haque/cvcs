@@ -48,7 +48,7 @@
                       আপনি কি নিশ্চিতভাবে এই বার্তাটি আর্কাইভ করতে চান?</b>
                     </div>
                     <div class="modal-footer">
-                      {!! Form::model($message, ['route' => ['dashboard.deleteformmessage', $message->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
+                      {!! Form::model($message, ['route' => ['dashboard.archiveformmessage', $message->id], 'method' => 'DELETE', 'class' => 'form-default', 'enctype' => 'multipart/form-data']) !!}
                           {!! Form::submit('আর্কাইভ করুন', array('class' => 'btn btn-success')) !!}
                           <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                       {!! Form::close() !!}
