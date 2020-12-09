@@ -2081,9 +2081,10 @@ class DashboardController extends Controller
     public function archiveFormMessage($id) 
     {
         $messages = Formmessage::find($id);
-        $messages->delete();
+        $messages->message_state = 1;
+        $messages->save();
 
-        Session::flash('success', 'Deleted Successfully!');
+        Session::flash('success', 'সফলভাবে আর্কাইভ ক্রয়া হয়েছে!');
         return redirect()->route('dashboard.formmessage');
     }
 
@@ -2092,7 +2093,7 @@ class DashboardController extends Controller
         $messages = Formmessage::find($id);
         $messages->delete();
 
-        Session::flash('success', 'Deleted Successfully!');
+        Session::flash('success', 'সফলভাবে ডিলেট ক্রয়া হয়েছে!');
         return redirect()->route('dashboard.formmessage');
     }
 
