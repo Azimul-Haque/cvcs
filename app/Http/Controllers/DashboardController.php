@@ -2072,7 +2072,9 @@ class DashboardController extends Controller
 
     public function getFormMessages() 
     {
-        $messages = Formmessage::orderBy('id', 'desc')->paginate(10);
+        $messages = Formmessage::orderBy('id', 'desc')
+                               ->where('message_state', 0)
+                               ->paginate(10);
 
         return view('dashboard.formmessage')
                     ->withMessages($messages);
@@ -2080,7 +2082,9 @@ class DashboardController extends Controller
 
     public function getArchivedFormMessages() 
     {
-        $messages = Formmessage::orderBy('id', 'desc')->paginate(10);
+        $messages = Formmessage::orderBy('id', 'desc')
+                               ->where('message_state', 1)
+                               ->paginate(10);
 
         return view('dashboard.archivedformmessage')
                         ->withMessages($messages);
