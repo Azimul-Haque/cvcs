@@ -2741,11 +2741,11 @@ class DashboardController extends Controller
 
                     // send sms
                     $mobile_number = 0;
-                    if(strlen($payment->user->mobile) == 11) {
-                        $mobile_number = $payment->user->mobile;
-                    } elseif(strlen($payment->user->mobile) > 11) {
-                        if (strpos($payment->user->mobile, '+') !== false) {
-                            $mobile_number = substr($payment->user->mobile, -11);
+                    if(strlen($member->mobile) == 11) {
+                        $mobile_number = $member->mobile;
+                    } elseif(strlen($member->mobile) > 11) {
+                        if (strpos($member->mobile, '+') !== false) {
+                            $mobile_number = substr($member->mobile, -11);
                         }
                     }
                     $url = config('sms.url');

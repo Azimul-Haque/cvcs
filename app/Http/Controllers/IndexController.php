@@ -538,8 +538,69 @@ class IndexController extends Controller
 
     public function paymentRegCancelledPost(Request $request)
     {
-        // $member = User::find($id);
-        // return view('index.membership.paymentnext')->withMember($member);
+        $member_id = $request->get('opt_a'); // member's original ID, not Member_ID, okay???
+        
+        if($request->get('pay_status') == 'Failed') {
+            Session::flash('info', 'Something went wrong, please try again!');
+            return redirect()->route('index.application.payment', $member_id);
+        }
+        
+        $amount_request = $request->get('opt_b');
+        $amount_paid = $request->get('amount');
+        
+        if($amount_paid == $amount_request)
+        {
+          $member = User::where('id', $member_id)->first();
+          $member->payment_status = 'Paid';
+          $member->save();
+          
+
+          // DELETE TEMPPAYMENT
+          // DELETE TEMPPAYMENT
+          $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
+          $temppayment->delete();
+          // DELETE TEMPPAYMENT
+          // DELETE TEMPPAYMENT
+
+          // send sms
+          $mobile_number = 0;
+          if(strlen($member->mobile) == 11) {
+              $mobile_number = $member->mobile;
+          } elseif(strlen($member->mobile) > 11) {
+              if (strpos($member->mobile, '+') !== false) {
+                  $mobile_number = substr($member->mobile, -11);
+              }
+          }
+          $url = config('sms.url');
+          $number = $mobile_number;
+          $text = 'Dear ' . $member->name . ', payment of tk. '. $amount_paid .' is received successfully, TrxID: ' . $member->trxid . '. Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+          $data= array(
+              'username'=>config('sms.username'),
+              'password'=>config('sms.password'),
+              'number'=>"$number",
+              'message'=>"$text",
+          );
+          // initialize send status
+          $ch = curl_init(); // Initialize cURL
+          curl_setopt($ch, CURLOPT_URL,$url);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+          $smsresult = curl_exec($ch);
+
+          // $sendstatus = $result = substr($smsresult, 0, 3);
+          $p = explode("|",$smsresult);
+          $sendstatus = $p[0];
+
+          Session::flash('success','আপনার পরিশোধ সফল হয়েছে!');
+        } else {
+           // Something went wrong.
+          Session::flash('info', 'Something went wrong, please try again!');
+          return redirect()->route('index.application.payment', $member_id);
+        }
+        
+        //return $request->all();
+        return redirect(Route('dashboard.memberpayment'));
     }
 
     public function paymentRegCancelled($id)
