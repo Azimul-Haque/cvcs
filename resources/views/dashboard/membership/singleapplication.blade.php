@@ -13,7 +13,7 @@
       @endif আবেদন
       <div class="pull-right">
         @if($application->activation_status == 0)
-          @if(Auth::user()->email != 'dataentry@cvcsbd.com')
+          @if(Auth::user()->email != 'dataentry@cvcsbd.com' && $application->payment_status != 'Unpaid')
             <button class="btn btn-success" data-toggle="modal" data-target="#activateMemberModal" data-backdrop="static" title="অনুমোদন করুন"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
           @endif
           <a class="btn btn-danger" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="অসম্পূর্ণ আবেদনের তালিকায় পাঠান"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i></a>
