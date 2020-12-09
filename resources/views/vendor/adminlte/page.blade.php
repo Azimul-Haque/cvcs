@@ -328,7 +328,7 @@
                     
 
                     
-                    @if(Auth::user()->role_type == 'member')
+                    @if(Auth::user()->role_type == 'member' && Auth::user()->activation_status == 1)
                     <li class="{{ Request::is('dashboard/members/for/all') ? 'active' : '' }}">
                         <a href="{{ route('dashboard.membersforall') }}">
                             <i class="fa fa-fw fa-users"></i>
