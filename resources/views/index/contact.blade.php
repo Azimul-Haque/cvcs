@@ -51,7 +51,7 @@
                     {!! Form::open(['route' => 'index.storeformmessage', 'method' => 'POST']) !!}
                         <div id="success" class="no-margin-lr"></div>
                         <input name="name" type="text" value="{{ old('name') }}" placeholder="আপনার নাম" required="" />
-                        <input name="email" type="email" value="{{ old('email') }}" placeholder="ইমেইল এড্রেস"  required="" />
+                        <input name="mobile" type="text" value="{{ old('mobile') }}" placeholder="মোবাইল নম্বর"  required="" />
                         <textarea name="message" placeholder="বার্তা লিখুন"  required="">{{ old('message') }}</textarea>
                         
                         @php

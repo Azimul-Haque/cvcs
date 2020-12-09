@@ -614,7 +614,7 @@ class IndexController extends Controller
     {
         $this->validate($request,array(
             'name'                      => 'required|max:255',
-            'email'                     => 'required|max:255',
+            'mobile'                     => 'required|max:255',
             'message'                   => 'required',
             'contact_sum_result_hidden'   => 'required',
             'contact_sum_result'   => 'required'
@@ -622,8 +622,8 @@ class IndexController extends Controller
 
         if($request->contact_sum_result_hidden == $request->contact_sum_result) {
             $message = new Formmessage;
-            $message->name = htmlspecialchars(preg_replace("/\s+/", " ", ucwords($request->name)));
-            $message->email = htmlspecialchars(preg_replace("/\s+/", " ", $request->email));
+            $message->name = htmlspecialchars(preg_replace("/\s+/", " ", $request->name));
+            $message->mobile = htmlspecialchars(preg_replace("/\s+/", " ", $request->mobile));
             $message->message = htmlspecialchars(preg_replace("/\s+/", " ", $request->message));
             $message->save();
             

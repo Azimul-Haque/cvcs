@@ -15,8 +15,9 @@ class CreateFormmessagesTable extends Migration
         Schema::create('formmessages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email');
+            $table->string('mobile');
             $table->text('message');
+            $table->integer('message_state');
             $table->timestamps();
         });
     }
