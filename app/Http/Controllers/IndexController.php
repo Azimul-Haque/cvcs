@@ -370,6 +370,17 @@ class IndexController extends Controller
         $application->unique_key = $unique_key;
         $application->save();
 
+        // TEMPPAYMENT DATA
+        if($request->payment_method == "online") {
+            $temppayment = new Temppayment;
+            $temppayment->member_id = $application->id; // IN CASE OF REGISTRATION, THIS WILL BE APPLICANT'S ID
+            $temppayment->trxid = $trxid;
+            $temppayment->amount = $request->amountonline;
+            $temppayment->payment_type = 3; // 1 == single, 2 == bulk, 3 == registration
+            $temppayment->save();
+        }
+        // TEMPPAYMENT DATA
+
         // send activation SMS ... aro kichu kaaj baki ache...
         // send sms
         $mobile_number = 0;

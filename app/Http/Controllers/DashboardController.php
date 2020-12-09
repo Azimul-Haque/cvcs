@@ -2732,6 +2732,8 @@ class DashboardController extends Controller
                     // DELETE TEMPPAYMENT
                     $temppayment->delete();
                     // BULK PAYMENT CODE
+                } elseif ($temppayment->payment_type == 3) {
+
                 }
 
                 // Session::flash('info', 'Deleted!');
