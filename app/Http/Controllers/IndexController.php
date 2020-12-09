@@ -476,8 +476,8 @@ class IndexController extends Controller
 
             // DELETE TEMPPAYMENT
             // DELETE TEMPPAYMENT
-            // $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
-            // $temppayment->delete();
+            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
+            $temppayment->delete();
             // DELETE TEMPPAYMENT
             // DELETE TEMPPAYMENT
 

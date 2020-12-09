@@ -2734,21 +2734,10 @@ class DashboardController extends Controller
                 } elseif ($temppayment->payment_type == 3) {
                     // REGISTRATION PAYMENT CODE
                     // INSERT NEW DATA
-                    $member = User::where('member_id', $temppayment->member_id)->first();
-                    $payment = new Payment;
-                    $payment->member_id = $member->member_id;
-                    $payment->payer_id = $member->member_id;
-                    $payment->amount = $temppayment->amount;
-                    $payment->bank = 'aamarPay Payment Gateway';
-                    $payment->branch = 'N/A';
-                    $payment->pay_slip = '00';
-                    $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
-                    $payment->payment_category = 1; // monthly payment, if 0 then membership payment
-                    $payment->payment_type = 1; // single payment, if 2 then bulk payment
-                    $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-                    $payment->card_type = $decode_reply['payment_type']; // card_type
-                    $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
-                    $payment->save();
+                    $member = User::find($temppayment->member_id);
+                    $member->payment_status = 'Paid';
+                    $member->save();
+
 
                     // send sms
                     $mobile_number = 0;
@@ -2761,7 +2750,7 @@ class DashboardController extends Controller
                     }
                     $url = config('sms.url');
                     $number = $mobile_number;
-                    $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                    $text = 'Dear ' . $member->name . ', payment of tk. '. $temppayment->amount .' is received successfully, TrxID: ' . $member->trxid . '. Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                     $data= array(
                         'username'=>config('sms.username'),
                         'password'=>config('sms.password'),
