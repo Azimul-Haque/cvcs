@@ -496,7 +496,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <img src="{{ asset('images/PG.png') }}" class="img-responsive">
+      <img src="{{ asset('images/PG2.png') }}" class="img-responsive">
     </div>
   </div>
   <!-- nav-tabs-custom -->
