@@ -496,7 +496,9 @@
       </div>
     </div>
     <div class="col-md-3">
-      <img src="{{ asset('images/PG2.png') }}" class="img-responsive">
+      <a href="{{ route('dashboard.memberpaymentselfonline') }}">
+        <img src="{{ asset('images/PG2.png') }}" class="img-responsive shadow">
+      </a>
     </div>
   </div>
   <!-- nav-tabs-custom -->
