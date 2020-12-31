@@ -243,254 +243,259 @@
     <!-- ./col -->
   </div>
   <!-- Custom Tabs -->
-  <div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">ব্যক্তিগত তথ্য</a></li>
-      <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত</a></li>
-     
-      <li class="pull-right dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
-        </a>
-        <ul class="dropdown-menu">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-          <li role="presentation" class="divider"></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">ব্যক্তিগত তথ্য</a></li>
+          <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত</a></li>
+         
+          <li class="pull-right dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+              <li role="presentation" class="divider"></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+            </ul>
+          </li>
         </ul>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="personal_info_tab">
-        <div class="row">
-          <div class="col-md-6">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <th colspan="2">
-                    <center>পরিচিতি</center>
-                  </th>
-                </tr>
-                <tr>
-                  <td colspan="2">
-                    <center>
-                      @if($member->image != null)
-                          <img src="{{ asset('images/users/'.$member->image)}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
-                      @else
-                          <img src="{{ asset('images/user.png')}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
-                      @endif
-                    </center>
-                  </td>
-                </tr>
-                @if(Auth::user()->activation_status == 1)
-                <tr>
-                  <th width="40%">সদস্যপদ নং</th>
-                  <td>{{ $member->member_id }}</td>
-                </tr>
-                @endif
-                <tr>
-                  <th width="40%">আবেদনকারীর নাম (বাংলায়)</th>
-                  <td>{{ $member->name_bangla }}</td>
-                </tr>
-                <tr>
-                  <th>আবেদনকারীর নাম (ইংরেজিতে)</th>
-                  <td>{{ $member->name}}</td>
-                </tr>
-                <tr>
-                  <th>জাতীয় পরিচয়পত্র নং</th>
-                  <td>{{ $member->nid}}</td>
-                </tr>
-                <tr>
-                  <th>জন্ম তারিখ</th>
-                  <td>{{ date('F d, Y', strtotime($member->dob)) }}</td>
-                </tr>
-                <tr>
-                  <th>লিঙ্গ</th>
-                  <td>{{ $member->gender }}</td>
-                </tr>
-                <tr>
-                  <th>স্বামী/স্ত্রীর নাম</th>
-                  <td>{{ $member->spouse }}</td>
-                </tr>
-                <tr>
-                  <th>স্বামী/স্ত্রীর পেশা</th>
-                  <td>{{ $member->spouse_profession }}</td>
-                </tr>
-                <tr>
-                  <th>পিতার নাম</th>
-                  <td>{{ $member->father }}</td>
-                </tr>
-                <tr>
-                  <th>মাতার নাম</th>
-                  <td>{{ $member->mother }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-md-6">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <th colspan="2">
-                    <center>কর্ম সংক্রান্ত</center>
-                  </th>
-                </tr>
-                <tr>
-                  <th width="40%">আবেদনকারীর পেশা</th>
-                  <td>{{ $member->profession }}</td>
-                </tr>
-                <tr>
-                  <th>আবেদনকারীর পদবি</th>
-                  <td>{{ $member->position->name }}</td>
-                </tr>
-                <tr>
-                  <th>দপ্তরের নাম</th>
-                  <td>{{ $member->branch->name }}</td>
-                </tr>
-                <tr>
-                  <th>চাকুরীতে যোগদানের তারিখ</th>
-                  <td>
-                    @if($member->joining_date != null)
-                      {{ date('F d, Y', strtotime($member->joining_date)) }}
-                    @else
-                      N/A
+        <div class="tab-content">
+          <div class="tab-pane active" id="personal_info_tab">
+            <div class="row">
+              <div class="col-md-6">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">
+                        <center>পরিচিতি</center>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <center>
+                          @if($member->image != null)
+                              <img src="{{ asset('images/users/'.$member->image)}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                          @else
+                              <img src="{{ asset('images/user.png')}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                          @endif
+                        </center>
+                      </td>
+                    </tr>
+                    @if(Auth::user()->activation_status == 1)
+                    <tr>
+                      <th width="40%">সদস্যপদ নং</th>
+                      <td>{{ $member->member_id }}</td>
+                    </tr>
                     @endif
-                  </td>
-                </tr>
+                    <tr>
+                      <th width="40%">আবেদনকারীর নাম (বাংলায়)</th>
+                      <td>{{ $member->name_bangla }}</td>
+                    </tr>
+                    <tr>
+                      <th>আবেদনকারীর নাম (ইংরেজিতে)</th>
+                      <td>{{ $member->name}}</td>
+                    </tr>
+                    <tr>
+                      <th>জাতীয় পরিচয়পত্র নং</th>
+                      <td>{{ $member->nid}}</td>
+                    </tr>
+                    <tr>
+                      <th>জন্ম তারিখ</th>
+                      <td>{{ date('F d, Y', strtotime($member->dob)) }}</td>
+                    </tr>
+                    <tr>
+                      <th>লিঙ্গ</th>
+                      <td>{{ $member->gender }}</td>
+                    </tr>
+                    <tr>
+                      <th>স্বামী/স্ত্রীর নাম</th>
+                      <td>{{ $member->spouse }}</td>
+                    </tr>
+                    <tr>
+                      <th>স্বামী/স্ত্রীর পেশা</th>
+                      <td>{{ $member->spouse_profession }}</td>
+                    </tr>
+                    <tr>
+                      <th>পিতার নাম</th>
+                      <td>{{ $member->father }}</td>
+                    </tr>
+                    <tr>
+                      <th>মাতার নাম</th>
+                      <td>{{ $member->mother }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-6">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">
+                        <center>কর্ম সংক্রান্ত</center>
+                      </th>
+                    </tr>
+                    <tr>
+                      <th width="40%">আবেদনকারীর পেশা</th>
+                      <td>{{ $member->profession }}</td>
+                    </tr>
+                    <tr>
+                      <th>আবেদনকারীর পদবি</th>
+                      <td>{{ $member->position->name }}</td>
+                    </tr>
+                    <tr>
+                      <th>দপ্তরের নাম</th>
+                      <td>{{ $member->branch->name }}</td>
+                    </tr>
+                    <tr>
+                      <th>চাকুরীতে যোগদানের তারিখ</th>
+                      <td>
+                        @if($member->joining_date != null)
+                          {{ date('F d, Y', strtotime($member->joining_date)) }}
+                        @else
+                          N/A
+                        @endif
+                      </td>
+                    </tr>
 
-                <tr>
-                  <th colspan="2">
-                    <center>যোগাযোগ</center>
-                  </th>
-                </tr>
-                <tr>
-                  <th>বর্তমান ঠিকানা</th>
-                  <td>{{ $member->present_address }}</td>
-                </tr>
-                <tr>
-                  <th>স্থায়ী ঠিকানা</th>
-                  <td>{{ $member->permanent_address }}</td>
-                </tr>
-                <tr>
-                  <th>অফিসের টেলিফোন</th>
-                  <td>{{ $member->office_telephone }}</td>
-                </tr>
-                <tr>
-                  <th>বাসার টেলিফোন</th>
-                  <td>{{ $member->home_telephone }}</td>
-                </tr>
-                <tr>
-                  <th>মোবাইল</th>
-                  <td>{{ $member->mobile }}</td>
-                </tr>
-                <tr>
-                  <th>ইমেইল এড্রেস</th>
-                  <td>{{ $member->email }}</td>
-                </tr>
-              </tbody>
-            </table>
+                    <tr>
+                      <th colspan="2">
+                        <center>যোগাযোগ</center>
+                      </th>
+                    </tr>
+                    <tr>
+                      <th>বর্তমান ঠিকানা</th>
+                      <td>{{ $member->present_address }}</td>
+                    </tr>
+                    <tr>
+                      <th>স্থায়ী ঠিকানা</th>
+                      <td>{{ $member->permanent_address }}</td>
+                    </tr>
+                    <tr>
+                      <th>অফিসের টেলিফোন</th>
+                      <td>{{ $member->office_telephone }}</td>
+                    </tr>
+                    <tr>
+                      <th>বাসার টেলিফোন</th>
+                      <td>{{ $member->home_telephone }}</td>
+                    </tr>
+                    <tr>
+                      <th>মোবাইল</th>
+                      <td>{{ $member->mobile }}</td>
+                    </tr>
+                    <tr>
+                      <th>ইমেইল এড্রেস</th>
+                      <td>{{ $member->email }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /.tab-pane -->
+          <div class="tab-pane" id="mominee_tab">
+            @if(Auth::user()->role_type != 'admin')
+            <div class="row">
+              <div class="col-md-6">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">
+                        <center>নমিনি ০১</center>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <center>
+                          @if($member->nominee_one_image != null)
+                              <img src="{{ asset('images/users/'.$member->nominee_one_image)}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                          @else
+                              <img src="{{ asset('images/user.png')}}" alt="image of {{ $member->nominee_one_name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                          @endif
+                        </center>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th width="40%">নমিনীর নাম (বাংলায়)</th>
+                      <td>{{ $member->nominee_one_name }}</td>
+                    </tr>
+                    <tr>
+                      <th>পরিচয় সংক্রান্ত দলিল</th>
+                      <td>
+                        {{ $member->nominee_one_identity_text }}
+                        @if($member->nominee_one_identity_type == 0)
+                          (জাতীয় পরিচয়পত্র)
+                        @else
+                          (জন্ম নিবন্ধন)
+                        @endif
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>সম্পর্ক</th>
+                      <td>{{ $member->nominee_one_relation }}</td>
+                    </tr>
+                    <tr>
+                      <th>শতকরা হার</th>
+                      <td>{{ $member->nominee_one_percentage }}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-6">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">
+                        <center>নমিনি ০২</center>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <center>
+                          @if($member->nominee_two_image != null)
+                              <img src="{{ asset('images/users/'.$member->nominee_two_image)}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                          @else
+                              <img src="{{ asset('images/user.png')}}" alt="image of {{ $member->nominee_two_name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
+                          @endif
+                        </center>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th width="40%">নমিনীর নাম (বাংলায়)</th>
+                      <td>{{ $member->nominee_two_name }}</td>
+                    </tr>
+                    <tr>
+                      <th>পরিচয় সংক্রান্ত দলিল</th>
+                      <td>
+                        {{ $member->nominee_two_identity_text }}
+                        @if($member->nominee_two_identity_type == 0)
+                          (জাতীয় পরিচয়পত্র)
+                        @else
+                          (জন্ম নিবন্ধন)
+                        @endif
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>পরিচয় সংক্রান্ত দলিল</th>
+                      <td>{{ $member->nominee_two_relation }}</td>
+                    </tr>
+                    <tr>
+                      <th>শতকরা হার</th>
+                      <td>{{ $member->nominee_two_percentage }}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            @endif
           </div>
         </div>
-      </div>
-      <!-- /.tab-pane -->
-      <div class="tab-pane" id="mominee_tab">
-        @if(Auth::user()->role_type != 'admin')
-        <div class="row">
-          <div class="col-md-6">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <th colspan="2">
-                    <center>নমিনি ০১</center>
-                  </th>
-                </tr>
-                <tr>
-                  <td colspan="2">
-                    <center>
-                      @if($member->nominee_one_image != null)
-                          <img src="{{ asset('images/users/'.$member->nominee_one_image)}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
-                      @else
-                          <img src="{{ asset('images/user.png')}}" alt="image of {{ $member->nominee_one_name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
-                      @endif
-                    </center>
-                  </td>
-                </tr>
-                <tr>
-                  <th width="40%">নমিনীর নাম (বাংলায়)</th>
-                  <td>{{ $member->nominee_one_name }}</td>
-                </tr>
-                <tr>
-                  <th>পরিচয় সংক্রান্ত দলিল</th>
-                  <td>
-                    {{ $member->nominee_one_identity_text }}
-                    @if($member->nominee_one_identity_type == 0)
-                      (জাতীয় পরিচয়পত্র)
-                    @else
-                      (জন্ম নিবন্ধন)
-                    @endif
-                  </td>
-                </tr>
-                <tr>
-                  <th>সম্পর্ক</th>
-                  <td>{{ $member->nominee_one_relation }}</td>
-                </tr>
-                <tr>
-                  <th>শতকরা হার</th>
-                  <td>{{ $member->nominee_one_percentage }}%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-md-6">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <th colspan="2">
-                    <center>নমিনি ০২</center>
-                  </th>
-                </tr>
-                <tr>
-                  <td colspan="2">
-                    <center>
-                      @if($member->nominee_two_image != null)
-                          <img src="{{ asset('images/users/'.$member->nominee_two_image)}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
-                      @else
-                          <img src="{{ asset('images/user.png')}}" alt="image of {{ $member->nominee_two_name }}" class="img-responsive shadow" style="max-width: 200px; height: auto;" />
-                      @endif
-                    </center>
-                  </td>
-                </tr>
-                <tr>
-                  <th width="40%">নমিনীর নাম (বাংলায়)</th>
-                  <td>{{ $member->nominee_two_name }}</td>
-                </tr>
-                <tr>
-                  <th>পরিচয় সংক্রান্ত দলিল</th>
-                  <td>
-                    {{ $member->nominee_two_identity_text }}
-                    @if($member->nominee_two_identity_type == 0)
-                      (জাতীয় পরিচয়পত্র)
-                    @else
-                      (জন্ম নিবন্ধন)
-                    @endif
-                  </td>
-                </tr>
-                <tr>
-                  <th>পরিচয় সংক্রান্ত দলিল</th>
-                  <td>{{ $member->nominee_two_relation }}</td>
-                </tr>
-                <tr>
-                  <th>শতকরা হার</th>
-                  <td>{{ $member->nominee_two_percentage }}%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        @endif
+        <!-- /.tab-content -->
       </div>
     </div>
-    <!-- /.tab-content -->
+    <div class="col-md-3"></div>
   </div>
   <!-- nav-tabs-custom -->
 @stop
