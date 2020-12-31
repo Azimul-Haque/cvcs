@@ -246,6 +246,7 @@
 	              {{-- ভার্চুয়াল নাম্বারঃ 01708403978 --}}
 	            </div>
 	        </div>
+	        <img src="{{ asset('images/PG.png') }}" class="img-responsive shadow">
     	</div>
     </div>
 @stop
