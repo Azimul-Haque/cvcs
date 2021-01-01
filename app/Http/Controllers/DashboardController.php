@@ -2826,7 +2826,7 @@ class DashboardController extends Controller
           $payment = new Payment;
           $payment->member_id = $member->member_id;
           $payment->payer_id = $member->member_id;
-          $payment->amount = $amount_paid;
+          $payment->amount = round($amount_paid - ($amount_paid * 0.0167158308751));
           $payment->bank = 'aamarPay Payment Gateway';
           $payment->branch = 'N/A';
           $payment->pay_slip = '00';
@@ -2998,6 +2998,33 @@ class DashboardController extends Controller
         return view('dashboard.profile.usermanual');
     }
 
+    public function getBulkPaymentPage() 
+    {
+        // dd(Auth::user()->branch->id);
+        $branch = Branch::find(Auth::user()->branch->id);
+        $members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')
+                       ->where('branch_id', Auth::user()->branch->id)
+                       ->orderBy('id', 'desc')
+                       ->get();
+        return view('dashboard.adminsandothers.bulkpayment')
+                            ->withBranch($branch)
+                            ->withMembers($members);
+    }
+
+    public function getBulkPaymentPageFromBranch($branch_id) 
+    {
+        $branch = Branch::find($branch_id);
+        $members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')
+                       ->where('branch_id', $branch_id)
+                       ->orderBy('id', 'desc')
+                       ->get();
+        return view('dashboard.adminsandothers.bulkpayment')
+                            ->withBranch($branch)
+                            ->withMembers($members);
+    }
+
     public function storeBulkPayment(Request $request) 
     {
         if($request->payment_method == 'offline') {
@@ -3149,7 +3176,7 @@ class DashboardController extends Controller
             $temppayment = new Temppayment;
             $temppayment->member_id = Auth::user()->member_id; // IN CASE OF BULK, THIS WILL BE PAYER'S MEMBER_ID
             $temppayment->trxid = $trxid;
-            $temppayment->amount = $request->amountonline;
+            $temppayment->amount = $request->amountonline + ($request->amountonline * 0.0170);
             $temppayment->payment_type = 2; // 1 == single, 2 == bulk, 3 == registration
             $temppayment->bulkdata = $bulk_payment_member_ids;
             $temppayment->save();
@@ -3157,39 +3184,12 @@ class DashboardController extends Controller
 
             return view('dashboard.adminsandothers.bulknext')
                         ->withTrxid($trxid)
-                        ->withAmount($request->amountonline)
+                        ->withAmount($temppayment->amount)
                         ->withPaymentids($bulk_payment_member_ids);
             // ONLINE TRANSACTION
             // ONLINE TRANSACTION
         }
         
-    }
-
-    public function getBulkPaymentPage() 
-    {
-        // dd(Auth::user()->branch->id);
-        $branch = Branch::find(Auth::user()->branch->id);
-        $members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')
-                       ->where('branch_id', Auth::user()->branch->id)
-                       ->orderBy('id', 'desc')
-                       ->get();
-        return view('dashboard.adminsandothers.bulkpayment')
-                            ->withBranch($branch)
-                            ->withMembers($members);
-    }
-
-    public function getBulkPaymentPageFromBranch($branch_id) 
-    {
-        $branch = Branch::find($branch_id);
-        $members = User::where('activation_status', 1)
-                       ->where('role_type', '!=', 'admin')
-                       ->where('branch_id', $branch_id)
-                       ->orderBy('id', 'desc')
-                       ->get();
-        return view('dashboard.adminsandothers.bulkpayment')
-                            ->withBranch($branch)
-                            ->withMembers($members);
     }
 
     public function searchMemberForBulkPaymentAPI(Request $request)
