@@ -376,7 +376,7 @@ class IndexController extends Controller
             $temppayment = new Temppayment;
             $temppayment->member_id = $application->id; // IN CASE OF REGISTRATION, THIS WILL BE APPLICANT'S ID
             $temppayment->trxid = $trxid;
-            $temppayment->amount = $request->amountonline;
+            $temppayment->amount = $request->amountonline + ($request->amountonline * 0.0170);
             $temppayment->payment_type = 3; // 1 == single, 2 == bulk, 3 == registration
             $temppayment->save();
         }
