@@ -69,6 +69,10 @@
             <div class="youtibecontainer">
                 <iframe class="youtubeiframe" width="560" height="315" src="https://www.youtube.com/embed/hpiRlo6Zxj4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div><br/><br/><br/><br/>
+            <h1>সিভিসিএস অনলাইন প্লাটফর্মে পেমেন্ট গেটওয়ের মাধ্যমে 'অনলাইন পরিশোধ' করবেন যেভাবে</h1>
+            <div class="youtibecontainer">
+                <iframe class="youtubeiframe" width="560" height="315" src="https://www.youtube.com/embed/BRPgv1D14DQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div><br/><br/><br/><br/>
     	</div>
     </div>
 @stop
