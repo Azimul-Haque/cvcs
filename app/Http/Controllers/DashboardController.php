@@ -2479,14 +2479,14 @@ class DashboardController extends Controller
         $temppayment = new Temppayment;
         $temppayment->member_id = $member->member_id; // IN CASE OF SINGLE, THIS WILL BE THE MEMBER'S MEMBER_ID
         $temppayment->trxid = $trxid;
-        $temppayment->amount = $request->amount;
+        $temppayment->amount = $request->amount + ($request->amount * 0.0170);
         $temppayment->payment_type = 1; // 1 == single, 2 == bulk, 3 == registration
         $temppayment->save();
 
         return view('dashboard.profile.nextpaymentpage')
                     ->withTrxid($trxid)
                     ->withMember($member)
-                    ->withAmount($request->amount);
+                    ->withAmount($temppayment->amount);
     }
 
     public function paymentSuccessOrFailed(Request $request)
@@ -2510,7 +2510,7 @@ class DashboardController extends Controller
             $payment = new Payment;
             $payment->member_id = $member->member_id;
             $payment->payer_id = $member->member_id;
-            $payment->amount = $amount_paid;
+            $payment->amount = round($amount_paid - ($amount_paid * 0.0167158308751));
             $payment->bank = 'aamarPay Payment Gateway';
             $payment->branch = 'N/A';
             $payment->pay_slip = '00';
@@ -2615,7 +2615,7 @@ class DashboardController extends Controller
                     $payment = new Payment;
                     $payment->member_id = $member->member_id;
                     $payment->payer_id = $member->member_id;
-                    $payment->amount = $temppayment->amount;
+                    $payment->amount = round($temppayment->amount - ($temppayment->amount * 0.0167158308751));
                     $payment->bank = 'aamarPay Payment Gateway';
                     $payment->branch = 'N/A';
                     $payment->pay_slip = '00';
