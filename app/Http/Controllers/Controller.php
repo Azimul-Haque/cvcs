@@ -102,7 +102,11 @@ class Controller extends BaseController
       } catch (\Exception $e) {
 
       }
-      $notifgbsmsbalance = -1;
+      // ADHOC
+      // ADHOC
+      $notifgbsmsbalance = 10000; // -1 hobe
+      // ADHOC
+      // ADHOC
       if($actualgbbalance > 0) {
         $notifgbsmsbalance = $actualgbbalance;
       }
