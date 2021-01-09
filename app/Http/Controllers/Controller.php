@@ -80,7 +80,7 @@ class Controller extends BaseController
       }
       // ADHOC
       // ADHOC
-      $notifsmsbalance = 6000; // -1 hobe
+      $notifsmsbalance = 1200; // -1 hobe
       // ADHOC
       // ADHOC
       if($actualbalance > 0) {
