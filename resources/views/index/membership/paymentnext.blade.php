@@ -17,7 +17,7 @@
           </h2>
           <center>
             @if($member->payment_status == 'Unpaid')
-              <h3 class="margin-two">অনুগ্রহ করে <b><u>৳{{ ($member->application_payment_amount + ($member->application_payment_amount * 0.0170)) }}</u></b> পেমেন্ট গেটওয়ের মাধ্যমে পরিশোধ করুন</h3>
+              <h3 class="margin-two">অনুগ্রহ করে <b><u>৳{{ ($member->application_payment_amount + (ceil($member->application_payment_amount * 0.0170))) }}</u></b> পেমেন্ট গেটওয়ের মাধ্যমে পরিশোধ করুন</h3>
               <h4>
                 CVCS Trx_ID: <span style="color: #008D4C;"><b>{{ $member->trxid }}</b></span>
                 {{-- <span class="blinking_trx_id_text">(পেমেন্টজনিত জটিলতা এড়াতে নম্বরটি সংরক্ষণ করুন)</span> --}}
@@ -38,8 +38,8 @@
 
                       'desc' => 'Registration Fee',
                       'opt_a' => $member->id,
-                      'opt_b' => ($member->application_payment_amount + ($member->application_payment_amount * 0.0170))
-                  ], ($member->application_payment_amount + ($member->application_payment_amount * 0.0170)), '<i class="fa fa-money"></i> Pay Through AamarPay', 'btn btn-success') !!}
+                      'opt_b' => ($member->application_payment_amount + (ceil($member->application_payment_amount * 0.0170)))
+                  ], ($member->application_payment_amount + (ceil($member->application_payment_amount * 0.0170))), '<i class="fa fa-money"></i> Pay Through AamarPay', 'btn btn-success') !!}
               </div>
             @else
               <h4>আপনার পেমেন্ট সম্পন্ন হয়েছে!</h4>
