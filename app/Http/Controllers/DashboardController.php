@@ -2479,7 +2479,7 @@ class DashboardController extends Controller
         $temppayment = new Temppayment;
         $temppayment->member_id = $member->member_id; // IN CASE OF SINGLE, THIS WILL BE THE MEMBER'S MEMBER_ID
         $temppayment->trxid = $trxid;
-        $temppayment->amount = $request->amount + ($request->amount * 0.0170);
+        $temppayment->amount = $request->amount + (ceil($request->amount * 0.0170));
         $temppayment->payment_type = 1; // 1 == single, 2 == bulk, 3 == registration
         $temppayment->save();
 
@@ -3176,7 +3176,7 @@ class DashboardController extends Controller
             $temppayment = new Temppayment;
             $temppayment->member_id = Auth::user()->member_id; // IN CASE OF BULK, THIS WILL BE PAYER'S MEMBER_ID
             $temppayment->trxid = $trxid;
-            $temppayment->amount = $request->amountonline + ($request->amountonline * 0.0170);
+            $temppayment->amount = $request->amountonline + (ceil($request->amountonline * 0.0170));
             $temppayment->payment_type = 2; // 1 == single, 2 == bulk, 3 == registration
             $temppayment->bulkdata = $bulk_payment_member_ids;
             $temppayment->save();
