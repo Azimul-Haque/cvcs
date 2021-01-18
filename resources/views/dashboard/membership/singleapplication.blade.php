@@ -421,6 +421,8 @@
                           ফাইল পাওয়া যায়নি!
                       @endif
                     </button>
+                  @else
+                    এই পরিশোধটি পেমেন্ট গেটওয়ের মাধ্যমে দেওয়া হয়েছে।
                   @endif
                   <!-- Receipt Modal -->
                   <!-- Receipt Modal -->
