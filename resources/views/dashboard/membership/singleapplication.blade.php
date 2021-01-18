@@ -413,13 +413,15 @@
                 <td>{{ $application->application_payment_branch }}</td>
                 <td>{{ $application->application_payment_pay_slip }}</td>
                 <td>
-                  <button class="" data-toggle="modal" data-target="#membershipReceiptModal{{ $application->id }}" data-backdrop="static" title="দেখতে ক্লিক করুন">
-                    @if($application->application_payment_receipt != null)
-                        <img src="{{ asset('images/receipts/'.$application->application_payment_receipt)}}" alt="Receipt of membership payment {{ $application->name }}" class="img-responsive shadow" style="width: 100px; height: auto;" />
-                    @else
-                        ফাইল পাওয়া যায়নি!
-                    @endif
-                  </button>
+                  @if($application->payment_method != 1)
+                    <button class="" data-toggle="modal" data-target="#membershipReceiptModal{{ $application->id }}" data-backdrop="static" title="দেখতে ক্লিক করুন">
+                      @if($application->application_payment_receipt != null)
+                          <img src="{{ asset('images/receipts/'.$application->application_payment_receipt)}}" alt="Receipt of membership payment {{ $application->name }}" class="img-responsive shadow" style="width: 100px; height: auto;" />
+                      @else
+                          ফাইল পাওয়া যায়নি!
+                      @endif
+                    </button>
+                  @endif
                   <!-- Receipt Modal -->
                   <!-- Receipt Modal -->
                   <div class="modal fade" id="membershipReceiptModal{{ $application->id }}" role="dialog">
