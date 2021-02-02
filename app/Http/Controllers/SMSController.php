@@ -210,8 +210,8 @@ class SMSController extends Controller
             // TEST CODE
 	        $smsdata = array_values($smsdata);
 
-            return view('dashboard.smstest')
-                    ->withSmsdata($smsdata);
+            // return view('dashboard.smstest')
+            //         ->withSmsdata($smsdata);
 
 	        $smsjsondata = json_encode($smsdata);
         	// echo $smsjsondata;
