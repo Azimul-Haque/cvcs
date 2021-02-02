@@ -27,7 +27,7 @@
         @foreach($smsdata as $sms)
         <tr>
           <td>{{ $sms['to'] }}</td>
-          <td>{{ rawurldecode($sms['message']) }}</td>
+          <td>{{ rawurldecode($sms['message']) . '</br>' . $sms['joining_date'] }}</td>
         </tr>
         @endforeach
       </tbody>
