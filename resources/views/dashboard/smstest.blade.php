@@ -16,6 +16,7 @@
 @stop
 
 @section('content')
+    {{ $count($smsdata) }}
     <table class="table table-bordered">
       <thead>
         <tr>
