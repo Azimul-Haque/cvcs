@@ -216,10 +216,15 @@ class SMSController extends Controller
 	        $smsjsondata = json_encode($smsdata);
         	// echo $smsjsondata;
             // dd($smsjsondata);
-            if((count($smsdata) * 2) > (int) $request->hiddengbbalance) {
-                Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি! রিচার্জ করুন।');
-                return redirect()->route('dashboard.smsmodule');
-            }
+            
+            // APATOTO TULE DEOA HOILO
+            // APATOTO TULE DEOA HOILO
+            // APATOTO TULE DEOA HOILO
+            // APATOTO TULE DEOA HOILO
+            // if((count($smsdata) * 2) > (int) $request->hiddengbbalance) {
+            //     Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি! রিচার্জ করুন।');
+            //     return redirect()->route('dashboard.smsmodule');
+            // }
 
 	        $url = config('sms.gw_url');
 
