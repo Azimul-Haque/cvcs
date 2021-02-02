@@ -172,7 +172,7 @@ class SMSController extends Controller
                         // 'member_id'=>"$member->member_id",
 	            	    'to'=>"$mobile_number",
                         'message'=>"$encodedtext", // $encodedtext
-                        'joining_date'=>"$member->joining_date",
+                        // 'joining_date'=>"$member->joining_date",
 	            	    // 'due'=>"$member->totalpendingmonthly",
 	            	);
 	            } else {
