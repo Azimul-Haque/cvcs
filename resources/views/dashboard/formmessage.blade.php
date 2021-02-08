@@ -59,7 +59,7 @@
               <!-- Archive Message Modal -->
               <!-- Archive Message Modal -->
 
-              <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteFormMessageModal{{ $message->id }}" data-backdrop="static" title="মেসেজ ডিলেট করুন" disabled=""><i class="fa fa-trash-o"></i></button>
+              <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteFormMessageModal{{ $message->id }}" data-backdrop="static" title="মেসেজ ডিলেট করুন" disabled><i class="fa fa-trash-o"></i></button>
               <!-- Delete Message Modal -->
               <!-- Delete Message Modal -->
               <div class="modal fade" id="deleteFormMessageModal{{ $message->id }}" role="dialog">
