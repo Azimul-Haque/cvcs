@@ -2595,8 +2595,8 @@ class DashboardController extends Controller
         {
             $store_id = config('aamarpay.store_id');
             $signature_key = config('aamarpay.signature_key');
-            $api = "https://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=CVCS1613278705VDXQ6&store_id=cvcsbd&signature_key=4cde6ff3e7816ac461447af66baca194&type=json";
-            // $api = "http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=" . $temppayment->trxid . "&store_id=$store_id&signature_key=$signature_key&type=json";
+            // $api = "https://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=CVCS1613278705VDXQ6&store_id=cvcsbd&signature_key=4cde6ff3e7816ac461447af66baca194&type=json";
+            $api = 'http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=' . $temppayment->trxid . '&store_id=$store_id&signature_key=$signature_key&type=json';
             // http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=TGA2020D00465350&store_id=sererl&signature_key=3c831409a577666bd9c49b6a46473acc&type=json
             $reply_json = $this->curlAamarpay($api);
             $decode_reply = json_decode($reply_json, true);
