@@ -2606,6 +2606,7 @@ class DashboardController extends Controller
             } else {
                 $pay_status = '';
             }
+
             if($pay_status == 'Successful')
             {
                 if($temppayment->payment_type == 1) {
