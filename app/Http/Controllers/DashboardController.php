@@ -2600,13 +2600,13 @@ class DashboardController extends Controller
             // http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=TGA2020D00465350&store_id=sererl&signature_key=3c831409a577666bd9c49b6a46473acc&type=json
             $reply_json = $this->curlAamarpay($api);
             $decode_reply = json_decode($reply_json, true);
-            dd($reply_json);
+            // dd($reply_json);
             if(!empty($decode_reply['pay_status']) || isset($decode_reply['pay_status'])) {
                 $pay_status = $decode_reply['pay_status'];
             } else {
                 $pay_status = '';
             }
-            
+            dd($pay_status);
             if($pay_status == 'Successful')
             {
                 if($temppayment->payment_type == 1) {
