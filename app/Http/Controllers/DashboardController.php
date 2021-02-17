@@ -2803,6 +2803,7 @@ class DashboardController extends Controller
             } else {
                 // DELETE PORE KORANO HOBE, AAGE CHECK KORTE THAKUK...
                 // $temppayment->delete();
+                echo 'error';
             }
         }
         
