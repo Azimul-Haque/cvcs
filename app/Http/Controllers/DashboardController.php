@@ -2606,7 +2606,7 @@ class DashboardController extends Controller
             if(!empty($decode_reply['pay_status']) || isset($decode_reply['pay_status'])) {
                 $pay_status = $decode_reply['pay_status'];
             } else {
-                // $pay_status = '';
+                $pay_status = '';
             }
             if($pay_status == 'Successful')
             {
