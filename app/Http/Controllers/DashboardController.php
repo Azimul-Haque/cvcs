@@ -2800,11 +2800,11 @@ class DashboardController extends Controller
 
                 // Session::flash('info', 'Deleted!');
                 // return redirect(Route('dashboard.memberpaymentselfonline'));
-                echo 'success' . '<br/>';
+                // echo 'success' . '<br/>';
             } else {
                 // DELETE PORE KORANO HOBE, AAGE CHECK KORTE THAKUK...
                 // $temppayment->delete();
-                echo $decode_reply['store_id'] . '<br/>';
+                // echo $decode_reply['store_id'] . '<br/>';
                 if($decode_reply['store_id'] == 'cvcsbd') {
                     $temppayment->delete();
                 }
