@@ -2804,7 +2804,7 @@ class DashboardController extends Controller
             } else {
                 // DELETE PORE KORANO HOBE, AAGE CHECK KORTE THAKUK...
                 $temppayment->delete();
-                echo $pay_status . '<br/>';
+                echo $decode_reply['store_id'] . '<br/>';
             }
         }
         
