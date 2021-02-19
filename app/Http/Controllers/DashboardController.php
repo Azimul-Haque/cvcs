@@ -2621,10 +2621,10 @@ class DashboardController extends Controller
                                            ->where('member_id', $member->member_id)
                                            ->where('amount', round($temppayment->amount - ($temppayment->amount * 0.0167158308751)))
                                            ->first();
-                    dd($checkpayment);
+                    // dd($checkpayment);
 
                     if(!empty($checkpayment) || ($checkpayment != null)) {
-
+                        dd($checkpayment);
                     } else {
                         $payment = new Payment;
                         $payment->member_id = $member->member_id;
