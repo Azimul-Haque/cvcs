@@ -2786,7 +2786,6 @@ class DashboardController extends Controller
                     $member->payment_status = 'Paid';
                     $member->save();
 
-
                     // send sms
                     $mobile_number = 0;
                     if(strlen($member->mobile) == 11) {
