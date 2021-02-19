@@ -2598,7 +2598,7 @@ class DashboardController extends Controller
             $store_id = config('aamarpay.store_id');
             $signature_key = config('aamarpay.signature_key');
             $api = "https://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=" . $temppayment->trxid . "&store_id=" . $store_id . "&signature_key=" . $signature_key . "&type=json";
-            // $api = "https://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=CVCS1613278705VDXQ6&store_id=cvcsbd&signature_key=4cde6ff3e7816ac461447af66baca194&type=json";
+            $api = "https://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=CVCS1613278705VDXQ6&store_id=cvcsbd&signature_key=4cde6ff3e7816ac461447af66baca194&type=json";
             // http://secure.aamarpay.com/api/v1/trxcheck/request.php?request_id=TGA2020D00465350&store_id=sererl&signature_key=3c831409a577666bd9c49b6a46473acc&type=json
             $reply_json = $this->curlAamarpay($api);
             $decode_reply = json_decode($reply_json, true);
@@ -2614,6 +2614,15 @@ class DashboardController extends Controller
                     // SINGLE PAYMENT CODE
                     // INSERT NEW DATA
                     $member = User::where('member_id', $temppayment->member_id)->first();
+
+                    // check payment
+                    // check payment
+                    $checkpayment = Payment::where('payment_key', $decode_reply['mer_txnid'])
+                                           ->where('member_id', $member->member_id)
+                                           ->where('amount', round($temppayment->amount - ($temppayment->amount * 0.0167158308751)))
+                                           ->first();
+                    dd($checkpayment);
+
                     $payment = new Payment;
                     $payment->member_id = $member->member_id;
                     $payment->payer_id = $member->member_id;
