@@ -2621,7 +2621,6 @@ class DashboardController extends Controller
                                            ->where('member_id', $member->member_id)
                                            ->where('amount', round($temppayment->amount - ($temppayment->amount * 0.0167158308751)))
                                            ->first();
-                    dd($checkpayment);
 
                     if(!empty($checkpayment) || ($checkpayment != null)) {
                         // dd($checkpayment);
@@ -2700,47 +2699,58 @@ class DashboardController extends Controller
 
                     foreach ($payers as $payer)
                     {
-                        $payerdata = (explode(":",$payer)); 
+                        $payerdata = (explode(":",$payer));
                         // [0] = memebr_id, [1] = mobile, [2] = amount
                         // [0] = memebr_id, [1] = mobile, [2] = amount
 
-                        $payment = new Payment;
-                        $payment->member_id = $payerdata[0];
-                        $payment->payer_id = $temppayment->member_id; // payers member_id
-                        $payment->amount = $payerdata[2];
-                        $payment->bank = 'aamarPay Payment Gateway';
-                        $payment->branch = 'N/A';
-                        $payment->pay_slip = '00';
-                        $payment->payment_status = 1; // approved
-                        $payment->payment_category = 1; // monthly payment
-                        $payment->payment_type = 2; // bulk payment
-                        $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-                        $payment->card_type = $decode_reply['payment_type']; // card_type
-                        $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
-                        $payment->save();
+                        // check payment
+                        // check payment
+                        $checkpayment = Payment::where('payment_key', $decode_reply['mer_txnid'])
+                                               ->where('member_id', $payerdata[0])
+                                               ->where('amount', $payerdata[2])
+                                               ->first();
+                                               
+                        if(!empty($checkpayment) || ($checkpayment != null)) {
+                        // dd($checkpayment);
+                        } else {
+                          $payment = new Payment;
+                          $payment->member_id = $payerdata[0];
+                          $payment->payer_id = $temppayment->member_id; // payers member_id
+                          $payment->amount = $payerdata[2];
+                          $payment->bank = 'aamarPay Payment Gateway';
+                          $payment->branch = 'N/A';
+                          $payment->pay_slip = '00';
+                          $payment->payment_status = 1; // approved
+                          $payment->payment_category = 1; // monthly payment
+                          $payment->payment_type = 2; // bulk payment
+                          $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+                          $payment->card_type = $decode_reply['payment_type']; // card_type
+                          $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
+                          $payment->save();
 
 
-                        // input member SMS into array
-                        // input member SMS into array
-                        $member = User::where('member_id', $payerdata[0])->first();
-                        $mobile_number = $payerdata[1];
+                          // input member SMS into array
+                          // input member SMS into array
+                          $member = User::where('member_id', $payerdata[0])->first();
+                          $mobile_number = $payerdata[1];
 
-                        $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-                        $smsdata[$payerdata[0]] = array(
-                            'username'=>config('sms.username'),
-                            'password'=>config('sms.password'),
-                            'number'=>"$mobile_number",
-                            'message'=>"$text",
-                        );
-                        $multiCurl[$payerdata[0]] = curl_init(); // Initialize cURL
-                        curl_setopt($multiCurl[$payerdata[0]], CURLOPT_URL, $url);
-                        curl_setopt($multiCurl[$payerdata[0]], CURLOPT_HEADER, 0);
-                        curl_setopt($multiCurl[$payerdata[0]], CURLOPT_POSTFIELDS, http_build_query($smsdata[$payerdata[0]]));
-                        curl_setopt($multiCurl[$payerdata[0]], CURLOPT_RETURNTRANSFER, 1);
-                        curl_setopt($multiCurl[$payerdata[0]], CURLOPT_SSL_VERIFYPEER, false); // this is important
-                        curl_multi_add_handle($mh, $multiCurl[$payerdata[0]]);
-                        // input member SMS into array
-                        // input member SMS into array
+                          $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                          $smsdata[$payerdata[0]] = array(
+                              'username'=>config('sms.username'),
+                              'password'=>config('sms.password'),
+                              'number'=>"$mobile_number",
+                              'message'=>"$text",
+                          );
+                          $multiCurl[$payerdata[0]] = curl_init(); // Initialize cURL
+                          curl_setopt($multiCurl[$payerdata[0]], CURLOPT_URL, $url);
+                          curl_setopt($multiCurl[$payerdata[0]], CURLOPT_HEADER, 0);
+                          curl_setopt($multiCurl[$payerdata[0]], CURLOPT_POSTFIELDS, http_build_query($smsdata[$payerdata[0]]));
+                          curl_setopt($multiCurl[$payerdata[0]], CURLOPT_RETURNTRANSFER, 1);
+                          curl_setopt($multiCurl[$payerdata[0]], CURLOPT_SSL_VERIFYPEER, false); // this is important
+                          curl_multi_add_handle($mh, $multiCurl[$payerdata[0]]);
+                          // input member SMS into array
+                          // input member SMS into array  
+                        }
                     }
 
                     // partial SMS data
