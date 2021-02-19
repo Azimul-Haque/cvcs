@@ -19,6 +19,7 @@ class CreateTemppaymentsTable extends Migration
             $table->integer('amount');
             $table->integer('payment_type');
             $table->string('bulkdata')->nullable();
+            $table->integer('tried');
             $table->timestamps();
         });
     }
