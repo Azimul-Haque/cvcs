@@ -2624,8 +2624,9 @@ class DashboardController extends Controller
                     // dd($checkpayment);
 
                     if(!empty($checkpayment) || ($checkpayment != null)) {
-                        dd($checkpayment);
+                        // dd($checkpayment);
                     } else {
+                        dd($checkpayment);
                         $payment = new Payment;
                         $payment->member_id = $member->member_id;
                         $payment->payer_id = $member->member_id;
@@ -2675,7 +2676,7 @@ class DashboardController extends Controller
                         // DELETE TEMPPAYMENT
                         $temppayment->delete();
                     }
-                    
+
                     // SINGLE PAYMENT CODE
                 } elseif ($temppayment->payment_type == 2) {
                     // BULK PAYMENT CODE
