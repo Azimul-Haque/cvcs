@@ -2626,7 +2626,6 @@ class DashboardController extends Controller
                     if(!empty($checkpayment) || ($checkpayment != null)) {
                         // dd($checkpayment);
                     } else {
-                        dd($checkpayment);
                         $payment = new Payment;
                         $payment->member_id = $member->member_id;
                         $payment->payer_id = $member->member_id;
