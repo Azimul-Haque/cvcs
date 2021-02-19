@@ -2709,7 +2709,7 @@ class DashboardController extends Controller
                                                ->where('member_id', $payerdata[0])
                                                ->where('amount', $payerdata[2])
                                                ->first();
-                        dd($checkpayment);
+                        // dd($checkpayment);
                                             
                         if(!empty($checkpayment) || ($checkpayment != null)) {
                         // dd($checkpayment);
