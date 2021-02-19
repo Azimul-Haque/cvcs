@@ -2830,8 +2830,13 @@ class DashboardController extends Controller
                 // DELETE PORE KORANO HOBE, AAGE CHECK KORTE THAKUK...
                 // $temppayment->delete();
                 // echo $decode_reply['store_id'] . '<br/>';
-                if($decode_reply['store_id'] == 'cvcsbd') {
+
+                // CHECK FROM AAMARPAY AND INCERENT UTO TWICE
+                if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 1) {
                     $temppayment->delete();
+                } else {
+                    $temppayment->tried++;
+                    $temppayment->save();
                 }
             }
         }
