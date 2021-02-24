@@ -3329,6 +3329,16 @@ class DashboardController extends Controller
                     ->withPayments($payments);
     }
 
+    public function getMembersApprovedPaymentsAamarpay() 
+    {
+        $totalpending = DB::table('payments')
+                           ->select(DB::raw('SUM(amount) as totalamount'))
+                           ->where('payment_status', '=', 1)
+                           ->where('is_archieved', '=', 0)
+                           ->where('bank', 'aamarPay Payment Gateway')
+                           ->first();
+    }
+
     public function getMembersDisputedPayments() 
     {
         $payments = Payment::where('payment_status', 2) // 2 Means Disputed
