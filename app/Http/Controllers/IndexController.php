@@ -472,7 +472,6 @@ class IndexController extends Controller
             $member = User::where('id', $member_id)->first();
             $member->payment_status = 'Paid';
             $member->save();
-            
 
             // DELETE TEMPPAYMENT
             // DELETE TEMPPAYMENT
