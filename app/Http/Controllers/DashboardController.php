@@ -3340,6 +3340,7 @@ class DashboardController extends Controller
         $totalmembershipaamarpay = DB::table('users')
                                    ->select(DB::raw('SUM(application_payment_amount) as totalamount'))
                                    ->where('payment_status', 'Paid')
+                                   ->where('activation_status', 0)
                                    ->where('application_payment_bank', 'aamarPay Payment Gateway')
                                    ->first();
 
