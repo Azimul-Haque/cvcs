@@ -3184,7 +3184,6 @@ class DashboardController extends Controller
             // close
             curl_multi_close($mh);
             
-            
             Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
             return redirect()->route('dashboard.memberpayment');
             // OFFLINE TRANSACTION
