@@ -3331,13 +3331,19 @@ class DashboardController extends Controller
 
     public function getMembersApprovedPaymentsAamarpay() 
     {
-        $totalaamarpay = DB::table('payments')
-                           ->select(DB::raw('SUM(amount) as totalamount'))
-                           ->where('payment_status', '=', 1)
-                           ->where('is_archieved', '=', 0)
-                           ->where('bank', 'aamarPay Payment Gateway')
-                           ->first();
-        dd($totalaamarpay->totalamount);
+        $totalpaymentsaamarpay = DB::table('payments')
+                                   ->select(DB::raw('SUM(amount) as totalamount'))
+                                   ->where('payment_status', '=', 1)
+                                   ->where('is_archieved', '=', 0)
+                                   ->where('bank', 'aamarPay Payment Gateway')
+                                   ->first();
+        $totalmembershipaamarpay = DB::table('users')
+                                   ->select(DB::raw('SUM(application_payment_amount) as totalamount'))
+                                   ->where('payment_status', 'Paid')
+                                   ->where('application_payment_bank', 'aamarPay Payment Gateway')
+                                   ->first();
+
+        dd($totalpaymentsaamarpay->totalamount + $totalmembershipaamarpay->totalamount);
     }
 
     public function getMembersDisputedPayments() 
