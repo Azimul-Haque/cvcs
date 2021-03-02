@@ -245,7 +245,7 @@ class SMSController extends Controller
 	        $smsresult = curl_exec($ch);
 
 	        $resultstr = substr($smsresult, 0, 6);
-	        dd($smsresult);
+	        // dd($smsresult);
 
 	        if($resultstr == '') {
 	            Session::flash('success', bangla(count($smsdata)) . ' জন সদস্যকে SMS সফলভাবে পাঠানো হয়েছে!');
