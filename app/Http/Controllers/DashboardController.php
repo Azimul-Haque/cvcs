@@ -2624,7 +2624,7 @@ class DashboardController extends Controller
 
                     if(!empty($checkpayment) || ($checkpayment != null)) {
                         // dd($checkpayment);
-                        if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 1) {
+                        if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
                             $temppayment->delete();
                         } else {
                             $temppayment->tried++;
@@ -2719,7 +2719,7 @@ class DashboardController extends Controller
                                             
                         if(!empty($checkpayment) || ($checkpayment != null)) {
                         // dd($checkpayment);
-                            if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 1) {
+                            if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
                                 $temppayment->delete();
                             } else {
                                 $temppayment->tried++;
@@ -2843,7 +2843,7 @@ class DashboardController extends Controller
                 // echo $decode_reply['store_id'] . '<br/>';
 
                 // CHECK FROM AAMARPAY AND INCERENT UTO TWICE
-                if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 1) {
+                if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
                     $temppayment->delete();
                 } else {
                     $temppayment->tried++;
