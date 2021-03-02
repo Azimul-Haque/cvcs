@@ -2624,6 +2624,12 @@ class DashboardController extends Controller
 
                     if(!empty($checkpayment) || ($checkpayment != null)) {
                         // dd($checkpayment);
+                        if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 1) {
+                            $temppayment->delete();
+                        } else {
+                            $temppayment->tried++;
+                            $temppayment->save();
+                        }
                     } else {
                         $payment = new Payment;
                         $payment->member_id = $member->member_id;
@@ -2713,6 +2719,12 @@ class DashboardController extends Controller
                                             
                         if(!empty($checkpayment) || ($checkpayment != null)) {
                         // dd($checkpayment);
+                            if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 1) {
+                                $temppayment->delete();
+                            } else {
+                                $temppayment->tried++;
+                                $temppayment->save();
+                            }
                         } else {
                           $payment = new Payment;
                           $payment->member_id = $payerdata[0];
