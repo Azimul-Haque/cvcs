@@ -2863,6 +2863,7 @@ class DashboardController extends Controller
                          ->where('is_archieved', 0)
                          ->first();
                          
+        dd($totalamount->totalamount);                
         return $totalamount->totalamount;
     }
 
