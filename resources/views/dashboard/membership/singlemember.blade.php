@@ -4,6 +4,7 @@
 
 @section('css')
   {!!Html::style('css/parsley.css')!!}
+  <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 @stop
 
 @section('content_header')
