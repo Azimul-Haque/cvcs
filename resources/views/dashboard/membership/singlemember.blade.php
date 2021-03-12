@@ -529,8 +529,8 @@
                         <!-- See Memberwise Data Modal -->
                         <!-- See Memberwise Data Modal -->
                       @endif
-                      @if($payment->payment_method != 1 && count($payment->paymentreceipts) > 0)
-                      
+                      @if(($payment->payment_method != 1) && (count($payment->paymentreceipts) > 0))
+                      <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal{{ $payment->id }}" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-paperclip"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
                       <!-- See Receipts Modal -->
                       <!-- See Receipts Modal -->
                       <div class="modal fade" id="seeReceiptModal{{ $payment->id }}" role="dialog">
@@ -557,7 +557,7 @@
                       <!-- See Receipts Modal -->
                       <!-- See Receipts Modal -->
                       @endif
-                      
+
                       <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#downloadPDF{{ $payment->id }}" data-backdrop="static" title="রিপোর্ট ডাউনলোড করুন" id="downloadPDFButton{{ $payment->id }}"><i class="fa fa-download"></i></button>
                       <!-- Download PDF Modal -->
                       <!-- Download PDF Modal -->
