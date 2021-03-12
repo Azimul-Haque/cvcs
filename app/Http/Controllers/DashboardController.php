@@ -2854,6 +2854,16 @@ class DashboardController extends Controller
         
     }
 
+    public function paymentVerificationCheckTotal()
+    {
+        $totalamount = DB::table('payments')
+                         ->select(DB::raw('SUM(amount) as totalamount'))
+                         ->where('bank', 'aamarPay Payment Gatewa')
+                         ->where('payment_status', 1)
+                         ->where('is_archieved', 0)
+                         ->first();
+    }
+
     public function paymentCancelledPost(Request $request)
     {
         $member_id = $request->get('opt_a');
