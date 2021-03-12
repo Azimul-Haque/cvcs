@@ -250,7 +250,7 @@
           <li class="active"><a href="#personal_info_tab" data-toggle="tab" aria-expanded="false">ব্যক্তিগত তথ্য</a></li>
           <li class=""><a href="#mominee_tab" data-toggle="tab" aria-expanded="false">নমিনি সংক্রান্ত</a></li>
          
-          <li class="pull-right dropdown">
+          {{-- <li class="pull-right dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-gear"></i>
             </a>
             <ul class="dropdown-menu">
@@ -260,7 +260,7 @@
               <li role="presentation" class="divider"></li>
               <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
             </ul>
-          </li>
+          </li> --}}
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="personal_info_tab">
