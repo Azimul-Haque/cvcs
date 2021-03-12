@@ -76,7 +76,7 @@
           </td>
           <td>{{ date('F d, Y h:i A', strtotime($payment->created_at)) }}</td>
           <td>
-            @if($payment->payment_method != 1 && count($payment->paymentreceipts) > 0)
+            @if(($payment->payment_method != 1) & (count($payment->paymentreceipts) > 0))
               <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal{{ $payment->id }}" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-paperclip"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
               <!-- See Receipts Modal -->
               <!-- See Receipts Modal -->
