@@ -2858,11 +2858,11 @@ class DashboardController extends Controller
     {
         $totalamount = DB::table('payments')
                          ->select(DB::raw('SUM(amount) as totalamount'))
-                         ->where('bank', 'aamarPay Payment Gatewa')
+                         ->where('bank', 'aamarPay Payment Gateway')
                          ->where('payment_status', 1)
                          ->where('is_archieved', 0)
                          ->first();
-                         
+
         dd($totalamount->totalamount);                
         return $totalamount->totalamount;
     }
