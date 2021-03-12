@@ -58,7 +58,7 @@
         </td>
       </tr>
       <tr style="">
-        <td colspan="2"><b>জমাদানকারী</b> {{ $payment->payee->name_bangla }}</td>
+        <td colspan="2"><b>জমাদানকারীঃ</b> {{ $payment->payee->name_bangla }}</td>
       </tr>
     </table>
   </div>
