@@ -2862,6 +2862,7 @@ class DashboardController extends Controller
                          ->where('payment_status', 1)
                          ->where('is_archieved', 0)
                          ->first();
+        return $totalamount->totalamount;
     }
 
     public function paymentCancelledPost(Request $request)
