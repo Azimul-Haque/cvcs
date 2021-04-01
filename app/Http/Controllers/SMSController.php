@@ -201,11 +201,11 @@ class SMSController extends Controller
 
             // TEST CODE
             // TEST CODE
-            // ini_set('max_execution_time', '300');
-            // ini_set("pcre.backtrack_limit", "5000000");
-            // $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => array_slice($smsdata, 0, 500)]);
-            // $fileName = 'Reminder_SMS_List.pdf';
-            // return $pdf->stream($fileName);
+            ini_set('max_execution_time', '300');
+            ini_set("pcre.backtrack_limit", "5000000");
+            $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => array_slice($smsdata, 0, 500)]);
+            $fileName = 'Reminder_SMS_List.pdf';
+            return $pdf->stream($fileName);
             // TEST CODE
             // TEST CODE
 	        $smsdata = array_values($smsdata);
