@@ -165,7 +165,8 @@ class SMSController extends Controller
                     }
 	            	
 
-	            	$encodedtext = rawurlencode($text);
+                    $encodedtext = rawurlencode($text);
+	            	$encodedtext = $text;
 	            	$smsdata[$i] = array(
                         'name'=>"$member->name",
                         'name_bangla'=>"$member->name_bangla",
