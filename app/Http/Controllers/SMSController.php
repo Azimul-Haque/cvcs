@@ -167,12 +167,12 @@ class SMSController extends Controller
 
 	            	$encodedtext = rawurlencode($text);
 	            	$smsdata[$i] = array(
-                        // 'name'=>"$member->name",
-                        // 'name_bangla'=>"$member->name_bangla",
-                        // 'member_id'=>"$member->member_id",
+                        'name'=>"$member->name",
+                        'name_bangla'=>"$member->name_bangla",
+                        'member_id'=>"$member->member_id",
 	            	    'to'=>"$mobile_number",
                         'message'=>"$encodedtext", // $encodedtext
-                        // 'joining_date'=>"$member->joining_date",
+                        'joining_date'=>"$member->joining_date",
 	            	    'due'=>"$member->totalpendingmonthly",
 	            	);
 	            } else {
@@ -188,12 +188,12 @@ class SMSController extends Controller
 
                     $encodedtext = rawurlencode($text);
                     $smsdata[$i] = array(
-                        // 'name'=>"$member->name",
-                        // 'name_bangla'=>"$member->name_bangla",
-                        // 'member_id'=>"$member->member_id",
+                        'name'=>"$member->name",
+                        'name_bangla'=>"$member->name_bangla",
+                        'member_id'=>"$member->member_id",
                         'to'=>"$mobile_number",
                         'message'=>"$encodedtext", // $encodedtext
-                        // 'joining_date'=>"$member->joining_date",
+                        'joining_date'=>"$member->joining_date",
                         'due'=>"$member->totalpendingmonthly",
                     );
                 }
