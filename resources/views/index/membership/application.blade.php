@@ -338,8 +338,8 @@
                                     <div class="row">
                                       <div class="col-md-6">
                                         <div class="form-group">
-                                          {!! Form::label('amountoffline', 'পরিমাণ *') !!}
-                                          {!! Form::text('amountoffline', null, array('class' => '', 'id' => 'amountoffline', 'placeholder' => 'পরিমাণ লিখুন (২০০০/- এর বেশি)')) !!}
+                                          {!! Form::label('amountoffline', 'পরিমাণ * (ইংরেজি সংখ্যায় লিখুন)') !!}
+                                          {!! Form::text('amountoffline', null, array('class' => '', 'id' => 'amountoffline', 'placeholder' => 'পরিমাণ লিখুন (২০০০/- এর বেশি) [ইংরেজিতে লিখিন]')) !!}
                                         </div>
                                       </div>
                                       <div class="col-md-6">
