@@ -252,8 +252,8 @@ class IndexController extends Controller
             'nominee_two_percentage'       => 'sometimes|max:255',
             'nominee_two_image'            => 'sometimes|image|max:250',
 
-            'amountoffline'                => 'sometimes|max:255',
-            'amountonline'                 => 'sometimes|max:255',
+            'amountoffline'                => 'sometimes|integer',
+            'amountonline'                 => 'sometimes|integer',
             'application_payment_bank'     => 'sometimes|max:255',
             'application_payment_branch'   => 'sometimes|max:255',
             'application_payment_pay_slip' => 'sometimes|max:255',
