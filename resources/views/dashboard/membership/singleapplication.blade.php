@@ -39,7 +39,7 @@
           </div>
           <div class="modal-footer">
             {!! Form::model($application, ['route' => ['dashboard.activatemember', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
-                {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-success')) !!}
+                <button type="submit" class="btn btn-success" id="submitactivate">দাখিল করুন</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
             {!! Form::close() !!}
           </div>
@@ -462,5 +462,10 @@
 @stop
 
 @section('js')
-
+  <script type="text/javascript">
+    $('#submitactivate').click(function() {
+      $('#submitactivate').attr('disabled', true);
+      $('#submitactivate').parents('form').submit();
+    });
+  </script>
 @stop
