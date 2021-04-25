@@ -41,6 +41,7 @@ class EasyPeriodController extends Controller
     	$message->name = $request->name;
     	$message->email = $request->email;
     	$message->message = $request->message;
+    	$message->location = $request->location;
     	$message->save();
 
     	return response()->json([
