@@ -22,7 +22,7 @@ class EasyPeriodController extends Controller
     {
         parent::__construct();
         
-        // $this->middleware('auth')->except('storeMessage');
+        $this->middleware('auth')->except('storeMessageAPI');
     }
 
     public function index() {
