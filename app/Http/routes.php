@@ -298,7 +298,15 @@ Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsa
 // operation
 // operation
 Route::get('/dashboard/get5000', ['as'=>'dashboard.get5000','uses'=>'DashboardController@getAll5000']);
+Route::get('/dashboard/easyperiod', ['as'=>'dashboard.easyperiod','uses'=>'EasyPeriodController@index']);
 // Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
+
+// EasyPeriod Contact  Data
+// EasyPeriod Contact  Data
+Route::get('/dashboard/easyperiod', ['as'=>'dashboard.easyperiod.index','uses'=>'EasyPeriodController@index']);
+Route::get('/dashboard/easyperiod/store/message/api', ['as'=>'dashboard.storemessage','uses'=>'EasyPeriodController@storeMessageAPI']);
+Route::delete('/dashboard/easyperiod/message/{id}/delete', ['as'=>'dashboard.easyperiod.delmessage','uses'=>'EasyPeriodController@delMessage']);
+
 
 // operation
 // operation

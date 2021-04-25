@@ -14,6 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'payment/*',
         'application/payment/success',
-        'application/payment/cancel/*'
+        'application/payment/cancel/*',
+        'dashboard/easyperiod/store/message/api'
     ];
 }
