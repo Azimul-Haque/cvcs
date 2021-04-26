@@ -24,7 +24,7 @@ class EasyPeriodController extends Controller
     {
         parent::__construct();
         
-        $this->middleware('auth')->except('storeMessageAPI', 'storeUserImageAPI');
+        $this->middleware('auth')->except('storeMessageAPI', 'storeUserImageAPI', 'getUserImageAPI');
     }
 
     public function index() {
@@ -83,7 +83,7 @@ class EasyPeriodController extends Controller
 	        file_put_contents($location, $uploadedimage);
 	        $oldimage->image = $filename;
 	        $oldimage->save();
-	        
+
 	        return response()->json([
 	            'success' => true,
 	        ]);
@@ -102,5 +102,23 @@ class EasyPeriodController extends Controller
 	            'success' => true,
 	        ]);
     	}
+    }
+
+
+    
+    public function getUserImageAPI($uid)
+    {
+        $userdata = Easyperioduserimage::where('uid', $uid)->first();
+
+        if(!empty($userdata) || $userdata != null) {
+        	return response()->json([
+		        'success' => true,
+		        'image' => $userdata->image
+		    ]);
+        } else {
+        	return response()->json([
+		        'success' => false,
+		    ]);
+        }
     }
 }
