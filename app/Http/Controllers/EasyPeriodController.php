@@ -68,8 +68,7 @@ class EasyPeriodController extends Controller
     	    'image'           => 'sometimes'
     	));
 
-    	$userimage = new Easyperioduserimage;
-    	$userimage->uid = $request->uid;
+    	
 
     	$data = $request->all();
     	$uploadedimage = base64_decode($data['image']);
@@ -80,15 +79,23 @@ class EasyPeriodController extends Controller
 	        if(File::exists($image_path)) {
 	            File::delete($image_path);
 	        }
+	        $filename   = $request->uid . time() . '.jpg';
+	        $location   = public_path('/images/easyperiod/users/'. $filename);
+	        // Image::make($request->image)->save($location);
+	        file_put_contents($location, $uploadedimage);
+	        $oldimage->image = $filename;
+	        $oldimage->save();
+    	} else {
+    		$userimage = new Easyperioduserimage;
+    		$userimage->uid = $request->uid;
+
+    		$filename   = $request->uid . time() . '.jpg';
+	        $location   = public_path('/images/easyperiod/users/'. $filename);
+	        // Image::make($request->image)->save($location);
+	        file_put_contents($location, $uploadedimage);
+	        $userimage->image = $filename;
+	        $userimage->save();
     	}
-        $filename   = $request->uid . time() . '.jpg';
-        $location   = public_path('/images/easyperiod/users/'. $filename);
-        // Image::make($request->image)->save($location);
-        file_put_contents($location, $uploadedimage);
-        $userimage->image = $filename;
-
-
-    	$userimage->save();
 
     	return response()->json([
     	    'success' => true,
