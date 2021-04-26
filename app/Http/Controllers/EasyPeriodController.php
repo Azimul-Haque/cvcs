@@ -68,8 +68,6 @@ class EasyPeriodController extends Controller
     	    'image'           => 'sometimes'
     	));
 
-    	
-
     	$data = $request->all();
     	$uploadedimage = base64_decode($data['image']);
 
@@ -85,6 +83,10 @@ class EasyPeriodController extends Controller
 	        file_put_contents($location, $uploadedimage);
 	        $oldimage->image = $filename;
 	        $oldimage->save();
+	        
+	        return response()->json([
+	            'success' => true,
+	        ]);
     	} else {
     		$userimage = new Easyperioduserimage;
     		$userimage->uid = $request->uid;
@@ -95,11 +97,10 @@ class EasyPeriodController extends Controller
 	        file_put_contents($location, $uploadedimage);
 	        $userimage->image = $filename;
 	        $userimage->save();
-    	}
 
-    	return response()->json([
-    	    'success' => true,
-    	    'image' => $request->image,
-    	]);
+	        return response()->json([
+	            'success' => true,
+	        ]);
+    	}
     }
 }
