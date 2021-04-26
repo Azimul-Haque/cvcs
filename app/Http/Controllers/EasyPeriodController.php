@@ -75,7 +75,7 @@ class EasyPeriodController extends Controller
     	$uploadedimage = base64_decode($data['image']);
 
     	$oldimage = Easyperioduserimage::where('uid', $request->uid)->first();
-    	if(!empty($oldimage)) {
+    	if(!empty($oldimage) || $oldimage != null) {
     		$image_path = public_path('/images/easyperiod/users/'. $oldimage->image);
 	        if(File::exists($image_path)) {
 	            File::delete($image_path);
