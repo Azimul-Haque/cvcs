@@ -14,6 +14,7 @@ class CreateEasyperiodmessagesTable extends Migration
     {
         Schema::create('easyperiodmessages', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('uid');
             $table->string('email');
             $table->string('name');
             $table->string('message');

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Easyperiodmessage;
+use App\Easyperioduserimage;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -15,6 +16,7 @@ use Auth;
 use File;
 use Session, Config;
 use PDF;
+use Storage;
 
 class EasyPeriodController extends Controller
 {
@@ -22,7 +24,7 @@ class EasyPeriodController extends Controller
     {
         parent::__construct();
         
-        $this->middleware('auth')->except('storeMessageAPI');
+        $this->middleware('auth')->except('storeMessageAPI', 'storeUserImageAPI');
     }
 
     public function index() {
@@ -60,4 +62,37 @@ class EasyPeriodController extends Controller
         return redirect()->route('dashboard.easyperiod.index');
     }
 
+    public function storeUserImageAPI(Request $request) {
+    	$this->validate($request,array(
+    	    'uid'       	  => 'required|max:255',
+    	    'image'           => 'sometimes'
+    	));
+
+    	$userimage = new Easyperioduserimage;
+    	$userimage->uid = $request->uid;
+
+    	$data = $request->all();
+    	$uploadedimage = base64_decode($data['image']);
+
+    	$oldimage = Easyperioduserimage::where('uid', $request->uid)->first();
+    	if(!empty($oldimage)) {
+    		$image_path = public_path('/images/easyperiod/users/'. $oldimage->image);
+	        if(File::exists($image_path)) {
+	            File::delete($image_path);
+	        }
+    	}
+        $filename   = $request->uid . time() . '.jpg';
+        $location   = public_path('/images/easyperiod/users/'. $filename);
+        // Image::make($request->image)->save($location);
+        file_put_contents($location, $uploadedimage);
+        $userimage->image = $filename;
+
+
+    	$userimage->save();
+
+    	return response()->json([
+    	    'success' => true,
+    	    'image' => $request->image,
+    	]);
+    }
 }
