@@ -19,6 +19,7 @@ return array(
     'CreateDonationsTable' => $baseDir . '/database/migrations/2019_04_20_013848_create_donations_table.php',
     'CreateDonorsTable' => $baseDir . '/database/migrations/2019_04_07_145638_create_donors_table.php',
     'CreateEasyperiodmessagesTable' => $baseDir . '/database/migrations/2021_04_25_155510_create_easyperiodmessages_table.php',
+    'CreateEasyperioduserimagesTable' => $baseDir . '/database/migrations/2021_04_26_234443_create_easyperioduserimages_table.php',
     'CreateEventsTable' => $baseDir . '/database/migrations/2019_03_24_055417_create_events_table.php',
     'CreateFaqsTable' => $baseDir . '/database/migrations/2019_03_30_224539_create_faqs_table.php',
     'CreateFormmessagesTable' => $baseDir . '/database/migrations/2019_03_25_043604_create_formmessages_table.php',

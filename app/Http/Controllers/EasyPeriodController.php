@@ -32,12 +32,14 @@ class EasyPeriodController extends Controller
 
     public function storeMessageAPI(Request $request) {
     	$this->validate($request,array(
+    	    'uid'         => 'required|max:255',
     	    'name'        => 'required|max:255',
     	    'email'       => 'required|max:255',
     	    'message'     => 'required|max:255'
     	));
 
     	$message = new Easyperiodmessage;
+    	$message->uid = $request->uid;
     	$message->name = $request->name;
     	$message->email = $request->email;
     	$message->message = $request->message;
