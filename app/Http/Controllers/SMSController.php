@@ -52,10 +52,15 @@ class SMSController extends Controller
                        ->where('role_type', '!=', 'admin')                
                        ->get();
                        
-        if(($request->smsbalance) < ($members->count() * $request->smscount)) {
-            Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি! রিচার্জ করুন।');
-            return redirect()->route('dashboard.smsmodule');
-        }
+        // ADHOC
+        // ADHOC
+        // if(($request->smsbalance) < ($members->count() * $request->smscount)) {
+        //     Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি! রিচার্জ করুন।');
+        //     return redirect()->route('dashboard.smsmodule');
+        // }
+        // ADHOC
+        // ADHOC
+                      
         // send sms
         $numbersarray = [];
         foreach ($members as $member) {
@@ -74,7 +79,7 @@ class SMSController extends Controller
         
         $url = config('sms.url');
         $number = $mobile_number;
-        $text = $request->message . ' Customs and VAT Co-operative Society (CVCS).';
+        $text = $request->message; // . ' Customs and VAT Co-operative Society (CVCS).';
         $data= array(
             'username'=>config('sms.username'),
             'password'=>config('sms.password'),
@@ -256,7 +261,8 @@ class SMSController extends Controller
 	            Session::flash('info', 'দুঃখিত! SMS পাঠানো যায়নি!');
 	            // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
 	        } else {
-	            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+                // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+	            Session::flash('warning', 'কিছু কিছু নাম্বারে SMS পাঠানো যায়নি!');
 	        }
 	        return redirect()->route('dashboard.smsmodule');
         } else {
