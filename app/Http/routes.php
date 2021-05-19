@@ -298,7 +298,16 @@ Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsa
 // operation
 // operation
 Route::get('/dashboard/get5000', ['as'=>'dashboard.get5000','uses'=>'DashboardController@getAll5000']);
+
 Route::get('/dashboard/easyperiod', ['as'=>'dashboard.easyperiod','uses'=>'EasyPeriodController@index']);
+
+Route::get('/easyperiod/{slug}', ['as'=>'easyperiod.article','uses'=>'EasyPeriodController@getArticle']);
+Route::get('/easyperiod/article/list/api', ['as'=>'easyperiod.article.list','uses'=>'EasyPeriodController@getArticlesList']);
+Route::get('/dashboard/easyperiod/create/article', ['as'=>'easyperiod.article.create','uses'=>'EasyPeriodController@createArticlePage']);
+Route::post('/dashboard/easyperiod/store/article', ['as'=>'easyperiod.article.store','uses'=>'EasyPeriodController@storeArticle']);
+Route::get('/dashboard/easyperiod/{id}/edit/article', ['as'=>'easyperiod.article.edit','uses'=>'EasyPeriodController@editArticle']);
+Route::post('/dashboard/easyperiod/{id}/update/article', ['as'=>'easyperiod.article.update','uses'=>'EasyPeriodController@updateArticle']);
+Route::delete('/dashboard/easyperiod/article/{id}/delete', ['as'=>'easyperiod.article.delete','uses'=>'EasyPeriodController@delArticle']);
 // Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
 
 // EasyPeriod Contact  Data

@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    IIT Alumni | {{ $blog->slug }}
+    CVCS | {{ $blog->title }}
 @endsection
 
 @section('css')

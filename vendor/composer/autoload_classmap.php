@@ -18,6 +18,7 @@ return array(
     'CreateCommitteesTable' => $baseDir . '/database/migrations/2019_04_06_035151_create_committees_table.php',
     'CreateDonationsTable' => $baseDir . '/database/migrations/2019_04_20_013848_create_donations_table.php',
     'CreateDonorsTable' => $baseDir . '/database/migrations/2019_04_07_145638_create_donors_table.php',
+    'CreateEasyperiodarticlesTable' => $baseDir . '/database/migrations/2021_05_20_023801_create_easyperiodarticles_table.php',
     'CreateEasyperiodmessagesTable' => $baseDir . '/database/migrations/2021_04_25_155510_create_easyperiodmessages_table.php',
     'CreateEasyperioduserimagesTable' => $baseDir . '/database/migrations/2021_04_26_234443_create_easyperioduserimages_table.php',
     'CreateEventsTable' => $baseDir . '/database/migrations/2019_03_24_055417_create_events_table.php',
