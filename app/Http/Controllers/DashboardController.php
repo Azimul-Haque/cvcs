@@ -3799,75 +3799,73 @@ class DashboardController extends Controller
         return response()->download($latest_filename);
     }
 
-    public function runDBBackup(){
+    public function runDBBackup()
+    {
+            
+        $get_all_table_query = "SHOW TABLES";
+        $result = DB::select(DB::raw($get_all_table_query));
 
-      //ENTER THE RELEVANT INFO BELOW
-              $mysqlHostName      = env('DB_HOST');
-              $mysqlUserName      = env('DB_USERNAME');
-              $mysqlPassword      = env('DB_PASSWORD');
-              $DbName             = env('DB_DATABASE');
-              $backup_name        = "mybackup.sql";
+        $tables = [];
+        $queryTables = DB::select('SHOW TABLES');
+        foreach ( $queryTables as $table )
+        {
+           foreach ( $table as $tName)
+           {
+               $tables[]= $tName ;
+           }
+        }
 
-              $tables = [];
-              $queryTables = DB::select('SHOW TABLES');
-               foreach ( $queryTables as $table )
-               {
-                   foreach ( $table as $tName)
-                   {
-                       $tables[]= $tName ;
-                   }
-               }
+        $structure = '';
+        $data = '';
+        foreach ($tables as $table) {
+          $show_table_query = "SHOW CREATE TABLE " . $table . "";
 
-              $connect = new \PDO("mysql:host=$mysqlHostName;dbname=$DbName;charset=utf8", "$mysqlUserName", "$mysqlPassword",array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-              $get_all_table_query = "SHOW TABLES";
-              $statement = $connect->prepare($get_all_table_query);
-              $statement->execute();
-              $result = $statement->fetchAll();
+          $show_table_result = DB::select(DB::raw($show_table_query));
 
+          foreach ($show_table_result as $show_table_row) {
+              $show_table_row = (array)$show_table_row;
+              $structure .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
+          }
+          $select_query = "SELECT * FROM " . $table;
+          $records = DB::select(DB::raw($select_query));
 
-              $output = '';
-              foreach($tables as $table)
-              {
-               $show_table_query = "SHOW CREATE TABLE " . $table . "";
-               $statement = $connect->prepare($show_table_query);
-               $statement->execute();
-               $show_table_result = $statement->fetchAll();
-
-               foreach($show_table_result as $show_table_row)
-               {
-                $output .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
-               }
-               $select_query = "SELECT * FROM " . $table . "";
-               $statement = $connect->prepare($select_query);
-               $statement->execute();
-               $total_row = $statement->rowCount();
-
-               for($count=0; $count<$total_row; $count++)
-               {
-                $single_result = $statement->fetch(\PDO::FETCH_ASSOC);
-                $table_column_array = array_keys($single_result);
-                $table_value_array = array_values($single_result);
-                $output .= "\nINSERT INTO $table (";
-                $output .= "" . implode(", ", $table_column_array) . ") VALUES (";
-                $output .= "'" . implode("','", $table_value_array) . "');\n";
-               }
+          foreach ($records as $record) {
+              $record = (array)$record;
+              $table_column_array = array_keys($record);
+              foreach ($table_column_array as $key => $name) {
+                  $table_column_array[$key] = '`' . $table_column_array[$key] . '`';
               }
-              $file_name = 'database_backup_on_' . date('y-m-d') . '.sql';
-              $file_handle = fopen($file_name, 'w+');
-              fwrite($file_handle, $output);
-              fclose($file_handle);
-              header('Content-Description: File Transfer');
-              header('Content-Type: application/octet-stream');
-              header('Content-Disposition: attachment; filename=' . basename($file_name));
-              header('Content-Transfer-Encoding: binary');
-              header('Expires: 0');
-              header('Cache-Control: must-revalidate');
-                 header('Pragma: public');
-                 header('Content-Length: ' . filesize($file_name));
-                 ob_clean();
-                 flush();
-                 readfile($file_name);
-                 unlink($file_name);
+
+              $table_value_array = array_values($record);
+              $data .= "\nINSERT INTO $table (";
+
+              $data .= "" . implode(", ", $table_column_array) . ") VALUES \n";
+
+              foreach($table_value_array as $key => $record_column)
+                  $table_value_array[$key] = addslashes($record_column);
+
+              $data .= "('" . implode("','", $table_value_array) . "');\n";
+          }
+        }
+        $file_name = 'database_backup_on_' . date('y_m_d') . '.sql';
+        $file_handle = fopen($file_name, 'w + ');
+
+        $output = $structure . $data;
+        fwrite($file_handle, $output);
+        fclose($file_handle);
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename=' . basename($file_name));
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($file_name));
+        ob_clean();
+        flush();
+        readfile($file_name);
+        unlink($file_name);
+        echo "DB backup ready";
 
 
     }
