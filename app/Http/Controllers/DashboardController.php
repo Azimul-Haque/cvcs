@@ -3782,10 +3782,12 @@ class DashboardController extends Controller
     {
         Artisan::call('backup:clean');
         Artisan::call('backup:run');
-        $path = storage_path('app/laravel-backup/temp');
+        $path = storage_path('app/laravel-backup/*');
         $latest_ctime = 0;
         $latest_filename = '';
         $files = glob($path);
+
+        dd(count($files));
         foreach($files as $file)
         {
             if (is_file($file) && filectime($file) > $latest_ctime)
@@ -3793,7 +3795,6 @@ class DashboardController extends Controller
                  $latest_ctime = filectime($file);
                  $latest_filename = $file;
             }
-            echo $file;
         }
         return response()->download($latest_filename);
      }
