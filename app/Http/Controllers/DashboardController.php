@@ -3780,9 +3780,9 @@ class DashboardController extends Controller
 
     public function runDBBackup() 
     {
+         Artisan::call('backup:clean');
          Artisan::call('backup:run');
          $path = storage_path('app/laravel-backup/*');
-         // $path = public_path('files/db/');
          $latest_ctime = 0;
          $latest_filename = '';
          $files = glob($path);
