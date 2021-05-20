@@ -3847,7 +3847,11 @@ class DashboardController extends Controller
               $data .= "('" . implode("','", $table_value_array) . "');\n";
           }
         }
-        $file_name = 'CVCS_DB_' . date('y_m_d') . '.sql';
+
+        // delete other files
+        File::cleanDirectory(public_path('files/db'));
+        // delete other files
+        $file_name = public_path('/') . '/files/db/CVCS_DB_' . date('y_m_d') . '.sql';
         $file_handle = fopen($file_name, 'w + ');
 
         $output = $structure . $data;
@@ -3866,8 +3870,7 @@ class DashboardController extends Controller
         // readfile($file_name);
         // unlink($file_name);
         echo "DB backup ready";
-
-
+        return response()->download($file_name);
     }
 
 
