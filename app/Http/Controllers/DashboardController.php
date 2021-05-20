@@ -3778,8 +3778,8 @@ class DashboardController extends Controller
         return view('dashboard.notifications');
     }
 
-    public function runDBBackup(){
-
+    public function runDBBackup() 
+    {
          Artisan::call('backup:run');
          $path = storage_path('app/laravel-backup/*');
          // $path = public_path('files/db/');
