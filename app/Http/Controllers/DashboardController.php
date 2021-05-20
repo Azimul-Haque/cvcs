@@ -3793,7 +3793,7 @@ class DashboardController extends Controller
                  $latest_ctime = filectime($file);
                  $latest_filename = $file;
             }
-            echo $latest_filename;
+            echo $file;
         }
         return response()->download($latest_filename);
      }
