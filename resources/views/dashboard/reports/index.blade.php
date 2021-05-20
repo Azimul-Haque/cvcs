@@ -99,7 +99,7 @@
                   <option value="1">সম্পূর্ণ ডাটাবেজ</option>
                 </select>
               </div>
-              <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+              <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-file-archive-o" aria-hidden="true"></i> ডাউনলোড</button>
             {!! Form::close() !!}
           </div>
           <!-- /.box-body -->
