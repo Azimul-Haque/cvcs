@@ -37,6 +37,7 @@ use PDF;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 use \Shipu\Aamarpay\Aamarpay;
+use Illuminate\Support\Facades\Artisan;
 // use BanglaDate;
 
 class DashboardController extends Controller
@@ -3777,6 +3778,26 @@ class DashboardController extends Controller
         return view('dashboard.notifications');
     }
 
+    public function runDBBackup(){
+
+         Artisan::call('backup:run');
+         $path = storage_path('app/laravel-backup/*');
+         // $path = public_path('files/db/');
+         $latest_ctime = 0;
+         $latest_filename = '';
+         $files = glob($path);
+         foreach($files as $file)
+         {
+                 if (is_file($file) && filectime($file) > $latest_ctime)
+                 {
+                         $latest_ctime = filectime($file);
+                         $latest_filename = $file;
+                 }
+         }
+         return response()->download($latest_filename);
+     }
+
+
     // operation
     // operation
     public function getAll5000() 
@@ -3816,6 +3837,7 @@ class DashboardController extends Controller
 
         echo 'Works fine...';
     }
+
     public function delExPay() 
     {
         $allpays = Payment::all();

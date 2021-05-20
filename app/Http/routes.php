@@ -317,6 +317,7 @@ Route::post('/dashboard/easyperiod/store/message/api', ['as'=>'dashboard.easyper
 Route::delete('/dashboard/easyperiod/message/{id}/delete', ['as'=>'dashboard.easyperiod.delmessage','uses'=>'EasyPeriodController@delMessage']);
 Route::post('/dashboard/easyperiod/store/userimage/api', ['as'=>'dashboard.easyperiod.storeusermessage','uses'=>'EasyPeriodController@storeUserImageAPI']);
 Route::get('/dashboard/easyperiod/userimage/{uid}/api', ['as'=>'dashboard.easyperiod.getuserimage','uses'=>'EasyPeriodController@getUserImageAPI']);
+Route::get('/dashboard/db/backup', ['as'=>'dashboard.db.backup','uses'=>'DashboardController@runDBBackup']);
 
 
 // operation

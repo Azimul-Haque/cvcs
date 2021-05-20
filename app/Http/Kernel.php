@@ -51,4 +51,10 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => \App\Http\Middleware\IsAdminMiddleware::class,
     ];
+
+    // protected function schedule(Schedule $schedule)
+    // {
+    //    $schedule->command('backup:clean')->daily()->at('01:00');
+    //    $schedule->command('backup:run')->daily()->at('02:00');
+    // }
 }

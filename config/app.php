@@ -165,6 +165,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
         Shipu\Aamarpay\AamarpayServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
 
     ],
 
