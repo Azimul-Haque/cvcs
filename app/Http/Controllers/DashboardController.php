@@ -3778,6 +3778,8 @@ class DashboardController extends Controller
         return view('dashboard.notifications');
     }
 
+    // not using this
+    // not using this
     public function runDBBackup33() 
     {
         Artisan::call('backup:clean');
@@ -3806,8 +3808,8 @@ class DashboardController extends Controller
        $DbName             = env('DB_DATABASE');
        $file_name = 'database_backup_on_' . date('y-m-d') . '.sql';
 
-
-       $queryTables = \DB::select(\DB::raw('SHOW TABLES'));
+       // $queryTables = \DB::select(\DB::raw('SHOW TABLES'));
+       $queryTables = DB::select('SHOW TABLES');
         foreach ( $queryTables as $table )
         {
             foreach ( $table as $tName)
