@@ -3420,19 +3420,19 @@ class DashboardController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
-        $smsresult = curl_exec($ch);
+        // $smsresult = curl_exec($ch);
 
-        // $sendstatus = $result = substr($smsresult, 0, 3);
-        $p = explode("|",$smsresult);
-        $sendstatus = $p[0];
-        // send sms
-        if($sendstatus == 1101) {
-            Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 1006) {
-            Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
-        } else {
-            Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
-        }
+        // // $sendstatus = $result = substr($smsresult, 0, 3);
+        // $p = explode("|",$smsresult);
+        // $sendstatus = $p[0];
+        // // send sms
+        // if($sendstatus == 1101) {
+        //     Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        // } elseif($sendstatus == 1006) {
+        //     Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+        // } else {
+        //     Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        // }
 
         Session::flash('success', 'অনুমোদন সফল হয়েছে!');
         return redirect()->route('dashboard.membersapprovedpayments');
@@ -3534,23 +3534,23 @@ class DashboardController extends Controller
             curl_multi_add_handle($mh, $multiCurl[$member_id]);
         }
 
-        $index=null;
-        do {
-          curl_multi_exec($mh, $index);
-        } while($index > 0);
-        // get content and remove handles
-        foreach($multiCurl as $k => $ch) {
-          $result[$k] = curl_multi_getcontent($ch);
-          curl_multi_remove_handle($mh, $ch);
-          $smsresult = $result[$k];
-          $p = explode("|",$smsresult);
-          $sendstatus = $p[0];
-          if($sendstatus == 1101) {
-              $smssuccesscount++;
-          }
-        }
-        // close
-        curl_multi_close($mh);
+        // $index=null;
+        // do {
+        //   curl_multi_exec($mh, $index);
+        // } while($index > 0);
+        // // get content and remove handles
+        // foreach($multiCurl as $k => $ch) {
+        //   $result[$k] = curl_multi_getcontent($ch);
+        //   curl_multi_remove_handle($mh, $ch);
+        //   $smsresult = $result[$k];
+        //   $p = explode("|",$smsresult);
+        //   $sendstatus = $p[0];
+        //   if($sendstatus == 1101) {
+        //       $smssuccesscount++;
+        //   }
+        // }
+        // // close
+        // curl_multi_close($mh);
 
         Session::flash('success', 'অনুমোদন সফল হয়েছে!');
 
