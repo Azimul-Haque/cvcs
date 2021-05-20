@@ -3851,7 +3851,7 @@ class DashboardController extends Controller
         // delete other files
         File::cleanDirectory(public_path('files/db'));
         // delete other files
-        $file_name = public_path('/') . '/files/db/CVCS_DB_' . date('y_m_d') . '.sql';
+        $file_name = public_path('/') . '/files/db/CVCS_DB_' . date('d_m_Y') . '.sql';
         $file_handle = fopen($file_name, 'w + ');
 
         $output = $structure . $data;
