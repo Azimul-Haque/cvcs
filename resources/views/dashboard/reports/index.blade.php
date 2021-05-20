@@ -84,6 +84,26 @@
           </div>
           <!-- /.box-body -->
         </div>
+
+        <div class="box box-success" id="beforedivheightcommodity">
+          <div class="box-header with-border text-green">
+            <i class="fa fa-fw fa-database"></i>
+            <h3 class="box-title">ডাটাবেজ ব্যাকআপ</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {!! Form::open(['route' => 'reports.getdbbackup', 'method' => 'GET']) !!}
+              <div class="form-group">
+                <select name="report_type" class="form-control" required="">
+                  <option value="" selected="" disabled="">রিপোর্টের ধরন নির্ধারণ করুন</option>
+                  <option value="1">সম্পূর্ণ ডাটাবেজ</option>
+                </select>
+              </div>
+              <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+            {!! Form::close() !!}
+          </div>
+          <!-- /.box-body -->
+        </div>
       </div>
       <div class="col-md-4">
         <div class="box box-warning" id="beforedivheightcommodity">

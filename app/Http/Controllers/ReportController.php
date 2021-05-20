@@ -242,21 +242,26 @@ class ReportController extends Controller
 
     public function getPDFDesignationMembersList(Request $request)
     {
-    	//validation
-    	$this->validate($request, array(
-    	  'position_id' => 'required'
-    	));
+        //validation
+        $this->validate($request, array(
+          'position_id' => 'required'
+        ));
 
-    	$position = Position::find($request->position_id);
+        $position = Position::find($request->position_id);
 
-    	$members = User::where('activation_status', 1)
+        $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')                
                        ->where('position_id', $request->position_id)           
                        ->orderBy('position_id', 'asc')           
                        ->get();
 
-		$pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members]);
-		$fileName = 'CVCS_Designation_Members_List_Report.pdf';
-		return $pdf->download($fileName); // download
+        $pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members]);
+        $fileName = 'CVCS_Designation_Members_List_Report.pdf';
+        return $pdf->download($fileName); // download
+    }
+
+    public function getDBBackup()
+    {
+    	return redirect()->route('dashboard.db.backup');
     }
 }
