@@ -3853,18 +3853,18 @@ class DashboardController extends Controller
         $output = $structure . $data;
         fwrite($file_handle, $output);
         fclose($file_handle);
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename=' . basename($file_name));
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($file_name));
-        ob_clean();
-        flush();
-        readfile($file_name);
-        unlink($file_name);
+        // header('Content-Description: File Transfer');
+        // header('Content-Type: application/octet-stream');
+        // header('Content-Disposition: attachment; filename=' . basename($file_name));
+        // header('Content-Transfer-Encoding: binary');
+        // header('Expires: 0');
+        // header('Cache-Control: must-revalidate');
+        // header('Pragma: public');
+        // header('Content-Length: ' . filesize($file_name));
+        // ob_clean();
+        // flush();
+        // readfile($file_name);
+        // unlink($file_name);
         echo "DB backup ready";
 
 
