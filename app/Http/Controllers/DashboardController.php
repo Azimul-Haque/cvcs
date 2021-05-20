@@ -3847,7 +3847,7 @@ class DashboardController extends Controller
               $data .= "('" . implode("','", $table_value_array) . "');\n";
           }
         }
-        $file_name = 'database_backup_on_' . date('y_m_d') . '.sql';
+        $file_name = 'CVCS_DB_' . date('y_m_d') . '.sql';
         $file_handle = fopen($file_name, 'w + ');
 
         $output = $structure . $data;
