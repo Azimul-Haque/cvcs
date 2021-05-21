@@ -15,7 +15,8 @@
 <meta name="description" property="og:description" content="{{ substr(strip_tags($article->body), 0, 200) }}" />
 <meta property="og:type" content="article"/>
 <meta property="og:url" content="{{ Request::url() }}" />
-<meta property="og:site_name" content="TenX">
+<meta property="og:category" content="{{ $article->category }}"/>
+<meta property="og:site_name" content="EasyPeriod">
 <meta name="og:locale" content="en_US">
 <meta name="fb:admins" content="100001596964477">
 <meta name="fb:app_id" content="163879201229487">
