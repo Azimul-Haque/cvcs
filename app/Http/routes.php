@@ -299,7 +299,18 @@ Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsa
 // operation
 // operation
 Route::get('/dashboard/get5000', ['as'=>'dashboard.get5000','uses'=>'DashboardController@getAll5000']);
+// Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
+// operation
+// operation
 
+// DB BACKUP
+// DB BACKUP
+Route::get('/dashboard/db/backup', ['as'=>'dashboard.db.backup','uses'=>'DashboardController@runDBBackup']);
+// DB BACKUP
+// DB BACKUP
+
+// EasyPeriod
+// EasyPeriod
 Route::get('/dashboard/easyperiod', ['as'=>'dashboard.easyperiod','uses'=>'EasyPeriodController@index']);
 
 Route::get('/easyperiod/{slug}', ['as'=>'easyperiod.article','uses'=>'EasyPeriodController@getArticle']);
@@ -309,17 +320,19 @@ Route::post('/dashboard/easyperiod/store/article', ['as'=>'easyperiod.article.st
 Route::get('/dashboard/easyperiod/{id}/edit/article', ['as'=>'easyperiod.article.edit','uses'=>'EasyPeriodController@editArticle']);
 Route::post('/dashboard/easyperiod/{id}/update/article', ['as'=>'easyperiod.article.update','uses'=>'EasyPeriodController@updateArticle']);
 Route::delete('/dashboard/easyperiod/article/{id}/delete', ['as'=>'easyperiod.article.delete','uses'=>'EasyPeriodController@delArticle']);
-// Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
 
-// EasyPeriod Contact  Data
-// EasyPeriod Contact  Data
 Route::get('/dashboard/easyperiod', ['as'=>'dashboard.easyperiod.index','uses'=>'EasyPeriodController@index']);
 Route::post('/dashboard/easyperiod/store/message/api', ['as'=>'dashboard.easyperiod.storemessage','uses'=>'EasyPeriodController@storeMessageAPI']);
 Route::delete('/dashboard/easyperiod/message/{id}/delete', ['as'=>'dashboard.easyperiod.delmessage','uses'=>'EasyPeriodController@delMessage']);
 Route::post('/dashboard/easyperiod/store/userimage/api', ['as'=>'dashboard.easyperiod.storeusermessage','uses'=>'EasyPeriodController@storeUserImageAPI']);
+
 Route::get('/dashboard/easyperiod/userimage/{uid}/api', ['as'=>'dashboard.easyperiod.getuserimage','uses'=>'EasyPeriodController@getUserImageAPI']);
-Route::get('/dashboard/db/backup', ['as'=>'dashboard.db.backup','uses'=>'DashboardController@runDBBackup']);
 
-
-// operation
-// operation
+Route::get('/dashboard/easyperiod/global/posts/{offset}/api', ['as'=>'dashboard.easyperiod.globalposts','uses'=>'EasyPeriodController@getGlobalPosts']);
+Route::get('/dashboard/easyperiod/user/posts/{uid}/{offset}/api', ['as'=>'dashboard.easyperiod.userposts','uses'=>'EasyPeriodController@getUserPosts']);
+Route::post('/dashboard/easyperiod/store/post/api', ['as'=>'dashboard.easyperiod.storepost','uses'=>'EasyPeriodController@storePost']);
+Route::get('/dashboard/easyperiod/delete/post/{id}/api', ['as'=>'dashboard.easyperiod.deletepost','uses'=>'EasyPeriodController@deletePost']);
+Route::post('/dashboard/easyperiod/store/post/reply/api', ['as'=>'dashboard.easyperiod.storepostreply','uses'=>'EasyPeriodController@storePostReply']);
+Route::get('/dashboard/easyperiod/delete/post/reply/{id}/api', ['as'=>'dashboard.easyperiod.deletepostreply','uses'=>'EasyPeriodController@deletePostReply']);
+// EasyPeriod
+// EasyPeriod

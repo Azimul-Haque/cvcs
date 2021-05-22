@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Easyperiodmessage;
 use App\Easyperioduserimage;
 use App\Easyperiodarticle;
+use App\Easyperiodpost;
+use App\Easyperiodpostreply;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -27,7 +29,7 @@ class EasyPeriodController extends Controller
     {
         parent::__construct();
         
-        $this->middleware('auth')->except('storeMessageAPI', 'storeUserImageAPI', 'getUserImageAPI', 'getArticle', 'getArticlesList');
+        $this->middleware('auth')->except('storeMessageAPI', 'storeUserImageAPI', 'getUserImageAPI', 'getArticle', 'getArticlesList', 'storePost', 'getGlobalPosts', 'getUserPosts', 'storePostReply', 'deletePostReply', 'deletePost');
     }
 
     public function index() {
@@ -40,24 +42,24 @@ class EasyPeriodController extends Controller
     }
 
     public function storeMessageAPI(Request $request) {
-    	$this->validate($request,array(
-    	    'uid'         => 'required|max:255',
-    	    'name'        => 'required|max:255',
-    	    'email'       => 'required|max:255',
-    	    'message'     => 'required|max:255'
-    	));
+        $this->validate($request,array(
+            'uid'         => 'required|max:255',
+            'name'        => 'required|max:255',
+            'email'       => 'required|max:255',
+            'message'     => 'required|max:255'
+        ));
 
-    	$message = new Easyperiodmessage;
-    	$message->uid = $request->uid;
-    	$message->name = $request->name;
-    	$message->email = $request->email;
-    	$message->message = $request->message;
-    	$message->location = $request->location;
-    	$message->save();
+        $message = new Easyperiodmessage;
+        $message->uid = $request->uid;
+        $message->name = $request->name;
+        $message->email = $request->email;
+        $message->message = $request->message;
+        $message->location = $request->location;
+        $message->save();
 
-    	return response()->json([
-    	    'success' => true
-    	]);
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     public function delMessage($id)
@@ -251,5 +253,110 @@ class EasyPeriodController extends Controller
             $articlelist[] = $article->slug;
         }
         return $articlelist;
+    }
+
+    // COOMUNITY POST
+    // COOMUNITY POST
+    public function getGlobalPosts($offset)
+    {
+        $globalposts = Easyperiodpost::orderBy('id', 'desc')
+                                     ->skip($offset)->take(7)->get();
+        $globalposts->load('easyperiodpostreplies');
+
+        // foreach ($globalposts as $globalpost) {
+        //     $globalpost->replycount = $globalpost->easyperiodpostreplies->count();
+        // }
+
+        // dd($globalposts);
+        if(!empty($globalposts) || $globalposts != null) {
+            return response()->json([
+                'success' => true,
+                'posts' => $globalposts
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+    }
+    public function getUserPosts($uid, $offset)
+    {
+        $userposts = Easyperiodpost::where('uid', $uid)
+                                   ->orderBy('id', 'desc')
+                                   ->skip($offset)->take(7)->get();
+        $userposts->load('easyperiodpostreplies');
+
+        if(!empty($userposts) || $userposts != null) {
+            return response()->json([
+                'success' => true,
+                'posts' => $userposts
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+    }
+
+    public function storePost(Request $request) {
+        $this->validate($request,array(
+            'uid'        => 'required',
+            'anonymous'  => 'required',
+            'body'       => 'required|max:1000'
+        ));
+
+        $post = new Easyperiodpost;
+        $post->uid = $request->uid;
+        $post->anonymous = $request->anonymous;
+        $post->body = $request->body;
+        $post->save();
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function deletePost($id)
+    {
+        $post = Easyperiodpost::findOrFail($id);
+        foreach ($post->easyperiodpostreplies as $reply) {
+            $reply->delete();
+        }
+        $post->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function storePostReply(Request $request) {
+        $this->validate($request,array(
+            'easyperiodpost_id'    => 'required',
+            'uid'                  => 'required',
+            'anonymous'            => 'required',
+            'reply'                 => 'required|max:1000'
+        ));
+
+        $reply = new Easyperiodpostreply;
+        $reply->easyperiodpost_id = $request->easyperiodpost_id;
+        $reply->uid = $request->uid;
+        $reply->anonymous = $request->anonymous;
+        $reply->reply = $request->reply;
+        $reply->save();
+
+        return response()->json([
+            'success' => true,
+            'reply' => $reply
+        ]);
+    }
+
+    public function deletePostReply($id)
+    {
+        $reply = Easyperiodpostreply::findOrFail($id);
+        $reply->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

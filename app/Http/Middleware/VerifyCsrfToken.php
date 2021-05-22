@@ -16,6 +16,8 @@ class VerifyCsrfToken extends BaseVerifier
         'application/payment/success',
         'application/payment/cancel/*',
         'dashboard/easyperiod/store/message/api',
-        'dashboard/easyperiod/store/userimage/api'
+        'dashboard/easyperiod/store/userimage/api',
+        'dashboard/easyperiod/store/post/api',
+        'dashboard/easyperiod/store/post/reply/api',
     ];
 }
