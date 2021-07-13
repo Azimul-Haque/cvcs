@@ -2624,7 +2624,7 @@ class DashboardController extends Controller
                                            ->first();
 
                     if(!empty($checkpayment) || ($checkpayment != null)) {
-                        // dd($checkpayment);
+                        dd($checkpayment);
                         if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
                             $temppayment->delete();
                         } else {
