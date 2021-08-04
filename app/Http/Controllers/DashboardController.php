@@ -2592,7 +2592,7 @@ class DashboardController extends Controller
     public function paymentVerification()
     {
         // $temppayments = Temppayment::all();
-        $temppayments = Temppayment::inRandomOrder()->limit(2)->get();
+        $temppayments = Temppayment::inRandomOrder()->limit(3)->get();
         // dd($temppayments);
         foreach ($temppayments as $temppayment)
         {
