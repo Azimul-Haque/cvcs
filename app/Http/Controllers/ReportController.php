@@ -242,6 +242,7 @@ class ReportController extends Controller
 
     public function getPDFDesignationMembersList(Request $request)
     {
+        ini_set("pcre.backtrack_limit", "50000000");
         //validation
         $this->validate($request, array(
           'position_id' => 'required'
