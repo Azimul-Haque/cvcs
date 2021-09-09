@@ -258,7 +258,7 @@ class ReportController extends Controller
 
         $pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members]);
         $fileName = 'CVCS_Designation_Members_List_Report.pdf';
-        return $pdf->download($fileName); // download
+        return $pdf->stream($fileName); // download
     }
 
     public function getDBBackup()

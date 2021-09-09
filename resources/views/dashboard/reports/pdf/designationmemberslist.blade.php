@@ -44,11 +44,11 @@
   <div class="" style="padding-top: 0px;">
     <table class="">
       <tr class="graybackground">
-        <th width="5%">#</th>
+        <th width="7%">#</th>
         <th width="30%">সদস্য</th>
         <th width="13%">মেম্বার আইডি</th>
         <th>যোগাযোগ</th>
-        <th width="20%">অফিস তথ্য</th>
+        <th width="19%">অফিস তথ্য</th>
         <th>ছবি</th>
       </tr>
       @php
@@ -56,7 +56,7 @@
       @endphp
       @foreach($members as $member)
         <tr>
-          <td align="center">{{ bangla($counter++) }}</td>
+          <td align="center">{{ bangla($counter++) }}১২৯৮</td>
           <td>{{ $member->name_bangla }}<br/><span style="font-family: Calibri; font-size: 12px;">{{ $member->name }}</span></td>
           <td align="center"><span style="font-family: Calibri;"><b>{{ $member->member_id }}</b></span></td>
           <td style="font-family: Calibri;">{{ $member->mobile }}<br/><small>{{ $member->email }}</small></td>
