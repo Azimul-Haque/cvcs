@@ -56,7 +56,7 @@
       @endphp
       @foreach($members as $member)
         <tr>
-          <td align="center">{{ bangla($counter++) }}১২৯৮</td>
+          <td align="center">{{ bangla($counter++) }}</td>
           <td>{{ $member->name_bangla }}<br/><span style="font-family: Calibri; font-size: 12px;">{{ $member->name }}</span></td>
           <td align="center"><span style="font-family: Calibri;"><b>{{ $member->member_id }}</b></span></td>
           <td style="font-family: Calibri;">{{ $member->mobile }}<br/><small>{{ $member->email }}</small></td>
