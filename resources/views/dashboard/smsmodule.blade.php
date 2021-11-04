@@ -73,6 +73,7 @@
       <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">মাসিক পেমেন্ট রিমাইন্ডার মেসেজ <b>[ডায়নামিক মেসেজ ব্যালেন্সঃ {{ (int) ($notifgbsmsbalance / 0.30) }} টি]</b></h3>
+          <a class="btn btn-success btn-xs" href="{{ route('dashboard.sms.sendreminderprev') }}" target="_blank" title="রিপোর্ট ডাউনলোড"><i class="fa fa-download"></i></a>
         </div>
         <div class="box-body">
           {!! Form::open(['route' => 'dashboard.sms.sendreminder', 'method' => 'POST', 'class' => 'form-default', 'id' => 'sendOneToManyForm']) !!}

@@ -289,6 +289,7 @@ Route::get('/dashboard/notifications', ['as'=>'dashboard.notifications','uses'=>
 Route::get('/dashboard/sms/module', ['as'=>'dashboard.smsmodule','uses'=>'SMSController@getSMSModule']);
 Route::post('/dashboard/sms/send/bulk', ['as'=>'dashboard.sms.sendbulk','uses'=>'SMSController@sendBulkSMS']);
 Route::post('/dashboard/sms/send/reminder', ['as'=>'dashboard.sms.sendreminder','uses'=>'SMSController@sendReminderSMS']);
+Route::get('/dashboard/sms/send/reminder/preview', ['as'=>'dashboard.sms.sendreminderprev','uses'=>'SMSController@sendReminderSMSPrev']);
 
 Route::get('/dashboard/sms/module/test', ['as'=>'dashboard.testgpsmsapi','uses'=>'SMSController@testGPSMSAPI']);
 Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsapi','uses'=>'SMSController@testMultiGPSMSAPI']);

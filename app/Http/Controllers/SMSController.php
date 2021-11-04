@@ -271,6 +271,106 @@ class SMSController extends Controller
         }
     }
 
+    public function sendReminderSMSPrev() 
+    {
+        $members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')         
+                       ->with(['payments' => function ($query) {
+                            $query->where('payment_status', '=', 1);
+                            $query->where('is_archieved', '=', 0);
+                            $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
+                        }])           
+                       ->get();
+
+        
+        $intotalmontlydues = 0;
+
+        $smsdata = [];
+        foreach ($members as $i => $member) {
+            $approvedcashformontly = $member->payments->sum('amount');
+            $totalmonthsformember = 0;
+            $member->totalpendingmonthly = 0;
+            if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date)) {
+                $thismonth = Carbon::now()->format('Y-m-');
+                $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
+                $to = Carbon::createFromFormat('Y-m-d', $thismonth . date('t', strtotime($thismonth))); // t returns the number of days of the month
+                $totalmonthsformember = $to->diffInMonths($from);
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+                }
+            } else {
+                $startmonth = date('Y-m-', strtotime($member->joining_date));
+                $thismonth = Carbon::now()->format('Y-m-');
+                $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
+                $to = Carbon::createFromFormat('Y-m-d', $thismonth . date('t', strtotime($thismonth))); // t returns the number of days of the month
+                $totalmonthsformember = $to->diffInMonths($from);
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+                }
+            }
+
+            if($member->totalpendingmonthly > 0) {
+                $mobile_number = 0;
+                if(strlen($member->mobile) == 11) {
+                    $mobile_number = $member->mobile;
+                } elseif(strlen($member->mobile) > 11) {
+                    if (strpos($member->mobile, '+') !== false) {
+                        $mobile_number = substr($member->mobile, -11);
+                    }
+                }
+                $pendingmonths = (int) ceil($member->totalpendingmonthly / 300);
+                if($pendingmonths == 1 || 0) {
+                    $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is due, you are requested to pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                } else {
+                    $text = 'Dear ' . $member->name . ', your monthly payments from ' . date("F, Y", strtotime("-". $pendingmonths + 1 ." months"))  . ' to ' . date('F, Y') . ' are due, you are requested to pay it. Total due: ' . $member->totalpendingmonthly . '/-. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                }
+                
+
+                $encodedtext = rawurlencode($text);
+                $smsdata[$i] = array(
+                    'name'=>"$member->name",
+                    'name_bangla'=>"$member->name_bangla",
+                    'member_id'=>"$member->member_id",
+                    'to'=>"$mobile_number",
+                    'message'=>"$text", // $encodedtext
+                    'joining_date'=>"$member->joining_date",
+                    'due'=>"$member->totalpendingmonthly",
+                );
+            } else {
+                $mobile_number = 0;
+                if(strlen($member->mobile) == 11) {
+                    $mobile_number = $member->mobile;
+                } elseif(strlen($member->mobile) > 11) {
+                    if (strpos($member->mobile, '+') !== false) {
+                        $mobile_number = substr($member->mobile, -11);
+                    }
+                }
+                $text = 'Dear ' . $member->name . ', your monthly payment for the month ' . date('F, Y') . ' is already paid. Thank you. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+
+                $encodedtext = rawurlencode($text);
+                $smsdata[$i] = array(
+                    'name'=>"$member->name",
+                    'name_bangla'=>"$member->name_bangla",
+                    'member_id'=>"$member->member_id",
+                    'to'=>"$mobile_number",
+                    'message'=>"$text", // $encodedtext
+                    'joining_date'=>"$member->joining_date",
+                    'due'=>"$member->totalpendingmonthly",
+                );
+            }
+        }
+
+        // TEST CODE
+        // TEST CODE
+        ini_set('max_execution_time', '300');
+        ini_set("pcre.backtrack_limit", "5000000");
+        $pdf = PDF::loadView('dashboard.dumpfiles.reminderpdf', ['smsdata' => array_slice($smsdata, 0, 500)]);
+        $fileName = 'Reminder_SMS_List.pdf';
+        return $pdf->stream($fileName);
+        // TEST CODE
+        // TEST CODE
+    }
+
     public function testGPSMSAPI() 
     {
         // KAAJ BAKI ACHE...
