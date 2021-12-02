@@ -268,6 +268,7 @@ class ReportController extends Controller
 
     public function getPDFDateRangePayment(Request $request)
     {
+        ini_set("pcre.backtrack_limit", "5000000");
         //validation
         $this->validate($request, array(
           'startdate' => 'required',
