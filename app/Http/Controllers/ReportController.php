@@ -289,6 +289,6 @@ class ReportController extends Controller
 
         $pdf = PDF::loadView('dashboard.reports.pdf.daterangepayment', ['startdate' => $request->startdate, 'enddate' => $request->enddate, 'payments' => $payments]);
         $fileName = 'CVCS_'. date('Y-m-d', strtotime($request->startdate)) .'-to-'. date('Y-m-d', strtotime($request->enddate)) .'_Report.pdf';
-        return $pdf->download($fileName); // download
+        return $pdf->stream($fileName); // download
     }
 }
