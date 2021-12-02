@@ -41,7 +41,7 @@
     <span style="font-size: 20px;">'{{ bangla(date('F d, Y', strtotime($startdate))) }}' হতে '{{ bangla(date('F d, Y', strtotime($enddate))) }}' পর্যন্ত আদায়কৃত অর্থের হিসাব</span><br/>
   </p>
   
-  <div class="" style="padding-top: 0px;">
+  <div class="" style="padding-top: -5px;">
     <table class="">
       <tr class="graybackground">
         <th>#</th>
