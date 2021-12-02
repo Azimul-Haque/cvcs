@@ -44,7 +44,7 @@
   <div class="" style="padding-top: 0px;">
     <table class="">
       <tr class="graybackground">
-        <th width="5%">#</th>
+        <th width="8%">#</th>
         <th width="60%">সদস্য</th>
         <th>ছবি</th>
         <th>সদস্য কর্তৃক মোট পরিশোধ</th>
