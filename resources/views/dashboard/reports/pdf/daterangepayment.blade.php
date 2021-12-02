@@ -47,8 +47,8 @@
         <th>#</th>
         <th>সদস্য</th>
         <th>পদবি</th>
-        <th>যোগাযোগ</th>
-        <th>সদস্য কর্তৃক মোট পরিশোধ</th>
+        <th width="14%">যোগাযোগ</th>
+        <th width="15%">মোট পরিশোধ</th>
       </tr>
       @php
         $counter = 1;
@@ -66,7 +66,7 @@
               {{ $payment->user->position->name }}<br/>
               {{ $payment->user->branch->name }}
             </td>
-            <td>{{ $payment->user->mobile }}</td>
+            <td align="center">{{ $payment->user->mobile }}</td>
             {{-- <td align="center">
               @if($payment->user->image != null && file_exists(public_path('images/users/'.$payment->user->image)))
                  <img src="{{ public_path('images/users/'.$payment->user->image)}}" style="height: 50px; width: auto;" />
