@@ -301,7 +301,7 @@ Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsa
 // operation
 // operation
 Route::get('/dashboard/get5000', ['as'=>'dashboard.get5000','uses'=>'DashboardController@getAll5000']);
-Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
+// Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
 // operation
 // operation
 
