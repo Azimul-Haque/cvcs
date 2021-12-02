@@ -74,6 +74,13 @@
             $counter++;
             $grandtotal = $grandtotal + $payment->totalamount
           @endphp
+        @else
+        <tr>
+          <td>{{ $payment->member_id }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
         @endif
       @endforeach
 
