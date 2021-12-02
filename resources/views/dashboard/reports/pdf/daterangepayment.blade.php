@@ -56,7 +56,7 @@
       @foreach($payments as $payment)
         @if($payment->user)
           <tr>
-            <td align="center">১২১{{ bangla($counter) }}</td>
+            <td align="center">{{ bangla($counter) }}</td>
             <td>
               <b>{{ $payment->user->name_bangla }}</b>, {{ $payment->user->position->name }}<br/>
               আইডিঃ {{ $payment->user->member_id }}, ফোনঃ {{ $payment->user->mobile }}
