@@ -62,11 +62,11 @@
               আইডিঃ {{ $payment->user->member_id }}, ফোনঃ {{ $payment->user->mobile }}
             </td>
             <td align="center">
-              @if($payment->user->image != null && file_exists(public_path('images/users/'.$payment->user->image)))
-                <img src="{{ public_path('images/users/'.$payment->user->image)}}" style="height: 50px; width: auto;" />
+              {{-- @if($payment->user->image != null && file_exists(public_path('images/users/'.$payment->user->image)))
+                 <img src="{{ public_path('images/users/'.$payment->user->image)}}" style="height: 50px; width: auto;" />
               @else
                 <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
-              @endif
+              @endif --}}
             </td>
             <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
           </tr>
@@ -78,7 +78,7 @@
         <tr>
           <td></td>
           <td>ERROR: {{ $payment->member_id }}</td>
-          <td>N/A</td>
+          <td></td>
           <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
         </tr>
         @endif
