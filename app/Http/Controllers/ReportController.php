@@ -265,4 +265,26 @@ class ReportController extends Controller
     {
     	return redirect()->route('dashboard.db.backup');
     }
+
+    public function getPDFDateRangePayment(Request $request)
+    {
+        //validation
+        $this->validate($request, array(
+          'startdate' => 'required',
+          'enddate'   => 'required'
+        ));
+
+        $payments = Payment::select(['member_id', 'created_at', DB::raw("SUM(amount) as totalamount")])
+                           ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"), '>=', date('Y-m-d', strtotime($request->startdate)))
+                           ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"), '<=', date('Y-m-d', strtotime($request->enddate)))
+                           ->groupBy('member_id')
+                           ->orderBy('member_id', 'ASC')
+                           ->get();
+                           // select('*', [DB::raw("SUM(amount) as totalamount")])
+        // dd($payments);
+
+        $pdf = PDF::loadView('dashboard.reports.pdf.daterangepayment', ['position' => $position, 'members' => $members]);
+        $fileName = 'CVCS_Designation_Members_List_Report.pdf';
+        return $pdf->download($fileName); // download
+    }
 }

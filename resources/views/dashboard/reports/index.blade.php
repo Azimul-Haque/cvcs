@@ -3,7 +3,7 @@
 @section('title', 'CVCS | রিপোর্ট')
 
 @section('css')
-
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
 @stop
 
 @section('content_header')
@@ -128,6 +128,29 @@
           <!-- /.box-body -->
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="box box-warning" id="beforedivheightcommodity">
+          <div class="box-header with-border text-yellow">
+            <i class="fa fa-fw fa-bar-chart"></i>
+            <h3 class="box-title">তারিখভিত্তিক আদায়ের তালিকা</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {!! Form::open(['route' => 'reports.getdaterangepayment', 'method' => 'GET']) !!}
+              <div class="form-group row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <input type="text" class="form-control" name="startdate" id="startdate" placeholder="হতে" readonly="">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <input type="text" class="form-control" name="enddate" id="enddate" placeholder="পর্যন্ত" readonly="">
+                </div>
+              </div>
+              <button class="btn btn-warning" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+            {!! Form::close() !!}
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
     </div>
   @else
     <span class="text-red"><i class="fa fa-exclamation-triangle"></i> দুঃখিত, আপনার এই পাতাটি দেখবার অনুমতি নেই!</span>
@@ -135,5 +158,50 @@
 @stop
 
 @section('js')
+  <script type="text/javascript" src="{{ asset('js/jquery-for-dp.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script>
+    var dateToday = new Date('2019-01-01'); 
+    $("#startdate").datepicker({
+      format: 'MM dd, yyyy',
+      todayHighlight: true,
+      autoclose: true,
+      startDate: dateToday,
+    });
 
+    $("#enddate").datepicker({
+      format: 'MM dd, yyyy',
+      todayHighlight: true,
+      autoclose: true,
+    });
+
+    $('#loadTodaysDeposits').click(function() {
+      var startdate = $('#startdate').val();
+
+      // toastr.warning('Select Date!', 'WARNING').css('width', '400px');
+      
+      selecteduser = $('#selecteduser').val();
+      console.log(selecteduser);
+      if(isEmptyOrSpaces(startdate)) {
+        Toast.fire({
+          icon: 'warning',
+          title: 'Select Date!'
+        })
+      } else {
+        window.location.href = '/dashboard/deposit/'+ moment(startdate).format('YYYY-MM-DD') + '/' + selecteduser;
+      }
+    });
+
+    // on enter search
+    function isEmptyOrSpaces(str){
+        return str === null || str.match(/^ *$/) !== null;
+    }
+
+    // print
+    $('#printThisPage').click(function(){
+      $('.bg-success').removeClass('bg-success');
+      window.print();
+    });
+  </script>
 @stop

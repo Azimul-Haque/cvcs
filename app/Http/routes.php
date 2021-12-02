@@ -266,6 +266,7 @@ Route::get('/dashboard/reports/export/payment/pdf', ['as'=>'reports.getpaymentsa
 Route::get('/dashboard/reports/export/db/backup', ['as'=>'reports.getdbbackup','uses'=>'ReportController@getDBBackup']);
 Route::get('/dashboard/reports/export/branch/members/pdf', ['as'=>'reports.getbranchmemberspaymentreport','uses'=>'ReportController@getPDFBranchMembersPayments']);
 Route::get('/dashboard/reports/export/branch/members/list/pdf', ['as'=>'reports.branchmemberslist','uses'=>'ReportController@getPDFBranchMembersList']);
+Route::get('/dashboard/reports/export/daterange/payment/pdf', ['as'=>'reports.getdaterangepayment','uses'=>'ReportController@getPDFDateRangePayment']);
 Route::get('/dashboard/reports/export/designation/members/list/pdf', ['as'=>'reports.designationsmemberslist','uses'=>'ReportController@getPDFDesignationMembersList']);
 
 //Fuads reports----
