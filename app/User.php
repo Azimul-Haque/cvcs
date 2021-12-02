@@ -38,6 +38,12 @@ class User extends Authenticatable
       return $this->belongsTo('App\Branch');
     }
 
+    // public function totalamount() {
+    //     return $this->hasOne('App\Payment')
+    //         ->selectRaw('sum(amount) as totalamount, member_id')
+    //         ->groupBy('member_id');
+    // }
+
     protected $fillable = [
         'name', 'email', 'password',
     ];
