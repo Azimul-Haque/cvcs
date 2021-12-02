@@ -76,7 +76,7 @@
           @endphp
         @else
         <tr>
-          <td>{{ $payment->member_id }}</td>
+          <td>ERROR: {{ $payment->member_id }}</td>
           <td></td>
           <td></td>
           <td></td>
