@@ -80,7 +80,7 @@
           <td>ERROR: {{ $payment->member_id }}</td>
           <td></td>
           <td></td>
-          <td></td>
+          <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
         </tr>
         @endif
       @endforeach

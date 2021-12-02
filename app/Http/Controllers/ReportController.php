@@ -278,6 +278,8 @@ class ReportController extends Controller
         $payments = Payment::select(['member_id', 'created_at', DB::raw("SUM(amount) as totalamount")])
                            ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"), '>=', date('Y-m-d', strtotime($request->startdate)))
                            ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"), '<=', date('Y-m-d', strtotime($request->enddate)))
+                           ->where('payment_status', '=', 1)
+                           ->where('is_archieved', '=', 0)
                            ->groupBy('member_id')
                            ->orderBy('member_id', 'ASC')
                            ->with('user')
