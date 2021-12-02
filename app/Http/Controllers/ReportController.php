@@ -281,7 +281,7 @@ class ReportController extends Controller
                            ->where('payment_status', '=', 1)
                            ->where('is_archieved', '=', 0)
                            ->groupBy('member_id')
-                           ->orderBy('member_id', 'ASC')
+                           ->orderBy('created_at', 'ASC')
                            ->with('user')
                            ->get();
                            // select('*', [DB::raw("SUM(amount) as totalamount")])
