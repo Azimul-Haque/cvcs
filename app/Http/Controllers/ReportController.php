@@ -283,8 +283,8 @@ class ReportController extends Controller
                            // select('*', [DB::raw("SUM(amount) as totalamount")])
         // dd($payments);
 
-        $pdf = PDF::loadView('dashboard.reports.pdf.daterangepayment', ['position' => $position, 'members' => $members]);
-        $fileName = 'CVCS_Designation_Members_List_Report.pdf';
-        return $pdf->download($fileName); // download
+        $pdf = PDF::loadView('dashboard.reports.pdf.daterangepayment', ['startdate' => $request->startdate, 'enddate' => $request->enddate, 'payments' => $payments]);
+        $fileName = 'CVCS_'. date('Y-m-d', strtotime($request->startdate)) .'_Report.pdf';
+        return $pdf->stream($fileName); // download
     }
 }
