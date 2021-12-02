@@ -45,8 +45,9 @@
     <table class="">
       <tr class="graybackground">
         <th>#</th>
-        <th width="60%">সদস্য</th>
-        <th>ছবি</th>
+        <th>সদস্য</th>
+        <th>পদবি</th>
+        <th>যোগাযোগ</th>
         <th>সদস্য কর্তৃক মোট পরিশোধ</th>
       </tr>
       @php
@@ -58,16 +59,17 @@
           <tr>
             <td align="center">{{ bangla($counter) }}</td>
             <td>
-              <b>{{ $payment->user->name_bangla }}</b>, {{ $payment->user->position->name }}<br/>
-              আইডিঃ {{ $payment->user->member_id }}, ফোনঃ {{ $payment->user->mobile }}
+              {{ $payment->user->name_bangla }}, আইডিঃ {{ $payment->user->member_id }}
             </td>
-            <td align="center">
-              {{-- @if($payment->user->image != null && file_exists(public_path('images/users/'.$payment->user->image)))
+            <td><small>{{ $payment->user->position->name }}, {{ $payment->user->branch->name }}</small></td>
+            <td>{{ $payment->user->mobile }}</td>
+            {{-- <td align="center">
+              @if($payment->user->image != null && file_exists(public_path('images/users/'.$payment->user->image)))
                  <img src="{{ public_path('images/users/'.$payment->user->image)}}" style="height: 50px; width: auto;" />
               @else
                 <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
-              @endif --}}
-            </td>
+              @endif
+            </td> --}}
             <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
           </tr>
           @php
@@ -79,15 +81,14 @@
           <td></td>
           <td>ERROR: {{ $payment->member_id }}</td>
           <td></td>
+          <td></td>
           <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
         </tr>
         @endif
       @endforeach
 
       <tr class="graybackground">
-        <th></th>
-        <th></th>
-        <th align="right">মোট</th>
+        <th colspan="4" align="right">মোট</th>
         <th>৳ {{ bangla($grandtotal) }}</th>
       </tr>
       
