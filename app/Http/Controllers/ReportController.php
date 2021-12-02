@@ -279,6 +279,7 @@ class ReportController extends Controller
                            ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"), '<=', date('Y-m-d', strtotime($request->enddate)))
                            ->groupBy('member_id')
                            ->orderBy('member_id', 'ASC')
+                           ->with('user')
                            ->get();
                            // select('*', [DB::raw("SUM(amount) as totalamount")])
         // dd($payments);
