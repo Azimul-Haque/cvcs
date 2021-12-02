@@ -78,7 +78,7 @@
         <tr>
           <td></td>
           <td>ERROR: {{ $payment->member_id }}</td>
-          <td></td>
+          <td>N/A</td>
           <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
         </tr>
         @endif
