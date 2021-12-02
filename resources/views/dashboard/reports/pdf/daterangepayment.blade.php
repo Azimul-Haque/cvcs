@@ -54,25 +54,27 @@
         $grandtotal = 0;
       @endphp
       @foreach($payments as $payment)
-        <tr>
-          <td align="center">{{ bangla($counter) }}</td>
-          <td>
-            <b>{{ $payment->user->name_bangla }}</b>, {{ $payment->user->position->name }}<br/>
-            আইডিঃ {{ $payment->user->member_id }}, ফোনঃ {{ $payment->user->mobile }}
-          </td>
-          <td align="center">
-            @if($payment->user->image != null && file_exists(public_path('images/users/'.$payment->user->image)))
-              <img src="{{ public_path('images/users/'.$payment->user->image)}}" style="height: 50px; width: auto;" />
-            @else
-              <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
-            @endif
-          </td>
-          <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
-        </tr>
-        @php
-          $counter++;
-          $grandtotal = $grandtotal + $payment->totalamount
-        @endphp
+        @if($payment->user)
+          <tr>
+            <td align="center">{{ bangla($counter) }}</td>
+            <td>
+              <b>{{ $payment->user->name_bangla }}</b>, {{ $payment->user->position->name }}<br/>
+              আইডিঃ {{ $payment->user->member_id }}, ফোনঃ {{ $payment->user->mobile }}
+            </td>
+            <td align="center">
+              @if($payment->user->image != null && file_exists(public_path('images/users/'.$payment->user->image)))
+                <img src="{{ public_path('images/users/'.$payment->user->image)}}" style="height: 50px; width: auto;" />
+              @else
+                <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
+              @endif
+            </td>
+            <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
+          </tr>
+          @php
+            $counter++;
+            $grandtotal = $grandtotal + $payment->totalamount
+          @endphp
+        @endif
       @endforeach
 
       <tr class="graybackground">
