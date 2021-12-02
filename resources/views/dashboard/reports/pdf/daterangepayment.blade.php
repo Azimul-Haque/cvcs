@@ -59,9 +59,13 @@
           <tr>
             <td align="center">{{ bangla($counter) }}</td>
             <td>
-              {{ $payment->user->name_bangla }}, আইডিঃ {{ $payment->user->member_id }}
+              {{ $payment->user->name_bangla }}<br/>
+              আইডিঃ {{ $payment->user->member_id }}
             </td>
-            <td><small>{{ $payment->user->position->name }}, {{ $payment->user->branch->name }}</small></td>
+            <td>
+              {{ $payment->user->position->name }}<br/>
+              {{ $payment->user->branch->name }}
+            </td>
             <td>{{ $payment->user->mobile }}</td>
             {{-- <td align="center">
               @if($payment->user->image != null && file_exists(public_path('images/users/'.$payment->user->image)))
