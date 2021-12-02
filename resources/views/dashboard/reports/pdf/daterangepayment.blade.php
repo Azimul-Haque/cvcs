@@ -57,7 +57,7 @@
         <tr>
           <td align="center">{{ bangla($counter) }}</td>
           <td>
-            <b>{{ $payment->user->name_bangla ? $payment->user->name_bangla : $payment->user->name }}</b>, {{ $payment->user->position->name }}<br/>
+            <b>{{ $payment->user->name ? $payment->user->name : $payment->user->name }}</b>, {{ $payment->user->position->name }}<br/>
             আইডিঃ {{ $payment->user->member_id }}, ফোনঃ {{ $payment->user->mobile }}
           </td>
           <td align="center">
