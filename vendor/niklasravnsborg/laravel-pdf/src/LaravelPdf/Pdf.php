@@ -19,16 +19,20 @@ class Pdf {
 	{
 		$this->config = $config;
 
+		// @see https://mpdf.github.io/reference/mpdf-functions/construct.html
 		$mpdf_config = [
-			'mode'                 =>   $this->getConfig('mode'),              // mode - default ''
-			'format'               =>   $this->getConfig('format'),            // format - A4, for example, default ''
-			'margin_left'          =>   $this->getConfig('margin_left'),       // margin_left
-			'margin_right'         =>   $this->getConfig('margin_right'),      // margin right
-			'margin_top'           =>   $this->getConfig('margin_top'),        // margin top
-			'margin_bottom'        =>   $this->getConfig('margin_bottom'),     // margin bottom
-			'margin_header'        =>   $this->getConfig('margin_header'),     // margin header
-			'margin_footer'        =>   $this->getConfig('margin_footer'),     // margin footer
-			'tempDir'              =>   $this->getConfig('tempDir')            // margin footer
+			'mode'              => $this->getConfig('mode'),              // Mode of the document.
+			'format'            => $this->getConfig('format'),            // Can be specified either as a pre-defined page size, or as an array of width and height in millimetres
+			'default_font_size' => $this->getConfig('default_font_size'), // Sets the default document font size in points (pt).
+			'default_font'      => $this->getConfig('default_font'),      // Sets the default font-family for the new document.
+			'margin_left'       => $this->getConfig('margin_left'),       // Set the page margins for the new document.
+			'margin_right'      => $this->getConfig('margin_right'),      // Set the page margins for the new document.
+			'margin_top'        => $this->getConfig('margin_top'),        // Set the page margins for the new document.
+			'margin_bottom'     => $this->getConfig('margin_bottom'),     // Set the page margins for the new document.
+			'margin_header'     => $this->getConfig('margin_header'),     // Set the page margins for the new document.
+			'margin_footer'     => $this->getConfig('margin_footer'),     // Set the page margins for the new document.
+			'orientation'       => $this->getConfig('orientation'),       // This attribute specifies the default page orientation of the new document if format is defined as an array. This value will be ignored if format is a string value.
+			'tempDir'           => $this->getConfig('tempDir')            // temporary directory
 		];
 
 		// Handle custom fonts
@@ -45,6 +49,19 @@ class Pdf {
 		$this->mpdf->SetSubject       ( $this->getConfig('subject') );
 		$this->mpdf->SetKeywords      ( $this->getConfig('keywords') );
 		$this->mpdf->SetDisplayMode   ( $this->getConfig('display_mode') );
+
+		if (!empty($this->getConfig('pdf_a'))) {
+			$this->mpdf->PDFA = $this->getConfig('pdf_a');           // Set the flag whether you want to use the pdfA-1b format
+			$this->mpdf->PDFAauto = $this->getConfig('pdf_a_auto');  // Overrides warnings making changes when possible to force PDFA1-b compliance;
+		}
+
+		if (!empty($this->getConfig('icc_profile_path'))) {
+			$this->mpdf->ICCProfile = $this->getConfig('icc_profile_path'); // Specify ICC colour profile
+		}
+
+		if (isset($this->config['instanceConfigurator']) && is_callable(($this->config['instanceConfigurator']))) {
+			$this->config['instanceConfigurator']($this->mpdf);
+		}
 
 		$this->mpdf->WriteHTML($html);
 	}

@@ -62,7 +62,7 @@ It is also possible to use the following methods on the `pdf` object:
 
 ## Config
 
-You can use a custom file to overwrite the default configuration. Just create `config/pdf.php` and add this:
+If you have published config file, you can change the default settings in `config/pdf.php` file:
 
 ```php
 return [
@@ -81,6 +81,16 @@ To override this configuration on a per-file basis use the fourth parameter of t
 PDF::loadView('pdf', $data, [], [
   'format' => 'A5-L'
 ])->save($pdfFilePath);
+```
+
+You can use a callback with the key 'instanceConfigurator' to access mpdf functions:
+```php
+$config = ['instanceConfigurator' => function($mpdf) {
+    $mpdf->SetImportUse();
+    $mpdf->SetDocTemplate(/path/example.pdf, true);
+}]
+ 
+PDF::loadView('pdf', $data, [], $config)->save($pdfFilePath);
 ```
 
 ## Headers and Footers
@@ -167,6 +177,15 @@ function generate_pdf() {
 ```
 
 Find more information to `SetProtection()` here: https://mpdf.github.io/reference/mpdf-functions/setprotection.html
+
+## Testing
+
+To use the testing suite, you need some extensions and binaries for your local PHP. On macOS, you can install them like this:
+
+```
+brew install imagemagick ghostscript
+pecl install imagick
+```
 
 ## License
 

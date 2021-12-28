@@ -3101,7 +3101,7 @@ class Otl
 		$ok = true;
 		$matches = [];
 		while ($ok) {
-			$x = ord($dict{$dictptr});
+			$x = ord($dict[$dictptr]);
 			$c = $this->OTLdata[$ptr]['uni'] & 0xFF;
 			if ($x == static::_DICT_INTERMEDIATE_MATCH) {
 //echo "DICT_INTERMEDIATE_MATCH: ".dechex($c).'<br />';
@@ -3120,11 +3120,11 @@ class Otl
 			} elseif ($x == static::_DICT_NODE_TYPE_LINEAR) {
 //echo "DICT_NODE_TYPE_LINEAR: ".dechex($c).'<br />';
 				$dictptr++;
-				$m = ord($dict{$dictptr});
+				$m = ord($dict[$dictptr]);
 				if ($c == $m) {
 					$ptr++;
 					if ($ptr > count($this->OTLdata) - 1) {
-						$next = ord($dict{$dictptr + 1});
+						$next = ord($dict[$dictptr + 1]);
 						if ($next == static::_DICT_INTERMEDIATE_MATCH || $next == static::_DICT_FINAL_MATCH) {
 							// Do not match if next character in text is a Mark
 							if (isset($this->OTLdata[$ptr]['uni']) && strpos($this->GlyphClassMarks, $this->OTLdata[$ptr]['hex']) === false) {
@@ -3142,13 +3142,13 @@ class Otl
 			} elseif ($x == static::_DICT_NODE_TYPE_SPLIT) {
 //echo "DICT_NODE_TYPE_SPLIT ON ".dechex($d).": ".dechex($c).'<br />';
 				$dictptr++;
-				$d = ord($dict{$dictptr});
+				$d = ord($dict[$dictptr]);
 				if ($c < $d) {
 					$dictptr += 5;
 				} else {
 					$dictptr++;
 					// Unsigned long 32-bit offset
-					$offset = (ord($dict{$dictptr}) * 16777216) + (ord($dict{$dictptr + 1}) << 16) + (ord($dict{$dictptr + 2}) << 8) + ord($dict{$dictptr + 3});
+					$offset = (ord($dict[$dictptr]) * 16777216) + (ord($dict[$dictptr + 1]) << 16) + (ord($dict[$dictptr + 2]) << 8) + ord($dict[$dictptr + 3]);
 					$dictptr = $offset;
 				}
 			} else {
@@ -4364,7 +4364,7 @@ class Otl
 			$this->seek($offset);
 			$ClassFormat = $this->read_ushort();
 			$GlyphClass = [];
-			//      $GlyphByClass = array(0=>array());  // NB This forces an index[0]
+			$GlyphByClass = [];
 			if ($ClassFormat == 1) {
 				$StartGlyph = $this->read_ushort();
 				$GlyphCount = $this->read_ushort();
@@ -4680,7 +4680,7 @@ class Otl
 				} else {
 					$gpos = '';
 				}
-				$chardata[] = ['char' => $chunkOTLdata['char_data'][$i]['uni'], 'level' => $cel, 'type' => $chardir, 'group' => $chunkOTLdata['group']{$i}, 'GPOSinfo' => $gpos];
+				$chardata[] = ['char' => $chunkOTLdata['char_data'][$i]['uni'], 'level' => $cel, 'type' => $chardir, 'group' => $chunkOTLdata['group'][$i], 'GPOSinfo' => $gpos];
 			}
 		}
 
@@ -5590,7 +5590,7 @@ class Otl
 				if (isset($cOTLdata[$nc]['char_data'][$i]['orig_type'])) {
 					$carac['orig_type'] = $cOTLdata[$nc]['char_data'][$i]['orig_type'];
 				}
-				$carac['group'] = $cOTLdata[$nc]['group']{$i};
+				$carac['group'] = $cOTLdata[$nc]['group'][$i];
 				$carac['chunkid'] = $chunkorder[$nc]; // gives font id and/or object ID
 
 				$maxlevel = max((isset($carac['level']) ? $carac['level'] : 0), $maxlevel);
@@ -5791,7 +5791,7 @@ class Otl
 
 	public function trimOTLdata(&$cOTLdata, $Left = true, $Right = true)
 	{
-		$len = $cOTLdata['char_data'] === null ? 0 : count($cOTLdata['char_data']);
+		$len = (!is_array($cOTLdata) || $cOTLdata['char_data'] === null) ? 0 : count($cOTLdata['char_data']);
 		$nLeft = 0;
 		$nRight = 0;
 		for ($i = 0; $i < $len; $i++) {
@@ -6135,16 +6135,25 @@ class Otl
 		if ($available == '') {
 			return '';
 		}
-		$tags = preg_split('/-/', $ietf);
+
+		$tags = $ietf
+			? preg_split('/-/', $ietf)
+			: [];
+
 		$lang = '';
 		$country = '';
 		$script = '';
-		$lang = strtolower($tags[0]);
+
+		$lang = isset($tags[0])
+			? strtolower($tags[0])
+			: '';
+
 		if (isset($tags[1]) && $tags[1]) {
 			if (strlen($tags[1]) == 2) {
 				$country = strtolower($tags[1]);
 			}
 		}
+
 		if (isset($tags[2]) && $tags[2]) {
 			$country = strtolower($tags[2]);
 		}
@@ -6156,6 +6165,7 @@ class Otl
 		} else {
 			$langsys = "DFLT";
 		}
+
 		if (strpos($available, $langsys) === false) {
 			if (strpos($available, "DFLT") !== false) {
 				return "DFLT";
@@ -6163,6 +6173,7 @@ class Otl
 				return '';
 			}
 		}
+
 		return $langsys;
 	}
 
