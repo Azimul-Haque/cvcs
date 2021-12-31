@@ -94,8 +94,8 @@
                     echo $from . '<br/>';
                     echo $to . '<br/>';
                     $totaldays = $to->diffInDays($from);
-                    if(($totaldays / (30 * 12)) > 2.5) {
-                      $totaldays = $totaldays - (($totaldays / (30 * 12)) - 1) * 5;
+                    if(($totaldays / 365) > 2.5) {
+                      $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
                     }
                     $totalmonthsformember = (int) floor($totaldays/30);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
@@ -114,8 +114,8 @@
                     echo $from . '<br/>';
                     echo $to . '<br/>';
                     $totaldays = $to->diffInDays($from);
-                    if(($totaldays / (30 * 12)) > 2) {
-                      $totaldays = $totaldays - ($totaldays / (30 * 12)) * 5;
+                    if(($totaldays / 365) > 2) {
+                      $totaldays = $totaldays - ($totaldays / 365) * 5;
                     }
                     $totalmonthsformember = (int) floor($totaldays/30);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
