@@ -60,7 +60,7 @@
         $grandtotal = 0;
       @endphp
       @foreach($payments as $payment)
-        @if($payment->user && $payment->totalamount > 2000)
+        @if($payment->user)
           <tr>
             <td align="center">{{ bangla($counter) }}</td>
             <td>
@@ -120,7 +120,6 @@
             <td align="center">৳ {{ bangla(number_format($totaladvancedmonthly, 0)) }}</td>
             <td align="center">৳ {{ bangla(number_format($payment->totalamount, 0)) }}</td>
           </tr>
-          
         @else
         <tr>
           <td align="center">{{ bangla($counter) }}</td>
