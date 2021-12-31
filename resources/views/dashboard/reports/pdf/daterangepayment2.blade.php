@@ -82,6 +82,7 @@
             <td align="center">
               @php
                   $approvedcashformontly = $payment->totalamount - 2000;
+                  $totaldays = 0;
                   $totalmonthsformember = 0;
                   $totalpaidmonthly = 0;
                   $totaladvancedmonthly = 0;
@@ -92,7 +93,11 @@
                     $to = Carbon\Carbon::parse($enddate . '11:59:59');
                     echo $from . '<br/>';
                     echo $to . '<br/>';
-                    $totalmonthsformember = $to->diffInDays($from);
+                    $totaldays = $to->diffInDays($from);
+                    if(($totaldays / (30 * 12)) > 2) {
+                      $totaldays = $totaldays - (($totaldays / (30 * 12)) - 1) * 5;
+                    }
+                    $totalmonthsformember = (int) floor($totaldays/30);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
                       $totalpaidmonthly = $totalmonthsformember * 300;
                       $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
@@ -108,7 +113,11 @@
                     $to = Carbon\Carbon::parse($enddate . '11:59:59');
                     echo $from . '<br/>';
                     echo $to . '<br/>';
-                    $totalmonthsformember = $to->diffInDays($from);
+                    $totaldays = $to->diffInDays($from);
+                    if(($totaldays / (30 * 12)) > 2) {
+                      $totaldays = $totaldays - ($totaldays / (30 * 12)) * 5;
+                    }
+                    $totalmonthsformember = (int) floor($totaldays/30);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
                       $totalpaidmonthly = $totalmonthsformember * 300;
                       $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
@@ -118,7 +127,7 @@
                     }
                   }
               @endphp
-              মোট মাসঃ {{ floor($totalmonthsformember/30) }}<br/>
+              মোট মাসঃ {{ $totalmonthsformember }}<br/>
               ৳ {{ bangla(local_currency($totalpaidmonthly)) }}
             </td>
             <td align="center">৳ {{ bangla(local_currency($totaladvancedmonthly)) }}</td>
