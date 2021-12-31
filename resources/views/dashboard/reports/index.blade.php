@@ -66,7 +66,7 @@
         <div class="box box-primary" id="beforedivheightcommodity">
           <div class="box-header with-border text-blue">
             <i class="fa fa-fw fa-bar-chart"></i>
-            <h3 class="box-title">তারিখভিত্তিক আদায়ের তালিকা (বিস্তারিত)</h3>
+            <h3 class="box-title">মাসভিত্তিক আদায়ের তালিকা</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
