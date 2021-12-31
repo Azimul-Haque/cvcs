@@ -87,15 +87,11 @@
                   $totalpaidmonthly = 0;
                   $totaladvancedmonthly = 0;
                   if($payment->user->joining_date == '' || $payment->user->joining_date == null || strtotime('31-01-2019') > strtotime($payment->user->joining_date)) {
-                    // $from = Carbon::createFromFormat('Y-m-d', strtotime('2019-1-1'));
                     $from = Carbon\Carbon::parse('2019-1-1');
-                    // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
                     $to = Carbon\Carbon::parse($enddate . '11:59:59');
                     $totaldays = $to->diffInDays($from);
                     if(($totaldays / 365) > 3) {
                       $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
-                      echo $totaldays . '<br/>';
-                      echo ($totaldays / 365) . '<br/>';
                     }
                     $totalmonthsformember = (int) floor($totaldays/30);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
@@ -107,15 +103,11 @@
                     }
                   } else {
                     $startmonth = date('Y-m-', strtotime($payment->user->joining_date));
-                    // $from = Carbon::createFromFormat('Y-m-d', strtotime($startmonth . '1'));
                     $from = Carbon\Carbon::parse($startmonth . '1');
-                    // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
                     $to = Carbon\Carbon::parse($enddate . '11:59:59');
                     $totaldays = $to->diffInDays($from);
                     if(($totaldays / 365) > 3) {
                       $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
-                      echo $totaldays . '<br/>';
-                      echo ($totaldays / 365) . '<br/>';
                     }
                     $totalmonthsformember = (int) floor($totaldays/30);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
