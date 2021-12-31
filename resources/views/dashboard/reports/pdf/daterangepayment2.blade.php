@@ -89,7 +89,7 @@
                     // $from = Carbon::createFromFormat('Y-m-d', strtotime('2019-1-1'));
                     $from = Carbon\Carbon::parse('2019-1-1');
                     // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
-                    $to = Carbon\Carbon::parse($enddate);
+                    $to = Carbon\Carbon::parse($enddate . '11:59:59');
                     echo $from . '<br/>';
                     echo $to . '<br/>';
                     $totalmonthsformember = $to->diffInDays($from);
