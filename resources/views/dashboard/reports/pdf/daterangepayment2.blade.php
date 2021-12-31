@@ -64,7 +64,7 @@
           <tr>
             <td align="center">{{ bangla($counter) }}</td>
             <td>
-              {{ $payment->user->joining_date > date('2019-01-01 00:00:00') ? 'Joining: ' . date('F, Y', strtotime($payment->user->joining_date)) : '' }}<br/>
+              {{-- {{ $payment->user->joining_date > date('2019-01-01 00:00:00') ? 'Joining: ' . date('F, Y', strtotime($payment->user->joining_date)) : '' }}<br/> --}}
               {{ $payment->user->name_bangla }}<br/>
               আইডিঃ {{ $payment->user->member_id }}
             </td>
@@ -119,7 +119,7 @@
                   }
                 }
               @endphp
-              মোট মাসঃ {{ $totalmonthsformember }}<br/>
+              {{-- মোট মাসঃ {{ $totalmonthsformember }}<br/> --}}
               ৳ {{ bangla(local_currency($totalpaidmonthly)) }}
             </td>
             <td align="center">৳ {{ bangla(local_currency($totaladvancedmonthly)) }}</td>
