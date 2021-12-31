@@ -95,6 +95,7 @@
                     if(($totaldays / 365) > 3) {
                       $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
                       echo $totaldays . '<br/>';
+                      echo ($totaldays / 365) . '<br/>';
                     }
                     $totalmonthsformember = (int) floor($totaldays/30);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
@@ -112,8 +113,9 @@
                     $to = Carbon\Carbon::parse($enddate . '11:59:59');
                     $totaldays = $to->diffInDays($from);
                     if(($totaldays / 365) > 3) {
-                      $totaldays = $totaldays - ($totaldays / 365) * 5;
+                      $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
                       echo $totaldays . '<br/>';
+                      echo ($totaldays / 365) . '<br/>';
                     }
                     $totalmonthsformember = (int) floor($totaldays/30);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
