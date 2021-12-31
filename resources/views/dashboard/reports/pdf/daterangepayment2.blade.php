@@ -90,8 +90,8 @@
                     $from = Carbon\Carbon::parse('2019-1-1');
                     // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
                     $to = Carbon\Carbon::parse($enddate);
-                    echo $from;
-                    echo $to;
+                    echo $from . <br/>;
+                    echo $to . <br/>;
                     $totalmonthsformember = $to->diffInMonths($from);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
                       $totalpaidmonthly = $totalmonthsformember * 300;
@@ -106,8 +106,8 @@
                     $from = Carbon\Carbon::parse($startmonth . '1');
                     // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
                     $to = Carbon\Carbon::parse($enddate);
-                    echo $from;
-                    echo $to;
+                    echo $from . <br/>;
+                    echo $to . <br/>;
                     $totalmonthsformember = $to->diffInMonths($from);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
                       $totalpaidmonthly = $totalmonthsformember * 300;
