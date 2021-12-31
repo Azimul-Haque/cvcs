@@ -143,10 +143,10 @@
 
       <tr class="graybackground">
         <th colspan="3" align="right">মোট</th>
-        <th>৳ {{ bangla($grandtotalshare) }}</th>
-        <th>৳ {{ bangla($grandtotalpaid) }}</th>
-        <th>৳ {{ bangla($grandtotaladvanced) }}</th>
-        <th>৳ {{ bangla($grandtotal) }}</th>
+        <th>৳ {{ bangla(number_format($grandtotalshare, 0)) }}</th>
+        <th>৳ {{ bangla(number_format($grandtotalpaid, 0)) }}</th>
+        <th>৳ {{ bangla(number_format($grandtotaladvanced, 0)) }}</th>
+        <th>৳ {{ bangla(number_format($grandtotal, 0)) }}</th>
       </tr>
       
     </table>
