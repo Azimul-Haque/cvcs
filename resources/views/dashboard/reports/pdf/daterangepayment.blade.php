@@ -78,7 +78,7 @@
           </tr>
           @php
             $counter++;
-            $grandtotal = $grandtotal + $payment->totalamount
+            $grandtotal = $grandtotal + $payment->totalamount;
           @endphp
         @else
         <tr>

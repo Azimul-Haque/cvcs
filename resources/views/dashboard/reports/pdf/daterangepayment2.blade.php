@@ -54,6 +54,9 @@
       </tr>
       @php
         $counter = 1;
+        $grandtotalshare = 0;
+        $grandtotalpaid = 0;
+        $grandtotaladvanced = 0;
         $grandtotal = 0;
       @endphp
       @foreach($payments as $payment)
@@ -75,7 +78,7 @@
                 <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
               @endif
             </td> --}}
-            <td align="center">৳ ২০০০</td>
+            <td align="center">৳ ২,০০০</td>
             <td align="center">
               @php
                   $approvedcashformontly = $payment->totalamount - 2000;
@@ -112,26 +115,31 @@
                     }
                   }
               @endphp
-              ৳ {{ bangla($totalpaidmonthly) }}
+              ৳ {{ bangla(number_format($totalpaidmonthly, 0)) }}
             </td>
-            <td align="center">৳ {{ bangla($totaladvancedmonthly) }}</td>
-            <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
+            <td align="center">৳ {{ bangla(number_format($totaladvancedmonthly, 0)) }}</td>
+            <td align="center">৳ {{ bangla(number_format($payment->totalamount, 0)) }}</td>
           </tr>
-          @php
-            $counter++;
-            $grandtotal = $grandtotal + $payment->totalamount
-          @endphp
+          
         @else
-        {{-- <tr>
-          <td></td>
+        <tr>
+          <td align="center">{{ bangla($counter) }}</td>
           <td>ERROR: {{ $payment->member_id }}</td>
           <td></td>
+          <td align="center">৳ ২,০০০</td>
           <td align="center">-</td>
           <td align="center">-</td>
-          <td align="center">-</td>
-          <td align="center">৳ {{ bangla($payment->totalamount - 2000) }}</td>
-        </tr> --}}
+          <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
+        </tr>
         @endif
+
+        @php
+          $counter++;
+          $grandtotalshare = $grandtotalshare + 2000;
+          $grandtotalpaid = $grandtotalpaid + $totalpaidmonthly;
+          $grandtotaladvanced = $grandtotaladvanced + $totaladvancedmonthly;
+          $grandtotal = $grandtotal + $payment->totalamount;
+        @endphp
       @endforeach
 
       <tr class="graybackground">
