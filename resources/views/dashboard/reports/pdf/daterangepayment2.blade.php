@@ -144,9 +144,9 @@
 
       <tr class="graybackground">
         <th colspan="3" align="right">মোট</th>
-        <th>৳ {{ bangla($grandtotal) }}</th>
-        <th>৳ {{ bangla($grandtotal) }}</th>
-        <th>৳ {{ bangla($grandtotal) }}</th>
+        <th>৳ {{ bangla($grandtotalshare) }}</th>
+        <th>৳ {{ bangla($grandtotalpaid) }}</th>
+        <th>৳ {{ bangla($grandtotaladvanced) }}</th>
         <th>৳ {{ bangla($grandtotal) }}</th>
       </tr>
       
