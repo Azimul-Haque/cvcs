@@ -81,43 +81,43 @@
             <td align="center">৳ ২,০০০</td>
             <td align="center">
               @php
-                  $approvedcashformontly = $payment->totalamount - 2000;
-                  $totaldays = 0;
-                  $totalmonthsformember = 0;
-                  $totalpaidmonthly = 0;
-                  $totaladvancedmonthly = 0;
-                  if($payment->user->joining_date == '' || $payment->user->joining_date == null || strtotime('31-01-2019') > strtotime($payment->user->joining_date)) {
-                    $from = Carbon\Carbon::parse('2019-1-1');
-                    $to = Carbon\Carbon::parse($enddate . '11:59:59');
-                    $totaldays = $to->diffInDays($from);
-                    if(($totaldays / 365) > 3) {
-                      $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
-                    }
-                    $totalmonthsformember = (int) floor($totaldays/30);
-                    if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
-                      $totalpaidmonthly = $totalmonthsformember * 300;
-                      $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
-                    } else {
-                      $totalpaidmonthly = $approvedcashformontly;
-                      $totaladvancedmonthly = 0;
-                    }
-                  } else {
-                    $startmonth = date('Y-m-', strtotime($payment->user->joining_date));
-                    $from = Carbon\Carbon::parse($startmonth . '1');
-                    $to = Carbon\Carbon::parse($enddate . '11:59:59');
-                    $totaldays = $to->diffInDays($from);
-                    if(($totaldays / 365) > 3) {
-                      $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
-                    }
-                    $totalmonthsformember = (int) floor($totaldays/30);
-                    if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
-                      $totalpaidmonthly = $totalmonthsformember * 300;
-                      $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
-                    } else {
-                      $totalpaidmonthly = $approvedcashformontly;
-                      $totaladvancedmonthly = 0;
-                    }
+                $approvedcashformontly = $payment->totalamount - 2000;
+                $totaldays = 0;
+                $totalmonthsformember = 0;
+                $totalpaidmonthly = 0;
+                $totaladvancedmonthly = 0;
+                if($payment->user->joining_date == '' || $payment->user->joining_date == null || strtotime('31-01-2019') > strtotime($payment->user->joining_date)) {
+                  $from = Carbon\Carbon::parse('2019-1-1');
+                  $to = Carbon\Carbon::parse($enddate . '11:59:59');
+                  $totaldays = $to->diffInDays($from);
+                  if(($totaldays / 365) > 3) {
+                    $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
                   }
+                  $totalmonthsformember = (int) floor($totaldays/30);
+                  if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
+                    $totalpaidmonthly = $totalmonthsformember * 300;
+                    $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
+                  } else {
+                    $totalpaidmonthly = $approvedcashformontly;
+                    $totaladvancedmonthly = 0;
+                  }
+                } else {
+                  $startmonth = date('Y-m-', strtotime($payment->user->joining_date));
+                  $from = Carbon\Carbon::parse($startmonth . '1');
+                  $to = Carbon\Carbon::parse($enddate . '11:59:59');
+                  $totaldays = $to->diffInDays($from);
+                  if(($totaldays / 365) > 3) {
+                    $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
+                  }
+                  $totalmonthsformember = (int) floor($totaldays/30);
+                  if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
+                    $totalpaidmonthly = $totalmonthsformember * 300;
+                    $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
+                  } else {
+                    $totalpaidmonthly = $approvedcashformontly;
+                    $totaladvancedmonthly = 0;
+                  }
+                }
               @endphp
               মোট মাসঃ {{ $totalmonthsformember }}<br/>
               ৳ {{ bangla(local_currency($totalpaidmonthly)) }}
