@@ -111,7 +111,7 @@
                     // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
                     $to = Carbon\Carbon::parse($enddate . '11:59:59');
                     $totaldays = $to->diffInDays($from);
-                    if(($totaldays / 365) > 2) {
+                    if(($totaldays / 365) > 3) {
                       $totaldays = $totaldays - ($totaldays / 365) * 5;
                       echo $totaldays . '<br/>';
                     }
