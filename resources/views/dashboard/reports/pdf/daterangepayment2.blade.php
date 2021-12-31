@@ -92,7 +92,7 @@
                     $to = Carbon\Carbon::parse($enddate);
                     echo $from . '<br/>';
                     echo $to . '<br/>';
-                    $totalmonthsformember = $to->diffInMonths($from);
+                    $totalmonthsformember = $to->diffInDays($from);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
                       $totalpaidmonthly = $totalmonthsformember * 300;
                       $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
@@ -105,10 +105,10 @@
                     // $from = Carbon::createFromFormat('Y-m-d', strtotime($startmonth . '1'));
                     $from = Carbon\Carbon::parse($startmonth . '1');
                     // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
-                    $to = Carbon\Carbon::parse($enddate);
+                    $to = Carbon\Carbon::parse($enddate . '11:59:59');
                     echo $from . '<br/>';
                     echo $to . '<br/>';
-                    $totalmonthsformember = $to->diffInMonths($from);
+                    $totalmonthsformember = $to->diffInDays($from);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
                       $totalpaidmonthly = $totalmonthsformember * 300;
                       $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
@@ -118,7 +118,7 @@
                     }
                   }
               @endphp
-              মোট মাসঃ {{ $totalmonthsformember }}<br/>
+              মোট মাসঃ {{ floor($totalmonthsformember/30) }}<br/>
               ৳ {{ bangla(number_format($totalpaidmonthly, 0)) }}
             </td>
             <td align="center">৳ {{ bangla(number_format($totaladvancedmonthly, 0)) }}</td>
