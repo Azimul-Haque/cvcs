@@ -94,7 +94,7 @@
                     echo $from . '<br/>';
                     echo $to . '<br/>';
                     $totaldays = $to->diffInDays($from);
-                    if(($totaldays / 365) > 2.5) {
+                    if(($totaldays / 365) > 3) {
                       $totaldays = $totaldays - (($totaldays / 365) - 1) * 5;
                     }
                     $totalmonthsformember = (int) floor($totaldays/30);
