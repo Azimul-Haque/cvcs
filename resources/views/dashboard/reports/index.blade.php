@@ -62,6 +62,28 @@
           </div>
           <!-- /.box-body -->
         </div>
+
+        <div class="box box-primary" id="beforedivheightcommodity">
+          <div class="box-header with-border text-blue">
+            <i class="fa fa-fw fa-bar-chart"></i>
+            <h3 class="box-title">তারিখভিত্তিক আদায়ের তালিকা (বিস্তারিত)</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {!! Form::open(['route' => 'reports.getdaterangepayment2', 'method' => 'GET']) !!}
+              <div class="form-group row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <input type="text" class="form-control" name="startdate" id="startdate2" value="January 01, 2019" placeholder="হতে" readonly="">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <input type="text" class="form-control" name="enddate" id="enddate2" placeholder="পর্যন্ত" readonly="">
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
+            {!! Form::close() !!}
+          </div>
+          <!-- /.box-body -->
+        </div>
       </div>
       <div class="col-md-4">
         <div class="box box-success" id="beforedivheightcommodity">
@@ -171,6 +193,18 @@
     });
 
     $("#enddate").datepicker({
+      format: 'MM dd, yyyy',
+      todayHighlight: true,
+      autoclose: true,
+    });
+    // $("#startdate2").datepicker({
+    //   format: 'MM dd, yyyy',
+    //   todayHighlight: true,
+    //   autoclose: true,
+    //   startDate: dateToday,
+    // });
+
+    $("#enddate2").datepicker({
       format: 'MM dd, yyyy',
       todayHighlight: true,
       autoclose: true,
