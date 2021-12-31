@@ -57,10 +57,11 @@
         $grandtotal = 0;
       @endphp
       @foreach($payments as $payment)
-        @if($payment->user)
+        @if($payment->user && $payment->totalamount > 2000)
           <tr>
-            <td align="center">{{ bangla($counter . 3899) }}</td>
+            <td align="center">{{ bangla($counter) }}</td>
             <td>
+              {{ $payment->user->joining_date > date('2019-01-01 00:00:00') ? date('F, Y', strtotime($payment->user->joining_date)) : '' }}<br/>
               {{ $payment->user->name_bangla }}<br/>
               আইডিঃ {{ $payment->user->member_id }}
             </td>
@@ -74,9 +75,46 @@
                 <img src="{{ public_path('images/user.png')}}" style="height: 50px; width: auto;" />
               @endif
             </td> --}}
-            <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
-            <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
-            <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
+            <td align="center">৳ ২০০০</td>
+            <td align="center">
+              @php
+                  $approvedcashformontly = $payment->totalamount - 2000;
+                  $totalmonthsformember = 0;
+                  $totalpaidmonthly = 0;
+                  $totaladvancedmonthly = 0;
+                  if($payment->user->joining_date == '' || $payment->user->joining_date == null || strtotime('31-01-2019') > strtotime($payment->user->joining_date)) {
+                    // $from = Carbon::createFromFormat('Y-m-d', strtotime('2019-1-1'));
+                    $from = Carbon\Carbon::parse('2019-1-1');
+                    // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
+                    $to = Carbon\Carbon::parse($enddate);
+                    $totalmonthsformember = $to->diffInMonths($from);
+                    if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
+                      $totalpaidmonthly = $totalmonthsformember * 300;
+                      $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
+                    } else {
+                      $totalpaidmonthly = $approvedcashformontly;
+                      $totaladvancedmonthly = 0;
+                    }
+                  } else {
+                    $startmonth = date('Y-m-', strtotime($payment->user->joining_date));
+                    // $from = Carbon::createFromFormat('Y-m-d', strtotime($startmonth . '1'));
+                    $from = Carbon\Carbon::parse($startmonth . '1');
+                    // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
+                    $to = Carbon\Carbon::parse($enddate);
+                    // echo $to;
+                    $totalmonthsformember = $to->diffInMonths($from);
+                    if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
+                      $totalpaidmonthly = $totalmonthsformember * 300;
+                      $totaladvancedmonthly = $approvedcashformontly - ($totalmonthsformember * 300);
+                    } else {
+                      $totalpaidmonthly = $approvedcashformontly;
+                      $totaladvancedmonthly = 0;
+                    }
+                  }
+              @endphp
+              ৳ {{ bangla($totalpaidmonthly) }}
+            </td>
+            <td align="center">৳ {{ bangla($totaladvancedmonthly) }}</td>
             <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
           </tr>
           @php
@@ -84,15 +122,15 @@
             $grandtotal = $grandtotal + $payment->totalamount
           @endphp
         @else
-        <tr>
+        {{-- <tr>
           <td></td>
           <td>ERROR: {{ $payment->member_id }}</td>
           <td></td>
-          <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
-          <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
-          <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
-          <td align="center">৳ {{ bangla($payment->totalamount) }}</td>
-        </tr>
+          <td align="center">-</td>
+          <td align="center">-</td>
+          <td align="center">-</td>
+          <td align="center">৳ {{ bangla($payment->totalamount - 2000) }}</td>
+        </tr> --}}
         @endif
       @endforeach
 
