@@ -119,10 +119,10 @@
                   }
               @endphp
               মোট মাসঃ {{ floor($totalmonthsformember/30) }}<br/>
-              ৳ {{ bangla(number_format($totalpaidmonthly, 0)) }}
+              ৳ {{ bangla(local_currency($totalpaidmonthly)) }}
             </td>
-            <td align="center">৳ {{ bangla(number_format($totaladvancedmonthly, 0)) }}</td>
-            <td align="center">৳ {{ bangla(number_format($payment->totalamount, 0)) }}</td>
+            <td align="center">৳ {{ bangla(local_currency($totaladvancedmonthly)) }}</td>
+            <td align="center">৳ {{ bangla(local_currency($payment->totalamount)) }}</td>
           </tr>
         @else
         <tr>
@@ -147,10 +147,10 @@
 
       <tr class="graybackground">
         <th colspan="3" align="right">মোট</th>
-        <th>৳ {{ bangla(number_format($grandtotalshare, 0)) }}</th>
-        <th>৳ {{ bangla(number_format($grandtotalpaid, 0)) }}</th>
-        <th>৳ {{ bangla(number_format($grandtotaladvanced, 0)) }}</th>
-        <th>৳ {{ bangla(number_format($grandtotal, 0)) }}</th>
+        <th>৳ {{ bangla(local_currency($grandtotalshare)) }}</th>
+        <th>৳ {{ bangla(local_currency($grandtotalpaid)) }}</th>
+        <th>৳ {{ bangla(local_currency($grandtotaladvanced)) }}</th>
+        <th>৳ {{ bangla(local_currency($grandtotal)) }}</th>
       </tr>
       
     </table>
