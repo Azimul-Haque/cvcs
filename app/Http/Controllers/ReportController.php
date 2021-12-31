@@ -300,10 +300,11 @@ class ReportController extends Controller
           'startdate' => 'required',
           'enddate'   => 'required'
         ));
-
+        $theenddate = date('Y-m-', strtotime($request->enddate)) . date('t', strtotime($request->enddate));
+        // dd(date('Y-m-d', strtotime($theenddate)));
         $payments = Payment::select(['member_id', 'created_at', DB::raw("SUM(amount) as totalamount")])
                            ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"), '>=', date('Y-m-d', strtotime($request->startdate)))
-                           ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"), '<=', date('Y-m-d', strtotime($request->enddate)))
+                           ->where(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d')"), '<=', date('Y-m-d', strtotime($theenddate)))
                            ->where('payment_status', '=', 1)
                            ->where('is_archieved', '=', 0)
                            ->groupBy('member_id')
@@ -313,7 +314,7 @@ class ReportController extends Controller
                            // select('*', [DB::raw("SUM(amount) as totalamount")])
         // dd($payments);
 
-        $pdf = PDF::loadView('dashboard.reports.pdf.daterangepayment2', ['startdate' => $request->startdate, 'enddate' => $request->enddate, 'payments' => $payments]);
+        $pdf = PDF::loadView('dashboard.reports.pdf.daterangepayment2', ['startdate' => $request->startdate, 'enddate' => $theenddate, 'payments' => $payments]);
         $fileName = 'CVCS_'. date('Y-m-d', strtotime($request->startdate)) .'-to-'. date('Y-m-d', strtotime($request->enddate)) .'_Report.pdf';
         return $pdf->stream($fileName); // download
     }

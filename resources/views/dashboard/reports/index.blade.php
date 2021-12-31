@@ -73,10 +73,10 @@
             {!! Form::open(['route' => 'reports.getdaterangepayment2', 'method' => 'GET']) !!}
               <div class="form-group row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                  <input type="text" class="form-control" name="startdate" id="startdate2" value="January 01, 2019" placeholder="হতে" readonly="">
+                  <input type="text" class="form-control" name="startdate" id="startdate2" value="January 2019" placeholder="হতে" readonly="">
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                  <input type="text" class="form-control" name="enddate" id="enddate2" placeholder="পর্যন্ত" readonly="">
+                  <input type="text" class="form-control" name="enddate" id="enddate2" placeholder="পর্যন্ত" readonly="" required>
                 </div>
               </div>
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> ডাউনলোড</button>
@@ -205,8 +205,9 @@
     // });
 
     $("#enddate2").datepicker({
-      format: 'MM dd, yyyy',
-      todayHighlight: true,
+      format: "MM yyyy",
+      startView: "months", 
+      minViewMode: "months",
       autoclose: true,
     });
 

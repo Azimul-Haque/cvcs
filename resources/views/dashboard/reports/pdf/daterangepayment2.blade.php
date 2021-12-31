@@ -90,6 +90,8 @@
                     $from = Carbon\Carbon::parse('2019-1-1');
                     // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
                     $to = Carbon\Carbon::parse($enddate);
+                    echo $from;
+                    echo $to;
                     $totalmonthsformember = $to->diffInMonths($from);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
                       $totalpaidmonthly = $totalmonthsformember * 300;
@@ -104,7 +106,8 @@
                     $from = Carbon\Carbon::parse($startmonth . '1');
                     // $to = Carbon::createFromFormat('Y-m-d', strtotime($enddate));
                     $to = Carbon\Carbon::parse($enddate);
-                    // echo $to;
+                    echo $from;
+                    echo $to;
                     $totalmonthsformember = $to->diffInMonths($from);
                     if($approvedcashformontly - ($totalmonthsformember * 300) > 0) {
                       $totalpaidmonthly = $totalmonthsformember * 300;
@@ -115,6 +118,7 @@
                     }
                   }
               @endphp
+              মোট মাসঃ {{ $totalmonthsformember }}<br/>
               ৳ {{ bangla(number_format($totalpaidmonthly, 0)) }}
             </td>
             <td align="center">৳ {{ bangla(number_format($totaladvancedmonthly, 0)) }}</td>
