@@ -297,14 +297,7 @@ class ReportController extends Controller
 
         $pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members, 'intotalmontlypaid' => $intotalmontlypaid, 'intotalmontlydues' => $intotalmontlydues]);
         $fileName = 'CVCS_Designation_Members_Details_Report.pdf';
-        return $pdf->stream($fileName); // download
-        // PURATON CODE
-        // PURATON CODE
-        // PURATON CODE
-
-        // $pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members]);
-        // $fileName = 'CVCS_Designation_Members_List_Report.pdf';
-        // return $pdf->stream($fileName); // download
+        return $pdf->download($fileName); // download
     }
 
     public function getDBBackup()
