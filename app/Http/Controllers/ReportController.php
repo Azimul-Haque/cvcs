@@ -261,7 +261,7 @@ class ReportController extends Controller
                         }])           
                        ->get();
 
-        // dd($members);
+        dd($members);
         $intotalmontlypaid = 0;
         $intotalmontlydues = 0;
 
