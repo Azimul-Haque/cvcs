@@ -254,7 +254,7 @@ class ReportController extends Controller
                        ->where('role_type', '!=', 'admin')                
                        ->where('position_id', $request->position_id)           
                        ->with(['payments' => function ($query) {
-                            // $query->orderBy('created_at', 'desc');
+                            $query->orderBy('created_at', 'desc');
                             $query->where('payment_status', '=', 1);
                             $query->where('is_archieved', '=', 0);
                             $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
