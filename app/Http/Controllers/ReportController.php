@@ -293,7 +293,7 @@ class ReportController extends Controller
         }
 
         $members = $members->orderBy('totalpendingmonthly', 'desc');
-        dd($members);
+        // dd($members);
 
         $pdf = PDF::loadView('dashboard.reports.pdf.designationmemberslist', ['position' => $position, 'members' => $members, 'intotalmontlypaid' => $intotalmontlypaid, 'intotalmontlydues' => $intotalmontlydues]);
         $fileName = 'CVCS_Designation_Members_Details_Report.pdf';
