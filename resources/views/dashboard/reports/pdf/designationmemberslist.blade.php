@@ -38,7 +38,7 @@
     কাস্টমস এন্ড ভ্যাট কো-অপারেটিভ সোসাইটি
   </h2>
   <p align="center" style="padding-top: -20px;">
-    <span style="font-size: 20px;">সদস্যভিত্তিক পরিশোধ-বকেয়া রিপোর্ট ({{ $branch->name }})</span><br/>
+    <span style="font-size: 20px;">সদস্যভিত্তিক পরিশোধ-বকেয়া রিপোর্ট ({{ $position->name }})</span><br/>
   </p>
   
   <div class="" style="padding-top: 0px;">
