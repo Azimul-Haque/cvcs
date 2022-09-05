@@ -262,42 +262,42 @@ class ReportController extends Controller
                        ->get();
 
         // dd($members);
-        // $intotalmontlypaid = 0;
-        // $intotalmontlydues = 0;
+        $intotalmontlypaid = 0;
+        $intotalmontlydues = 0;
 
-        // foreach ($members as $member) {
-        //     $approvedcashformontly = $member->payments->sum('amount');
-        //     $member->totalpendingmonthly = 0;
-        //     $intotalmontlypaid = $intotalmontlypaid + $approvedcashformontly;
-        //     if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
-        //     {
-        //         $thismonth = Carbon::now()->format('Y-m-');
-        //         $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
-        //         $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
-        //         $totalmonthsformember = $to->diffInMonths($from) + 1;
-        //         if(($totalmonthsformember * 300) > $approvedcashformontly) {
-        //           $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
-        //           $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
-        //         }
-        //     } else {
-        //         $startmonth = date('Y-m-', strtotime($member->joining_date));
-        //         $thismonth = Carbon::now()->format('Y-m-');
-        //         $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
-        //         $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
-        //         $totalmonthsformember = $to->diffInMonths($from) + 1;
-        //         if(($totalmonthsformember * 300) > $approvedcashformontly) {
-        //           $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
-        //           $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
-        //         }
-        //     }
-        // }
+        foreach ($members as $member) {
+            $approvedcashformontly = $member->payments->sum('amount');
+            $member->totalpendingmonthly = 0;
+            $intotalmontlypaid = $intotalmontlypaid + $approvedcashformontly;
+            if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
+            {
+                $thismonth = Carbon::now()->format('Y-m-');
+                $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
+                $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+                $totalmonthsformember = $to->diffInMonths($from) + 1;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+                  $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
+                }
+            } else {
+                $startmonth = date('Y-m-', strtotime($member->joining_date));
+                $thismonth = Carbon::now()->format('Y-m-');
+                $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
+                $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+                $totalmonthsformember = $to->diffInMonths($from) + 1;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+                  $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
+                }
+            }
+        }
 
-        // $members = $members->orderBy('totalpendingmonthly', 'desc');
-        // dd($members);
+        $members = $members->orderBy('totalpendingmonthly', 'desc');
+        dd($members);
 
-        // $pdf = PDF::loadView('dashboard.reports.pdf.branchmembersdetails', ['branch' => $branch, 'members' => $members, 'intotalmontlypaid' => $intotalmontlypaid, 'intotalmontlydues' => $intotalmontlydues]);
-        // $fileName = 'CVCS_Branch_Members_Details_Report.pdf';
-        // return $pdf->download($fileName); // download
+        $pdf = PDF::loadView('dashboard.reports.pdf.branchmembersdetails', ['branch' => $branch, 'members' => $members, 'intotalmontlypaid' => $intotalmontlypaid, 'intotalmontlydues' => $intotalmontlydues]);
+        $fileName = 'CVCS_Branch_Members_Details_Report.pdf';
+        return $pdf->download($fileName); // download
         // PURATON CODE
         // PURATON CODE
         // PURATON CODE
