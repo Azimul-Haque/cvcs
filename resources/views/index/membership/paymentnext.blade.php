@@ -27,7 +27,7 @@
                   <img src="{{ asset('images/aamarpay.png') }}" class="img-responsive margin-two">
                   {!! 
                   aamarpay_post_button([
-                      'tran_id'  => $member->trxid,
+                      'tran_id'   => $member->trxid,
                       'cus_name'  => $member->name,
                       'cus_email' => $member->email,
                       'cus_phone' => $member->mobile,
