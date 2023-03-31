@@ -65,7 +65,7 @@
         }
         $adhocmembers1->merge($adhocmembers2);
       @endphp
-      @foreach($adhocmembers as $member) 
+      @foreach($adhocmembers1 as $member) 
         {{-- ->sortBy('position_id') --}}
         <tr>
           <td align="center">{{ bangla($counter) }}</td>
