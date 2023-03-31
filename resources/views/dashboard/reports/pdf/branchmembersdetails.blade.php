@@ -67,7 +67,7 @@
         }
         $adhocmemberscol1 = collect($adhocmembers1);
         $adhocmemberscol2 = collect($adhocmembers2);
-        $adhocmemberscol1->merge($adhocmemberscol2);
+        // $adhocmemberscol1->merge($adhocmemberscol2);
         dd($adhocmemberscol1);
       @endphp
       @foreach($adhocmemberscol1 as $member) 
