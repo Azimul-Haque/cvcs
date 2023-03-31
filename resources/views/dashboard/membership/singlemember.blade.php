@@ -101,28 +101,11 @@
       <div class="small-box bg-aqua">
         <div class="inner">
           <h3>
-            @if(empty($pendingfordashboard->totalamount))
+            {{-- @if(empty($pendingfordashboard->totalamount))
               0.00
             @else
               {{ $pendingfordashboard->totalamount }}
-            @endif
-            <sup style="font-size: 20px">৳</sup>
-          </h3>
-
-          <p>প্রক্রিয়াধীন অর্থ</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-loop"></i>
-        </div>
-        {{-- <a href="{{ route('dashboard.memberpayment') }}" class="small-box-footer">আরও দেখুন <i class="fa fa-arrow-circle-right"></i></a> --}}
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-green">
-        <div class="inner">
-          <h3>
+            @endif --}}
             @if(empty($approvedfordashboard->totalamount))
               0.00
             @else
@@ -135,6 +118,28 @@
         </div>
         <div class="icon">
           <i class="ion ion-cash"></i>
+        </div>
+        {{-- <a href="{{ route('dashboard.memberpayment') }}" class="small-box-footer">আরও দেখুন <i class="fa fa-arrow-circle-right"></i></a> --}}
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>
+            @if(empty($totalpendingthiuser))
+              0.00
+            @else
+              {{ $totalpendingthiuser }}
+            @endif
+            <sup style="font-size: 20px">৳</sup>
+          </h3>
+
+          <p>বকেয়া অর্থ</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-loop"></i>
         </div>
         {{-- <a href="{{ route('dashboard.memberpayment') }}" class="small-box-footer">আরও দেখুন <i class="fa fa-arrow-circle-right"></i></a> --}}
       </div>
