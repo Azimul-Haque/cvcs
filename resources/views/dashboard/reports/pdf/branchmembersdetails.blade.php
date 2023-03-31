@@ -67,11 +67,11 @@
         }
         $adhocmemberscol1 = collect($adhocmembers1);
         $adhocmemberscol2 = collect($adhocmembers2);
-        $related = collect();
-        $related = $adhocmemberscol1->merge($adhocmemberscol2);
-        dd($related);
+        $mergedmembers = collect();
+        $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
+        // dd($mergedmembers);
       @endphp
-      @foreach($adhocmemberscol1 as $member) 
+      @foreach($mergedmembers as $member) 
         {{-- ->sortBy('position_id') --}}
         <tr>
           <td align="center">{{ bangla($counter) }}</td>
