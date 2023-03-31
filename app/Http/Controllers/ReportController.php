@@ -173,7 +173,7 @@ class ReportController extends Controller
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')                
                        ->where('branch_id', $request->branch_id)
-                       ->orderBy('created_at', 'desc')         
+                       ->orderBy('position_id', 'asc')         
                        ->with(['payments' => function ($query) {
                             // $query->orderBy('created_at', 'desc');
                             $query->where('payment_status', '=', 1);
