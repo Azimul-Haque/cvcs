@@ -63,7 +63,7 @@
             $adhocmembers2 = $member;
           }
         }
-        dd($adhocmembers2);
+        // dd($adhocmembers1);
         // $adhocmembers1->merge($adhocmembers2);
       @endphp
       @foreach($adhocmembers1 as $member) 
