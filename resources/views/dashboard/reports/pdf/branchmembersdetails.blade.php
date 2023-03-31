@@ -57,7 +57,7 @@
         $adhocmembers1 = [];
         $adhocmemberscol1 = collect();
         $adhocmembers2 = [];
-        $adhocmemberscol1 = collect();
+        $adhocmemberscol2 = collect();
         foreach($members as $member) {
           if($member->position_id == 34) {
             $adhocmembers1[] = $member;
@@ -65,10 +65,12 @@
             $adhocmembers2[] = $member;
           }
         }
+        $adhocmemberscol1 = collect($adhocmembers1);
+        $adhocmemberscol2 = collect($adhocmembers2);
         // dd($adhocmembers1);
-        // $adhocmembers1->merge($adhocmembers2);
+        $adhocmemberscol1->merge($adhocmemberscol2);
       @endphp
-      @foreach($adhocmembers1 as $member) 
+      @foreach($adhocmemberscol1 as $member) 
         {{-- ->sortBy('position_id') --}}
         <tr>
           <td align="center">{{ bangla($counter) }}</td>
