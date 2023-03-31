@@ -71,7 +71,8 @@
         $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
         // dd($mergedmembers);
       @endphp
-      @foreach($members->sortByDesc('totalpendingmonthly') as $member)
+      @foreach($members as $member)
+      {{-- ->sortByDesc('totalpendingmonthly') --}}
         <tr>
           <td align="center">{{ bangla($counter) }}</td>
           <td>
