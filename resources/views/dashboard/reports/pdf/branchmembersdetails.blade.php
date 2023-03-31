@@ -55,7 +55,7 @@
       @php
         $counter = 1;
       @endphp
-      @foreach($members->sortBy('position_id') as $member)
+      @foreach($members as $member)
         <tr>
           <td align="center">{{ bangla($counter) }}</td>
           <td>
