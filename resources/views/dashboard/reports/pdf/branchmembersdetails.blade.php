@@ -54,13 +54,13 @@
       </tr>
       @php
         $counter = 1;
-        $adhocmembers1 = collect();
-        $adhocmembers2 = collect();
+        $adhocmembers1 = [];
+        $adhocmembers2 = [];
         foreach($members as $member) {
           if($member->position_id == 34) {
-            $adhocmembers1 = $member;
+            $adhocmembers1[] = $member;
           } else {
-            $adhocmembers2 = $member;
+            $adhocmembers2[] = $member;
           }
         }
         // dd($adhocmembers1);
