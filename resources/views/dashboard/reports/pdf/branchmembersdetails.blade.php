@@ -63,6 +63,7 @@
             $adhocmembers2 = $member;
           }
         }
+        $adhocmembers1->merge($adhocmembers2);
       @endphp
       @foreach($adhocmembers as $member) 
         {{-- ->sortBy('position_id') --}}
