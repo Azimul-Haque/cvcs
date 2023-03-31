@@ -54,8 +54,8 @@
       </tr>
       @php
         $counter = 1;
-        $adhocmembers1 = Collection();
-        $adhocmembers2 = Collection();
+        $adhocmembers1 = new Collection();
+        $adhocmembers2 = new Collection();
         foreach($members as $member) {
           if($member->position_id == 34) {
             $adhocmembers1 = $member;
