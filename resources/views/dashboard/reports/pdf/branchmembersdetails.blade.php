@@ -67,8 +67,8 @@
         }
         $adhocmemberscol1 = collect($adhocmembers1);
         $adhocmemberscol2 = collect($adhocmembers2);
-        dd($adhocmembers2);
         $adhocmemberscol1->merge($adhocmemberscol2);
+        dd($adhocmembers2);
       @endphp
       @foreach($adhocmemberscol1 as $member) 
         {{-- ->sortBy('position_id') --}}
