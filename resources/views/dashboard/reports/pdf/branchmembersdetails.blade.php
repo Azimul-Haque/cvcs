@@ -55,7 +55,9 @@
       @php
         $counter = 1;
         $adhocmembers1 = [];
+        $adhocmemberscol1 = collect();
         $adhocmembers2 = [];
+        $adhocmemberscol1 = collect();
         foreach($members as $member) {
           if($member->position_id == 34) {
             $adhocmembers1[] = $member;
