@@ -2081,7 +2081,7 @@ class DashboardController extends Controller
               $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
             }
         }
-        $totalpendingthiuser = $intotalmontlydues;                       
+        $totalpendingthiuser = $intotalmontlydues + 2000; // BPATC FTC COMMIT                       
         // TOTAL PENDING
         // TOTAL PENDING
         // TOTAL PENDING
