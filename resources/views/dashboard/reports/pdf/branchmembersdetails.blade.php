@@ -54,8 +54,14 @@
       </tr>
       @php
         $counter = 1;
+        $adhocmembers = Collection();
+        foreach($members as $member) {
+          if($member->position_id == 34) {
+            $adhocmembers = $member;
+          }
+        }
       @endphp
-      @foreach($members->sortBy('position_id') as $member) 
+      @foreach($adhocmembers as $member) 
         {{-- ->sortBy('position_id') --}}
         <tr>
           <td align="center">{{ bangla($counter) }}</td>
