@@ -2058,7 +2058,6 @@ class DashboardController extends Controller
         $intotalmontlypaid = 0;
         $intotalmontlydues = 0;
         $approvedcashformontly = $member->payments->sum('amount');
-        dd($member->payments);
         $member->totalpendingmonthly = 0;
         $intotalmontlypaid = $intotalmontlypaid + $approvedcashformontly;
         if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
