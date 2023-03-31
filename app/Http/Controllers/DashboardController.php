@@ -2055,7 +2055,7 @@ class DashboardController extends Controller
         // TOTAL PENDING
         // TOTAL PENDING
         // TOTAL PENDING
-        $intotalmontlypaid = -2000;
+        $intotalmontlypaid = 0;
         $intotalmontlydues = 0;
         $approvedcashformontly = $member->payments->sum('amount');
         $member->totalpendingmonthly = 0;
