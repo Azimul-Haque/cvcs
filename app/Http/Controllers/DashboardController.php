@@ -2055,7 +2055,7 @@ class DashboardController extends Controller
         // TOTAL PENDING
         // TOTAL PENDING
         // TOTAL PENDING
-        $intotalmontlypaid = 0;
+        $intotalmontlypaid = -2000;
         $intotalmontlydues = 0;
         $approvedcashformontly = $member->payments->sum('amount');
         $member->totalpendingmonthly = 0;
@@ -2081,7 +2081,7 @@ class DashboardController extends Controller
               $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
             }
         }
-        $totalpendingthiuser = $intotalmontlydues + 2000; // BPATC FTC COMMIT                       
+        $totalpendingthiuser = $intotalmontlydues; // BPATC FTC COMMIT                       
         // TOTAL PENDING
         // TOTAL PENDING
         // TOTAL PENDING
