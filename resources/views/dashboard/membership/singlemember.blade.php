@@ -612,11 +612,7 @@
                 </td>
                 <td>N/A</td>
                 <td>
-                  @if($payment->payment_status == 0)
-                    <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
-                  @else
-                    <span class="badge badge-success"><i class="fa fa-check"></i>অনুমোদিত</span>
-                  @endif
+                  <span class="badge badge-success"><i class="fa fa-check"></i>অনুমোদিত</span>
                   <br/>
                   @if($payment->payment_type == 1)
                     <b>SINGLE</b>
