@@ -90,7 +90,7 @@
               <div class="modal fade" id="sendToDefectiveListModal" role="dialog">
                 <div class="modal-dialog modal-md">
                   <div class="modal-content">
-                    <div class="modal-header modal-header-danger">
+                    <div class="modal-header modal-header-warning">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> অসম্পূর্ণ আবেদন তালিকায় প্রেরণ</h4>
                     </div>
@@ -99,7 +99,7 @@
                     </div>
                     <div class="modal-footer">
                       {!! Form::model($application, ['route' => ['dashboard.makedefective', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
-                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-danger')) !!}
+                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-warning')) !!}
                           <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                       {!! Form::close() !!}
                     </div>
