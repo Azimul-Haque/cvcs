@@ -2218,7 +2218,7 @@ class DashboardController extends Controller
             }
         }
         $totalpendingthiuser = $intotalmontlydues; // BPATC FTC COMMIT     
-        dd($totalpendingthiuser);                
+        // dd($totalpendingthiuser);                
         // TOTAL PENDING
         // TOTAL PENDING
         // TOTAL PENDING
