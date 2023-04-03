@@ -2097,8 +2097,8 @@ class DashboardController extends Controller
 
         // for now, user can only see his profile, so if there is a change, then kaaj kora jaabe...
         if((Auth::user()->role == 'member') && ($member->unique_key != Auth::user()->unique_key)) {
-            Session::flash('warning', ' দুঃখিত, আপনার এই পাতাটি দেখার অনুমতি নেই!');
-            return redirect()->route('dashboard.memberpayment');
+            // Session::flash('warning', ' দুঃখিত, আপনার এই পাতাটি দেখার অনুমতি নেই!');
+            return redirect()->route('dashboard.members');
         }
 
         return view('dashboard.membership.singlemember')
