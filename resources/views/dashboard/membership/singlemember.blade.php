@@ -616,8 +616,8 @@
                   <br/>
                   <b>SINGLE</b>
                 </td>
-                <td align="right">৳ {{ $payment->amount }}</td>
-                <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
+                <td align="right">৳ ২০০০</td>
+                <td>N/A</td>
                 <td>{{ date('F d, Y h:i A', strtotime($member->created_at)) }}</td>
                 <td>
                 </td>
