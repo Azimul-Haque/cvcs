@@ -1843,12 +1843,14 @@ class DashboardController extends Controller
                             ->withMemberscount($memberscount);
     }
 
-    public function transferMember(Request $request)
+    public function transferMember(Request $request, $id)
     {
         $this->validate($request,array(
             'branch_id'        =>   'required',
             'confirmcheckbox'  =>   'required'
         ));
+
+        $member = User::find($id);
 
         return view('dashboard.membership.members')
                             ->withMembers($paginatedItems)
@@ -1856,7 +1858,7 @@ class DashboardController extends Controller
                             ->withMemberscount($memberscount);
     }
 
-    public function getMembersForAll(Request $request, $id)
+    public function getMembersForAll(Request $request)
     {
         $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
