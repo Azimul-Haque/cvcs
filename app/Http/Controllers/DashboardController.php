@@ -1956,7 +1956,9 @@ class DashboardController extends Controller
             } else {
                 $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
             }
-            foreach($row->branches as $branch) {
+
+            $branches = Branch::where('id', '>', 0)->get();
+            foreach($branches as $branch) {
                 $officelist .= '<option value="' . $branch->id . '">' . $branch->name . '</option>';
             }
             
