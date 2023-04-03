@@ -610,7 +610,7 @@
                 <td>
                   সদস্যপদ বাবদ
                 </td>
-                <td>{{ $payment->pay_slip }}<br/>{{ $payment->payment_key }}</td>
+                <td>N/A</td>
                 <td>
                   @if($payment->payment_status == 0)
                     <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
