@@ -102,6 +102,9 @@
                             <option value="{{ $branch->id }}" @if($branch->id == $member->branch_id) selected="" @endif>{{ $branch->name }}</option>
                           @endforeach
                       </select>
+                      <div class="checkbox">
+                        <label><input type="checkbox" value="">Option 1</label>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       
