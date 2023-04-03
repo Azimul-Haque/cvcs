@@ -95,7 +95,12 @@
                       <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> অসম্পূর্ণ আবেদন তালিকায় প্রেরণ</h4>
                     </div>
                     <div class="modal-body">
-                      আপনি কি এই আবেদনটি <b>অসম্পূর্ণ আবেদন তালিকায়</b> পাঠাতে চান?
+                      <select name="branch_id" id="branch_id" class="form-control" required="">
+                          <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                          @foreach($branches as $branch)
+                            <option value="{{ $branch->id }}" @if($branch->id == $application->branch_id) selected="" @endif>{{ $branch->name }}</option>
+                          @endforeach
+                      </select>
                     </div>
                     <div class="modal-footer">
                       {!! Form::model($member, ['route' => ['dashboard.makedefective', $member->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
