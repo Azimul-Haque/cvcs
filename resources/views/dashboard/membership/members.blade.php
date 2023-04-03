@@ -96,7 +96,6 @@
                     </div>
                     {!! Form::model($member, ['route' => ['dashboard.makedefective', $member->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
                     <div class="modal-body">
-                      <input type="hidden" name="member_id" value="$member->id">
                       <select name="branch_id" id="branch_id" class="form-control" required="">
                           <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
                           @foreach($branches as $branch)
