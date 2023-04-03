@@ -98,7 +98,7 @@
                       আপনি কি এই আবেদনটি <b>অসম্পূর্ণ আবেদন তালিকায়</b> পাঠাতে চান?
                     </div>
                     <div class="modal-footer">
-                      {!! Form::model($application, ['route' => ['dashboard.makedefective', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
+                      {!! Form::model($member, ['route' => ['dashboard.makedefective', $member->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
                           {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-warning')) !!}
                           <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                       {!! Form::close() !!}
