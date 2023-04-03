@@ -189,7 +189,7 @@
             <sup style="font-size: 20px">৳</sup>
           </h3>
 
-          <p>প্রক্রিয়াধীন অর্থ</p>
+          <p>বকেয়া অর্থ</p>
         </div>
         <div class="icon">
           <i class="ion ion-loop"></i>
