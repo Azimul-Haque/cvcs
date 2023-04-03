@@ -1957,7 +1957,7 @@ class DashboardController extends Controller
                 $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
             }
             foreach($branches as $branch) {
-                $officelist = "<option value="' . $branch->id . '">' . $branch->name . '</option>";
+                $officelist .= "<option value="' . $branch->id . '">' . $branch->name . '</option>";
             }
             
             
