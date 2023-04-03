@@ -1985,7 +1985,7 @@ class DashboardController extends Controller
                             {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-warning')) !!}
                             <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                       </div>
-                      {!! Form::close() !!}
+                      </form>
                     </div>
                   </div>
                 </div>
