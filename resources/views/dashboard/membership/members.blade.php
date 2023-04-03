@@ -103,7 +103,7 @@
                           @endforeach
                       </select><br/>
                       <div class="checkbox">
-                        <label><input type="checkbox" value="">Option 1</label>
+                        <label><input type="checkbox" value="">আপনি কি নিশ্চিতভাবে দপ্তর পরিবর্তন করতে চান?</label>
                       </div>
                     </div>
                     <div class="modal-footer">
