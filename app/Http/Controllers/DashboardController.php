@@ -1847,10 +1847,7 @@ class DashboardController extends Controller
     {
         $this->validate($request,array(
             'branch_id'        =>   'required',
-            'present_address'  =>   'required',
-            'mobile'           =>   'required',
-            'email'            =>   'required',
-            'image'            =>   'sometimes|image|max:250'
+            'confirmcheckbox'  =>   'required'
         ));
 
         return view('dashboard.membership.members')
