@@ -1955,6 +1955,7 @@ class DashboardController extends Controller
             } else {
                 $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
             }
+            $officelist = 
             $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
                 <a class="btn btn-sm btn-primary" href="'. route('dashboard.singleapplicationedit', $row->unique_key) .'" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
                 <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#sendToDefectiveListModal'. $row->member_id .'" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
