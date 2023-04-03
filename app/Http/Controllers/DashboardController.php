@@ -1854,6 +1854,7 @@ class DashboardController extends Controller
         $member->branch_id = $request->branch_id;
         $member->save();
 
+        Session::flash('success','সফলভাবে সদস্যের দপ্তর পরিবর্তন করা হয়েছে!');
         return view('dashboard.membership.members')
                             ->withMembers($paginatedItems)
                             ->withBranches($branches)
