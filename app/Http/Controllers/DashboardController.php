@@ -1957,17 +1957,17 @@ class DashboardController extends Controller
             }
             $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
                 <a class="btn btn-sm btn-primary" href="'. route('dashboard.singleapplicationedit', $row->unique_key) .'" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
-                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#sendToDefectiveListModal'. $member->id .'" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#sendToDefectiveListModal'. $row->member_id .'" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
                 <!-- Transfer Member Modal -->
                 <!-- Transfer Member Modal -->
-                <div class="modal fade" id="sendToDefectiveListModal'. $member->id .'" role="dialog">
+                <div class="modal fade" id="sendToDefectiveListModal'. $row->member_id .'" role="dialog">
                   <div class="modal-dialog modal-md">
                     <div class="modal-content">
                       <div class="modal-header modal-header-warning">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><i class="fa fa-fw fa-exchange"></i> দপ্তর পরিবর্তন করুন</h4>
                       </div>
-                      <form method="POST" class="form-default" action="' . route('dashboard.transfermember', $member->id) . '">
+                      <form method="POST" class="form-default" action="' . route('dashboard.transfermember', $row->member_id) . '">
                       @csrf
                       <div class="modal-body">
                         <select name="branch_id" id="branch_id" class="form-control" required="">
