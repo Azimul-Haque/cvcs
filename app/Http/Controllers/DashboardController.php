@@ -1855,10 +1855,7 @@ class DashboardController extends Controller
         $member->save();
 
         Session::flash('success','সফলভাবে সদস্যের দপ্তর পরিবর্তন করা হয়েছে!');
-        return view('dashboard.membership.members')
-                            ->withMembers($paginatedItems)
-                            ->withBranches($branches)
-                            ->withMemberscount($memberscount);
+        return redirect()->route('dashboard.members');
     }
 
     public function getMembersForAll(Request $request)
