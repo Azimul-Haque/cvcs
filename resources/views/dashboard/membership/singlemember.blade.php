@@ -614,11 +614,7 @@
                 <td>
                   <span class="badge badge-success"><i class="fa fa-check"></i>অনুমোদিত</span>
                   <br/>
-                  @if($payment->payment_type == 1)
-                    <b>SINGLE</b>
-                  @elseif($payment->payment_type == 2)
-                    <b>BULK</b>
-                  @endif
+                  <b>SINGLE</b>
                 </td>
                 <td align="right">৳ {{ $payment->amount }}</td>
                 <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
