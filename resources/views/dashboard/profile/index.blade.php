@@ -181,10 +181,10 @@
       <div class="small-box bg-aqua">
         <div class="inner">
           <h3>
-            @if(empty($pendingfordashboard->totalamount))
+            @if(empty($totalpendingthiuser))
               0.00
             @else
-              {{ $pendingfordashboard->totalamount }}
+              {{ $totalpendingthiuser }}
             @endif
             <sup style="font-size: 20px">৳</sup>
           </h3>
