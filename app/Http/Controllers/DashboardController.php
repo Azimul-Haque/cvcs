@@ -2179,7 +2179,40 @@ class DashboardController extends Controller
                                          ->where('member_id', $member->member_id)
                                          ->get()
                                          ->count();
-
+        // TOTAL PENDING
+        // TOTAL PENDING
+        // TOTAL PENDING
+        $intotalmontlypaid = 0;
+        $intotalmontlydues = 0;
+        $approvedcashformontly = $member->payments->sum('amount');
+        $member->totalpendingmonthly = 0;
+        $intotalmontlypaid = $intotalmontlypaid + $approvedcashformontly;
+        if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
+        {
+            $thismonth = Carbon::now()->format('Y-m-');
+            $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
+            $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+            $totalmonthsformember = $to->diffInMonths($from) + 1;
+            if(($totalmonthsformember * 300) > $approvedcashformontly) {
+              $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+              $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
+            }
+        } else {
+            $startmonth = date('Y-m-', strtotime($member->joining_date));
+            $thismonth = Carbon::now()->format('Y-m-');
+            $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
+            $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+            $totalmonthsformember = $to->diffInMonths($from) + 1;
+            if(($totalmonthsformember * 300) > $approvedcashformontly) {
+              $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+              $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
+            }
+        }
+        $totalpendingthiuser = $intotalmontlydues; // BPATC FTC COMMIT                       
+        // TOTAL PENDING
+        // TOTAL PENDING
+        // TOTAL PENDING
+        
         return view('dashboard.profile.index')
                     ->withPositions($positions)
                     ->withBranches($branches)
