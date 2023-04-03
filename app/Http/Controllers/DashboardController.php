@@ -2212,7 +2212,7 @@ class DashboardController extends Controller
         // TOTAL PENDING
         // TOTAL PENDING
         // TOTAL PENDING
-        
+
         return view('dashboard.profile.index')
                     ->withPositions($positions)
                     ->withBranches($branches)
@@ -2220,7 +2220,8 @@ class DashboardController extends Controller
                     ->withPendingfordashboard($pendingfordashboard)
                     ->withApprovedfordashboard($approvedfordashboard)
                     ->withPendingcountdashboard($pendingcountdashboard)
-                    ->withApprovedcountdashboard($approvedcountdashboard);
+                    ->withApprovedcountdashboard($approvedcountdashboard)
+                    ->withTotalpendingthiuser($totalpendingthiuser);
     }
 
     public function updateMemberProfile(Request $request, $id) 
