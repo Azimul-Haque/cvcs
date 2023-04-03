@@ -92,7 +92,7 @@
                   <div class="modal-content">
                     <div class="modal-header modal-header-warning">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> অসম্পূর্ণ আবেদন তালিকায় প্রেরণ</h4>
+                      <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> দপ্তর পরিবর্তন করুন</h4>
                     </div>
                     {!! Form::model($member, ['route' => ['dashboard.makedefective', $member->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
                     <div class="modal-body">
