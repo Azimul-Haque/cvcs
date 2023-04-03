@@ -2155,7 +2155,15 @@ class DashboardController extends Controller
     {
         $positions = Position::where('id', '>', 0)->get();
         $branches = Branch::where('id', '>', 0)->get();
-        $member = User::find(Auth::user()->id);
+        // $member = User::find(Auth::user()->id);
+        $member = User::where('id', Auth::user()->id)
+                      ->with(['payments' => function ($query) {
+                            // $query->orderBy('created_at', 'desc');
+                            $query->where('payment_status', '=', 1);
+                            $query->where('is_archieved', '=', 0);
+                            $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
+                      }])
+                      ->first();
 
         $pendingfordashboard = DB::table('payments')
                                  ->select(DB::raw('SUM(amount) as totalamount'))
@@ -2187,6 +2195,7 @@ class DashboardController extends Controller
         $approvedcashformontly = $member->payments->sum('amount');
         $member->totalpendingmonthly = 0;
         $intotalmontlypaid = $intotalmontlypaid + $approvedcashformontly;
+        dd($approvedcashformontly);
         if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
         {
             $thismonth = Carbon::now()->format('Y-m-');
