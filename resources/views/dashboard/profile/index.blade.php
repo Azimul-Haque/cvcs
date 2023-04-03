@@ -192,7 +192,7 @@
           <p>বকেয়া অর্থ</p>
         </div>
         <div class="icon">
-          <i class="ion ion-loop"></i>
+          <i class="ion ion-cash"></i>
         </div>
         <a href="{{ route('dashboard.memberpayment') }}" class="small-box-footer">আরও দেখুন <i class="fa fa-arrow-circle-right"></i></a>
       </div>
