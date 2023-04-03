@@ -1958,8 +1958,6 @@ class DashboardController extends Controller
             $output .= '<td><a class="btn btn-sm btn-success" href="'. route('dashboard.singlemember', $row->unique_key) .'" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
                 <a class="btn btn-sm btn-primary" href="'. route('dashboard.singleapplicationedit', $row->unique_key) .'" title="আবেদনটি সম্পাদনা করুণ"><i class="fa fa-edit"></i></a>
                 <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#sendToDefectiveListModal'. $row->member_id .'" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
-                <!-- Transfer Member Modal -->
-                <!-- Transfer Member Modal -->
                 <div class="modal fade" id="sendToDefectiveListModal'. $row->member_id .'" role="dialog">
                   <div class="modal-dialog modal-md">
                     <div class="modal-content">
@@ -1988,8 +1986,6 @@ class DashboardController extends Controller
                     </div>
                   </div>
                 </div>
-                <!-- Transfer Member Modal -->
-                <!-- Transfer Member Modal -->
               </td>
             </tr>';
            }
