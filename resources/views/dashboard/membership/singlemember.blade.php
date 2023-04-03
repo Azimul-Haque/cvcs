@@ -605,7 +605,7 @@
                   পরিশোধকারীঃ
                   <a href="{{ route('dashboard.singlemember', $member->unique_key) }}">{{ $member->name_bangla }}</a>
                   <br/>
-                  জমাদানকারীঃ <a href="{{ route('dashboard.singlemember', $payment->payee->unique_key) }}">{{ $payment->payee->name_bangla }}</a>
+                  জমাদানকারীঃ <a href="{{ route('dashboard.singlemember', $member->unique_key) }}">{{ $paymmember->name_bangla }}</a>
                 </td>
                 <td>
                   @if($payment->payment_category == 0)
