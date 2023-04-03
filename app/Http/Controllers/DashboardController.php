@@ -1968,7 +1968,7 @@ class DashboardController extends Controller
                         <h4 class="modal-title"><i class="fa fa-fw fa-exchange"></i> দপ্তর পরিবর্তন করুন</h4>
                       </div>
                       <form method="POST" class="form-default" action="' . route('dashboard.transfermember', $member->id) . '">
-                      
+                      @csrf
                       <div class="modal-body">
                         <select name="branch_id" id="branch_id" class="form-control" required="">
                             <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
