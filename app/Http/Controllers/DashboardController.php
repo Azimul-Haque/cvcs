@@ -52,7 +52,7 @@ class DashboardController extends Controller
         parent::__construct();
         
         $this->middleware('auth')->except('paymentVerification');
-        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'paymentSuccessOrFailed', 'paymentCancelledPost', 'paymentCancelled', 'getBulkPaymentPage', 'paymentBulkSuccessOrFailed', 'paymentBulkCancelledPost', 'paymentBulkCancelled', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI', 'curlAamarpay', 'paymentVerification', 'getSignleApplicationEdit', 'updateSignleApplication');
+        $this->middleware('admin')->except('getBlogs', 'getProfile', 'getPaymentPage', 'getSingleMember', 'getSelfPaymentPage', 'storeSelfPayment', 'getSelfPaymentOnlinePage', 'nextSelfPaymentOnline', 'paymentSuccessOrFailed', 'paymentCancelledPost', 'paymentCancelled', 'getBulkPaymentPage', 'paymentBulkSuccessOrFailed', 'paymentBulkCancelledPost', 'paymentBulkCancelled', 'searchMemberForBulkPaymentAPI', 'findMemberForBulkPaymentAPI', 'storeBulkPayment', 'getMemberTransactionSummary', 'getMemberUserManual', 'getMemberChangePassword', 'memberChangePassword', 'downloadMemberPaymentPDF', 'downloadMemberCompletePDF', 'updateMemberProfile', 'getApplications', 'searchApplicationAPI', 'getDefectiveApplications', 'searchDefectiveApplicationAPI', 'getMembers', 'searchMemberAPI2', 'getMembersForAll', 'searchMemberAPI3', 'searchMemberForBulkPaymentSingleAPI', 'curlAamarpay', 'paymentVerification');
     }
 
     /**
@@ -2097,8 +2097,8 @@ class DashboardController extends Controller
 
         // for now, user can only see his profile, so if there is a change, then kaaj kora jaabe...
         if((Auth::user()->role == 'member') && ($member->unique_key != Auth::user()->unique_key)) {
-            // Session::flash('warning', ' দুঃখিত, আপনার এই পাতাটি দেখার অনুমতি নেই!');
-            return redirect()->route('dashboard.members');
+            Session::flash('warning', ' দুঃখিত, আপনার এই পাতাটি দেখার অনুমতি নেই!');
+            return redirect()->route('dashboard.memberpayment');
         }
 
         return view('dashboard.membership.singlemember')
