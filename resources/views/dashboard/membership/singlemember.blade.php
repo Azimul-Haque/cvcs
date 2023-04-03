@@ -616,7 +616,7 @@
                   <br/>
                   <b>SINGLE</b>
                 </td>
-                <td align="right">৳ 3000</td>
+                <td align="right">৳ 2000</td>
                 <td>N/A</td>
                 <td>{{ date('F d, Y h:i A', strtotime($member->created_at)) }}</td>
                 <td>
