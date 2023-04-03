@@ -94,6 +94,7 @@
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> অসম্পূর্ণ আবেদন তালিকায় প্রেরণ</h4>
                     </div>
+                    {!! Form::model($member, ['route' => ['dashboard.makedefective', $member->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
                     <div class="modal-body">
                       <select name="branch_id" id="branch_id" class="form-control" required="">
                           <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
@@ -103,11 +104,11 @@
                       </select>
                     </div>
                     <div class="modal-footer">
-                      {!! Form::model($member, ['route' => ['dashboard.makedefective', $member->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
+                      
                           {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-warning')) !!}
                           <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
-                      {!! Form::close() !!}
                     </div>
+                    {!! Form::close() !!}
                   </div>
                 </div>
               </div>
