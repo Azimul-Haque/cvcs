@@ -1851,6 +1851,8 @@ class DashboardController extends Controller
         ));
 
         $member = User::find($id);
+        $member->branch_id = $request->branch_id;
+        $member->save();
 
         return view('dashboard.membership.members')
                             ->withMembers($paginatedItems)
