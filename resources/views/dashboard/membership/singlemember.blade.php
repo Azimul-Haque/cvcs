@@ -618,7 +618,7 @@
                 </td>
                 <td align="right">৳ {{ $payment->amount }}</td>
                 <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
-                <td>{{ date('F d, Y h:i A', strtotime($payment->created_at)) }}</td>
+                <td>{{ date('F d, Y h:i A', strtotime($member->created_at)) }}</td>
                 <td>
                 </td>
               </tr>
