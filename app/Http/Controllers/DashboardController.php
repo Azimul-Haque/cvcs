@@ -1967,7 +1967,7 @@ class DashboardController extends Controller
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><i class="fa fa-fw fa-exchange"></i> দপ্তর পরিবর্তন করুন</h4>
                       </div>
-                      <form method="PUT" class="form-default" action="' . route('dashboard.transfermember', $member->id) . '">
+                      <form method="POST" class="form-default" action="' . route('dashboard.transfermember', $member->id) . '">
                       
                       <div class="modal-body">
                         <select name="branch_id" id="branch_id" class="form-control" required="">
