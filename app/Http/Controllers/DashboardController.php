@@ -1968,7 +1968,24 @@ class DashboardController extends Controller
                         <h4 class="modal-title"><i class="fa fa-fw fa-exchange"></i> দপ্তর পরিবর্তন করুন</h4>
                       </div>
                       <form method="PUT" class="form-default" >
-                      </form>
+                      {!! Form::model($member, ['route' => ['dashboard.transfermember', ' .$member->id. '], 'method' => 'PUT', 'class' => 'form-default']) !!}
+                      <div class="modal-body">
+                        <select name="branch_id" id="branch_id" class="form-control" required="">
+                            <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                            @foreach($branches as $branch)
+                              <option value="' . $branch->id . '" @if($branch->id == $member->branch_id) selected="" @endif>{{ $branch->name }}</option>
+                            @endforeach
+                        </select><br/>
+                        <div class="checkbox">
+                          <label><input type="checkbox" name="confirmcheckbox" value="1" required>আপনি কি নিশ্চিতভাবে দপ্তর পরিবর্তন করতে চান? (চেক বাটনে ক্লিক করুন)</label>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        
+                            {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-warning')) !!}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                      </div>
+                      {!! Form::close() !!}
                     </div>
                   </div>
                 </div>
