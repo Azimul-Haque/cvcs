@@ -1909,6 +1909,7 @@ class DashboardController extends Controller
         if($request->ajax())
         {
           $output = '';
+          $officelist = '';
           $query = $request->get('query');
           if($query != '')
           {
