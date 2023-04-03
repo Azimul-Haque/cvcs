@@ -1973,7 +1973,7 @@ class DashboardController extends Controller
                         <select name="branch_id" id="branch_id" class="form-control" required="">
                             <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
                             @foreach($branches as $branch)
-                              <option value="' . $row->branch_id . '">' . $branch->name . '</option>
+                              <option value="' . $row->branch_id . '">' . $row->branch->name . '</option>
                             @endforeach
                         </select><br/>
                         <div class="checkbox">
