@@ -1856,7 +1856,7 @@ class DashboardController extends Controller
                             ->withMemberscount($memberscount);
     }
 
-    public function getMembersForAll(Request $request)
+    public function getMembersForAll(Request $request, $id)
     {
         $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
