@@ -1976,9 +1976,7 @@ class DashboardController extends Controller
                       <div class="modal-body">
                         <select name="branch_id" id="branch_id" class="form-control" required="">
                             <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
-                            @foreach($branches as $branch)
-                              <option value="' . $row->branch_id . '">' . $row->branch->name . '</option>
-                            @endforeach
+                            ' . $officelist . '
                         </select><br/>
                         <div class="checkbox">
                           <label><input type="checkbox" name="confirmcheckbox" value="1" required>আপনি কি নিশ্চিতভাবে দপ্তর পরিবর্তন করতে চান? (চেক বাটনে ক্লিক করুন)</label>
