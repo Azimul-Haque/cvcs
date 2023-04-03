@@ -608,11 +608,7 @@
                   জমাদানকারীঃ <a href="{{ route('dashboard.singlemember', $member->unique_key) }}">{{ $paymmember->name_bangla }}</a>
                 </td>
                 <td>
-                  @if($payment->payment_category == 0)
-                    সদস্যপদ বাবদ
-                  @else
-                    মাসিক পরিশোধ
-                  @endif
+                  সদস্যপদ বাবদ
                 </td>
                 <td>{{ $payment->pay_slip }}<br/>{{ $payment->payment_key }}</td>
                 <td>
