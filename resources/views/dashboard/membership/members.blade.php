@@ -85,6 +85,29 @@
               {{-- <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#deleteMemberModal{{ $member->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
               <a class="btn btn-sm btn-primary" href="{{ route('dashboard.singleapplicationedit', $member->unique_key) }}" title="সদস্য তথ্য সম্পাদনা করুন"><i class="fa fa-edit"></i></a>
               <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
+              <!-- Send To Defective List Modal -->
+              <!-- Send To Defective List Modal -->
+              <div class="modal fade" id="sendToDefectiveListModal" role="dialog">
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header modal-header-danger">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> অসম্পূর্ণ আবেদন তালিকায় প্রেরণ</h4>
+                    </div>
+                    <div class="modal-body">
+                      আপনি কি এই আবেদনটি <b>অসম্পূর্ণ আবেদন তালিকায়</b> পাঠাতে চান?
+                    </div>
+                    <div class="modal-footer">
+                      {!! Form::model($application, ['route' => ['dashboard.makedefective', $application->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
+                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-danger')) !!}
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                      {!! Form::close() !!}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Send To Defective List Modal -->
+              <!-- Send To Defective List Modal -->
             </td>
           </tr>
           @endforeach
