@@ -603,11 +603,7 @@
               <tr>
                 <td>
                   পরিশোধকারীঃ
-                  @if(($payment->payment_type == 2) && ($payment->payment_status == 0))
-                    একাধিক
-                  @else
-                    <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
-                  @endif
+                  <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
                   <br/>
                   জমাদানকারীঃ <a href="{{ route('dashboard.singlemember', $payment->payee->unique_key) }}">{{ $payment->payee->name_bangla }}</a>
                 </td>
