@@ -84,8 +84,7 @@
               <a class="btn btn-sm btn-success" href="{{ route('dashboard.singlemember', $member->unique_key) }}" title="সদস্য তথ্য দেখুন"><i class="fa fa-eye"></i></a>
               {{-- <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#deleteMemberModal{{ $member->id }}" data-backdrop="static"><i class="fa fa-trash-o"></i></button> --}}
               <a class="btn btn-sm btn-primary" href="{{ route('dashboard.singleapplicationedit', $member->unique_key) }}" title="সদস্য তথ্য সম্পাদনা করুন"><i class="fa fa-edit"></i></a>
-              <a class="btn btn-sm btn-warning" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-exchange"></i></a>
-              <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i></a>
+              <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#sendToDefectiveListModal" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
             </td>
           </tr>
           @endforeach
