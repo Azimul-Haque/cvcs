@@ -101,7 +101,7 @@
                           @foreach($branches as $branch)
                             <option value="{{ $branch->id }}" @if($branch->id == $member->branch_id) selected="" @endif>{{ $branch->name }}</option>
                           @endforeach
-                      </select>
+                      </select><br/>
                       <div class="checkbox">
                         <label><input type="checkbox" value="">Option 1</label>
                       </div>
