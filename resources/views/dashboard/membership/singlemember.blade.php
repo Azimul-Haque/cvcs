@@ -600,6 +600,150 @@
                   </tr>
                 @endif
               @endforeach
+              <tr>
+                <td>
+                  পরিশোধকারীঃ
+                  @if(($payment->payment_type == 2) && ($payment->payment_status == 0))
+                    একাধিক
+                  @else
+                    <a href="{{ route('dashboard.singlemember', $payment->user->unique_key) }}">{{ $payment->user->name_bangla }}</a>
+                  @endif
+                  <br/>
+                  জমাদানকারীঃ <a href="{{ route('dashboard.singlemember', $payment->payee->unique_key) }}">{{ $payment->payee->name_bangla }}</a>
+                </td>
+                <td>
+                  @if($payment->payment_category == 0)
+                    সদস্যপদ বাবদ
+                  @else
+                    মাসিক পরিশোধ
+                  @endif
+                </td>
+                <td>{{ $payment->pay_slip }}<br/>{{ $payment->payment_key }}</td>
+                <td>
+                  @if($payment->payment_status == 0)
+                    <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> প্রক্রিয়াধীন</span>
+                  @else
+                    <span class="badge badge-success"><i class="fa fa-check"></i>অনুমোদিত</span>
+                  @endif
+                  <br/>
+                  @if($payment->payment_type == 1)
+                    <b>SINGLE</b>
+                  @elseif($payment->payment_type == 2)
+                    <b>BULK</b>
+                  @endif
+                </td>
+                <td align="right">৳ {{ $payment->amount }}</td>
+                <td>{{ $payment->bank }}<br/>{{ $payment->branch }}</td>
+                <td>{{ date('F d, Y h:i A', strtotime($payment->created_at)) }}</td>
+                <td>
+                  @if(($payment->payment_type == 2) && ($payment->payment_status == 0))
+                    <button class="btn btn-sm btn-info btn-with-count" data-toggle="modal" data-target="#seeMembersWiseModal{{ $payment->id }}" data-backdrop="static" title="সদস্য অনুযায়ী বিস্তারিত দেখুন"><i class="fa fa-eye"></i></button>
+                    <!-- See Memberwise Data Modal -->
+                    <!-- See Memberwise Data Modal -->
+                    <div class="modal fade" id="seeMembersWiseModal{{ $payment->id }}" role="dialog">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header modal-header-info">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"><i class="fa fa-paperclip"></i> সদস্য অনুযায়ী পরিশোধ</h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>সদস্য</th>
+                                    <th>সদস্য আইডি</th>
+                                    <th>ছবি</th>
+                                    <th>পরিমাণ</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach(json_decode($payment->bulk_payment_member_ids) as $member_id => $amount)
+                                    <tr>
+                                      <td>{{ $members->where('member_id', $member_id)->first()->name_bangla }}</td>
+                                      <td><big><b>{{ $member_id }}</b></big></td>
+                                      <td><img src="{{ asset('images/users/'.$members->where('member_id', $member_id)->first()->image) }}" class="img-responsive" style="max-height: 70px; width: auto;"></td>
+                                      <td>{{ $amount }}/-</td>
+                                    </tr>
+                                  @endforeach
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- See Memberwise Data Modal -->
+                    <!-- See Memberwise Data Modal -->
+                  @endif
+                  @if(($payment->payment_method != 1) & (count($payment->paymentreceipts) > 0))
+                  <button class="btn btn-sm btn-primary btn-with-count" data-toggle="modal" data-target="#seeReceiptModal{{ $payment->id }}" data-backdrop="static" title="রিসিট সংযুক্তি দেখুন"><i class="fa fa-paperclip"></i> <span class="badge">{{ count($payment->paymentreceipts) }}</span></button>
+                  <!-- See Receipts Modal -->
+                  <!-- See Receipts Modal -->
+                  <div class="modal fade" id="seeReceiptModal{{ $payment->id }}" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header modal-header-success">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title"><i class="fa fa-paperclip"></i> পরিশোধ সংযুক্তি</h4>
+                        </div>
+                        <div class="modal-body">
+                          পে-স্লিপ নম্বরঃ {{ $payment->pay_slip }}
+                          @if(count($payment->paymentreceipts) > 0)
+                            @foreach($payment->paymentreceipts as $paymentreceipt)
+                              <img src="{{ asset('images/receipts/'. $paymentreceipt->image) }}" alt="Album Image" class="img-responsive" style=""><br/>
+                            @endforeach
+                          @endif
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- See Receipts Modal -->
+                  <!-- See Receipts Modal -->
+                  @endif
+
+                  <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#downloadPDF{{ $payment->id }}" data-backdrop="static" title="রিপোর্ট ডাউনলোড করুন" id="downloadPDFButton{{ $payment->id }}"><i class="fa fa-download"></i></button>
+                  <!-- Download PDF Modal -->
+                  <!-- Download PDF Modal -->
+                  <div class="modal fade" id="downloadPDF{{ $payment->id }}" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header modal-header-success">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title"><i class="fa fa-download"></i> পরিশোধ রিপোর্ট ডাউনলোড</h4>
+                        </div>
+                        {!! Form::open(['route' => 'dashboard.member.payment.pdf', 'method' => 'POST', 'class' => 'form-default']) !!}
+                        <div class="modal-body">
+                          পরিশোধ রিপোর্টটি ডাউনলোড করুন
+                          {!! Form::hidden('id', $payment->id) !!}                      
+                          {!! Form::hidden('payment_key', $payment->payment_key) !!}                      
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-success"><i class="fa fa-download"></i> ডাউনলোড করুন</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                        </div>
+                        {!! Form::close() !!}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Download PDF Modal -->
+                  <!-- Download PDF Modal -->
+                  <script type="text/javascript">
+                    $('#downloadPDFButton{{ $payment->id }}').click(function() {
+                      setTimeout(function () {
+                        $('#downloadPDF{{ $payment->id }}').modal('hide');
+                      }, 3500);
+                    })
+                  </script>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
