@@ -190,7 +190,8 @@
                       @else
                         {!! Form::model($payment, ['route' => ['dashboard.approvebulkpayment', $payment->id], 'method' => 'PATCH', 'class' => 'form-default']) !!}
                       @endif
-                          {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-success')) !!}
+                          {{-- {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-success')) !!} --}}
+                          <input class="btn btn-success" id="submitbtn{{ $payment->id }}" onclick="hideButtonImmedietely({{ $payment->id }})"  type="submit" value="দাখিল করুন"> 
                           <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                       {!! Form::close() !!}
                     </div>
@@ -267,5 +268,9 @@
 @stop
 
 @section('js')
-
+    <script type="text/javascript">
+      function hideButtonImmedietely(paymentID) {
+        $('#submitbtn' + paymentID).hide();
+      }
+    </script>
 @stop
