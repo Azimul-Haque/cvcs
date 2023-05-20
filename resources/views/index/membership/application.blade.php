@@ -394,7 +394,7 @@
                                   <div class="panel-body">
                                     <h3 class="agency-title margin-two">অনলাইন পরিশোধ ফর্ম</h3>
                                     <div class="form-group">
-                                      {!! Form::label('amountonline', 'পরিমাণ *') !!}
+                                      {!! Form::label('amountonline', 'পরিমাণ * [ইংরেজি সংখ্যা লিখুন]') !!}
                                       {!! Form::number('amountonline', null, array('class' => '', 'id' => 'amountonline', 'placeholder' => 'পরিমাণ লিখুন (২০০০/- এর বেশি, ইংরেজি সংখ্যা লিখুন)')) !!}
                                     </div>
                                   </div>
