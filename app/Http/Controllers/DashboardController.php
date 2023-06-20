@@ -3939,6 +3939,15 @@ class DashboardController extends Controller
         }
         return response()->download($latest_filename);
     }
+    public function getExcelDataAll() 
+    {
+        $users = User::select('name', 'name_bangla', 'nid', 'dob', 'member_id', 'mobile', 'joining_date', 'email', 'designation')
+                     ->where('activation_status', 1)
+                     ->orderBy('position_id', 'asc')
+                     ->get();
+
+        return view('dashboard.excelexport')->withUsers($users);
+    }
 
     public function runDBBackup()
     {
