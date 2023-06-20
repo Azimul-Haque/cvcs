@@ -44,7 +44,7 @@
 					<td>{{ $user->mobile }}</td>
 					<td>{{ $user->email }}</td>
 					<td>{{ date('F d, Y', strtotime($user->joining_date)) }}</td>
-					<td>{{ $user->designation }}</td>
+					<td>{{ $user->position->name }}</td>
 				</tr>
 				@php
 					$sl++;
