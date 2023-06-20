@@ -3941,7 +3941,7 @@ class DashboardController extends Controller
     }
     public function getExcelDataAll() 
     {
-        $users = User::select('name', 'name_bangla', 'nid', 'dob', 'member_id', 'mobile', 'joining_date', 'email', 'designation')
+        $users = User::select('name', 'name_bangla', 'nid', 'dob', 'member_id', 'mobile', 'joining_date', 'email', 'designation', 'position_id')
                      ->where('activation_status', 1)
                      ->orderBy('position_id', 'asc')
                      ->get();
