@@ -2155,8 +2155,7 @@ class DashboardController extends Controller
             $output .= '</tr>';
             $output .= '
             <tr>
-             <td>মোট মাসিক কিস্তি পরিশোধ</td>
-             <td>মোট মাসিক কিস্তি বকেয়া</td>
+             <td>'.$row->member_id.'</td>
             ';
            }
           }
