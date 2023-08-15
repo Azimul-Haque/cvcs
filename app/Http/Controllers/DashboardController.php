@@ -1867,7 +1867,22 @@ class DashboardController extends Controller
                        ->orderBy('position_id', 'asc')
                        // ->paginate(20);
                        ->get();
-
+        $counter = 1;
+        $adhocmembers1 = [];
+        $adhocmemberscol1 = collect();
+        $adhocmembers2 = [];
+        $adhocmemberscol2 = collect();
+        foreach($members as $member) {
+          if($member->position_id == 34) {
+            $adhocmembers1[] = $member;
+          } else {
+            $adhocmembers2[] = $member;
+          }
+        }
+        $adhocmemberscol1 = collect($adhocmembers1);
+        $adhocmemberscol2 = collect($adhocmembers2);
+        $mergedmembers = collect();
+        $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
         $ordered_member_array = [];
         foreach ($members as $member) {
             $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
