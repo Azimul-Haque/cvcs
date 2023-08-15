@@ -2154,7 +2154,7 @@ class DashboardController extends Controller
             }
             $output .= '
              <td>'.$row->payments->sum('amount').'</td>
-             <td>'.$row->member_id.'</td>
+             <td>'.$row->totalpendingmonthly.'</td>
             ';
             $output .= '</tr>';
            }
