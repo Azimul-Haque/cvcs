@@ -1883,10 +1883,11 @@ class DashboardController extends Controller
         $adhocmemberscol2 = collect($adhocmembers2);
         $mergedmembers = collect();
         $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
-        $ordered_member_array = [];
-        foreach ($members as $member) {
-            $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
-        }
+        
+        // $ordered_member_array = [];
+        // foreach ($members as $member) {
+        //     $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+        // }
         // ksort($ordered_member_array); // ascending order according to key
     
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
