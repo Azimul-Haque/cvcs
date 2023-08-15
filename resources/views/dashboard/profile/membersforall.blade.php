@@ -47,7 +47,7 @@
       <table class="table table-bordered" id="mainTable">
         <thead>
           <tr>
-            <th>নাম</th>
+            <th width="30%">নাম</th>
             <th>মেম্বার আইডি</th>
             <th>অফিস তথ্য</th>
             <th>ছবি</th>
