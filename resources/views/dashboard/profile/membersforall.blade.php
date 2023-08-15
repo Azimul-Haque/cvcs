@@ -95,8 +95,10 @@
                 <th>দপ্তরসমূহ</th>
               </tr>
             </thead>
-           <tbody id="searchtbody">
-
+           <tbody>
+              <tr>
+                
+              </tr>
            </tbody>
           </table>
         </div>
