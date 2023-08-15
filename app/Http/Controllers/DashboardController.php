@@ -1942,6 +1942,89 @@ class DashboardController extends Controller
                             ->withBranches($branches);
     }
 
+    public function getMembersForAllBranchWise(Request $request)
+    {
+        $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
+        $members = User::where('activation_status', 1)
+                       ->where('role_type', '!=', 'admin')
+                       ->with(['payments' => function ($query) {
+                            // $query->orderBy('created_at', 'desc');
+                            $query->where('payment_status', '=', 1);
+                            $query->where('is_archieved', '=', 0);
+                            $query->where('payment_category', 1);  // 1 means monthly, 0 for membership
+                        }])  
+                       ->orderBy('position_id', 'asc')
+                       // ->paginate(20);
+                       ->get();
+
+        // GET THE DUES AND PAIDS
+        // GET THE DUES AND PAIDS
+        foreach ($members as $member) {
+            $approvedcashformontly = $member->payments->sum('amount');
+            $member->totalpendingmonthly = 0;
+            if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
+            {
+                $thismonth = Carbon::now()->format('Y-m-');
+                $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
+                $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+                $totalmonthsformember = $to->diffInMonths($from) + 1;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+                }
+            } else {
+                $startmonth = date('Y-m-', strtotime($member->joining_date));
+                $thismonth = Carbon::now()->format('Y-m-');
+                $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
+                $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+                $totalmonthsformember = $to->diffInMonths($from) + 1;
+                if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                  $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+                }
+            }
+        }
+
+        // SORT IT WITH সদস্য DESIGNEATION              
+        // SORT IT WITH সদস্য DESIGNEATION              
+        $adhocmembers1 = [];
+        $adhocmemberscol1 = collect();
+        $adhocmembers2 = [];
+        $adhocmemberscol2 = collect();
+        foreach($members as $member) {
+          if($member->position_id == 34) {
+            $adhocmembers1[] = $member;
+          } else {
+            $adhocmembers2[] = $member;
+          }
+        }
+        $adhocmemberscol1 = collect($adhocmembers1);
+        $adhocmemberscol2 = collect($adhocmembers2);
+        $mergedmembers = collect();
+        $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
+        
+        // $ordered_member_array = [];
+        // foreach ($members as $member) {
+        //     $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
+        // }
+        // ksort($ordered_member_array); // ascending order according to key
+    
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $itemCollection = collect($mergedmembers); // $ordered_member_array chilo aage
+        $perPage = 20;
+        // Slice the collection to get the items to display in current page
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        // Create our paginator and pass it to the view
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        // set url path for generted links
+        $paginatedItems->setPath($request->url());
+
+        $branches = Branch::all();
+
+        return view('dashboard.profile.membersforall')
+                            ->withMembers($paginatedItems)
+                            ->withMemberscount($memberscount)
+                            ->withBranches($branches);
+    }
+
     public function getSearchMember()
     {
         return view('dashboard.membership.searchmember');
