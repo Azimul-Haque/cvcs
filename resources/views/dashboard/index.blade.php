@@ -188,7 +188,13 @@
     	<div class="col-md-3">
 	        <div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">সর্বশেষ নিবন্ধিত</h3>
+                  <h3 class="box-title">সর্বশেষ নিবন্ধিত
+                  @if(empty($registeredmember))
+	                0
+	                @else
+	                {{ $registeredmember }}
+	                @endif
+	                জন</h3>
 
                   <div class="box-tools pull-right">
                     {{-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
