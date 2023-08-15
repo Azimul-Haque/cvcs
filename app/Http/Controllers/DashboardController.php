@@ -2121,7 +2121,7 @@ class DashboardController extends Controller
           $total_row = count($members);
           if($total_row > 0)
           {
-           foreach($data as $row)
+           foreach($members as $row)
            {
             $output .= '
             <tr>
@@ -2145,12 +2145,12 @@ class DashboardController extends Controller
            </tr>
            ';
           }
-          $data = array(
+          $members = array(
            'table_data'  => $output,
            'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
           );
 
-          echo json_encode($data);
+          echo json_encode($members);
         }        
     }
 
