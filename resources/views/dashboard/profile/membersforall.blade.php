@@ -99,7 +99,7 @@
               @foreach($branches as $branch)
                 <tr>
                   <td>
-                    {{ $branch->name }}
+                    <a href="{{ route('dashboard.membersforall.branchwise', $branch->id) }}">{{ $branch->name }}</a>
                   </td>
                 </tr>
               @endforeach
