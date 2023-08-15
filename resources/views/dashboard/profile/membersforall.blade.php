@@ -75,7 +75,7 @@
             $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
             // dd($mergedmembers);
           @endphp
-          @foreach($members as $member)
+          @foreach($mergedmembers as $member)
           <tr>
             <td>{{ $member->name_bangla }}<br/>{{ $member->name }}</td>
             <td><big><b>{{ $member->member_id }}</b></big></td>
