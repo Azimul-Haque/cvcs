@@ -2116,6 +2116,24 @@ class DashboardController extends Controller
                     }
                 }
             }
+
+            // SORT IT WITH সদস্য DESIGNEATION              
+                    // SORT IT WITH সদস্য DESIGNEATION              
+                    $adhocmembers1 = [];
+                    $adhocmemberscol1 = collect();
+                    $adhocmembers2 = [];
+                    $adhocmemberscol2 = collect();
+                    foreach($members as $member) {
+                      if($member->position_id == 34) {
+                        $adhocmembers1[] = $member;
+                      } else {
+                        $adhocmembers2[] = $member;
+                      }
+                    }
+                    $adhocmemberscol1 = collect($adhocmembers1);
+                    $adhocmemberscol2 = collect($adhocmembers2);
+                    $mergedmembers = collect();
+                    $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
           }
 
           $total_row = count($members);
