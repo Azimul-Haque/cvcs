@@ -215,7 +215,7 @@
                   </ul>
                 </div>
                 <div class="box-footer text-center">
-                  <a href="{{ route('dashboard.members') }}" class="uppercase">সকল সদস্য দেখুন</a>
+                  <a href="{{ route('dashboard.members') }}">সকল সদস্য দেখুন</a>
                 </div>
             </div>
     	</div>
