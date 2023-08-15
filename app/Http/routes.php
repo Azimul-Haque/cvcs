@@ -237,6 +237,7 @@ Route::get('/payment/cancel', 'DashboardController@paymentCancelled')->name('pay
 
 Route::post('/dashboard/member/complete/report/download/pdf', ['as'=>'dashboard.member.complete.pdf','uses'=>'DashboardController@downloadMemberCompletePDF']);
 Route::get('/dashboard/members/for/all', ['as'=>'dashboard.membersforall','uses'=>'DashboardController@getMembersForAll']);
+Route::get('/dashboard/members/for/all/branch/{id}', ['as'=>'dashboard.membersforall','uses'=>'DashboardController@getMembersForAll']);
 
 Route::get('/dashboard/member/transaction/summary', ['as'=>'dashboard.membertransactionsummary','uses'=>'DashboardController@getMemberTransactionSummary']);
 Route::get('/dashboard/member/user/manual', ['as'=>'dashboard.memberusermanual','uses'=>'DashboardController@getMemberUserManual']);
