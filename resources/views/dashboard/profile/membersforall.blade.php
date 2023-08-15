@@ -89,7 +89,7 @@
       </div>
       <div class="col-md-3">
         <div class="table-responsive">
-          <table class="table table-striped table-bordered" id="searchTable">
+          <table class="table table-striped table-bordered">
             <thead>
               <tr>
                 <th>দপ্তরসমূহ</th>
