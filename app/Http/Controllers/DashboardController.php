@@ -1875,11 +1875,8 @@ class DashboardController extends Controller
         ksort($ordered_member_array); // ascending order according to key
     
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-
         $itemCollection = collect($ordered_member_array);
- 
         $perPage = 20;
- 
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
