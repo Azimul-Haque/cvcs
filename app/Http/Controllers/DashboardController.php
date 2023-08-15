@@ -1864,7 +1864,7 @@ class DashboardController extends Controller
         $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
-                       ->orderBy('position_id', 'asc')
+                       ->orderBy('id', 'asc')
                        ->get();
 
         $ordered_member_array = [];
