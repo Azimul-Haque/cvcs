@@ -189,10 +189,10 @@
 	        <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">সর্বশেষ নিবন্ধিত
-                  (@if(empty($registeredmember))
-	                0
+                  @if(empty($registeredmember))
+	                (0
 	                @else
-	                {{ $registeredmember }}
+	                ({{ $registeredmember }}
 	                @endif
 	                জন)</h3>
 
