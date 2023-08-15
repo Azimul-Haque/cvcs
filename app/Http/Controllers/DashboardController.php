@@ -2071,7 +2071,7 @@ class DashboardController extends Controller
           $query = $request->get('query');
           if($query != '')
           {
-           $data = User::where('activation_status', 1)
+           $members = User::where('activation_status', 1)
                     ->where('role_type', '!=', 'admin') // avoid the super admin type
                     ->where(function($newquery) use ($query) {
                         $newquery->where('name', 'like', '%'.$query.'%')
