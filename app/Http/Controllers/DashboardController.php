@@ -2153,7 +2153,7 @@ class DashboardController extends Controller
                 $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
             }
             $output .= '
-             <td>'.$row->member_id.'</td>
+             <td>'.$row->payments->sum('amount').'</td>
              <td>'.$row->member_id.'</td>
             ';
             $output .= '</tr>';
