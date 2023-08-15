@@ -62,7 +62,7 @@
             <td><big><b>{{ $member->member_id }}</b></big></td>
             {{-- <td>{{ $member->mobile }}<br/>{{ $member->email }}</td> --}}
             <td>{{ $member->branch->name }}<br/>{{ $member->profession }} ({{ $member->position->name }})</td>
-            <td>
+            <td align="center">
               @if($member->image != null)
                 <img src="{{ asset('images/users/'.$member->image)}}" style="height: 50px; width: auto;" />
               @else
