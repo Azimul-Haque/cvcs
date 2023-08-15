@@ -89,10 +89,10 @@
               @endif
             </td>
             <td>
-              {{ $member->payments->sum('amount') }}
+              ৳ {{ $member->payments->sum('amount') }}
             </td>
             <td>
-              {{ $member->totalpendingmonthly }}
+              ৳ {{ $member->totalpendingmonthly }}
             </td>
           </tr>
           @endforeach
