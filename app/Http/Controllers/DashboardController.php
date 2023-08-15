@@ -1867,7 +1867,7 @@ class DashboardController extends Controller
                        ->orderBy('position_id', 'asc')
                        // ->paginate(20);
                        ->get();
-        $counter = 1;
+                       
         $adhocmembers1 = [];
         $adhocmemberscol1 = collect();
         $adhocmembers2 = [];
@@ -1891,7 +1891,7 @@ class DashboardController extends Controller
         // ksort($ordered_member_array); // ascending order according to key
     
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $itemCollection = collect($ordered_member_array); // $ordered_member_array chilo aage
+        $itemCollection = collect($mergedmembers); // $ordered_member_array chilo aage
         $perPage = 20;
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
