@@ -2136,10 +2136,10 @@ class DashboardController extends Controller
             $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
           }
 
-          $total_row = count($members);
+          $total_row = count($mergedmembers);
           if($total_row > 0)
           {
-           foreach($members as $row)
+           foreach($mergedmembers as $row)
            {
             $output .= '
             <tr>
