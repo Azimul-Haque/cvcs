@@ -30,11 +30,12 @@
       <table class="table table-striped table-bordered" id="searchTable">
         <thead>
           <tr>
-            <th>নাম</th>
-            <th>মেম্বার আইডি</th>
-            {{-- <th>যোগাযোগ</th> --}}
-            <th>অফিস তথ্য</th>
+            <th width="25%">নাম</th>
+            <th width="10%">মেম্বার আইডি</th>
+            <th width="20%">অফিস তথ্য</th>
             <th>ছবি</th>
+            <th>মোট মাসিক কিস্তি পরিশোধ</th>
+            <th>মোট মাসিক কিস্তি বকেয়া</th>
           </tr>
         </thead>
        <tbody id="searchtbody">
