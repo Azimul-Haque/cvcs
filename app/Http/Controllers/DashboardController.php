@@ -1873,7 +1873,6 @@ class DashboardController extends Controller
         foreach ($members as $member) {
             $approvedcashformontly = $member->payments->sum('amount');
             $member->totalpendingmonthly = 0;
-            $intotalmontlypaid = $intotalmontlypaid + $approvedcashformontly;
             if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
             {
                 $thismonth = Carbon::now()->format('Y-m-');
