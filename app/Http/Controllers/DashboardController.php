@@ -2153,6 +2153,12 @@ class DashboardController extends Controller
                 $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
             }
             $output .= '</tr>';
+            $output .= '
+            <tr>
+             <td width="25%">'. $row->name_bangla .'<br/> '. $row->name .'</td>
+             <td width="10%"><big><b>'.$row->member_id.'</big></b></td>
+             <td width="20%">'.$row->branch->name.'<br/>'.$row->profession.' ('. $row->position->name .')</td>
+            ';
            }
           }
           else
