@@ -69,7 +69,8 @@
                 <img src="{{ asset('images/user.png')}}" style="height: 50px; width: auto;" />
               @endif
             </td>
-            
+            <td></td>
+            <td></td>
           </tr>
           @endforeach
         </tbody>
