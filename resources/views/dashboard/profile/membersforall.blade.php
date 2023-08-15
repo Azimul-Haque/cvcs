@@ -91,7 +91,9 @@
             <td>
               {{ $member->payments->sum('amount') }}
             </td>
-            <td></td>
+            <td>
+              {{ $member->totalpendingmonthly }}
+            </td>
           </tr>
           @endforeach
         </tbody>
