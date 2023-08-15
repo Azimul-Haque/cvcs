@@ -87,6 +87,61 @@
           {{ $members->links() }}
         </div>
       </div>
+      <div class="col-md-3">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered" id="searchTable">
+            <thead>
+              <tr>
+                <th>দপ্তরসমূহ</th>
+              </tr>
+            </thead>
+           <tbody id="searchtbody">
+
+           </tbody>
+          </table>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered" id="mainTable">
+            <thead>
+              <tr>
+                <th width="25%">নাম</th>
+                <th width="10%">মেম্বার আইডি</th>
+                <th width="20%">অফিস তথ্য</th>
+                <th>ছবি</th>
+                <th>মোট মাসিক কিস্তি পরিশোধ</th>
+                <th>মোট মাসিক কিস্তি বকেয়া</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($members as $member)
+              <tr>
+                <td>{{ $member->name_bangla }}<br/>{{ $member->name }}</td>
+                <td><big><b>{{ $member->member_id }}</b></big></td>
+                {{-- <td>{{ $member->mobile }}<br/>{{ $member->email }}</td> --}}
+                <td>{{ $member->branch->name }}<br/>{{ $member->profession }} ({{ $member->position->name }})</td>
+                <td align="center">
+                  @if($member->image != null)
+                    <img src="{{ asset('images/users/'.$member->image)}}" style="height: 50px; width: auto;" />
+                  @else
+                    <img src="{{ asset('images/user.png')}}" style="height: 50px; width: auto;" />
+                  @endif
+                </td>
+                <td>
+                  ৳ {{ $member->payments->sum('amount') }}
+                </td>
+                <td>
+                  ৳ {{ $member->totalpendingmonthly }}
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        <div id="mainLink">
+          {{ $members->links() }}
+        </div>
+      </div>
     </div>
 @stop
 
