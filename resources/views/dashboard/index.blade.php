@@ -168,7 +168,7 @@
     </div>
 
     <div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 		    <div class="box box-success" style="position: relative; left: 0px; top: 0px;">
 		        <div class="box-header ui-sortable-handle" style="">
 		          <i class="fa fa-calculator"></i>
