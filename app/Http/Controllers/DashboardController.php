@@ -2090,6 +2090,32 @@ class DashboardController extends Controller
                      }])  
                     ->orderBy('position_id', 'asc')
                     ->get();
+
+            // GET THE DUES AND PAIDS
+                    // GET THE DUES AND PAIDS
+                    foreach ($members as $member) {
+                        $approvedcashformontly = $member->payments->sum('amount');
+                        $member->totalpendingmonthly = 0;
+                        if($member->joining_date == '' || $member->joining_date == null || strtotime('31-01-2019') > strtotime($member->joining_date))
+                        {
+                            $thismonth = Carbon::now()->format('Y-m-');
+                            $from = Carbon::createFromFormat('Y-m-d', '2019-1-1');
+                            $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+                            $totalmonthsformember = $to->diffInMonths($from) + 1;
+                            if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                              $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+                            }
+                        } else {
+                            $startmonth = date('Y-m-', strtotime($member->joining_date));
+                            $thismonth = Carbon::now()->format('Y-m-');
+                            $from = Carbon::createFromFormat('Y-m-d', $startmonth . '1');
+                            $to = Carbon::createFromFormat('Y-m-d', $thismonth . '1');
+                            $totalmonthsformember = $to->diffInMonths($from) + 1;
+                            if(($totalmonthsformember * 300) > $approvedcashformontly) {
+                              $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
+                            }
+                        }
+                    }
           }
 
           $total_row = count($members);
