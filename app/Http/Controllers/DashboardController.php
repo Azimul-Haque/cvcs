@@ -1942,7 +1942,7 @@ class DashboardController extends Controller
                             ->withBranches($branches);
     }
 
-    public function getMembersForAllBranchWise(Request $request)
+    public function getMembersForAllBranchWise(Request $request, $id)
     {
         $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
