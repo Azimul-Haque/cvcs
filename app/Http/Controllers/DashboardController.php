@@ -2152,11 +2152,11 @@ class DashboardController extends Controller
             } else {
                 $output .= '<td><img src="'. asset('images/user.png') .'" style="height: 50px; width: auto;" /></td>';
             }
-            $output .= '</tr>';
             $output .= '
-            <tr>
+             <td>'.$row->member_id.'</td>
              <td>'.$row->member_id.'</td>
             ';
+            $output .= '</tr>';
            }
           }
           else
