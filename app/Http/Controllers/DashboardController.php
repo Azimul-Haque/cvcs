@@ -1944,7 +1944,7 @@ class DashboardController extends Controller
 
     public function getMembersForAllBranchWise(Request $request, $branch_id)
     {
-        $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
+        $memberscount = User::where('activation_status', 1)->where('branch_id', $branch_id)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
                        ->where('branch_id', $branch_id)
                        ->where('role_type', '!=', 'admin')
