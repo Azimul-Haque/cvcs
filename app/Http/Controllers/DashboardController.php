@@ -2143,9 +2143,9 @@ class DashboardController extends Controller
            {
             $output .= '
             <tr>
-             <td>'. $row->name_bangla .'<br/> '. $row->name .'</td>
-             <td><big><b>'.$row->member_id.'</big></b></td>
-             <td>'.$row->branch->name.'<br/>'.$row->profession.' ('. $row->position->name .')</td>
+             <td width="25%">'. $row->name_bangla .'<br/> '. $row->name .'</td>
+             <td width="10%"><big><b>'.$row->member_id.'</big></b></td>
+             <td width="20%">'.$row->branch->name.'<br/>'.$row->profession.' ('. $row->position->name .')</td>
             ';
             if($row->image != null) {
                 $output .= '<td><img src="'. asset('images/users/'.$row->image) .'" style="height: 50px; width: auto;" /></td>';
