@@ -1946,7 +1946,7 @@ class DashboardController extends Controller
     {
         $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
         $members = User::where('activation_status', 1)
-                       ->where('branch_id', $request->branch_id)
+                       ->where('branch_id', $branch_id)
                        ->where('role_type', '!=', 'admin')
                        ->with(['payments' => function ($query) {
                             // $query->orderBy('created_at', 'desc');
