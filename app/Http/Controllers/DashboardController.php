@@ -1865,14 +1865,14 @@ class DashboardController extends Controller
         $members = User::where('activation_status', 1)
                        ->where('role_type', '!=', 'admin')
                        ->orderBy('position_id', 'asc')
-                       ->paginate(20);
-                       // ->get();
+                       // ->paginate(20);
+                       ->get();
 
         $ordered_member_array = [];
         foreach ($members as $member) {
             $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
         }
-        ksort($ordered_member_array); // ascending order according to key
+        // ksort($ordered_member_array); // ascending order according to key
     
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $itemCollection = collect($ordered_member_array);
