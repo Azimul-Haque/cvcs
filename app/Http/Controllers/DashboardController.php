@@ -2145,12 +2145,12 @@ class DashboardController extends Controller
            </tr>
            ';
           }
-          $members = array(
+          $data = array(
            'table_data'  => $output,
            'total_data'  => $total_row . ' টি ফলাফল পাওয়া গেছে'
           );
 
-          echo json_encode($members);
+          echo json_encode($data);
         }        
     }
 
