@@ -1938,7 +1938,7 @@ class DashboardController extends Controller
 
         return view('dashboard.profile.membersforall')
                             ->withMembers($paginatedItems)
-                            ->withMemberscount($memberscount);
+                            ->withMemberscount($memberscount)
                             ->withBranches($branches);
     }
 
