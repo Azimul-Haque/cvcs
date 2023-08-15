@@ -92,7 +92,7 @@
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>দপ্তরসমূহ (ফিল্টারযোগ্য)</th>
+                <th>দপ্তরসমূহ (<i class="fa fa-filter"></i> ফিল্টারযোগ্য)</th>
               </tr>
             </thead>
            <tbody>
