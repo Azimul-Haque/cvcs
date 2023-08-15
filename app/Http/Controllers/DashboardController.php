@@ -1934,9 +1934,12 @@ class DashboardController extends Controller
         // set url path for generted links
         $paginatedItems->setPath($request->url());
 
+        $branches = Branch::all();
+
         return view('dashboard.profile.membersforall')
                             ->withMembers($paginatedItems)
                             ->withMemberscount($memberscount);
+                            ->withBranches($branches);
     }
 
     public function getSearchMember()
