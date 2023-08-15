@@ -2092,7 +2092,7 @@ class DashboardController extends Controller
                     ->get();
           }
 
-          $total_row = count($data);
+          $total_row = count($members);
           if($total_row > 0)
           {
            foreach($data as $row)
