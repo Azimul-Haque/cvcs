@@ -1881,7 +1881,7 @@ class DashboardController extends Controller
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
                 if(($totalmonthsformember * 300) > $approvedcashformontly) {
                   $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
-                  $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
+                  
                 }
             } else {
                 $startmonth = date('Y-m-', strtotime($member->joining_date));
@@ -1891,7 +1891,7 @@ class DashboardController extends Controller
                 $totalmonthsformember = $to->diffInMonths($from) + 1;
                 if(($totalmonthsformember * 300) > $approvedcashformontly) {
                   $member->totalpendingmonthly = ($totalmonthsformember * 300) - $approvedcashformontly;
-                  $intotalmontlydues = $intotalmontlydues + $member->totalpendingmonthly;
+                  
                 }
             }
         }
