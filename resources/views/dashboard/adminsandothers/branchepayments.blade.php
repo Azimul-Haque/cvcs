@@ -22,7 +22,7 @@
         <div class="box-header with-border">
           <h3 class="box-title">বিল অব এন্ট্রি পরিশোধের তালিকা</h3>
           <div class="box-tools pull-right">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addBranchPaymentModal" data-backdrop="static" title="নতুন বিল অব এন্ট্রি পরিশোধ যোগ করুন" data-placement="top"><i class="fa fa-plus" style="margin-right: 10px;"></i> নতুন বিল অব এন্ট্রি </button>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addBranchPaymentModal" data-backdrop="static" title="নতুন বিল অব এন্ট্রি পরিশোধ যোগ করুন" data-placement="top"><i class="fa fa-plus" style="margin-right:5px;"></i> নতুন বিল অব এন্ট্রি </button>
           </div>
         </div>
 
