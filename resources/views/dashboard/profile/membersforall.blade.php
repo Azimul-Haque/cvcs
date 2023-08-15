@@ -73,7 +73,7 @@
             $adhocmemberscol2 = collect($adhocmembers2);
             $mergedmembers = collect();
             $mergedmembers = $adhocmemberscol1->merge($adhocmemberscol2);
-            dd($mergedmembers);
+            // dd($mergedmembers);
           @endphp
           @foreach($mergedmembers as $member)
           <tr>
