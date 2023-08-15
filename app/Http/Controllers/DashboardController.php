@@ -1888,7 +1888,7 @@ class DashboardController extends Controller
         $paginatedItems->setPath($request->url());
 
         return view('dashboard.profile.membersforall')
-                            ->withMembers($paginatedItems)
+                            ->withMembers($members)
                             ->withMemberscount($memberscount);
     }
 
