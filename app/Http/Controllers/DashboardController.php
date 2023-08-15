@@ -1872,7 +1872,7 @@ class DashboardController extends Controller
         foreach ($members as $member) {
             $ordered_member_array[(int) substr($member->member_id, -5)] = $member;
         }
-        // ksort($ordered_member_array); // ascending order according to key
+        ksort($ordered_member_array); // ascending order according to key
     
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
