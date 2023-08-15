@@ -96,9 +96,13 @@
               </tr>
             </thead>
            <tbody>
-              <tr>
-                
-              </tr>
+              @foreach($branches as $branch)
+                <tr>
+                  <td>
+                    {{ $branch->name }}
+                  </td>
+                </tr>
+              @endforeach
            </tbody>
           </table>
         </div>
