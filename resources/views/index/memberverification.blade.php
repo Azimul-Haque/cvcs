@@ -55,11 +55,11 @@
                                 </tr>
                                 <tr>
                                     <td>পদবি</td>
-                                    <td>{{ $member->designation }}</td>
+                                    <td>{{ $member->position ? $member->position->name : '' }}</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <img src="{!! QrCode::size(200) ->format('eps') ->generate('ItSolutionStuff.com', public_path('images/qrcode.eps')); !!}">
+                        {{-- <img src="{!! QrCode::size(200) ->format('eps') ->generate('ItSolutionStuff.com', public_path('images/qrcode.eps')); !!}"> --}}
                         {{-- {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!} --}}
                     @else
                         <center>
