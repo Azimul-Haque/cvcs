@@ -32,7 +32,11 @@
                                 <tr>
                                     <td colspan="2">
                                         <center>
-                                            s
+                                            @if($user->image != null)
+                                                <img src="{{ asset('images/users/'.$user->image)}}" alt="image of {{ $user->name }}" class="img-responsive shadow" style="max-width: 220px; height: auto;" />
+                                            @else
+                                                <img src="{{ asset('images/user.png')}}" alt="image of {{ $user->name }}" class="img-responsive shadow" style="max-width: 220px; height: auto;" />
+                                            @endif
                                         </center>
                                     </td>
                                 </tr>
