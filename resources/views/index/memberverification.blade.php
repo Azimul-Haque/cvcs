@@ -14,7 +14,7 @@
             <div class="row">
                 <!-- section title -->
                 <div class="col-md-12 col-sm-12 xs-margin-bottom-four wow fadeInUp">
-                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">ইভেন্ট তালিকা</span>
+                    <span class="text-large letter-spacing-2 black-text font-weight-600 text-uppercase agency-title">সদস্য যাচাইকরণ</span>
                 </div>
                 <!-- end section title -->
             </div>
