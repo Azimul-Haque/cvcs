@@ -45,6 +45,10 @@
                                     <td>নাম (বাংলা)</td>
                                     <td>{{ $member->name_bangla }}</td>
                                 </tr>
+                                <tr>
+                                    <td>পদবি</td>
+                                    <td>{{ $member->designation }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     @else
