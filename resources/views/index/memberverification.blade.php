@@ -25,8 +25,12 @@
     <section style="padding: 13px 0;">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    
+                <div class="col-md-6 col-md-offset-3">
+                    @if($member->count() > 0)
+                        পাওয়া গেসে
+                    @else
+                        পাওয়া যায়নি!
+                    @endif
                 </div>
             </div>
         </div>
