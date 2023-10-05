@@ -47,11 +47,7 @@
 					<td>{{ date('F d, Y', strtotime($user->joining_date)) }}</td>
 					<td>{{ $user->position ? $user->position->name : '' }}</td>
 					<td>
-						@if($user->image != null)
-						    <img src="{{ asset('images/users/'.$user->image)}}" alt="image of {{ $user->name }}" class="img-responsive img-circle shadow" style="max-width: 100px; height: auto; padding: 2px; margin: 10px;" />
-						@else
-						    <img src="{{ asset('images/user.png')}}" alt="image of {{ $user->name }}" class="img-responsive img-circle shadow" style="max-width: 100px; height: auto; padding: 2px; margin: 10px;" />
-						@endif
+						{!! QrCode::size(200)->generate('Make me into a QrCode!'); !!}
 					</td>
 					{{-- <td>{!! QrCode::size(200)->format('eps')->generate('ItSolutionStuff.com', public_path('images/qrcode.eps')); !!}</td> --}}
 				</tr>
