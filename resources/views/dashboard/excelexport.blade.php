@@ -46,7 +46,7 @@
 					<td>{{ $user->email }}</td>
 					<td>{{ date('F d, Y', strtotime($user->joining_date)) }}</td>
 					<td>{{ $user->position ? $user->position->name : '' }}</td>
-					<td>{!! $message->embedData(QrCode::format('png')->generate('Embed me into an e-mail!'), 'QrCode.png', 'image/png') !!}</td>
+					<td>{!! QrCode::size(200)->generate('Make me into a QrCode!'); !!} )</td>
 				</tr>
 				@php
 					$sl++;
