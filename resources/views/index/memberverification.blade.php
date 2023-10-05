@@ -27,6 +27,11 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     @if($member)
+                        <center>
+                            <big>
+                                <b>কোন সদস্য খুঁজে পাওয়া যায়নি!</b>
+                            </big>
+                        </center>
                         <table class="table table-bordered table-condensed">
                             <tbody>
                                 <tr>
