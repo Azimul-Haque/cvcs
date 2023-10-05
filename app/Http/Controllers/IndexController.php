@@ -776,7 +776,7 @@ class IndexController extends Controller
 
     public function verifyMember($member_id) 
     {
-        $member = User::where('member', $member_id)->first();
+        $member = User::where('member_id', $member_id)->first();
 
         return view('index.memberverification')
                     ->withMember($member);
