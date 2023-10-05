@@ -59,7 +59,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <img src="{{ base64_encode() }}">
+                        <img src="{{ base64_encode(QrCode::size(200)->generate('Make me into a QrCode!')) }}">
                         {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!}
                     @else
                         <center>
