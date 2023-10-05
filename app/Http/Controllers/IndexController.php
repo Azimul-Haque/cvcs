@@ -787,12 +787,12 @@ class IndexController extends Controller
     public function clear()
     {
         Artisan::call('route:clear');
-        // Artisan::call('optimize');
-        // Artisan::call('cache:clear');
-        // Artisan::call('view:clear');
-        // Artisan::call('key:generate');
-        // Artisan::call('config:clear');
-        // Artisan::call('config:cache');
+        Artisan::call('optimize');
+        Artisan::call('cache:clear');
+        Artisan::call('view:clear');
+        Artisan::call('key:generate');
+        Artisan::call('config:clear');
+        Artisan::call('config:cache');
         Session::flush();
         echo 'Config and Route Cached. All Cache Cleared';
     }
