@@ -27,7 +27,14 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     @if($member)
-                        পাওয়া গেসে
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>আসদ</th>
+                                    <th>আসদ</th>
+                                </tr>
+                            </thead>
+                        </table>
                     @else
                         <center>
                             <big>
