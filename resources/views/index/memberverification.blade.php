@@ -28,12 +28,12 @@
                 <div class="col-md-6 col-md-offset-3">
                     @if($member)
                         <table class="table table-bordered table-condensed">
-                            <thead>
+                            <tbody>
                                 <tr>
-                                    <th>আসদ</th>
-                                    <th>আসদ</th>
+                                    <td>আসদ</td>
+                                    <td>আসদ</td>
                                 </tr>
-                            </thead>
+                            </tbody>
                         </table>
                     @else
                         <center>
