@@ -778,7 +778,8 @@ class IndexController extends Controller
     {
         $member = User::where('member', $member_id)->first();
 
-
+        return view('index.memberverification')
+                    ->withMember($member);
     }
 
 
