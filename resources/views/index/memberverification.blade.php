@@ -59,7 +59,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        {!! QrCode::size(250)->generate('Make me into a QrCode!'); !!}
+                        {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!}
                     @else
                         <center>
                             <big>
