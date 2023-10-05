@@ -34,8 +34,8 @@
                                     <td>আসদ</td>
                                 </tr>
                                 <tr>
-                                    <td>আসদ</td>
-                                    <td>আসদ</td>
+                                    <td>নাম</td>
+                                    <td>{{ $member->member_id }}</td>
                                 </tr>
                             </tbody>
                         </table>
