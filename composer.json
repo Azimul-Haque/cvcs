@@ -13,7 +13,8 @@
         "mews/purifier": "^2.0",
         "shipu/php-aamarpay-payment": "^1.2",
         "spatie/laravel-backup": "^3.0.0",
-        "niklasravnsborg/laravel-pdf": "^4.1"
+        "niklasravnsborg/laravel-pdf": "^4.1",
+        "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
