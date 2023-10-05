@@ -46,7 +46,7 @@
 					<td>{{ $user->email }}</td>
 					<td>{{ date('F d, Y', strtotime($user->joining_date)) }}</td>
 					<td>{{ $user->position ? $user->position->name : '' }}</td>
-					<td>{!! QrCode::size(500) ->format('png') ->generate('ItSolutionStuff.com', public_path('images/qrcode.png')); !!}</td>
+					<td>{!! QrCode::size(200) ->format('png') ->generate('ItSolutionStuff.com', public_path('images/qrcode.png')); !!}</td>
 				</tr>
 				@php
 					$sl++;
