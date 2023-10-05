@@ -60,7 +60,7 @@
                             </tbody>
                         </table>
                         <img src="{!! QrCode::size(200) ->format('eps') ->generate('ItSolutionStuff.com', public_path('images/qrcode.eps')); !!}">
-                        {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!}
+                        {{-- {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!} --}}
                     @else
                         <center>
                             <big>
