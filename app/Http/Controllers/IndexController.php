@@ -776,25 +776,9 @@ class IndexController extends Controller
 
     public function verifyMember($member_id) 
     {
-        $this->validate($request,array(
-            'user_id'               => 'required',
-            'mobile'                => 'required|max:11',
-            'security_code'         => 'required',
-            'email'                 => 'required',
-            'password'              => 'required|min:8|same:password_confirmation'
-        ));
+        $user = User::where('member', $member_id)->first();
 
-        $user = User::find($request->user_id);
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        $security_token = Passwordresetsms::where('mobile', $request->mobile)
-                                          ->where('security_code', $request->security_code)
-                                          ->first();
-        $security_token->is_used = 1;
-        $security_token->save();
-        Session::flash('success', 'পাসওয়ার্ড সফলভাবে হালনাগাদ করা হয়েছে! লগইন করুন।');
-        return Redirect::to(url('login'));
+        
     }
 
 
