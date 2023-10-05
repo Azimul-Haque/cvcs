@@ -33,9 +33,9 @@
                                     <td colspan="2">
                                         <center>
                                             @if($member->image != null)
-                                                <img src="{{ asset('images/users/'.$member->image)}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 220px; height: auto;" />
+                                                <img src="{{ asset('images/users/'.$member->image)}}" alt="image of {{ $member->name }}" class="img-responsive img-circle shadow" style="max-width: 220px; height: auto;" />
                                             @else
-                                                <img src="{{ asset('images/user.png')}}" alt="image of {{ $member->name }}" class="img-responsive shadow" style="max-width: 220px; height: auto;" />
+                                                <img src="{{ asset('images/user.png')}}" alt="image of {{ $member->name }}" class="img-responsive img-circle shadow" style="max-width: 220px; height: auto;" />
                                             @endif
                                         </center>
                                     </td>
