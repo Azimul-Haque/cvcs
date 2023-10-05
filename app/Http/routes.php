@@ -48,6 +48,10 @@ Route::post('/member/application/store', ['as'=>'index.storeapplication','uses'=
 Route::post('/contact/form/message/store', ['as'=>'index.storeformmessage','uses'=>'IndexController@storeFormMessage']);
 Route::get('/tutorial/video', ['as'=>'index.videotutorial','uses'=>'IndexController@getVideoTutorials']);
 
+// check member
+// check member
+Route::get('/verification/member/{member_id}', ['as'=>'index.memberverification','uses'=>'IndexController@verifyMember']);
+
 Route::get('/test', ['as'=>'index.test','uses'=>'IndexController@getTest']);
 // index routes
 // index routes
