@@ -30,8 +30,7 @@
                         <table class="table table-bordered table-condensed">
                             <tbody>
                                 <tr>
-                                    <td>ছবি</td>
-                                    <td>আসদ</td>
+                                    <td colspan="2">ছবি</td>
                                 </tr>
                                 <tr>
                                     <td>সদস্যপদ নং</td>
