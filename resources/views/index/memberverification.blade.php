@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    @if($member->count() > 0)
+                    @if($member)
                         পাওয়া গেসে
                     @else
                         পাওয়া যায়নি!
