@@ -29,9 +29,11 @@
                     @if($member)
                         পাওয়া গেসে
                     @else
-                        <big>
-                            <b>কোন সদস্য খুঁজে পাওয়া যায়নি!</b>
-                        </big>
+                        <center>
+                            <big>
+                                <b>কোন সদস্য খুঁজে পাওয়া যায়নি!</b>
+                            </big>
+                        </center>
                     @endif
                 </div>
             </div>
