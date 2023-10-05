@@ -221,7 +221,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
         'Aamarpay'   =>  Shipu\Aamarpay\Facades\Aamarpay::class,
-        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
 
