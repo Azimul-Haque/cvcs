@@ -27,6 +27,7 @@
 				<th>Email</th>
 				<th>Joining Date</th>
 				<th>Designation</th>
+				<th>QR Code</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -45,6 +46,7 @@
 					<td>{{ $user->email }}</td>
 					<td>{{ date('F d, Y', strtotime($user->joining_date)) }}</td>
 					<td>{{ $user->position ? $user->position->name : '' }}</td>
+					<td>{!! QrCode::size(200)->generate('Make me into a QrCode!'); !!}</td>
 				</tr>
 				@php
 					$sl++;
