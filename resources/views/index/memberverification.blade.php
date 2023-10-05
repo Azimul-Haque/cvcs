@@ -59,7 +59,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        {{-- <img src="{!! QrCode::format('png')->size(200)->generate('Make me into a QrCode!', 'image/png'); !!}"> --}}
+                        <img src="{!! QrCode::format('eps')->size(200)->generate('Make me into a QrCode!', 'image/eps'); !!}">
                         {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!}
                     @else
                         <center>
