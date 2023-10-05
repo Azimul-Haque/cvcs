@@ -62,7 +62,7 @@
                     @else
                         <center>
                             <big>
-                                <b>কোন সদস্য খুঁজে পাওয়া যায়নি!</b>
+                                <b style="color: Red;">কোন সদস্য খুঁজে পাওয়া যায়নি!</b>
                             </big>
                         </center>
                         <br/>
