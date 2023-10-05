@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    CVCS | Events
+    CVCS | Member Verification
 @endsection
 
 @section('css')
