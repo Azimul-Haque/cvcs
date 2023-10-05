@@ -29,7 +29,7 @@
                     @if($member)
                         <center>
                             <big>
-                                <b>কোন সদস্য খুঁজে পাওয়া যায়নি!</b>
+                                <b>সদস্য খুঁজে পাওয়া গেছে!</b>
                             </big>
                         </center>
                         <table class="table table-bordered table-condensed">
