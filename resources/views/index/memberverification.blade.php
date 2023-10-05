@@ -30,11 +30,11 @@
                         <table class="table table-bordered table-condensed">
                             <tbody>
                                 <tr>
-                                    <td>আসদ</td>
+                                    <td>ছবি</td>
                                     <td>আসদ</td>
                                 </tr>
                                 <tr>
-                                    <td>সদস্যপদ নং</td>নাম: নাম(বাংলা): পদবি: দপ্তর: ছবি
+                                    <td>সদস্যপদ নং</td>
                                     <td>{{ bangla($member->member_id) }}</td>
                                 </tr>
                                 <tr>
