@@ -48,9 +48,9 @@
 					<td>{{ $user->position ? $user->position->name : '' }}</td>
 					<td>
 						@if($user->image != null)
-						    <img src="{{ asset('images/users/'.$user->image)}}" alt="image of {{ $user->name }}" class="img-responsive img-circle shadow" style="max-width: 220px; height: auto; padding: 2px; margin: 10px;" />
+						    <img src="{{ asset('images/users/'.$user->image)}}" alt="image of {{ $user->name }}" class="img-responsive img-circle shadow" style="max-width: 100px; height: auto; padding: 2px; margin: 10px;" />
 						@else
-						    <img src="{{ asset('images/user.png')}}" alt="image of {{ $user->name }}" class="img-responsive img-circle shadow" style="max-width: 220px; height: auto; padding: 2px; margin: 10px;" />
+						    <img src="{{ asset('images/user.png')}}" alt="image of {{ $user->name }}" class="img-responsive img-circle shadow" style="max-width: 100px; height: auto; padding: 2px; margin: 10px;" />
 						@endif
 					</td>
 					{{-- <td>{!! QrCode::size(200)->format('eps')->generate('ItSolutionStuff.com', public_path('images/qrcode.eps')); !!}</td> --}}
