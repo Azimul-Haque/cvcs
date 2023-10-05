@@ -47,7 +47,7 @@
 					<td>{{ date('F d, Y', strtotime($user->joining_date)) }}</td>
 					<td>{{ $user->position ? $user->position->name : '' }}</td>
 					<td>
-						{!! QrCode::size(200)->generate('Make me into a QrCode!'); !!}
+						{!! QrCode::size(200)->generate(route('index.memberverification', $user->member_id)); !!}
 					</td>
 					{{-- <td>{!! QrCode::size(200)->format('eps')->generate('ItSolutionStuff.com', public_path('images/qrcode.eps')); !!}</td> --}}
 				</tr>
