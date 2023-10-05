@@ -776,9 +776,9 @@ class IndexController extends Controller
 
     public function verifyMember($member_id) 
     {
-        $user = User::where('member', $member_id)->first();
+        $member = User::where('member', $member_id)->first();
 
-        
+
     }
 
 
