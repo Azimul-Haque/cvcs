@@ -38,11 +38,11 @@
                                     <td>{{ bangla($member->member_id) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>নাম</td>
+                                    <td>নাম (বাংলা)</td>
                                     <td>{{ $member->name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>নাম (বাংলা)</td>
+                                    <td>নাম (ইংরেজি)</td>
                                     <td>{{ $member->name_bangla }}</td>
                                 </tr>
                                 <tr>
