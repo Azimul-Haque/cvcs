@@ -47,7 +47,7 @@
 					<td>{{ date('F d, Y', strtotime($user->joining_date)) }}</td>
 					<td>{{ $user->position ? $user->position->name : '' }}</td>
 					<td>
-						@if($member->image != null)
+						@if($user->image != null)
 						    <img src="{{ asset('images/users/'.$user->image)}}" alt="image of {{ $user->name }}" class="img-responsive img-circle shadow" style="max-width: 220px; height: auto; padding: 2px; margin: 10px;" />
 						@else
 						    <img src="{{ asset('images/user.png')}}" alt="image of {{ $user->name }}" class="img-responsive img-circle shadow" style="max-width: 220px; height: auto; padding: 2px; margin: 10px;" />
