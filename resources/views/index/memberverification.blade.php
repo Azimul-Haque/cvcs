@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     @if($member)
-                        <table class="table table-bordered table-condensed table-bordered">
+                        <table class="table table-bordered table-condensed">
                             <thead>
                                 <tr>
                                     <th>আসদ</th>
