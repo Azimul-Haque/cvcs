@@ -25,27 +25,9 @@
     <section style="padding: 13px 0;">
         <div class="container">
             <div class="row">
-                @foreach($events as $event)
-                    <div class="col-md-4 col-sm-6 sm-margin-bottom-ten xs-text-center" style="min-height: 370px;">
-                        <div class="blog-post">
-                            <div class="blog-post-images">
-                                <a href="{{ route('index.singleevent', $event->id) }}">
-                                    @if(($event->image != null) || !file_exists(public_path('images/events/'.$event->image)))
-                                        <img src="{{ asset('images/events/'.$event->image) }}" alt="">
-                                    @else
-                                        <img src="{{ asset('images/events/default_event.jpg') }}" alt="">
-                                    @endif
-                                </a>
-                            </div>
-                            <div class="post-details">
-                                <a href="{{ route('index.singleevent', $event->id) }}" class="post-title text-large">{{ $event->name }}</a>
-                                <span class="post-author">
-                                    {{ date('F d, Y', strtotime($event->created_at)) }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                <div class="col-md-12">
+                    
+                </div>
             </div>
         </div>
     </section>
