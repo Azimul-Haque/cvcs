@@ -39,7 +39,11 @@
                                 </tr>
                                 <tr>
                                     <td>নাম</td>
-                                    <td>{{ bangla($member->member_id) }}</td>
+                                    <td>{{ $member->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>নাম (বাংলা)</td>
+                                    <td>{{ $member->name_bangla }}</td>
                                 </tr>
                             </tbody>
                         </table>
