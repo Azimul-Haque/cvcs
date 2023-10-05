@@ -37,6 +37,10 @@
                                     <td>সদস্যপদ নং</td>নাম: নাম(বাংলা): পদবি: দপ্তর: ছবি
                                     <td>{{ bangla($member->member_id) }}</td>
                                 </tr>
+                                <tr>
+                                    <td>নাম</td>
+                                    <td>{{ bangla($member->member_id) }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     @else
