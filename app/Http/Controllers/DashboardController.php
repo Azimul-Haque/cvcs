@@ -4133,10 +4133,12 @@ class DashboardController extends Controller
     public function getExcelDataAll($start_id, $end_id) 
     {
         $users = User::select('name', 'name_bangla', 'nid', 'dob', 'member_id', 'mobile', 'joining_date', 'email', 'designation', 'position_id')
+                     ->whereBetween('id', [$start_id, $end_id])
                      ->where('activation_status', 1)
                      ->orderBy('id', 'asc')
                      ->orderBy('position_id', 'asc')
-                     ->get()->take(50);
+                     ->get();
+                     // ->take(50);
 
         return view('dashboard.excelexport')->withUsers($users);
     }
