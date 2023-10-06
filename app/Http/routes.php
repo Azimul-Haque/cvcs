@@ -315,7 +315,7 @@ Route::get('/dashboard/get5000', ['as'=>'dashboard.get5000','uses'=>'DashboardCo
 // DB BACKUP
 // DB BACKUP
 Route::get('/dashboard/db/backup', ['as'=>'dashboard.db.backup','uses'=>'DashboardController@runDBBackup']);
-Route::get('/dashboard/excel/output', ['as'=>'dashboard.exceloutput','uses'=>'DashboardController@getExcelDataAll']);
+Route::get('/dashboard/excel/output', ['as'=>'dashboard.exceloutput/{start_id}/{end_id}','uses'=>'DashboardController@getExcelDataAll']);
 // DB BACKUP
 // DB BACKUP
 
