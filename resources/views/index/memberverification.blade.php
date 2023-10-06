@@ -59,9 +59,8 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <img src="{!! QrCode::size(200) ->format('png') ->generate('ItSolutionStuff.com', public_path('images/qrcode.png')); !!}">
-                        {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!}
-                        <img src="data:image/png;base64,{{ base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->format('png')->generate('Make me into a QrCode!') ) }}">
+                        {{-- {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!} --}}
+                        {{-- <img src="data:image/png;base64,{{ base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->format('png')->generate('Make me into a QrCode!') ) }}"> --}}
                     @else
                         <center>
                             <big>
