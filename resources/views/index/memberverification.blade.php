@@ -59,7 +59,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        {{-- <img src="{!! QrCode::size(200) ->format('eps') ->generate('ItSolutionStuff.com', public_path('images/qrcode.eps')); !!}"> --}}
+                        <img src="{!! QrCode::size(200) ->format('png') ->generate('ItSolutionStuff.com', public_path('images/qrcode.png')); !!}">
                         {{-- {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!} --}}
                     @else
                         <center>
