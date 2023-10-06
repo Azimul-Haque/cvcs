@@ -30,6 +30,8 @@
 				<th>QR Code</th>
 			</tr>
 		</thead>
+	</table>
+	<table>
 		<tbody>
 			@php
 				$sl = 1;
