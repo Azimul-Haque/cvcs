@@ -4136,7 +4136,7 @@ class DashboardController extends Controller
                      ->where('activation_status', 1)
                      ->orderBy('id', 'asc')
                      ->orderBy('position_id', 'asc')
-                     ->get();
+                     ->get()->take(20);
 
         return view('dashboard.excelexport')->withUsers($users);
     }
