@@ -47,9 +47,9 @@
 					<td>{{ date('F d, Y', strtotime($user->joining_date)) }}</td>
 					<td>{{ $user->position ? $user->position->name : '' }}</td>
 					<td>
-						{!! QrCode::size(150)->generate(route('index.memberverification', $user->member_id)); !!}
+						{{-- {!! QrCode::size(150)->generate(route('index.memberverification', $user->member_id)); !!} --}}
 						{{-- <img src="data:image/png;base64,{{ base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->format('png')->generate('Make me into a QrCode!') ) }}"> --}}
-						<img src="data:image/png;base64,{{ base64_encode(QrCode::size(150)->format('png')->generate('Make me into a QrCode!') ) }}">
+						<img src="data:image/png;base64,{{ base64_encode(QrCode::size(150)->format('png')->generate(route('index.memberverification', $user->member_id)) ) }}">
 					</td>
 					{{-- <td>{!! QrCode::size(200)->format('eps')->generate('ItSolutionStuff.com', public_path('images/qrcode.eps')); !!}</td> --}}
 				</tr>
