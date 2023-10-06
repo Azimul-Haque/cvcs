@@ -4130,7 +4130,7 @@ class DashboardController extends Controller
         }
         return response()->download($latest_filename);
     }
-    public function getExcelDataAll() 
+    public function getExcelDataAll($start_id, $end_id) 
     {
         $users = User::select('name', 'name_bangla', 'nid', 'dob', 'member_id', 'mobile', 'joining_date', 'email', 'designation', 'position_id')
                      ->where('activation_status', 1)
