@@ -59,7 +59,7 @@
                                 </tr>
                                 <tr>
                                     <td>মোবাইল নাম্বার</td>
-                                    <td>{{ $member->position ? $member->position->name : '' }}</td>
+                                    <td>{{ $member->mobile }}</td>
                                 </tr>
                             </tbody>
                         </table>
