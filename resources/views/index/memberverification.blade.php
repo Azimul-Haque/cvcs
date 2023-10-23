@@ -57,6 +57,10 @@
                                     <td>পদবি</td>
                                     <td>{{ $member->position ? $member->position->name : '' }}</td>
                                 </tr>
+                                <tr>
+                                    <td>মোবাইল নাম্বার</td>
+                                    <td>{{ $member->position ? $member->position->name : '' }}</td>
+                                </tr>
                             </tbody>
                         </table>
                         {{-- {!! QrCode::size(200)->generate('Make me into a QrCode!'); !!} --}}
