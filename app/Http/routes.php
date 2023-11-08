@@ -207,6 +207,7 @@ Route::get('/dashboard/member/single/{unique_key}', ['as'=>'dashboard.singlememb
 Route::get('/dashboard/members/update/requests', ['as'=>'dashboard.membersupdaterequests','uses'=>'DashboardController@getMembersUpdateRequests']);
 Route::post('/dashboard/member/update/request/approve', ['as'=>'dashboard.approveupdaterequest','uses'=>'DashboardController@approveUpdateRequest']);
 Route::post('/dashboard/member/update/transfer/{id}', ['as'=>'dashboard.transfermember','uses'=>'DashboardController@transferMember']);
+Route::post('/dashboard/member/update/designation/{id}', ['as'=>'dashboard.changedesignation','uses'=>'DashboardController@changeDesignation']);
 Route::delete('/dashboard/member/update/request/{id}/delete', ['as'=>'dashboard.deleteupdaterequest','uses'=>'DashboardController@deleteUpdateRequest']);
 
 // SEARCH MEMBER
