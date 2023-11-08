@@ -128,7 +128,7 @@
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title"><i class="fa fa-level-up"></i> পদবি পরিবর্তন করুন</h4>
                     </div>
-                    {!! Form::model($member, ['route' => ['dashboard.transfermember', $member->id], 'method' => 'POST', 'class' => 'form-default']) !!}
+                    {!! Form::model($member, ['route' => ['dashboard.changedesignation', $member->id], 'method' => 'POST', 'class' => 'form-default']) !!}
                     <div class="modal-body">
                       <select name="position_id" id="position_id" class="form-control" required="">
                           <option value="" selected="" disabled="">পদবির নাম নির্ধারণ করুন</option>
