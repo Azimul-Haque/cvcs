@@ -130,10 +130,10 @@
                     </div>
                     {!! Form::model($member, ['route' => ['dashboard.transfermember', $member->id], 'method' => 'POST', 'class' => 'form-default']) !!}
                     <div class="modal-body">
-                      <select name="branch_id" id="branch_id" class="form-control" required="">
+                      <select name="position_id" id="position_id" class="form-control" required="">
                           <option value="" selected="" disabled="">পদবির নাম নির্ধারণ করুন</option>
                           @foreach($positions as $position)
-                            <option value="{{ $position->id }}" @if($position->id == $member->branch_id) selected="" @endif>{{ $position->name }}</option>
+                            <option value="{{ $position->id }}" @if($position->id == $member->position_id) selected="" @endif>{{ $position->name }}</option>
                           @endforeach
                       </select><br/>
                       <div class="checkbox">
