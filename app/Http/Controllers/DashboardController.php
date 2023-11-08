@@ -2155,7 +2155,7 @@ class DashboardController extends Controller
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><i class="fa fa-fw fa-exchange"></i> পদবি পরিবর্তন করুন</h4>
                       </div>
-                      <form method="POST" class="form-default" action="' . route('dashboard.transfermember', $row->id) . '">
+                      <form method="POST" class="form-default" action="' . route('dashboard.changedesignation', $row->id) . '">
                       <input name="_token" type="hidden" value="' . csrf_token() . '">
                       <div class="modal-body">
                         <select name="branch_id" id="branch_id" class="form-control" required="">
