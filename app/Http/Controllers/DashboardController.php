@@ -1861,6 +1861,21 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.members');
     }
 
+    public function changeDesignation(Request $request, $id)
+    {
+        $this->validate($request,array(
+            'branch_id'        =>   'required',
+            'confirmcheckbox'  =>   'required'
+        ));
+
+        $member = User::find($id);
+        $member->branch_id = $request->branch_id;
+        $member->save();
+
+        Session::flash('success','সফলভাবে সদস্যের দপ্তর পরিবর্তন করা হয়েছে!');
+        return redirect()->route('dashboard.members');
+    }
+
     public function getMembersForAll(Request $request)
     {
         $memberscount = User::where('activation_status', 1)->where('role_type', '!=', 'admin')->count();
