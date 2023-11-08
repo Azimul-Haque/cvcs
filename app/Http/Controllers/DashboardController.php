@@ -2064,6 +2064,7 @@ class DashboardController extends Controller
         {
           $output = '';
           $officelist = '';
+          $designationlist = '';
           $query = $request->get('query');
           if($query != '')
           {
@@ -2112,8 +2113,12 @@ class DashboardController extends Controller
             }
 
             $branches = Branch::where('id', '>', 0)->get();
+            $positions = Position::where('id', '>', 0)->get();
             foreach($branches as $branch) {
                 $officelist .= '<option value="' . $branch->id . '">' . $branch->name . '</option>';
+            }
+            foreach($positions as $position) {
+                $designationlist .= '<option value="' . $position->id . '">' . $position->name . '</option>';
             }
             
             
@@ -2160,7 +2165,7 @@ class DashboardController extends Controller
                       <div class="modal-body">
                         <select name="position_id" id="position_id" class="form-control" required="">
                             <option value="" selected="" disabled="">পদবির নাম নির্ধারণ করুন</option>
-                            ' . $officelist . '
+                            ' . $designationlist . '
                         </select><br/>
                         <div class="checkbox">
                           <label><input type="checkbox" name="confirmcheckbox" value="1" required>আপনি কি নিশ্চিতভাবে পদবি পরিবর্তন করতে চান? (চেক বাটনে ক্লিক করুন)</label>
