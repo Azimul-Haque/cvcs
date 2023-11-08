@@ -1864,12 +1864,12 @@ class DashboardController extends Controller
     public function changeDesignation(Request $request, $id)
     {
         $this->validate($request,array(
-            'branch_id'        =>   'required',
+            'position_id'        =>   'required',
             'confirmcheckbox'  =>   'required'
         ));
 
         $member = User::find($id);
-        $member->branch_id = $request->branch_id;
+        $member->position_id = $request->position_id;
         $member->save();
 
         Session::flash('success','সফলভাবে সদস্যের দপ্তর পরিবর্তন করা হয়েছে!');
