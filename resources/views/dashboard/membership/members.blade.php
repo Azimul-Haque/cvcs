@@ -118,7 +118,7 @@
               <!-- Transfer Member Modal -->
               <!-- Transfer Member Modal -->
 
-              <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#changeDesigModal{{ $member->id }}" data-backdrop="static" title="সদস্যের পদবি করুন"><i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i></a>
+              <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#changeDesigModal{{ $member->id }}" data-backdrop="static" title="সদস্যের পদবি করুন"><i class="fa fa-level-up" aria-hidden="true"></i></a>
               <!-- Transfer Member Modal -->
               <!-- Transfer Member Modal -->
               <div class="modal fade" id="changeDesigModal{{ $member->id }}" role="dialog">
@@ -126,7 +126,7 @@
                   <div class="modal-content">
                     <div class="modal-header modal-header-warning">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title"><i class="fa fa-arrow-circle-o-up"></i> পদবি পরিবর্তন করুন</h4>
+                      <h4 class="modal-title"><i class="fa fa-level-up"></i> পদবি পরিবর্তন করুন</h4>
                     </div>
                     {!! Form::model($member, ['route' => ['dashboard.transfermember', $member->id], 'method' => 'POST', 'class' => 'form-default']) !!}
                     <div class="modal-body">
