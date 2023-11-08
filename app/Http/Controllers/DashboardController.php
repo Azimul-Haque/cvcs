@@ -1872,7 +1872,7 @@ class DashboardController extends Controller
         $member->position_id = $request->position_id;
         $member->save();
 
-        Session::flash('success','সফলভাবে সদস্যের দপ্তর পরিবর্তন করা হয়েছে!');
+        Session::flash('success','সফলভাবে সদস্যের পদবি পরিবর্তন করা হয়েছে!');
         return redirect()->route('dashboard.members');
     }
 
