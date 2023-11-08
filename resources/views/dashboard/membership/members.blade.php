@@ -131,7 +131,7 @@
                     {!! Form::model($member, ['route' => ['dashboard.transfermember', $member->id], 'method' => 'POST', 'class' => 'form-default']) !!}
                     <div class="modal-body">
                       <select name="branch_id" id="branch_id" class="form-control" required="">
-                          <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                          <option value="" selected="" disabled="">পদবির নাম নির্ধারণ করুন</option>
                           @foreach($branches as $branch)
                             <option value="{{ $branch->id }}" @if($branch->id == $member->branch_id) selected="" @endif>{{ $branch->name }}</option>
                           @endforeach
