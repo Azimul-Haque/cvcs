@@ -1841,6 +1841,7 @@ class DashboardController extends Controller
 
         return view('dashboard.membership.members')
                             ->withMembers($paginatedItems)
+                            ->withPositions($positions)
                             ->withBranches($branches)
                             ->withMemberscount($memberscount);
     }
