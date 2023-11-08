@@ -118,7 +118,7 @@
               <!-- Transfer Member Modal -->
               <!-- Transfer Member Modal -->
 
-              <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#changeDesigModal{{ $member->id }}" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
+              <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#changeDesigModal{{ $member->id }}" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
               <!-- Transfer Member Modal -->
               <!-- Transfer Member Modal -->
               <div class="modal fade" id="changeDesigModal{{ $member->id }}" role="dialog">
