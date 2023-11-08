@@ -2146,6 +2146,34 @@ class DashboardController extends Controller
                     </div>
                   </div>
                 </div>
+
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#sendToDefectiveListModal'. $row->member_id .'" data-backdrop="static" title="সদস্যের দপ্তর পরিবর্তন করুন"><i class="fa fa-fw fa-exchange" aria-hidden="true"></i></a>
+                <div class="modal fade" id="sendToDefectiveListModal'. $row->member_id .'" role="dialog">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                      <div class="modal-header modal-header-warning">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-fw fa-exchange"></i> দপ্তর পরিবর্তন করুন</h4>
+                      </div>
+                      <form method="POST" class="form-default" action="' . route('dashboard.transfermember', $row->id) . '">
+                      <input name="_token" type="hidden" value="' . csrf_token() . '">
+                      <div class="modal-body">
+                        <select name="branch_id" id="branch_id" class="form-control" required="">
+                            <option value="" selected="" disabled="">দপ্তরের নাম নির্ধারণ করুন</option>
+                            ' . $officelist . '
+                        </select><br/>
+                        <div class="checkbox">
+                          <label><input type="checkbox" name="confirmcheckbox" value="1" required>আপনি কি নিশ্চিতভাবে দপ্তর পরিবর্তন করতে চান? (চেক বাটনে ক্লিক করুন)</label>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                            <button type="submit" class="btn btn-warning">দাখিল করুন</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+                      </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>';
            }
