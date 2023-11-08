@@ -2152,11 +2152,11 @@ class DashboardController extends Controller
                   </div>
                 </div>
 
-                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#changeDesigModal'. $row->member_id .'" data-backdrop="static" title="সদস্যের পদবি পরিবর্তন করুন"><i class="fa fa-level-up" aria-hidden="true"></i></a>
+                <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#changeDesigModal'. $row->member_id .'" data-backdrop="static" title="সদস্যের পদবি পরিবর্তন করুন"><i class="fa fa-level-up" aria-hidden="true"></i></a>
                 <div class="modal fade" id="changeDesigModal'. $row->member_id .'" role="dialog">
                   <div class="modal-dialog modal-md">
                     <div class="modal-content">
-                      <div class="modal-header modal-header-warning">
+                      <div class="modal-header modal-header-info">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><i class="fa fa-level-up"></i> পদবি পরিবর্তন করুন</h4>
                       </div>
@@ -2172,7 +2172,7 @@ class DashboardController extends Controller
                         </div>
                       </div>
                       <div class="modal-footer">
-                            <button type="submit" class="btn btn-warning">দাখিল করুন</button>
+                            <button type="submit" class="btn btn-info">দাখিল করুন</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
                       </div>
                       </form>
