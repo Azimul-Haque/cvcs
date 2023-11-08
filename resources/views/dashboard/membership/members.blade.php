@@ -132,8 +132,8 @@
                     <div class="modal-body">
                       <select name="branch_id" id="branch_id" class="form-control" required="">
                           <option value="" selected="" disabled="">পদবির নাম নির্ধারণ করুন</option>
-                          @foreach($branches as $branch)
-                            <option value="{{ $branch->id }}" @if($branch->id == $member->branch_id) selected="" @endif>{{ $branch->name }}</option>
+                          @foreach($positions as $position)
+                            <option value="{{ $position->id }}" @if($position->id == $member->branch_id) selected="" @endif>{{ $position->name }}</option>
                           @endforeach
                       </select><br/>
                       <div class="checkbox">
