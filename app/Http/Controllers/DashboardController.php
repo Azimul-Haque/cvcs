@@ -2158,7 +2158,7 @@ class DashboardController extends Controller
                       <form method="POST" class="form-default" action="' . route('dashboard.changedesignation', $row->id) . '">
                       <input name="_token" type="hidden" value="' . csrf_token() . '">
                       <div class="modal-body">
-                        <select name="branch_id" id="branch_id" class="form-control" required="">
+                        <select name="position_id" id="position_id" class="form-control" required="">
                             <option value="" selected="" disabled="">পদবির নাম নির্ধারণ করুন</option>
                             ' . $officelist . '
                         </select><br/>
