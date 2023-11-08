@@ -126,7 +126,7 @@
                   <div class="modal-content">
                     <div class="modal-header modal-header-warning">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title"><i class="fa fa-arrow-circle-o-up"></i> দপ্তর পরিবর্তন করুন</h4>
+                      <h4 class="modal-title"><i class="fa fa-arrow-circle-o-up"></i> পদবি পরিবর্তন করুন</h4>
                     </div>
                     {!! Form::model($member, ['route' => ['dashboard.transfermember', $member->id], 'method' => 'POST', 'class' => 'form-default']) !!}
                     <div class="modal-body">
