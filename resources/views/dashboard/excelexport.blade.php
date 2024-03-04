@@ -13,7 +13,7 @@
 	</script>
 </head>
 <body>
-	{{-- <button onclick="table2excel()">Download Excel</button>
+	<button onclick="table2excel()">Download Excel</button>
 	<table>
 		<thead>
 			<tr>
@@ -30,7 +30,7 @@
 				<th>QR Code</th>
 			</tr>
 		</thead>
-	</table> --}}
+	</table>
 	<table>
 		<tbody>
 			@php
