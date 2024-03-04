@@ -4188,7 +4188,7 @@ class DashboardController extends Controller
                      ->orderBy('id', 'asc')
                      ->orderBy('position_id', 'asc')
                      ->get()
-                     ->take(0); // here is the catch
+                     ->take(0); // here is the catch!
 
         return view('dashboard.excelexport')->withUsers($users);
     }
