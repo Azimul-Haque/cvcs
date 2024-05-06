@@ -3456,8 +3456,8 @@ class DashboardController extends Controller
                             $mobile_number = substr($member->mobile, -11);
                         }
                     }
-                    // $url = config('sms.url');
-                    // $number = $mobile_number;
+                    $url = config('sms.url');
+                    $number = $mobile_number;
                     $text = 'Dear ' . $member->name . ', payment of tk. '. $temppayment->amount .' is received successfully, TrxID: ' . $member->trxid . '. Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                     
                     // NEW PANEL
@@ -3591,8 +3591,8 @@ class DashboardController extends Controller
                   $mobile_number = substr($payment->user->mobile, -11);
               }
           }
-          $url = config('sms.url');
-          $number = $mobile_number;
+          // $url = config('sms.url');
+          // $number = $mobile_number;
           $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
           
           // NEW PANEL
