@@ -4293,9 +4293,6 @@ class DashboardController extends Controller
                     $mobile_number = substr($member->mobile, -11);
                 }
             }
-            // if($mobile_number != 0) {
-            //   array_push($mobile_numbers, $mobile_number);
-            // }
             $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
             $usersarraystosend[$iterator]['to'] = $mobile_number;
             $usersarraystosend[$iterator]['message'] = $text; 
