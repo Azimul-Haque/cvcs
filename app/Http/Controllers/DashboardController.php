@@ -4318,53 +4318,53 @@ class DashboardController extends Controller
         // NEW PANEL
 
 
-        // send sms
-        // $mobile_numbers = [];
-        $smssuccesscount = 0;
-        $url = config('sms.url');
+        // // send sms
+        // // $mobile_numbers = [];
+        // $smssuccesscount = 0;
+        // $url = config('sms.url');
         
-        $multiCurl = array();
-        // data to be returned
-        $result = array();
-        // multi handle
-        $mh = curl_multi_init();
-        // sms data
-        $smsdata = [];
+        // $multiCurl = array();
+        // // data to be returned
+        // $result = array();
+        // // multi handle
+        // $mh = curl_multi_init();
+        // // sms data
+        // $smsdata = [];
 
-        foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
-            $member = User::where('member_id', $member_id)->first();
-            $mobile_number = 0;
-            if(strlen($member->mobile) == 11) {
-                $mobile_number = $member->mobile;
-            } elseif(strlen($member->mobile) > 11) {
-                if (strpos($member->mobile, '+') !== false) {
-                    $mobile_number = substr($member->mobile, -11);
-                }
-            }
-            // if($mobile_number != 0) {
-            //   array_push($mobile_numbers, $mobile_number);
-            // }
-            $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-            $smsdata[$member_id] = array(
-                'username'=>config('sms.username'),
-                'password'=>config('sms.password'),
-                // 'apicode'=>"1",
-                'number'=>"$mobile_number",
-                // 'msisdn'=>"$mobile_number",
-                // 'countrycode'=>"880",
-                // 'cli'=>"CVCS",
-                // 'messagetype'=>"1",
-                'message'=>"$text",
-                // 'messageid'=>"2"
-            );
-            $multiCurl[$member_id] = curl_init(); // Initialize cURL
-            curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
-            curl_setopt($multiCurl[$member_id], CURLOPT_HEADER, 0);
-            curl_setopt($multiCurl[$member_id], CURLOPT_POSTFIELDS, http_build_query($smsdata[$member_id]));
-            curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
-            curl_multi_add_handle($mh, $multiCurl[$member_id]);
-        }
+        // foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
+        //     $member = User::where('member_id', $member_id)->first();
+        //     $mobile_number = 0;
+        //     if(strlen($member->mobile) == 11) {
+        //         $mobile_number = $member->mobile;
+        //     } elseif(strlen($member->mobile) > 11) {
+        //         if (strpos($member->mobile, '+') !== false) {
+        //             $mobile_number = substr($member->mobile, -11);
+        //         }
+        //     }
+        //     // if($mobile_number != 0) {
+        //     //   array_push($mobile_numbers, $mobile_number);
+        //     // }
+        //     $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+        //     $smsdata[$member_id] = array(
+        //         'username'=>config('sms.username'),
+        //         'password'=>config('sms.password'),
+        //         // 'apicode'=>"1",
+        //         'number'=>"$mobile_number",
+        //         // 'msisdn'=>"$mobile_number",
+        //         // 'countrycode'=>"880",
+        //         // 'cli'=>"CVCS",
+        //         // 'messagetype'=>"1",
+        //         'message'=>"$text",
+        //         // 'messageid'=>"2"
+        //     );
+        //     $multiCurl[$member_id] = curl_init(); // Initialize cURL
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_HEADER, 0);
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_POSTFIELDS, http_build_query($smsdata[$member_id]));
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
+        //     curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
+        //     curl_multi_add_handle($mh, $multiCurl[$member_id]);
+        // }
 
         // $index=null;
         // do {
