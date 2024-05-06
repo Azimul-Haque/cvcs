@@ -3277,12 +3277,10 @@ class DashboardController extends Controller
                         // [0] = memebr_id, [1] = mobile, [2] = amount
 
                         // check payment
-                        // check payment
                         $checkpayment = Payment::where('payment_key', $decode_reply['mer_txnid'])
                                                ->where('member_id', $payerdata[0])
                                                ->where('amount', $payerdata[2])
                                                ->first();
-                        // dd($checkpayment);
                                             
                         if(!empty($checkpayment) || ($checkpayment != null)) {
                             // dd($checkpayment);
@@ -3321,16 +3319,6 @@ class DashboardController extends Controller
                     }
                     $messages = json_encode($usersarraystosend);
 
-                    // $messages = json_encode( [
-                    //     [
-                    //         "to" => "88016xxxxxxxx",
-                    //         "message" => "test content"
-                    //     ],
-                    //     [
-                    //         "to" => "88019xxxxxxxx",
-                    //         "message" => "test 2nd content"
-                    //     ]
-                    // ]);
                     $data = [
                         "api_key" => $api_key,
                         "senderid" => $senderid,
