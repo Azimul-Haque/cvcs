@@ -392,8 +392,8 @@ class IndexController extends Controller
                 $mobile_number = substr($application->mobile, -11);
             }
         }
-        $url = config('sms.url');
-        $number = $mobile_number;
+        // $url = config('sms.url');
+        // $number = $mobile_number;
         $text = 'Dear ' . $application->name . ', your membership application has been submitted! We will notify you when we approve. Thanks. Customs and Vat Co-operative Society. Visit: https://cvcsbd.com';
         // this sms costs 2 SMS
         
@@ -765,8 +765,8 @@ class IndexController extends Controller
                     $mobile_number = substr($request->mobile, -11);
                 }
             }
-            // $url = config('sms.url');
-            // $number = $mobile_number;
+            $url = config('sms.url');
+            $number = $mobile_number;
 
             $text = 'https://cvcsbd.com, your password reset security code is ' . $securuty_code . '. Thanks.';
 
@@ -964,8 +964,8 @@ class IndexController extends Controller
         //                ]';
         // echo $smsjsondata;
         // // dd($smsjsondata);
-        // $url = config('sms.url');
-
+        $url = config('sms.url');
+// 
 
         // $data= array(
         //     'message'=>"$smsjsondata",
