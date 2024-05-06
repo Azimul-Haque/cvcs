@@ -3269,16 +3269,22 @@ class DashboardController extends Controller
                     $url = "http://bulksmsbd.net/api/smsapimany";
                     $api_key = config('sms.api_key');
                     $senderid = config('sms.senderid');
-                    $messages = json_encode( [
-                        [
-                            "to" => "88016xxxxxxxx",
-                            "message" => "test content"
-                        ],
-                        [
-                            "to" => "88019xxxxxxxx",
-                            "message" => "test 2nd content"
-                        ]
-                    ]);
+                    
+                    foreach($users as $user) {
+                        $usersarrays[]['to'] = $user->mobile;
+                        $usersarrays[]['message'] = $user->name;
+                    }
+                    $messages = json_encode($usersarrays);
+                    // $messages = json_encode( [
+                    //     [
+                    //         "to" => "88016xxxxxxxx",
+                    //         "message" => "test content"
+                    //     ],
+                    //     [
+                    //         "to" => "88019xxxxxxxx",
+                    //         "message" => "test 2nd content"
+                    //     ]
+                    // ]);
                     $data = [
                         "api_key" => $api_key,
                         "senderid" => $senderid,
