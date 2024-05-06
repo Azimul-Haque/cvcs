@@ -4663,12 +4663,13 @@ class DashboardController extends Controller
             ]
         ]);
 
-        $users = User::take(2)->get();
+        $users = User::take(2)->get('name', 'mobile');
 
         $usersarrays = [];
         foreach($users as $object) {
             $usersarrays[] = $object->toArray();
         }
+        $newmessage = 
         dd($usersarrays);
     }
     // operation
