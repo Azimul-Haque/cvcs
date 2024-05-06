@@ -3319,7 +3319,8 @@ class DashboardController extends Controller
                            
                         }
                     }
-                    $messages = json_encode($usersarrays);
+                    $messages = json_encode($usersarraystosend);
+                    
                     // $messages = json_encode( [
                     //     [
                     //         "to" => "88016xxxxxxxx",
