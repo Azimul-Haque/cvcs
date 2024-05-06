@@ -795,6 +795,7 @@ class IndexController extends Controller
 
             if($jsonresponse->response_code == 202) {
                 Session::flash('info', $request->mobile . '-নম্বরে সিকিউরিটি কোড পাঠানো হয়েছে!');
+                return redirect()->route('index.mobileresetverifypage', $request->mobile);
             } elseif($jsonresponse->response_code == 1007) {
                 // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
