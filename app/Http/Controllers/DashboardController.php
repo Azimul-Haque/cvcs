@@ -4276,6 +4276,47 @@ class DashboardController extends Controller
         $bulkpayment->is_archieved = 1;
         $bulkpayment->save();
 
+        // NEW PANEL
+        $url = "http://bulksmsbd.net/api/smsapimany";
+        $api_key = config('sms.api_key');
+        $senderid = config('sms.senderid');
+        
+        $members = User::whereIn('member_id', $amountids)->get();
+        $usersarraystosend = [];
+        foreach ($members as $i => $member) {
+            $mobile_number = 0;
+            if(strlen($member->mobile) == 11) {
+                $mobile_number = $member->mobile;
+            } elseif(strlen($member->mobile) > 11) {
+                if (strpos($member->mobile, '+') !== false) {
+                    $mobile_number = substr($member->mobile, -11);
+                }
+            }
+
+            $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+            
+            $usersarraystosend[$i]['to'] = $mobile_number;
+            $usersarraystosend[$i]['message'] = $text;  
+        }
+
+        $messages = json_encode($usersarraystosend);
+
+        $data = [
+            "api_key" => $api_key,
+            "senderid" => $senderid,
+            "messages" => $messages
+        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+        // NEW PANEL
+
 
         // send sms
         // $mobile_numbers = [];
