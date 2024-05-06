@@ -3267,8 +3267,8 @@ class DashboardController extends Controller
 
                     // NEW PANEL
                     $url = "http://bulksmsbd.net/api/smsapimany";
-                    $api_key = "{your api key}";
-                    $senderid = "{your sender id}";
+                    $api_key = config('sms.api_key');
+                    $senderid = config('sms.senderid');
                     $messages = json_encode( [
                         [
                             "to" => "88016xxxxxxxx",
