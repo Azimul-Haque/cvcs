@@ -4666,7 +4666,7 @@ class DashboardController extends Controller
         $users = User::take(2)->get();
 
         $usersarrays = []
-        foreach($yourArrayName as $object)
+        foreach($users as $object)
         {
         $usersarrays[] = $object->toArray();
         }
