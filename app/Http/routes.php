@@ -302,6 +302,7 @@ Route::get('/dashboard/sms/send/reminder/preview', ['as'=>'dashboard.sms.sendrem
 
 Route::get('/dashboard/sms/module/test', ['as'=>'dashboard.testgpsmsapi','uses'=>'SMSController@testGPSMSAPI']);
 Route::get('/dashboard/sms/module/multi/test', ['as'=>'dashboard.testgpmultismsapi','uses'=>'SMSController@testMultiGPSMSAPI']);
+Route::get('/dashboard/test/sms/api', ['as'=>'dashboard.testsmsapi2','uses'=>'DashboardController@testAPI']);
 
 // dashboard routes
 // dashboard routes
