@@ -3876,9 +3876,7 @@ class DashboardController extends Controller
                         $mobile_number = substr($member->mobile, -11);
                     }
                 }
-                // if($mobile_number != 0) {
-                //   array_push($mobile_numbers, $mobile_number);
-                // }
+
                 $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
                 $smsdata[$i] = array(
                     'username'=>config('sms.username'),
