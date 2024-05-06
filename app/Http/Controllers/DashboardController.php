@@ -3272,9 +3272,6 @@ class DashboardController extends Controller
                     
                     $usersarraystosend = []
                     foreach($payers as $payer) {
-                        $usersarraystosend[]['to'] = $user->mobile;
-                        $usersarraystosend[]['message'] = $user->name;
-
                         $payerdata = (explode(":",$payer));
                         // [0] = memebr_id, [1] = mobile, [2] = amount
                         // [0] = memebr_id, [1] = mobile, [2] = amount
