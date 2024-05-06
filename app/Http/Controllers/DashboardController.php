@@ -3270,9 +3270,10 @@ class DashboardController extends Controller
                     $api_key = config('sms.api_key');
                     $senderid = config('sms.senderid');
                     
+                    $usersarraystosend = []
                     foreach($payers as $payer) {
-                        $usersarrays[]['to'] = $user->mobile;
-                        $usersarrays[]['message'] = $user->name;
+                        $usersarraystosend[]['to'] = $user->mobile;
+                        $usersarraystosend[]['message'] = $user->name;
                     }
                     $messages = json_encode($usersarrays);
                     // $messages = json_encode( [
