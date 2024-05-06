@@ -4671,7 +4671,7 @@ class DashboardController extends Controller
             $usersarrays[]['message'] = $user->name;
         }
         $newmessage = json_encode($usersarrays);
-        dd($newmessage);
+        dd($messages);
     }
     // operation
     // operation
