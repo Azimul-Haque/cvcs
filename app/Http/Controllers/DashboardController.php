@@ -4663,7 +4663,7 @@ class DashboardController extends Controller
             ]
         ]);
 
-        $users = User::take(2)->get('name');
+        $users = User::select('name','mobile')->take(2)->get();
 
         $usersarrays = [];
         foreach($users as $object) {
