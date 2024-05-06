@@ -3265,6 +3265,36 @@ class DashboardController extends Controller
                     // dd($request->all());
                     $payers = (explode(",",$temppayment->bulkdata));
 
+                    // NEW PANEL
+                    $url = "http://bulksmsbd.net/api/smsapimany";
+                    $api_key = "{your api key}";
+                    $senderid = "{your sender id}";
+                    $messages = json_encode( [
+                        [
+                            "to" => "88016xxxxxxxx",
+                            "message" => "test content"
+                        ],
+                        [
+                            "to" => "88019xxxxxxxx",
+                            "message" => "test 2nd content"
+                        ]
+                    ]);
+                    $data = [
+                        "api_key" => $api_key,
+                        "senderid" => $senderid,
+                        "messages" => $messages
+                    ];
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    $response = curl_exec($ch);
+                    curl_close($ch);
+                    return $response;
+                    // NEW PANEL
+
                     // INSERT DATA TO DATABASE
                     // INSERT DATA TO DATABASE
 
@@ -4079,7 +4109,7 @@ class DashboardController extends Controller
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
         // NEW PANEL
-        
+
         // $data= array(
         //     'username'=>config('sms.username'),
         //     'password'=>config('sms.password'),
