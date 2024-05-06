@@ -112,31 +112,6 @@ class SMSController extends Controller
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
         // NEW PANEL
-        // $data= array(
-        //     'username'=>config('sms.username'),
-        //     'password'=>config('sms.password'),
-        //     'number'=>"$numbersstr",
-        //     'message'=>"$text",
-        // );
-        // // initialize send status
-        // $ch = curl_init(); // Initialize cURL
-        // curl_setopt($ch, CURLOPT_URL,$url);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
-        // $smsresult = curl_exec($ch);
-
-        // // $sendstatus = $result = substr($smsresult, 0, 3);
-        // $p = explode("|",$smsresult);
-        // $sendstatus = $p[0];
-        // // send sms
-        // if($sendstatus == 1101) {
-        //     Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        // } elseif($sendstatus == 1006) {
-        //     Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
-        // } else {
-        //     Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
-        // }
         return redirect()->route('dashboard.smsmodule');
     }
 
