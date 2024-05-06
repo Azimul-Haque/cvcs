@@ -1764,7 +1764,7 @@ class DashboardController extends Controller
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
         // NEW PANEL
-        
+
         // $data= array(
         //     'username'=>config('sms.username'),
         //     'password'=>config('sms.password'),
@@ -2729,36 +2729,69 @@ class DashboardController extends Controller
                 $mobile_number = substr($member->mobile, -11);
             }
         }
-        $url = config('sms.url');
-        $number = $mobile_number;
+        // $url = config('sms.url');
+        // $number = $mobile_number;
         $text = 'Dear ' . $member->name . ', your information changing request has been approved! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
         // this sms costs 2 SMS
         
-        $data= array(
-            'username'=>config('sms.username'),
-            'password'=>config('sms.password'),
-            'number'=>"$number",
-            'message'=>"$text",
-        );
+        // NEW PANEL
+        $url = config('sms.url2');
+        $api_key = config('sms.api_key');
+        $senderid = config('sms.senderid');
+        $number = $mobile_number;
+        $message = $text;
 
-        // initialize send status
-        $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        $data = [
+            "api_key" => $api_key,
+            "senderid" => $senderid,
+            "number" => $number,
+            "message" => $message,
+        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
-        $smsresult = curl_exec($ch);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $jsonresponse = json_decode($response);
 
-        $p = explode("|",$smsresult);
-        $sendstatus = $p[0];
-        // send sms
-        if($sendstatus == 1101) {
-            Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-        } elseif($sendstatus == 1006) {
+        if($jsonresponse->response_code == 202) {
+            Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        } elseif($jsonresponse->response_code == 1007) {
             Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
         } else {
             Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
         }
+        // NEW PANEL
+        
+
+        // $data= array(
+        //     'username'=>config('sms.username'),
+        //     'password'=>config('sms.password'),
+        //     'number'=>"$number",
+        //     'message'=>"$text",
+        // );
+
+        // // initialize send status
+        // $ch = curl_init(); // Initialize cURL
+        // curl_setopt($ch, CURLOPT_URL,$url);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+        // $smsresult = curl_exec($ch);
+
+        // $p = explode("|",$smsresult);
+        // $sendstatus = $p[0];
+        // // send sms
+        // if($sendstatus == 1101) {
+        //     Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+        // } elseif($sendstatus == 1006) {
+        //     Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+        // } else {
+        //     Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+        // }
 
         Session::flash('success', 'সফলভাবে হালনাগাদ করা হয়েছে!');
         return redirect()->route('dashboard.membersupdaterequests');
