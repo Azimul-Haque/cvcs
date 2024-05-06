@@ -770,6 +770,38 @@ class IndexController extends Controller
 
             $text = 'https://cvcsbd.com, your password reset security code is ' . $securuty_code . '. Thanks.';
 
+            // NEW PANEL
+            $url = config('sms.url2');
+            $api_key = config('sms.api_key');
+            $senderid = config('sms.senderid');
+            $number = $mobile_number;
+            $message = $text;
+
+            $data = [
+                "api_key" => $api_key,
+                "senderid" => $senderid,
+                "number" => $number,
+                "message" => $message,
+            ];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $jsonresponse = json_decode($response);
+
+            if($jsonresponse->response_code == 202) {
+                Session::flash('info', $request->mobile . '-নম্বরে সিকিউরিটি কোড পাঠানো হয়েছে!');
+            } elseif($jsonresponse->response_code == 1007) {
+                // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+            } else {
+                // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+            }
+            // NEW PANEL
+
             $data= array(
                 'username'=>config('sms.username'),
                 'password'=>config('sms.password'),
