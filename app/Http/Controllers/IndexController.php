@@ -802,33 +802,33 @@ class IndexController extends Controller
             }
             // NEW PANEL
 
-            $data= array(
-                'username'=>config('sms.username'),
-                'password'=>config('sms.password'),
-                'number'=>"$number",
-                'message'=>"$text"
-            );
-            // initialize send status
-            $ch = curl_init(); // Initialize cURL
-            curl_setopt($ch, CURLOPT_URL,$url);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
-            $smsresult = curl_exec($ch);
+            // $data= array(
+            //     'username'=>config('sms.username'),
+            //     'password'=>config('sms.password'),
+            //     'number'=>"$number",
+            //     'message'=>"$text"
+            // );
+            // // initialize send status
+            // $ch = curl_init(); // Initialize cURL
+            // curl_setopt($ch, CURLOPT_URL,$url);
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+            // $smsresult = curl_exec($ch);
 
-            // $sendstatus = $result = substr($smsresult, 0, 3);
-            $p = explode("|",$smsresult);
-            $sendstatus = $p[0];
-            // send sms
-            if($sendstatus == 1101) {
-                Session::flash('info', $request->mobile . '-নম্বরে সিকিউরিটি কোড পাঠানো হয়েছে!');
-                return redirect()->route('index.mobileresetverifypage', $request->mobile);
-            } elseif($sendstatus == 1006) {
-                // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
-            } else {
-                // dd($smsresult);
-                Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।'); 
-            }
+            // // $sendstatus = $result = substr($smsresult, 0, 3);
+            // $p = explode("|",$smsresult);
+            // $sendstatus = $p[0];
+            // // send sms
+            // if($sendstatus == 1101) {
+            //     Session::flash('info', $request->mobile . '-নম্বরে সিকিউরিটি কোড পাঠানো হয়েছে!');
+            //     return redirect()->route('index.mobileresetverifypage', $request->mobile);
+            // } elseif($sendstatus == 1006) {
+            //     // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+            // } else {
+            //     // dd($smsresult);
+            //     Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি! আবার চেষ্টা করুন।'); 
+            // }
             return redirect()->route('index.mobilereset');
         } else {
             Session::flash('warning', 'এই নম্বরের কোন সদস্য পাওয়া যায়নি!');
