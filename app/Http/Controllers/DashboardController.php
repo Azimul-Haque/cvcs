@@ -2905,8 +2905,8 @@ class DashboardController extends Controller
                 $mobile_number = substr(Auth::user()->mobile, -11);
             }
         }
-        $url = config('sms.url');
-        $number = $mobile_number;
+        // $url = config('sms.url');
+        // $number = $mobile_number;
         $text = 'Dear ' . Auth::user()->name . ', payment of tk. '. $request->amount .' is submitted successfully. We will notify you once we approve it. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
         
         // NEW PANEL
