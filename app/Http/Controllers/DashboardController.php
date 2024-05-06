@@ -4309,13 +4309,7 @@ class DashboardController extends Controller
                 'message'=>"$text",
                 // 'messageid'=>"2"
             );
-            $multiCurl[$member_id] = curl_init(); // Initialize cURL
-            curl_setopt($multiCurl[$member_id], CURLOPT_URL, $url);
-            curl_setopt($multiCurl[$member_id], CURLOPT_HEADER, 0);
-            curl_setopt($multiCurl[$member_id], CURLOPT_POSTFIELDS, http_build_query($smsdata[$member_id]));
-            curl_setopt($multiCurl[$member_id], CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($multiCurl[$member_id], CURLOPT_SSL_VERIFYPEER, false); // this is important
-            curl_multi_add_handle($mh, $multiCurl[$member_id]);
+            $iterator++;
         }
         foreach ($members as $i => $member) {
             $mobile_number = 0;
