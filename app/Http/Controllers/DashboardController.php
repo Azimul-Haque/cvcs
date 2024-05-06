@@ -4669,8 +4669,8 @@ class DashboardController extends Controller
         foreach($users as $object) {
             $usersarrays[] = $object->toArray();
         }
-        $newmessage = 
-        dd($usersarrays);
+        $newmessage = json_encode(usersarrays);
+        dd($newmessage);
     }
     // operation
     // operation
