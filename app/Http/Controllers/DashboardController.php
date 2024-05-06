@@ -4669,7 +4669,7 @@ class DashboardController extends Controller
         foreach($users as $object) {
             $usersarrays[] = $object->toArray();
         }
-        dd($users);
+        dd($usersarrays);
     }
     // operation
     // operation
