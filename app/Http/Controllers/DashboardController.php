@@ -3892,13 +3892,8 @@ class DashboardController extends Controller
                     'message'=>"$text",
                     // 'messageid'=>"1"
                 );
-                $multiCurl[$i] = curl_init(); // Initialize cURL
-                curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
-                curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
-                curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
-                curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
-                curl_multi_add_handle($mh, $multiCurl[$i]);
+                    $usersarraystosend[$index]['to'] = $payerdata[1];
+                    $usersarraystosend[$index]['message'] = $text;  
             }
             // foreach($payers as $index => $payer) {
             //     $usersarraystosend[$index]['to'] = $payerdata[1];
