@@ -3270,7 +3270,7 @@ class DashboardController extends Controller
                     $api_key = config('sms.api_key');
                     $senderid = config('sms.senderid');
                     
-                    foreach($users as $user) {
+                    foreach($payers as $payer) {
                         $usersarrays[]['to'] = $user->mobile;
                         $usersarrays[]['message'] = $user->name;
                     }
