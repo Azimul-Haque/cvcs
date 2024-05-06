@@ -3316,7 +3316,7 @@ class DashboardController extends Controller
 
                           $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
 
-                          $usersarraystosend[]['to'] = $user->mobile;
+                          $usersarraystosend[]['to'] = $payerdata[1];
                           $usersarraystosend[]['message'] = $user->name;
                            
                         }
