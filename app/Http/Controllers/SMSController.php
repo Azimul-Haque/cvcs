@@ -77,15 +77,15 @@ class SMSController extends Controller
         $numbersstr = implode (",", $numbersarray);
         // dd($numbersstr);
         
-        $url = config('sms.url');
-        $number = $mobile_number;
+        // $url = config('sms.url');
+        // $number = $mobile_number;
         $text = $request->message; // . ' Customs and VAT Co-operative Society (CVCS).';
         
         // NEW PANEL
         $url = config('sms.url2');
         $api_key = config('sms.api_key');
         $senderid = config('sms.senderid');
-        $number = $mobile_number;
+        $number = $numbersstr;
         $message = $text;
 
         $data = [
