@@ -3866,52 +3866,45 @@ class DashboardController extends Controller
             $senderid = config('sms.senderid');
             
             $usersarraystosend = [];
-            foreach($payers as $index => $payer) {
-                $payerdata = (explode(":",$payer));
-                // [0] = memebr_id, [1] = mobile, [2] = amount
-                // [0] = memebr_id, [1] = mobile, [2] = amount
 
-                // check payment
-                $checkpayment = Payment::where('payment_key', $decode_reply['mer_txnid'])
-                                       ->where('member_id', $payerdata[0])
-                                       ->where('amount', $payerdata[2])
-                                       ->first();
-                                    
-                if(!empty($checkpayment) || ($checkpayment != null)) {
-                    // dd($checkpayment);
-                    // if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
-                    if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 3) {
-                        $temppayment->delete();
-                    } else {
-                        $temppayment->tried++;
-                        $temppayment->save();
+            $members = User::whereIn('member_id', $amountids)->get();
+            foreach ($members as $i => $member) {
+                $mobile_number = 0;
+                if(strlen($member->mobile) == 11) {
+                    $mobile_number = $member->mobile;
+                } elseif(strlen($member->mobile) > 11) {
+                    if (strpos($member->mobile, '+') !== false) {
+                        $mobile_number = substr($member->mobile, -11);
                     }
-                } else {
-                  $payment = new Payment;
-                  $payment->member_id = $payerdata[0];
-                  $payment->payer_id = $temppayment->member_id; // payers member_id
-                  $payment->amount = $payerdata[2];
-                  $payment->bank = 'aamarPay Payment Gateway';
-                  $payment->branch = 'N/A';
-                  $payment->pay_slip = '00';
-                  $payment->payment_status = 1; // approved
-                  $payment->payment_category = 1; // monthly payment
-                  $payment->payment_type = 2; // bulk payment
-                  $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-                  $payment->card_type = $decode_reply['payment_type']; // card_type
-                  $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
-                  $payment->save();
-
-
-                  // input member SMS into array
-                  $member = User::where('member_id', $payerdata[0])->first();
-                  $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-
-                  $usersarraystosend[$index]['to'] = $payerdata[1];
-                  $usersarraystosend[$index]['message'] = $text;
-                   
                 }
+                // if($mobile_number != 0) {
+                //   array_push($mobile_numbers, $mobile_number);
+                // }
+                $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                $smsdata[$i] = array(
+                    'username'=>config('sms.username'),
+                    'password'=>config('sms.password'),
+                    // 'apicode'=>"1",
+                    'number'=>"$mobile_number",
+                    // 'msisdn'=>"$mobile_number",
+                    // 'countrycode'=>"880",
+                    // 'cli'=>"CVCS",
+                    // 'messagetype'=>"1",
+                    'message'=>"$text",
+                    // 'messageid'=>"1"
+                );
+                $multiCurl[$i] = curl_init(); // Initialize cURL
+                curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
+                curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
+                curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
+                curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
+                curl_multi_add_handle($mh, $multiCurl[$i]);
             }
+            // foreach($payers as $index => $payer) {
+            //     $usersarraystosend[$index]['to'] = $payerdata[1];
+            //     $usersarraystosend[$index]['message'] = $text;                
+            // }
             $messages = json_encode($usersarraystosend);
 
             $data = [
@@ -3931,7 +3924,7 @@ class DashboardController extends Controller
             // NEW PANEL
 
 
-            
+
 
             // send sms
             // $mobile_numbers = [];
