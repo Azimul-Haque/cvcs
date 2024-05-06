@@ -3081,7 +3081,7 @@ class DashboardController extends Controller
                 // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
             }
             // NEW PANEL
-            
+
             // $data= array(
             //     'username'=>config('sms.username'),
             //     'password'=>config('sms.password'),
@@ -3101,7 +3101,7 @@ class DashboardController extends Controller
             // $sendstatus = $p[0];
             // // send sms
             // if($sendstatus == 1101) {
-            //     Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+            //     // Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
             // } elseif($sendstatus == 1006) {
             //     // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             // } else {
