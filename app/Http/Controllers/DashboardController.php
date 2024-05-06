@@ -4662,7 +4662,9 @@ class DashboardController extends Controller
                 "message" => "test 2nd content"
             ]
         ]);
-        dd($messages);
+
+        $users = User::take(2)->get();
+        dd($users);
     }
     // operation
     // operation
