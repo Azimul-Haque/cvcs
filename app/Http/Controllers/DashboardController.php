@@ -4297,18 +4297,7 @@ class DashboardController extends Controller
             //   array_push($mobile_numbers, $mobile_number);
             // }
             $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-            $smsdata[$member_id] = array(
-                'username'=>config('sms.username'),
-                'password'=>config('sms.password'),
-                // 'apicode'=>"1",
-                'number'=>"$mobile_number",
-                // 'msisdn'=>"$mobile_number",
-                // 'countrycode'=>"880",
-                // 'cli'=>"CVCS",
-                // 'messagetype'=>"1",
-                'message'=>"$text",
-                // 'messageid'=>"2"
-            );
+            
             $iterator++;
         }
         foreach ($members as $i => $member) {
