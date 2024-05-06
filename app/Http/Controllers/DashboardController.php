@@ -4314,7 +4314,7 @@ class DashboardController extends Controller
         $response = curl_exec($ch);
         curl_close($ch);
         // return $response;
-        
+
         // NEW PANEL
 
 
@@ -4410,86 +4410,156 @@ class DashboardController extends Controller
             // dd($request->all());
             $payers = (explode(",",$member_data));
 
-            // INSERT DATA TO DATABASE
-            // INSERT DATA TO DATABASE
-
-            // partial SMS data
-            $smssuccesscount = 0;
-            $url = config('sms.url');
+            // NEW PANEL
+            $url = "http://bulksmsbd.net/api/smsapimany";
+            $api_key = config('sms.api_key');
+            $senderid = config('sms.senderid');
             
-            $multiCurl = array();
-            // data to be returned
-            $result = array();
-            // multi handle
-            $mh = curl_multi_init();
-            // sms data
-            $smsdata = [];
-            // partial SMS data
-
-            foreach ($payers as $payer)
-            {
-                $payerdata = (explode(":",$payer)); 
+            $usersarraystosend = [];
+            foreach($payers as $index => $payer) {
+                $payerdata = (explode(":",$payer));
                 // [0] = memebr_id, [1] = mobile, [2] = amount
                 // [0] = memebr_id, [1] = mobile, [2] = amount
 
-                $payment = new Payment;
-                $payment->member_id = $payerdata[0];
-                $payment->payer_id = Auth::user()->member_id; // payers member_id
-                $payment->amount = $payerdata[2];
-                $payment->bank = 'aamarPay Payment Gateway';
-                $payment->branch = 'N/A';
-                $payment->pay_slip = '00';
-                $payment->payment_status = 1; // approved
-                $payment->payment_category = 1; // monthly payment
-                $payment->payment_type = 2; // bulk payment
-                $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-                $payment->card_type = $request->get('card_type');
-                $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
-                $payment->save();
+                // check payment
+                $checkpayment = Payment::where('payment_key', $decode_reply['mer_txnid'])
+                                       ->where('member_id', $payerdata[0])
+                                       ->where('amount', $payerdata[2])
+                                       ->first();
+                                    
+                if(!empty($checkpayment) || ($checkpayment != null)) {
+                    // dd($checkpayment);
+                    // if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
+                    if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 3) {
+                        $temppayment->delete();
+                    } else {
+                        $temppayment->tried++;
+                        $temppayment->save();
+                    }
+                } else {
+                  $payment = new Payment;
+                  $payment->member_id = $payerdata[0];
+                  $payment->payer_id = $temppayment->member_id; // payers member_id
+                  $payment->amount = $payerdata[2];
+                  $payment->bank = 'aamarPay Payment Gateway';
+                  $payment->branch = 'N/A';
+                  $payment->pay_slip = '00';
+                  $payment->payment_status = 1; // approved
+                  $payment->payment_category = 1; // monthly payment
+                  $payment->payment_type = 2; // bulk payment
+                  $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+                  $payment->card_type = $decode_reply['payment_type']; // card_type
+                  $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
+                  $payment->save();
 
 
-                // input member SMS into array
-                // input member SMS into array
-                $member = User::where('member_id', $payerdata[0])->first();
-                $mobile_number = $payerdata[1];
+                  // input member SMS into array
+                  $member = User::where('member_id', $payerdata[0])->first();
+                  $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
 
-                $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-                $smsdata[$payerdata[0]] = array(
-                    'username'=>config('sms.username'),
-                    'password'=>config('sms.password'),
-                    'number'=>"$mobile_number",
-                    'message'=>"$text",
-                );
-                $multiCurl[$payerdata[0]] = curl_init(); // Initialize cURL
-                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_URL, $url);
-                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_HEADER, 0);
-                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_POSTFIELDS, http_build_query($smsdata[$payerdata[0]]));
-                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($multiCurl[$payerdata[0]], CURLOPT_SSL_VERIFYPEER, false); // this is important
-                curl_multi_add_handle($mh, $multiCurl[$payerdata[0]]);
-                // input member SMS into array
-                // input member SMS into array
+                  $usersarraystosend[$index]['to'] = $payerdata[1];
+                  $usersarraystosend[$index]['message'] = $text;
+                   
+                }
             }
+            $messages = json_encode($usersarraystosend);
 
-            // partial SMS data
-            $index=null;
-            do {
-              curl_multi_exec($mh, $index);
-            } while($index > 0);
-            // get content and remove handles
-            foreach($multiCurl as $k => $ch) {
-              $result[$k] = curl_multi_getcontent($ch);
-              curl_multi_remove_handle($mh, $ch);
-              $smsresult = $result[$k];
-              $p = explode("|",$smsresult);
-              $sendstatus = $p[0];
-              if($sendstatus == 1101) {
-                  $smssuccesscount++;
-              }
-            }
-            // close
-            curl_multi_close($mh);
-            // partial SMS data
+            $data = [
+                "api_key" => $api_key,
+                "senderid" => $senderid,
+                "messages" => $messages
+            ];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            // return $response;
+            // NEW PANEL
+
+            // INSERT DATA TO DATABASE
+            // INSERT DATA TO DATABASE
+
+            // // partial SMS data
+            // $smssuccesscount = 0;
+            // $url = config('sms.url');
+            
+            // $multiCurl = array();
+            // // data to be returned
+            // $result = array();
+            // // multi handle
+            // $mh = curl_multi_init();
+            // // sms data
+            // $smsdata = [];
+            // // partial SMS data
+
+            // foreach ($payers as $payer)
+            // {
+            //     $payerdata = (explode(":",$payer)); 
+            //     // [0] = memebr_id, [1] = mobile, [2] = amount
+            //     // [0] = memebr_id, [1] = mobile, [2] = amount
+
+            //     $payment = new Payment;
+            //     $payment->member_id = $payerdata[0];
+            //     $payment->payer_id = Auth::user()->member_id; // payers member_id
+            //     $payment->amount = $payerdata[2];
+            //     $payment->bank = 'aamarPay Payment Gateway';
+            //     $payment->branch = 'N/A';
+            //     $payment->pay_slip = '00';
+            //     $payment->payment_status = 1; // approved
+            //     $payment->payment_category = 1; // monthly payment
+            //     $payment->payment_type = 2; // bulk payment
+            //     $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+            //     $payment->card_type = $request->get('card_type');
+            //     $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
+            //     $payment->save();
+
+
+            //     // input member SMS into array
+            //     // input member SMS into array
+            //     $member = User::where('member_id', $payerdata[0])->first();
+            //     $mobile_number = $payerdata[1];
+
+            //     $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+            //     $smsdata[$payerdata[0]] = array(
+            //         'username'=>config('sms.username'),
+            //         'password'=>config('sms.password'),
+            //         'number'=>"$mobile_number",
+            //         'message'=>"$text",
+            //     );
+            //     $multiCurl[$payerdata[0]] = curl_init(); // Initialize cURL
+            //     curl_setopt($multiCurl[$payerdata[0]], CURLOPT_URL, $url);
+            //     curl_setopt($multiCurl[$payerdata[0]], CURLOPT_HEADER, 0);
+            //     curl_setopt($multiCurl[$payerdata[0]], CURLOPT_POSTFIELDS, http_build_query($smsdata[$payerdata[0]]));
+            //     curl_setopt($multiCurl[$payerdata[0]], CURLOPT_RETURNTRANSFER, 1);
+            //     curl_setopt($multiCurl[$payerdata[0]], CURLOPT_SSL_VERIFYPEER, false); // this is important
+            //     curl_multi_add_handle($mh, $multiCurl[$payerdata[0]]);
+            //     // input member SMS into array
+            //     // input member SMS into array
+            // }
+
+            // // partial SMS data
+            // $index=null;
+            // do {
+            //   curl_multi_exec($mh, $index);
+            // } while($index > 0);
+            // // get content and remove handles
+            // foreach($multiCurl as $k => $ch) {
+            //   $result[$k] = curl_multi_getcontent($ch);
+            //   curl_multi_remove_handle($mh, $ch);
+            //   $smsresult = $result[$k];
+            //   $p = explode("|",$smsresult);
+            //   $sendstatus = $p[0];
+            //   if($sendstatus == 1101) {
+            //       $smssuccesscount++;
+            //   }
+            // }
+            // // close
+            // curl_multi_close($mh);
+            // // partial SMS data
 
             // INSERT DATA TO DATABASE
             // INSERT DATA TO DATABASE
