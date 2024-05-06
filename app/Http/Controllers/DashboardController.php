@@ -4282,7 +4282,7 @@ class DashboardController extends Controller
         $senderid = config('sms.senderid');
         
         $usersarraystosend = [];
-        
+        $iterator = 0;
         foreach (json_decode($bulkpayment->bulk_payment_member_ids) as $member_id => $amount) {
             $member = User::where('member_id', $member_id)->first();
             $mobile_number = 0;
