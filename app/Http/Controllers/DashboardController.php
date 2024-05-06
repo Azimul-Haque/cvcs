@@ -1729,8 +1729,8 @@ class DashboardController extends Controller
                 $mobile_number = substr($applicant->mobile, -11);
             }
         }
-        $url = config('sms.url');
-        $number = $mobile_number;
+        // $url = config('sms.url');
+        // $number = $mobile_number;
         $text = $request->message . ' Customs and VAT Co-operative Society (CVCS).';
         $data= array(
             'username'=>config('sms.username'),
