@@ -392,8 +392,8 @@ class IndexController extends Controller
                 $mobile_number = substr($application->mobile, -11);
             }
         }
-        // $url = config('sms.url');
-        // $number = $mobile_number;
+        $url = config('sms.url');
+        $number = $mobile_number;
         $text = 'Dear ' . $application->name . ', your membership application has been submitted! We will notify you when we approve. Thanks. Customs and Vat Co-operative Society. Visit: https://cvcsbd.com';
         // this sms costs 2 SMS
         
@@ -521,8 +521,8 @@ class IndexController extends Controller
                     $mobile_number = substr($member->mobile, -11);
                 }
             }
-            $url = config('sms.url');
-            $number = $mobile_number;
+            // $url = config('sms.url');
+            // $number = $mobile_number;
             $text = 'Dear ' . $member->name . ', payment of tk. '. $amount_paid .' is received successfully, TrxID: ' . $member->trxid . '. Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
             
             // NEW PANEL
