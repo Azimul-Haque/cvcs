@@ -4719,8 +4719,8 @@ class DashboardController extends Controller
 
         $usersarrays = [];
         foreach($users as $user) {
-            $usersarrays[]['to'] = $user->mobile;
-            $usersarrays[]['message'] = $user->name;
+            $usersarrays[$user->mobile]['to'] = $user->mobile;
+            $usersarrays[$user->mobile]['message'] = $user->name;
         }
         $newmessage = json_encode($usersarrays);
         dd($newmessage);
