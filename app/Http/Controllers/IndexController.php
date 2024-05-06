@@ -522,7 +522,7 @@ class IndexController extends Controller
                 }
             }
             // $url = config('sms.url');
-            $number = $mobile_number;
+            // $number = $mobile_number;
             $text = 'Dear ' . $member->name . ', payment of tk. '. $amount_paid .' is received successfully, TrxID: ' . $member->trxid . '. Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
             
             // NEW PANEL
