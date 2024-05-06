@@ -3878,20 +3878,9 @@ class DashboardController extends Controller
                 }
 
                 $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-                $smsdata[$i] = array(
-                    'username'=>config('sms.username'),
-                    'password'=>config('sms.password'),
-                    // 'apicode'=>"1",
-                    'number'=>"$mobile_number",
-                    // 'msisdn'=>"$mobile_number",
-                    // 'countrycode'=>"880",
-                    // 'cli'=>"CVCS",
-                    // 'messagetype'=>"1",
-                    'message'=>"$text",
-                    // 'messageid'=>"1"
-                );
-                    $usersarraystosend[$i]['to'] = $mobile_number;
-                    $usersarraystosend[$i]['message'] = $text;  
+                
+                $usersarraystosend[$i]['to'] = $mobile_number;
+                $usersarraystosend[$i]['message'] = $text;  
             }
 
             $messages = json_encode($usersarraystosend);
