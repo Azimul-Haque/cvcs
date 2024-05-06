@@ -964,8 +964,7 @@ class IndexController extends Controller
         //                ]';
         // echo $smsjsondata;
         // // dd($smsjsondata);
-        $url = config('sms.url');
-// 
+        // $url = config('sms.url');
 
         // $data= array(
         //     'message'=>"$smsjsondata",
