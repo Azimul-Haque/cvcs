@@ -13,4 +13,9 @@ return [
   'gp_url'      => env('GP_SMS_GATEWAY_URL'),
   'gp_username' => env('GP_SMS_GATEWAY_USERNAME'),
   'gp_password' => env('GP_SMS_GATEWAY_PASSWORD'),
+
+    // New SMS Panel Gateway API Data
+  'url2'      => env('SMS_GATEWAY_URL2'),
+  'senderid' => env('SMS_GATEWAY_SENDERID'),
+  'api_key' => env('SMS_GATEWAY_API_KEY'),
 ];

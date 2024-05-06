@@ -1621,36 +1621,68 @@ class DashboardController extends Controller
                     $mobile_number = substr($application->mobile, -11);
                 }
             }
-            $url = config('sms.url');
-            $number = $mobile_number;
+            // $url = config('sms.url');
+            // $number = $mobile_number;
             $text = 'Dear ' . $application->name . ', your membership application has been approved! Your ID: '. $application->member_id .', Email: '. $application->email .' and Password: cvcs12345. Customs and VAT Co-operative Society (CVCS). Login & change password: https://cvcsbd.com/login';
             // this sms costs 2 SMS
             // this sms costs 2 SMS
-            
-            $data= array(
-                'username'=>config('sms.username'),
-                'password'=>config('sms.password'),
-                'number'=>"$number",
-                'message'=>"$text",
-            );
-            // initialize send status
-            $ch = curl_init(); // Initialize cURL
-            curl_setopt($ch, CURLOPT_URL,$url);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+
+            // NEW PANEL
+            $url = config('sms.url2');
+            $api_key = config('sms.api_key');
+            $senderid = config('sms.senderid');
+            $number = $mobile_number;
+            $message = $text;
+
+            $data = [
+                "api_key" => $api_key,
+                "senderid" => $senderid,
+                "number" => $number,
+                "message" => $message,
+            ];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
-            $smsresult = curl_exec($ch);
-            $p = explode("|",$smsresult);
-            $sendstatus = $p[0];
-            // dd($smsresult);
-            // send sms
-            if($sendstatus == 1101) {
-                Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
-            } elseif($sendstatus == 1006) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $jsonresponse = json_decode($response);
+
+            if($jsonresponse->response_code == 202) {
+                Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
+            } elseif($jsonresponse->response_code == 1007) {
                 Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
             } else {
                 Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
             }
+            // NEW PANEL
+            
+            // $data= array(
+            //     'username'=>config('sms.username'),
+            //     'password'=>config('sms.password'),
+            //     'number'=>"$number",
+            //     'message'=>"$text",
+            // );
+            // // initialize send status
+            // $ch = curl_init(); // Initialize cURL
+            // curl_setopt($ch, CURLOPT_URL,$url);
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // this is important
+            // $smsresult = curl_exec($ch);
+            // $p = explode("|",$smsresult);
+            // $sendstatus = $p[0];
+            // // dd($smsresult);
+            // // send sms
+            // if($sendstatus == 1101) {
+            //     Session::flash('info', 'SMS সফলভাবে পাঠানো হয়েছে!');
+            // } elseif($sendstatus == 1006) {
+            //     Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+            // } else {
+            //     Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+            // }
 
             Session::flash('success', 'সদস্য সফলভাবে অনুমোদন করা হয়েছে!');
             return redirect()->route('dashboard.applications');

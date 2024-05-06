@@ -125,7 +125,6 @@ class SMSController extends Controller
 	                        }])           
 	                       ->get();
 
-	        
 	        $intotalmontlydues = 0;
 
 	        $smsdata = [];
