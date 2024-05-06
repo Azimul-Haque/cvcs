@@ -3274,6 +3274,53 @@ class DashboardController extends Controller
                     foreach($payers as $payer) {
                         $usersarraystosend[]['to'] = $user->mobile;
                         $usersarraystosend[]['message'] = $user->name;
+
+                        $payerdata = (explode(":",$payer));
+                        // [0] = memebr_id, [1] = mobile, [2] = amount
+                        // [0] = memebr_id, [1] = mobile, [2] = amount
+
+                        // check payment
+                        // check payment
+                        $checkpayment = Payment::where('payment_key', $decode_reply['mer_txnid'])
+                                               ->where('member_id', $payerdata[0])
+                                               ->where('amount', $payerdata[2])
+                                               ->first();
+                        // dd($checkpayment);
+                                            
+                        if(!empty($checkpayment) || ($checkpayment != null)) {
+                            // dd($checkpayment);
+                            // if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
+                            if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 3) {
+                                $temppayment->delete();
+                            } else {
+                                $temppayment->tried++;
+                                $temppayment->save();
+                            }
+                        } else {
+                          $payment = new Payment;
+                          $payment->member_id = $payerdata[0];
+                          $payment->payer_id = $temppayment->member_id; // payers member_id
+                          $payment->amount = $payerdata[2];
+                          $payment->bank = 'aamarPay Payment Gateway';
+                          $payment->branch = 'N/A';
+                          $payment->pay_slip = '00';
+                          $payment->payment_status = 1; // approved
+                          $payment->payment_category = 1; // monthly payment
+                          $payment->payment_type = 2; // bulk payment
+                          $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+                          $payment->card_type = $decode_reply['payment_type']; // card_type
+                          $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
+                          $payment->save();
+
+
+                          // input member SMS into array
+                          // input member SMS into array
+                          $member = User::where('member_id', $payerdata[0])->first();
+                          $mobile_number = $payerdata[1];
+
+                          $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                           
+                        }
                     }
                     $messages = json_encode($usersarrays);
                     // $messages = json_encode( [
