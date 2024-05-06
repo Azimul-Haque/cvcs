@@ -3865,9 +3865,8 @@ class DashboardController extends Controller
             $api_key = config('sms.api_key');
             $senderid = config('sms.senderid');
             
-            $usersarraystosend = [];
-
             $members = User::whereIn('member_id', $amountids)->get();
+            $usersarraystosend = [];
             foreach ($members as $i => $member) {
                 $mobile_number = 0;
                 if(strlen($member->mobile) == 11) {
