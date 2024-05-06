@@ -4652,7 +4652,7 @@ class DashboardController extends Controller
     }
 
     public function testAPI() {
-        return $messages = json_encode( [
+        $messages = json_encode( [
             [
                 "to" => "88016xxxxxxxx",
                 "message" => "test content"
