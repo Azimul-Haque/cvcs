@@ -4418,7 +4418,9 @@ class DashboardController extends Controller
             $usersarraystosend = [];
             foreach($payers as $index => $payer) {
                 $payerdata = (explode(":",$payer));
-                
+                //  [0] = memebr_id, [1] = mobile, [2] = amount
+                //  [0] = memebr_id, [1] = mobile, [2] = amount
+
                 $payment = new Payment;
                 $payment->member_id = $payerdata[0];
                 $payment->payer_id = $temppayment->member_id; // payers member_id
