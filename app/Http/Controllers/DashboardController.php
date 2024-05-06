@@ -4650,6 +4650,19 @@ class DashboardController extends Controller
             }
         }
     }
+
+    public function testAPI() {
+        $messages = json_encode( [
+            [
+                "to" => "88016xxxxxxxx",
+                "message" => "test content"
+            ],
+            [
+                "to" => "88019xxxxxxxx",
+                "message" => "test 2nd content"
+            ]
+        ]);
+    }
     // operation
     // operation
     
