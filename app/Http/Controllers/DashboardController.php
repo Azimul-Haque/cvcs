@@ -3300,7 +3300,7 @@ class DashboardController extends Controller
 
                     // partial SMS data
                     $smssuccesscount = 0;
-                    $url = config('sms.url');
+                    // $url = config('sms.url');
                     
                     $multiCurl = array();
                     // data to be returned
