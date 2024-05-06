@@ -3898,7 +3898,7 @@ class DashboardController extends Controller
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             $response = curl_exec($ch);
             curl_close($ch);
-            return $response;
+            // return $response;
             // NEW PANEL
 
 
