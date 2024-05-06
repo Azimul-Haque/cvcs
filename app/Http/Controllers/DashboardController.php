@@ -4297,25 +4297,10 @@ class DashboardController extends Controller
             //   array_push($mobile_numbers, $mobile_number);
             // }
             $text = 'Dear ' . $member->name . ', payment of tk. '. $amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-            
+            $usersarraystosend[$i]['to'] = $mobile_number;
+            $usersarraystosend[$i]['message'] = $text; 
             $iterator++;
         }
-        foreach ($members as $i => $member) {
-            $mobile_number = 0;
-            if(strlen($member->mobile) == 11) {
-                $mobile_number = $member->mobile;
-            } elseif(strlen($member->mobile) > 11) {
-                if (strpos($member->mobile, '+') !== false) {
-                    $mobile_number = substr($member->mobile, -11);
-                }
-            }
-
-            $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-            
-            $usersarraystosend[$i]['to'] = $mobile_number;
-            $usersarraystosend[$i]['message'] = $text;  
-        }
-
         $messages = json_encode($usersarraystosend);
 
         $data = [
