@@ -3902,73 +3902,71 @@ class DashboardController extends Controller
             // NEW PANEL
 
 
+            // // send sms
+            // // $mobile_numbers = [];
+            // $smssuccesscount = 0;
+            // // $url = config('sms.url');
+            // // 
+            // $multiCurl = array();
+            // // data to be returned
+            // $result = array();
+            // // multi handle
+            // $mh = curl_multi_init();
+            // // sms data
+            // $smsdata = [];
 
+            // $members = User::whereIn('member_id', $amountids)->get();
+            // foreach ($members as $i => $member) {
+            //     $mobile_number = 0;
+            //     if(strlen($member->mobile) == 11) {
+            //         $mobile_number = $member->mobile;
+            //     } elseif(strlen($member->mobile) > 11) {
+            //         if (strpos($member->mobile, '+') !== false) {
+            //             $mobile_number = substr($member->mobile, -11);
+            //         }
+            //     }
+            //     // if($mobile_number != 0) {
+            //     //   array_push($mobile_numbers, $mobile_number);
+            //     // }
+            //     $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+            //     $smsdata[$i] = array(
+            //         'username'=>config('sms.username'),
+            //         'password'=>config('sms.password'),
+            //         // 'apicode'=>"1",
+            //         'number'=>"$mobile_number",
+            //         // 'msisdn'=>"$mobile_number",
+            //         // 'countrycode'=>"880",
+            //         // 'cli'=>"CVCS",
+            //         // 'messagetype'=>"1",
+            //         'message'=>"$text",
+            //         // 'messageid'=>"1"
+            //     );
+            //     $multiCurl[$i] = curl_init(); // Initialize cURL
+            //     curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
+            //     curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
+            //     curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
+            //     curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
+            //     curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
+            //     curl_multi_add_handle($mh, $multiCurl[$i]);
+            // }
 
-            // send sms
-            // $mobile_numbers = [];
-            $smssuccesscount = 0;
-            // $url = config('sms.url');
-            // 
-            $multiCurl = array();
-            // data to be returned
-            $result = array();
-            // multi handle
-            $mh = curl_multi_init();
-            // sms data
-            $smsdata = [];
-
-            $members = User::whereIn('member_id', $amountids)->get();
-            foreach ($members as $i => $member) {
-                $mobile_number = 0;
-                if(strlen($member->mobile) == 11) {
-                    $mobile_number = $member->mobile;
-                } elseif(strlen($member->mobile) > 11) {
-                    if (strpos($member->mobile, '+') !== false) {
-                        $mobile_number = substr($member->mobile, -11);
-                    }
-                }
-                // if($mobile_number != 0) {
-                //   array_push($mobile_numbers, $mobile_number);
-                // }
-                $text = 'Dear ' . $member->name . ', a payment is submitted against your account. We will notify you further updates. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
-                $smsdata[$i] = array(
-                    'username'=>config('sms.username'),
-                    'password'=>config('sms.password'),
-                    // 'apicode'=>"1",
-                    'number'=>"$mobile_number",
-                    // 'msisdn'=>"$mobile_number",
-                    // 'countrycode'=>"880",
-                    // 'cli'=>"CVCS",
-                    // 'messagetype'=>"1",
-                    'message'=>"$text",
-                    // 'messageid'=>"1"
-                );
-                $multiCurl[$i] = curl_init(); // Initialize cURL
-                curl_setopt($multiCurl[$i], CURLOPT_URL, $url);
-                curl_setopt($multiCurl[$i], CURLOPT_HEADER, 0);
-                curl_setopt($multiCurl[$i], CURLOPT_POSTFIELDS, http_build_query($smsdata[$i]));
-                curl_setopt($multiCurl[$i], CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($multiCurl[$i], CURLOPT_SSL_VERIFYPEER, false); // this is important
-                curl_multi_add_handle($mh, $multiCurl[$i]);
-            }
-
-            $index=null;
-            do {
-              curl_multi_exec($mh, $index);
-            } while($index > 0);
-            // get content and remove handles
-            foreach($multiCurl as $k => $ch) {
-              $result[$k] = curl_multi_getcontent($ch);
-              curl_multi_remove_handle($mh, $ch);
-              // $sendstatus = substr($result[$k], 0, 3);
-              $p = explode("|",$result[$k]);
-              $sendstatus = $p[0];
-              if($sendstatus == 1101) {
-                  $smssuccesscount++;
-              }
-            }
-            // close
-            curl_multi_close($mh);
+            // $index=null;
+            // do {
+            //   curl_multi_exec($mh, $index);
+            // } while($index > 0);
+            // // get content and remove handles
+            // foreach($multiCurl as $k => $ch) {
+            //   $result[$k] = curl_multi_getcontent($ch);
+            //   curl_multi_remove_handle($mh, $ch);
+            //   // $sendstatus = substr($result[$k], 0, 3);
+            //   $p = explode("|",$result[$k]);
+            //   $sendstatus = $p[0];
+            //   if($sendstatus == 1101) {
+            //       $smssuccesscount++;
+            //   }
+            // }
+            // // close
+            // curl_multi_close($mh);
             
             Session::flash('success', 'পরিশোধ সফলভাবে দাখিল করা হয়েছে!');
             return redirect()->route('dashboard.memberpayment');
