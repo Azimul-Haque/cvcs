@@ -3890,7 +3890,7 @@ class DashboardController extends Controller
                     'message'=>"$text",
                     // 'messageid'=>"1"
                 );
-                    $usersarraystosend[$index]['to'] = $payerdata[1];
+                    $usersarraystosend[$index]['to'] = $mobile_number;
                     $usersarraystosend[$index]['message'] = $text;  
             }
             // foreach($payers as $index => $payer) {
