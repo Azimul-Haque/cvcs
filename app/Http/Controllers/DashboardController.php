@@ -3311,7 +3311,6 @@ class DashboardController extends Controller
 
 
                           // input member SMS into array
-                          // input member SMS into array
                           $member = User::where('member_id', $payerdata[0])->first();
                           $mobile_number = $payerdata[1];
 
