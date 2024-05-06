@@ -4718,7 +4718,7 @@ class DashboardController extends Controller
         $users = User::select('name','mobile')->take(2)->get();
 
         $usersarrays = [];
-        foreach($users as $user) {
+        foreach($users as $index => $user) {
             $usersarrays[0]['to'] = $user->mobile;
             $usersarrays[0]['message'] = $user->name;
         }
