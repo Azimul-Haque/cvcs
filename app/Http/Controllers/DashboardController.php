@@ -3271,7 +3271,7 @@ class DashboardController extends Controller
                     $senderid = config('sms.senderid');
                     
                     $usersarraystosend = [];
-                    foreach($payers as $payer) {
+                    foreach($payers as $index => $payer) {
                         $payerdata = (explode(":",$payer));
                         // [0] = memebr_id, [1] = mobile, [2] = amount
                         // [0] = memebr_id, [1] = mobile, [2] = amount
