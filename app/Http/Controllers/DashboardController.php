@@ -3272,7 +3272,7 @@ class DashboardController extends Controller
                     
                     $usersarraystosend = [];
                     foreach($payers as $index => $payer) {
-                        $payerdata = (explode(":",$payer));
+                        $payerdata = (explode(":", $payer));
                         // [0] = memebr_id, [1] = mobile, [2] = amount
                         // [0] = memebr_id, [1] = mobile, [2] = amount
 
@@ -4417,7 +4417,7 @@ class DashboardController extends Controller
             
             $usersarraystosend = [];
             foreach($payers as $index => $payer) {
-                $payerdata = (explode(":",$payer));
+                $payerdata = (explode(":", $payer));
                 //  [0] = memebr_id, [1] = mobile, [2] = amount
                 //  [0] = memebr_id, [1] = mobile, [2] = amount
 
@@ -4480,7 +4480,7 @@ class DashboardController extends Controller
 
             // foreach ($payers as $payer)
             // {
-            //     $payerdata = (explode(":",$payer)); 
+            //     $payerdata = (explode(":", $payer)); 
             //     // [0] = memebr_id, [1] = mobile, [2] = amount
             //     // [0] = memebr_id, [1] = mobile, [2] = amount
 
