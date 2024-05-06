@@ -3314,8 +3314,8 @@ class DashboardController extends Controller
                           $member = User::where('member_id', $payerdata[0])->first();
                           $text = 'Dear ' . $member->name . ', payment of tk. '. $payerdata[2] .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
 
-                          $usersarraystosend[]['to'] = $payerdata[1];
-                          $usersarraystosend[]['message'] = $text;
+                          $usersarraystosend[$index]['to'] = $payerdata[1];
+                          $usersarraystosend[$index]['message'] = $text;
                            
                         }
                     }
