@@ -4838,6 +4838,7 @@ class DashboardController extends Controller
             ->havingRaw('COUNT(*) > 1')
             ->get();
         foreach($payments as $payment) {
+            // DELETE THE DOUBLE PAYMENT!
             $payment->delete();
         }
         // dd($payments);
