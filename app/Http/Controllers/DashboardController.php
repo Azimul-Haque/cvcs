@@ -3167,15 +3167,16 @@ class DashboardController extends Controller
                                            ->first();
 
                     if(!empty($checkpayment) || ($checkpayment != null)) {
+                        $temppayment->delete();
                         // dd($checkpayment);
                         // if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
-                        if($temppayment->tried > 3) {
-                            $temppayment->delete();
-                        } else {
-                            $temppayment->tried++;
-                            $temppayment->save();
-                        }
-                    } else {
+                    //     if($temppayment->tried > 3) {
+                    //         $temppayment->delete();
+                    //     } else {
+                    //         $temppayment->tried++;
+                    //         $temppayment->save();
+                    //     }
+                    // } else {
                         $payment = new Payment;
                         $payment->member_id = $member->member_id;
                         $payment->payer_id = $member->member_id;
