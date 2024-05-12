@@ -3527,7 +3527,7 @@ class DashboardController extends Controller
                 // $temppayment->delete();
                 // echo $decode_reply['store_id'] . '<br/>';
 
-                // CHECK FROM AAMARPAY AND INCERENT UTO TWICE HERE
+                // CHECK FROM AAMARPAY AND INCREMENT TO TWICE HERE
                 // if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
                 if($temppayment->tried > 3) {
                     $temppayment->delete();
