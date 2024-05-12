@@ -4837,8 +4837,10 @@ class DashboardController extends Controller
             ->groupBy('member_id', 'amount', 'payment_key', 'payment_type')
             ->havingRaw('COUNT(*) > 1')
             ->get();
-
-        dd($payments);
+        foreach($payments as $payment) {
+            $payment->delete();
+        }
+        // dd($payments);
     }
 
     public function testAPI() {
