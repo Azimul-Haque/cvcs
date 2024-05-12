@@ -4832,11 +4832,13 @@ class DashboardController extends Controller
 
     public function delDoublePayments() 
     {
-        DB::table('payments')
+        $payments = DB::table('payments')
             ->select(*, DB::raw('COUNT(*) as `count`'))
             ->groupBy('member_id', 'amount', 'payment_key')
             ->havingRaw('COUNT(*) > 1')
             ->get();
+
+        dd($payments);
     }
 
     public function testAPI() {
