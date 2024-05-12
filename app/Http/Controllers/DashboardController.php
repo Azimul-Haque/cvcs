@@ -3294,7 +3294,7 @@ class DashboardController extends Controller
                         } else {
                           $payment = new Payment;
                           $payment->member_id = $payerdata[0];
-                          $payment->payer_id = $temppayment->member_id; // payers member_id
+                          $payment->payer_id = $payer_member_id; // payers member_id
                           $payment->amount = $payerdata[2];
                           $payment->bank = 'aamarPay Payment Gateway';
                           $payment->branch = 'N/A';
