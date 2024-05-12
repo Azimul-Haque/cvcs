@@ -3033,7 +3033,7 @@ class DashboardController extends Controller
             $payment->save();
 
             // DELETE TEMPPAYMENT
-            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
+            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'))->first();
             $temppayment->delete();
             // DELETE TEMPPAYMENT
 
@@ -3180,6 +3180,8 @@ class DashboardController extends Controller
                         $payment->member_id = $member->member_id;
                         $payment->payer_id = $member->member_id;
                         $payment->amount = round($temppayment->amount - ($temppayment->amount * 0.0167158308751));
+                        // DELETE TEMPPAYMENT
+                        $temppayment->delete();
                         $payment->bank = 'aamarPay Payment Gateway';
                         $payment->branch = 'N/A';
                         $payment->pay_slip = '00';
@@ -3200,6 +3202,7 @@ class DashboardController extends Controller
                                 $mobile_number = substr($payment->user->mobile, -11);
                             }
                         }
+
                         // $url = config('sms.url');
                         // $number = $mobile_number;
                         $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
@@ -3253,10 +3256,7 @@ class DashboardController extends Controller
                         // // $sendstatus = $result = substr($smsresult, 0, 3);
                         // $p = explode("|",$smsresult);
                         // $sendstatus = $p[0];
-                        // send sms
-
-                        // DELETE TEMPPAYMENT
-                        $temppayment->delete();
+                        // send sms                        
                     }
 
                     // SINGLE PAYMENT CODE
@@ -3317,6 +3317,10 @@ class DashboardController extends Controller
                            
                         }
                     }
+
+                    // DELETE TEMPPAYMENT
+                    $temppayment->delete();
+
                     $messages = json_encode($usersarraystosend);
 
                     $data = [
@@ -3437,8 +3441,7 @@ class DashboardController extends Controller
 
                     // INSERT DATA TO DATABASE
                     // INSERT DATA TO DATABASE
-                    // DELETE TEMPPAYMENT
-                    $temppayment->delete();
+                    
                     // BULK PAYMENT CODE
                 } elseif ($temppayment->payment_type == 3) {
                     // REGISTRATION PAYMENT CODE
@@ -4423,7 +4426,7 @@ class DashboardController extends Controller
 
                 $payment = new Payment;
                 $payment->member_id = $payerdata[0];
-                $payment->payer_id = $temppayment->member_id; // payers member_id
+                $payment->payer_id = Auth::user()->member_id; // payers member_id
                 $payment->amount = $payerdata[2];
                 $payment->bank = 'aamarPay Payment Gateway';
                 $payment->branch = 'N/A';
@@ -4432,10 +4435,9 @@ class DashboardController extends Controller
                 $payment->payment_category = 1; // monthly payment
                 $payment->payment_type = 2; // bulk payment
                 $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-                $payment->card_type = $decode_reply['payment_type']; // card_type
-                $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
+                $payment->card_type = $request->get('card_type');
+                $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
                 $payment->save();
-
 
                 // input member SMS into array
                 $member = User::where('member_id', $payerdata[0])->first();
@@ -4547,7 +4549,7 @@ class DashboardController extends Controller
             // INSERT DATA TO DATABASE
 
             // DELETE TEMPPAYMENT
-            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'));
+            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'))->first();;
             $temppayment->delete();
             // DELETE TEMPPAYMENT
 
