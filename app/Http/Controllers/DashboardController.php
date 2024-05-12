@@ -4834,7 +4834,7 @@ class DashboardController extends Controller
     {
         DB::table('payments')
             ->select(*, DB::raw('COUNT(*) as `count`'))
-            ->groupBy('name', 'location')
+            ->groupBy('member_id', 'location')
             ->havingRaw('COUNT(*) > 1')
             ->get();
     }
