@@ -3281,7 +3281,7 @@ class DashboardController extends Controller
                                                ->where('member_id', $payerdata[0])
                                                ->where('amount', $payerdata[2])
                                                ->first();
-                                            
+                        $payer_member_id = $temppayment->member_id;                 
                         if(!empty($checkpayment) || ($checkpayment != null)) {
                             // dd($checkpayment);
                             // if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
