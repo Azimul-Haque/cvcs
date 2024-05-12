@@ -4834,7 +4834,7 @@ class DashboardController extends Controller
     {
         $payments = DB::table('payments')
             ->select('id', 'member_id', 'amount', 'payment_key', 'payment_type', DB::raw('COUNT(*) as `count`'))
-            ->groupBy('member_id', 'amount', 'payment_key')
+            ->groupBy('member_id', 'amount', 'payment_key', 'payment_type')
             ->havingRaw('COUNT(*) > 1')
             ->get();
 
