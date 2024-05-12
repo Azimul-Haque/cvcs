@@ -4830,6 +4830,22 @@ class DashboardController extends Controller
         }
     }
 
+    public function delDoublePayments() 
+    {
+        $allpays = Payment::all();
+
+        $cosnsd = 0;
+        foreach($allpays as $payment) {
+            // search user
+            if(empty($payment->payee) || empty($payment->user)) {
+                $payment->delete();
+                $cosnsd++;
+                echo $cosnsd;
+                echo '. Done.<br/>';
+            }
+        }
+    }
+
     public function testAPI() {
         $messages = json_encode( [
             [
