@@ -311,7 +311,7 @@ Route::get('/dashboard/test/sms/api', ['as'=>'dashboard.testsmsapi2','uses'=>'Da
 // operation
 Route::get('/dashboard/get5000', ['as'=>'dashboard.get5000','uses'=>'DashboardController@getAll5000']);
 // Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
-Route::get('/dashboard/delete/extra/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
+Route::get('/dashboard/delete/double/payments', ['as'=>'dashboard.delexpay','uses'=>'DashboardController@delExPay']);
 // operation
 // operation
 
