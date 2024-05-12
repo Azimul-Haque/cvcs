@@ -4836,10 +4836,11 @@ class DashboardController extends Controller
             ->select('id', 'member_id', 'amount', 'payment_key', 'payment_type', DB::raw('COUNT(*) as `count`'))
             ->groupBy('member_id', 'amount', 'payment_key', 'payment_type')
             ->havingRaw('COUNT(*) > 1')
+            ->orderBy('id', 'desc')
             ->get();
         foreach($payments as $payment) {
             // DELETE THE DOUBLE PAYMENT!
-            $payment->last()->delete();
+            $payment->first()->delete();
         }
         // dd($payments);
     }
