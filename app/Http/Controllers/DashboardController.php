@@ -4840,8 +4840,11 @@ class DashboardController extends Controller
             ->get();
         foreach($payments as $payment) {
             // DELETE THE DOUBLE PAYMENT!
+            // DELETE THE DOUBLE PAYMENT!
             $delpayment = Payment::find($payment->id);
             $delpayment->delete();
+            // DELETE THE DOUBLE PAYMENT!
+            // DELETE THE DOUBLE PAYMENT!
         }
         // dd($payments);
     }
