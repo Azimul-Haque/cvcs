@@ -3028,74 +3028,74 @@ class DashboardController extends Controller
                 $temppayment->delete();
                 // DELETE TEMPPAYMENT
             } else {
-                
-            }
+                // SAVE THE PAYMENT
+                $payment = new Payment;
+                $payment->member_id = $member->member_id;
+                $payment->payer_id = $member->member_id;
+                $payment->amount = round($amount_paid - ($amount_paid * 0.0167158308751));
+                $payment->bank = 'aamarPay Payment Gateway';
+                $payment->branch = 'N/A';
+                $payment->pay_slip = '00';
+                $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
+                $payment->payment_category = 1; // monthly payment, if 0 then membership payment
+                $payment->payment_type = 1; // single payment, if 2 then bulk payment
+                $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
+                $payment->card_type = $request->get('card_type');
+                $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
+                $payment->save();
 
-            // SAVE THE PAYMENT
-            $payment = new Payment;
-            $payment->member_id = $member->member_id;
-            $payment->payer_id = $member->member_id;
-            $payment->amount = round($amount_paid - ($amount_paid * 0.0167158308751));
-            $payment->bank = 'aamarPay Payment Gateway';
-            $payment->branch = 'N/A';
-            $payment->pay_slip = '00';
-            $payment->payment_status = 1; // IN THIS CASE, PAYMENT IS APPROVED
-            $payment->payment_category = 1; // monthly payment, if 0 then membership payment
-            $payment->payment_type = 1; // single payment, if 2 then bulk payment
-            $payment->payment_method = 1; //IF NULL THEN OFFLINE, IF 1 THEN ONLINE
-            $payment->card_type = $request->get('card_type');
-            $payment->payment_key = $request->get('mer_txnid'); // SAME TRXID FOR BOTH METHOD
-            $payment->save();
+                // DELETE TEMPPAYMENT
+                $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'))->first();
+                $temppayment->delete();
+                // DELETE TEMPPAYMENT
 
-            // DELETE TEMPPAYMENT
-            $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'))->first();
-            $temppayment->delete();
-            // DELETE TEMPPAYMENT
-
-            // send sms
-            $mobile_number = 0;
-            if(strlen($payment->user->mobile) == 11) {
-                $mobile_number = $payment->user->mobile;
-            } elseif(strlen($payment->user->mobile) > 11) {
-                if (strpos($payment->user->mobile, '+') !== false) {
-                    $mobile_number = substr($payment->user->mobile, -11);
+                // send sms
+                $mobile_number = 0;
+                if(strlen($payment->user->mobile) == 11) {
+                    $mobile_number = $payment->user->mobile;
+                } elseif(strlen($payment->user->mobile) > 11) {
+                    if (strpos($payment->user->mobile, '+') !== false) {
+                        $mobile_number = substr($payment->user->mobile, -11);
+                    }
                 }
+                // $url = config('sms.url');
+                // $number = $mobile_number;
+                $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+                
+                // NEW PANEL
+                $url = config('sms.url2');
+                $api_key = config('sms.api_key');
+                $senderid = config('sms.senderid');
+                $number = $mobile_number;
+                $message = $text;
+
+                $data = [
+                    "api_key" => $api_key,
+                    "senderid" => $senderid,
+                    "number" => $number,
+                    "message" => $message,
+                ];
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $jsonresponse = json_decode($response);
+
+                if($jsonresponse->response_code == 202) {
+                    // Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
+                } elseif($jsonresponse->response_code == 1007) {
+                    // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
+                } else {
+                    // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
+                }
+                // NEW PANEL
             }
-            // $url = config('sms.url');
-            // $number = $mobile_number;
-            $text = 'Dear ' . $payment->user->name . ', payment of tk. '. $payment->amount .' is APPROVED successfully! Thanks. Customs and VAT Co-operative Society (CVCS). Login: https://cvcsbd.com/login';
+
             
-            // NEW PANEL
-            $url = config('sms.url2');
-            $api_key = config('sms.api_key');
-            $senderid = config('sms.senderid');
-            $number = $mobile_number;
-            $message = $text;
-
-            $data = [
-                "api_key" => $api_key,
-                "senderid" => $senderid,
-                "number" => $number,
-                "message" => $message,
-            ];
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            $response = curl_exec($ch);
-            curl_close($ch);
-            $jsonresponse = json_decode($response);
-
-            if($jsonresponse->response_code == 202) {
-                // Session::flash('success', 'SMS সফলভাবে পাঠানো হয়েছে!');
-            } elseif($jsonresponse->response_code == 1007) {
-                // Session::flash('warning', 'অপর্যাপ্ত SMS ব্যালেন্সের কারণে SMS পাঠানো যায়নি!');
-            } else {
-                // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
-            }
-            // NEW PANEL
 
             // $data= array(
             //     'username'=>config('sms.username'),
