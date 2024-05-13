@@ -3016,6 +3016,12 @@ class DashboardController extends Controller
         {
             $member = User::where('member_id', $member_id)->first();
 
+            $checkpayment = Payment::where('payment_key', $request->get('mer_txnid');)
+                                   ->where('member_id', $member->member_id)
+                                   ->where('payment_type', $temppayment->payment_type)
+                                   ->where('amount', round($temppayment->amount - ($temppayment->amount * 0.0167158308751)))
+                                   ->first();
+
             // SAVE THE PAYMENT
             $payment = new Payment;
             $payment->member_id = $member->member_id;
