@@ -3146,7 +3146,7 @@ class DashboardController extends Controller
 
             $reply_json = $this->curlAamarpay($api);
             $decode_reply = json_decode($reply_json, true);
-            dd($reply_json);
+            // dd($reply_json);
             if(!empty($decode_reply['pay_status']) || isset($decode_reply['pay_status'])) {
                 $pay_status = $decode_reply['pay_status'];
             } else {
