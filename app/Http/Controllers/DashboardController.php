@@ -3239,7 +3239,7 @@ class DashboardController extends Controller
                             // Session::flash('warning', 'দুঃখিত! SMS পাঠানো যায়নি!');
                         }
                         // NEW PANEL
-                        dd($payment);
+                        // dd($payment);
                         // $data= array(
                         //     'username'=>config('sms.username'),
                         //     'password'=>config('sms.password'),
