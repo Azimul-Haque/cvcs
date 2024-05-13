@@ -3165,7 +3165,7 @@ class DashboardController extends Controller
                                            ->where('member_id', $member->member_id)
                                            ->where('amount', round($temppayment->amount - ($temppayment->amount * 0.0167158308751)))
                                            ->first();
-                    
+
                     if(!empty($checkpayment) || ($checkpayment != null)) {
                         
                         // dd($checkpayment);
@@ -3193,7 +3193,7 @@ class DashboardController extends Controller
                         $payment->card_type = $decode_reply['payment_type']; // card_type
                         $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
                         $payment->save();
-
+                        dd($payment);
                         // send sms
                         $mobile_number = 0;
                         if(strlen($payment->user->mobile) == 11) {
