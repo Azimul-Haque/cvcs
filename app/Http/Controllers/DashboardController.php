@@ -3171,12 +3171,13 @@ class DashboardController extends Controller
                         
                         // dd($checkpayment);
                         // if($decode_reply['store_id'] == 'cvcsbd' && $temppayment->tried > 2) {
-                        if($temppayment->tried > 3) {
-                            $temppayment->delete();
-                        } else {
-                            $temppayment->tried++;
-                            $temppayment->save();
-                        }
+                        $temppayment->delete();
+                        // if($temppayment->tried > 3) {
+                        //     $temppayment->delete();
+                        // } else {
+                        //     $temppayment->tried++;
+                        //     $temppayment->save();
+                        // }
                     } else {
                         $payment = new Payment;
                         $payment->member_id = $member->member_id;
@@ -3194,7 +3195,7 @@ class DashboardController extends Controller
                         $payment->card_type = $decode_reply['payment_type']; // card_type
                         $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
                         $payment->save();
-                        
+
                         // send sms
                         $mobile_number = 0;
                         if(strlen($payment->user->mobile) == 11) {
