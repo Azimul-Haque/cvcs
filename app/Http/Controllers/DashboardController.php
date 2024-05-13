@@ -3158,14 +3158,14 @@ class DashboardController extends Controller
                     // SINGLE PAYMENT CODE
                     // INSERT NEW DATA
                     $member = User::where('member_id', $temppayment->member_id)->first();
-                    dd($member);
+
                     // check payment
                     // check payment
                     $checkpayment = Payment::where('payment_key', $decode_reply['mer_txnid'])
                                            ->where('member_id', $member->member_id)
                                            ->where('amount', round($temppayment->amount - ($temppayment->amount * 0.0167158308751)))
                                            ->first();
-
+                    dd($checkpayment);
                     if(!empty($checkpayment) || ($checkpayment != null)) {
                         
                         // dd($checkpayment);
