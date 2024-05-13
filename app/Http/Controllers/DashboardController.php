@@ -3016,7 +3016,7 @@ class DashboardController extends Controller
         {
             $member = User::where('member_id', $member_id)->first();
 
-            $checkpayment = Payment::where('payment_key', $request->get('mer_txnid');)
+            $checkpayment = Payment::where('payment_key', $request->get('mer_txnid'))
                                    ->where('member_id', $member->member_id)
                                    ->where('payment_type', 1) // single payment, if 2 then bulk payment
                                    ->where('amount', round($amount_paid - ($amount_paid * 0.0167158308751)))
