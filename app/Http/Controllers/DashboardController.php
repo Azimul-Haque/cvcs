@@ -3022,6 +3022,12 @@ class DashboardController extends Controller
                                    ->where('amount', round($amount_paid - ($amount_paid * 0.0167158308751)))
                                    ->first();
 
+            if(!empty($checkpayment) || ($checkpayment != null)) {
+
+            } else {
+                
+            }
+
             // SAVE THE PAYMENT
             $payment = new Payment;
             $payment->member_id = $member->member_id;
