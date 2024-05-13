@@ -3176,7 +3176,7 @@ class DashboardController extends Controller
                             $temppayment->tried++;
                             $temppayment->save();
                         }
-                    // } else {
+                    } else {
                         $payment = new Payment;
                         $payment->member_id = $member->member_id;
                         $payment->payer_id = $member->member_id;
