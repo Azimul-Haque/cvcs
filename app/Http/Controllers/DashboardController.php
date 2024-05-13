@@ -3193,7 +3193,7 @@ class DashboardController extends Controller
                         $payment->card_type = $decode_reply['payment_type']; // card_type
                         $payment->payment_key = $decode_reply['mer_txnid']; // SAME TRXID FOR BOTH METHOD
                         $payment->save();
-
+                        dd($payment);
                         // send sms
                         $mobile_number = 0;
                         if(strlen($payment->user->mobile) == 11) {
