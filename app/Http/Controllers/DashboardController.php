@@ -3158,7 +3158,7 @@ class DashboardController extends Controller
                     // SINGLE PAYMENT CODE
                     // INSERT NEW DATA
                     $member = User::where('member_id', $temppayment->member_id)->first();
-
+                    dd($member);
                     // check payment
                     // check payment
                     $checkpayment = Payment::where('payment_key', $decode_reply['mer_txnid'])
