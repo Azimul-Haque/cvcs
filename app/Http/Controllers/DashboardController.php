@@ -3023,7 +3023,10 @@ class DashboardController extends Controller
                                    ->first();
 
             if(!empty($checkpayment) || ($checkpayment != null)) {
-
+                // DELETE TEMPPAYMENT
+                $temppayment = Temppayment::where('trxid', $request->get('mer_txnid'))->first();
+                $temppayment->delete();
+                // DELETE TEMPPAYMENT
             } else {
                 
             }
