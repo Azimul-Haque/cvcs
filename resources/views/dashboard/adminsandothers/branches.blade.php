@@ -68,7 +68,18 @@
                   {!! Form::model($branch, ['route' => ['dashboard.updatebranch', $branch->id], 'method' => 'PUT', 'class' => 'form-default']) !!}
                         
                   <div class="modal-body">
-                    কাজ চলছে...
+                    <div class="form-group">
+                      {!! Form::label('name', 'কাস্টমস অফিসের নাম') !!}
+                      {!! Form::text('name', null, array('class' => 'form-control', 'id' => 'name', 'placeholder' => 'কাস্টমস অফিসের নাম', 'required' => '')) !!}
+                    </div>
+                    <div class="form-group">
+                      {!! Form::label('address', 'কাস্টমস অফিসের ঠিকানা') !!}
+                      {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'address', 'placeholder' => 'কাস্টমস অফিসের ঠিকানা', 'required' => '')) !!}
+                    </div>
+                    <div class="form-group">
+                      {!! Form::label('phone', 'কাস্টমস অফিসের ফোন') !!}
+                      {!! Form::number('phone', null, array('class' => 'form-control', 'id' => 'phone', 'placeholder' => 'কাস্টমস অফিসের ফোন', 'required' => '')) !!}
+                    </div>
                   </div>
                   <div class="modal-footer">
                     {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary')) !!}
@@ -124,7 +135,7 @@
   </div>
   <!-- Add Branch Modal -->
   <!-- Add Branch Modal -->
-  
+
   {{ $branches->links() }}
 
   @else
