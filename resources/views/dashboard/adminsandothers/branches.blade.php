@@ -102,10 +102,6 @@
         {!! Form::open(['route' => 'dashboard.storebranch', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
           <div class="modal-body">
             <div class="form-group">
-              {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
-              {!! Form::text('bank', null, array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
-            </div>
-            <div class="form-group">
               {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
               {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
             </div>
