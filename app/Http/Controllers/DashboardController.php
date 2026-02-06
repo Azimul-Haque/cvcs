@@ -479,7 +479,7 @@ class DashboardController extends Controller
         $branch->save();
 
         Session::flash('success', 'সফলভাবে ব্রাঞ্চ সংরক্ষন হয়েছে!');
-        return redirect()->route('dashboard.branches');
+        return redirect()->back();
     }
     
     public function updateBranch(Request $request, $id)
@@ -497,7 +497,7 @@ class DashboardController extends Controller
         $branch->save();
 
         Session::flash('success', 'সফলভাবে ব্রাঞ্চ হালনাগাদ হয়েছে!');
-        return redirect()->route('dashboard.branches');
+        return redirect()->back();
     }
 
     public function storeBranchPayment(Request $request)
