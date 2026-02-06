@@ -92,7 +92,7 @@
 
   <!-- Add Branch Modal -->
   <!-- Add Branch Modal -->
-  <div class="modal fade" id="addDonationModal" role="dialog">
+  <div class="modal fade" id="addBranchModal" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header modal-header-primary">
