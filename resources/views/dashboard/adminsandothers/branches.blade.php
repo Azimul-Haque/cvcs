@@ -109,24 +109,7 @@
               {!! Form::label('address', 'কাস্টমস অফিসের ঠিকানা') !!}
               {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের ঠিকানা', 'required' => '')) !!}
             </div>
-            <div class="form-group">
-              {!! Form::label('pay_slip', 'ব্রাঞ্চের নাম') !!}
-              {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
-            </div>
-            <div class="form-group">
-                <label>রিসিটের ছবি (সর্বোচ্চ ৫০০ কিলোবাইট)</label>
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <span class="btn btn-default btn-file">
-                            Browse <input type="file" id="image" name="image" required="">
-                        </span>
-                    </span>
-                    <input type="text" class="form-control text-blue" readonly>
-                </div>
-                <center>
-                  <img src="{{ asset('images/800x500.png')}}" id='img-upload' style="height: 100px; width: auto; padding: 5px;" />
-                </center>
-            </div>
+            
           </div>
           <div class="modal-footer">
             {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary')) !!}
