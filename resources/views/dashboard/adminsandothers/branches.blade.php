@@ -103,7 +103,7 @@
   <!-- Add Branch Modal -->
   <!-- Add Branch Modal -->
   <div class="modal fade" id="addBranchModal" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header modal-header-primary">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
