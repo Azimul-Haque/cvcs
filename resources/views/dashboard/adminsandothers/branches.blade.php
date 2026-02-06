@@ -11,7 +11,7 @@
       দপ্তর সমূহ
       <div class="pull-right">
         @if(Auth::user()->role == 'admin')
-        <a class="btn btn-success" href="#!" title="দপ্তর যোগ করুন (কাজ চলছে...)" data-toggle="modal" data-target="#addDonationModal" data-backdrop="static" title="নতুন ডোনেশন যোগ করুন" data-placement="top"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></a> {{-- {{ route('dashboard.createbulkpayer') }} --}}
+        <button class="btn btn-success" href="#!" title="দপ্তর যোগ করুন (কাজ চলছে...)" data-toggle="modal" data-target="#addDonationModal" data-backdrop="static" title="নতুন ডোনেশন যোগ করুন" data-placement="top"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></button> {{-- {{ route('dashboard.createbulkpayer') }} --}}
         @endif
       </div>
     </h1>
