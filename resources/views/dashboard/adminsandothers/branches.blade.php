@@ -106,7 +106,7 @@
               {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের নাম', 'required' => '')) !!}
             </div>
             <div class="form-group">
-              {!! Form::label('address', 'কাস্টমস অফিসের নাম') !!}
+              {!! Form::label('address', 'কাস্টমস অফিসের ঠিকানা') !!}
               {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের নাম', 'required' => '')) !!}
             </div>
             <div class="form-group">
