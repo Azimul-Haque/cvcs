@@ -111,7 +111,7 @@
             </div>
             <div class="form-group">
               {!! Form::label('phone', 'কাস্টমস অফিসের ফোন') !!}
-              {!! Form::text('phone', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের ফোন', 'required' => '')) !!}
+              {!! Form::number('phone', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের ফোন', 'required' => '')) !!}
             </div>
           </div>
           <div class="modal-footer">
