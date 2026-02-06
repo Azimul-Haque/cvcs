@@ -89,6 +89,69 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Add Branch Modal -->
+  <!-- Add Branch Modal -->
+  <div class="modal fade" id="addDonationModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header modal-header-primary">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">নতুন ডোনেশন যোগ</h4>
+        </div>
+        {!! Form::open(['route' => 'dashboard.storedonation', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
+          <div class="modal-body">
+            {!! Form::hidden('submitter_id', Auth::user()->id) !!}
+            <div class="form-group">
+              {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
+              <select class="form-control" name="donor_id" id="donor_id" required="">
+                <option selected="" disabled="">ডোনার (দাতা) নির্ধারণ করুন</option>
+                @foreach($donors as $donor)
+                <option value="{{ $donor->id }}">{{ $donor->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
+              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'টাকার পরিমাণ লিখুন', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
+            </div>
+            <div class="form-group">
+              {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
+              {!! Form::text('bank', null, array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
+            </div>
+            <div class="form-group">
+              {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
+              {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
+            </div>
+            <div class="form-group">
+              {{-- {!! Form::label('pay_slip', 'ব্রাঞ্চের নাম') !!} --}}
+              {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
+            </div>
+            <div class="form-group">
+                <label>রিসিটের ছবি (সর্বোচ্চ ৫০০ কিলোবাইট)</label>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <span class="btn btn-default btn-file">
+                            Browse <input type="file" id="image" name="image" required="">
+                        </span>
+                    </span>
+                    <input type="text" class="form-control text-blue" readonly>
+                </div>
+                <center>
+                  <img src="{{ asset('images/800x500.png')}}" id='img-upload' style="height: 100px; width: auto; padding: 5px;" />
+                </center>
+            </div>
+          </div>
+          <div class="modal-footer">
+            {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary')) !!}
+            <button type="button" class="btn btn-default" data-dismiss="modal">ফিরে যান</button>
+          </div>
+        {!! Form::close() !!}
+      </div>
+    </div>
+  </div>
+  <!-- Add Branch Modal -->
+  <!-- Add Branch Modal -->
   {{ $branches->links() }}
 
   @else
