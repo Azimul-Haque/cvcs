@@ -73,11 +73,11 @@
                       </div>
                       <div class="form-group">
                         {!! Form::label('address', 'কাস্টমস অফিসের ঠিকানা') !!}
-                        {!! Form::text('address', $branch->name, array('class' => 'form-control', 'id' => 'address', 'placeholder' => 'কাস্টমস অফিসের ঠিকানা', 'required' => '')) !!}
+                        {!! Form::text('address', $branch->address, array('class' => 'form-control', 'id' => 'address', 'placeholder' => 'কাস্টমস অফিসের ঠিকানা', 'required' => '')) !!}
                       </div>
                       <div class="form-group">
                         {!! Form::label('phone', 'কাস্টমস অফিসের ফোন') !!}
-                        {!! Form::number('phone', $branch->name, array('class' => 'form-control', 'id' => 'phone', 'placeholder' => 'কাস্টমস অফিসের ফোন', 'required' => '')) !!}
+                        {!! Form::number('phone', $branch->phone, array('class' => 'form-control', 'id' => 'phone', 'placeholder' => 'কাস্টমস অফিসের ফোন', 'required' => '')) !!}
                       </div>
                     </div>
                     <div class="modal-footer">
