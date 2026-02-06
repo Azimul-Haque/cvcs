@@ -109,7 +109,10 @@
               {!! Form::label('address', 'কাস্টমস অফিসের ঠিকানা') !!}
               {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের ঠিকানা', 'required' => '')) !!}
             </div>
-            
+            <div class="form-group">
+              {!! Form::label('address', 'কাস্টমস অফিসের ঠিকানা') !!}
+              {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের ঠিকানা', 'required' => '')) !!}
+            </div>
           </div>
           <div class="modal-footer">
             {!! Form::submit('দাখিল করুন', array('class' => 'btn btn-primary')) !!}
