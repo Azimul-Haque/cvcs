@@ -106,6 +106,10 @@
               {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের নাম', 'required' => '')) !!}
             </div>
             <div class="form-group">
+              {!! Form::label('address', 'কাস্টমস অফিসের নাম') !!}
+              {!! Form::text('address', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'কাস্টমস অফিসের নাম', 'required' => '')) !!}
+            </div>
+            <div class="form-group">
               {!! Form::label('pay_slip', 'ব্রাঞ্চের নাম') !!}
               {!! Form::text('pay_slip', null, array('class' => 'form-control', 'id' => 'pay_slip', 'placeholder' => 'পে স্লিপ নম্বর লিখুন', 'required' => '')) !!}
             </div>
