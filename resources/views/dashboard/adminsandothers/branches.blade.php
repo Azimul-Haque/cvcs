@@ -102,19 +102,6 @@
         {!! Form::open(['route' => 'dashboard.storebranch', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
           <div class="modal-body">
             <div class="form-group">
-              {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-              <select class="form-control" name="donor_id" id="donor_id" required="">
-                <option selected="" disabled="">ডোনার (দাতা) নির্ধারণ করুন</option>
-                @foreach($donors as $donor)
-                <option value="{{ $donor->id }}">{{ $donor->name }}</option>
-                @endforeach
-              </select>
-            </div>
-            <div class="form-group">
-              {{-- {!! Form::label('amount', 'পরিমাণ (৳)') !!} --}}
-              {!! Form::text('amount', null, array('class' => 'form-control', 'id' => 'amount', 'placeholder' => 'টাকার পরিমাণ লিখুন', 'required', 'data-parsley-type' => 'number','data-parsley-type-message' => 'সংখ্যায় লিখুন')) !!}
-            </div>
-            <div class="form-group">
               {{-- {!! Form::label('bank', 'ব্যাংকের নাম') !!} --}}
               {!! Form::text('bank', null, array('class' => 'form-control', 'id' => 'bank', 'placeholder' => 'ব্যাংকের নাম লিখুন', 'required' => '', 'data-parsley-required-message' => 'ব্যাংকের নামটি লিখুন')) !!}
             </div>
