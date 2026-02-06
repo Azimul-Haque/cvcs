@@ -99,7 +99,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">নতুন ডোনেশন যোগ</h4>
         </div>
-        {!! Form::open(['route' => 'dashboard.storedonation', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::open(['route' => 'dashboard.storebranch', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
           <div class="modal-body">
             {!! Form::hidden('submitter_id', Auth::user()->id) !!}
             <div class="form-group">
