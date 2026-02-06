@@ -124,6 +124,7 @@
   </div>
   <!-- Add Branch Modal -->
   <!-- Add Branch Modal -->
+  
   {{ $branches->links() }}
 
   @else
