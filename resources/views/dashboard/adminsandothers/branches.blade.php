@@ -102,7 +102,7 @@
         {!! Form::open(['route' => 'dashboard.storebranch', 'method' => 'POST', 'class' => 'form-default', 'data-parsley-validate' => '', 'enctype' => 'multipart/form-data']) !!}
           <div class="modal-body">
             <div class="form-group">
-              {{-- {!! Form::label('branch', 'ব্রাঞ্চের নাম') !!} --}}
+              {{-- {!! Form::label('branch', 'কাস্টমস অফিসের নাম') !!} --}}
               {!! Form::text('branch', null, array('class' => 'form-control', 'id' => 'branch', 'placeholder' => 'ব্রাঞ্চের নাম লিখুন', 'required' => '')) !!}
             </div>
             <div class="form-group">
