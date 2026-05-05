@@ -156,12 +156,12 @@
             <div class="bcs-btn-container">
                 <!-- App Link -->
                 <a href="https://play.google.com/store/apps/details?id=com.orbachinujbuk.bcs" target="_blank" class="bcs-action-btn btn-app">
-                    <i class="glyphicon glyphicon-phone"></i>\uf17b অ্যাপ ডাউনলোড করুন
+                    📱 অ্যাপ ডাউনলোড করুন
                 </a>
                 
                 <!-- Website Link -->
                 <a href="https://bcsexamaid.com" target="_blank" class="bcs-action-btn btn-web">
-                    <i class="glyphicon glyphicon-globe"></i> ওয়েবসাইট ভিজিট করুন
+                    🌐 ওয়েবসাইট ভিজিট করুন
                 </a>
                 
                 <!-- Blog Link -->
