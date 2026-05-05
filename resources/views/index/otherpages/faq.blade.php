@@ -83,91 +83,90 @@
     <!-- end content section -->
     <br>
     <br>
-    <!-- BCS Exam Aid Widget - Professional Version -->
+    <!-- BCS Exam Aid Widget - Ultra Modern Version -->
     <style>
-        /* কনফ্লিক্ট এড়াতে স্পেসিফিক ক্লাস ব্যবহার করা হয়েছে */
-        .bcs-widget-card {
-            max-width: 360px;
-            margin: 15px auto;
-            border: 1px solid #e1e4e8;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .bcs-widget-card:hover {
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-            transform: translateY(-3px);
-        }
-        .bcs-widget-header {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-            color: #ffffff;
-            padding: 20px 15px;
+        .bcs-pro-widget {
+            max-width: 340px;
+            margin: 20px auto;
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             text-align: center;
+            overflow: hidden;
         }
-        .bcs-widget-header h4 {
+        .bcs-pro-header {
+            background: #0d47a1; /* Deep Professional Blue */
+            padding: 25px 15px;
+            color: #ffffff;
+        }
+        .bcs-pro-header h2 {
             margin: 0;
+            font-size: 22px;
             font-weight: 700;
             letter-spacing: 0.5px;
-            font-size: 19px;
         }
-        .bcs-widget-header p {
-            margin: 5px 0 0;
-            font-size: 12px;
-            opacity: 0.9;
-        }
-        .bcs-widget-body {
-            padding: 20px 25px;
-            background: #ffffff;
-        }
-        .bcs-widget-body .desc {
-            color: #586069;
-            font-size: 13.5px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .bcs-btn-group .btn {
-            margin-bottom: 12px;
-            padding: 10px;
-            font-weight: 600;
+        .bcs-pro-header p {
+            margin: 8px 0 0;
             font-size: 13px;
-            border-radius: 6px;
-            transition: opacity 0.2s;
+            opacity: 0.85;
+            font-weight: 300;
         }
-        .bcs-btn-group .btn:last-child { margin-bottom: 0; }
+        .bcs-pro-body {
+            padding: 25px;
+        }
+        .bcs-pro-body .info-text {
+            font-size: 14px;
+            color: #455a64;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        /* Buttons Customization */
+        .bcs-action-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .bcs-action-btn:last-child { margin-bottom: 0; }
         
-        /* আইকন ও কালার কাস্টমাইজেশন */
-        .btn-google { background-color: #00875f !important; border-color: #00875f !important; color: #fff !important; }
-        .btn-site { background-color: #1a237e !important; border-color: #1a237e !important; color: #fff !important; }
-        .btn-blog { background-color: #03a9f4 !important; border-color: #03a9f4 !important; color: #fff !important; }
+        .btn-app { background: #1b5e20; color: #ffffff !important; } /* Success Green */
+        .btn-web { background: #0d47a1; color: #ffffff !important; } /* Primary Blue */
+        .btn-blog { border: 2px solid #0d47a1; color: #0d47a1 !important; background: transparent; }
+        
+        .bcs-action-btn:hover { opacity: 0.9; transform: scale(1.02); }
     </style>
 
-    <div class="panel panel-default bcs-widget-card">
-        <div class="bcs-widget-header">
-            <h4>BCS Exam Aid</h4>
-            <p>Your Gateway to Civil Service Excellence</p>
+    <div class="bcs-pro-widget">
+        <div class="bcs-pro-header">
+            <h2>BCS Exam Aid</h2>
+            <p>বিসিএস ও সরকারি চাকরির স্মার্ট প্ল্যাটফর্ম</p>
         </div>
-        <div class="bcs-widget-body">
-            <p class="desc">
-                ১ লক্ষাধিক প্রশ্ন এবং বিসিএস ক্যাডারদের প্রত্যক্ষ তত্ত্বাবধানে তৈরি বাংলাদেশের অন্যতম ডিজিটাল লার্নিং প্ল্যাটফর্ম।
+        <div class="bcs-pro-body">
+            <p class="info-text">
+                ক্যাডারদের তত্ত্বাবধানে তৈরি ১ লক্ষাধিক প্রশ্ন এবং নির্ভুল সমাধানের মাধ্যমে আপনার স্মার্ট প্রস্তুতি নিশ্চিত করুন।
             </p>
             
-            <div class="bcs-btn-group">
+            <div class="bcs-btn-container">
                 <!-- App Link -->
-                <a href="https://play.google.com/store" target="_blank" class="btn btn-success btn-block btn-google">
-                    <i class="glyphicon glyphicon-play"></i> Get Android App
+                <a href="https://play.google.com/store" target="_blank" class="bcs-action-btn btn-app">
+                    <i class="glyphicon glyphicon-phone"></i> অ্যাপ ডাউনলোড করুন
                 </a>
                 
                 <!-- Website Link -->
-                <a href="https://bcsexamaid.com" target="_blank" class="btn btn-primary btn-block btn-site">
-                    <i class="glyphicon glyphicon-globe"></i> Official Website
+                <a href="https://bcsexamaid.com" target="_blank" class="bcs-action-btn btn-web">
+                    <i class="glyphicon glyphicon-globe"></i> ওয়েবসাইট ভিজিট করুন
                 </a>
                 
                 <!-- Blog Link -->
-                <a href="https://bcsexamaid.com/blogs" target="_blank" class="btn btn-info btn-block btn-blog">
-                    <i class="glyphicon glyphicon-edit"></i> Preparation Blogs
+                <a href="https://bcsexamaid.com/blogs" target="_blank" class="bcs-action-btn btn-blog">
+                    <i class="glyphicon glyphicon-book"></i> প্রস্তুতি ব্লগ পড়ুন
                 </a>
             </div>
         </div>
