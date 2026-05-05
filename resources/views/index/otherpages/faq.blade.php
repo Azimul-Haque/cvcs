@@ -155,7 +155,7 @@
             
             <div class="bcs-btn-container">
                 <!-- App Link -->
-                <a href="https://play.google.com/store" target="_blank" class="bcs-action-btn btn-app">
+                <a href="https://play.google.com/store/apps/details?id=com.orbachinujbuk.bcs" target="_blank" class="bcs-action-btn btn-app">
                     <i class="glyphicon glyphicon-phone"></i> অ্যাপ ডাউনলোড করুন
                 </a>
                 
