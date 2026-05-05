@@ -139,9 +139,6 @@
                     <a target="_blank" href="{{ $sharedbasicinfo->twitter }}">
                         <i class="fa fa-twitter"></i>
                     </a>
-                    <a target="_blank" href="{{ $sharedbasicinfo->gplus }}">
-                        <i class="fa fa-google-plus"></i>
-                    </a>
                     <a target="_blank" href="{{ $sharedbasicinfo->ytube }}">
                         <i class="fa fa-youtube"></i>
                     </a>
