@@ -83,65 +83,93 @@
     <!-- end content section -->
     <br>
     <br>
-    <!-- Custom Style to Modernize BS3 -->
+    <!-- BCS Exam Aid Widget - Professional Version -->
     <style>
-        .bcs-modern-card {
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: none;
+        /* কনফ্লিক্ট এড়াতে স্পেসিফিক ক্লাস ব্যবহার করা হয়েছে */
+        .bcs-widget-card {
+            max-width: 360px;
+            margin: 15px auto;
+            border: 1px solid #e1e4e8;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             overflow: hidden;
-            max-width: 350px;
-            margin: 20px auto;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
-        .bcs-modern-card:hover {
-            transform: translateY(-5px);
+        .bcs-widget-card:hover {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
         }
-        .bcs-card-header {
-            background: #1a237e; /* Royal Blue */
-            color: white;
-            padding: 20px;
+        .bcs-widget-header {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: #ffffff;
+            padding: 20px 15px;
             text-align: center;
         }
-        .bcs-card-body {
-            padding: 20px;
+        .bcs-widget-header h4 {
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-size: 19px;
+        }
+        .bcs-widget-header p {
+            margin: 5px 0 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .bcs-widget-body {
+            padding: 20px 25px;
             background: #ffffff;
         }
-        .btn-bcs {
-            margin-bottom: 10px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .bcs-widget-body .desc {
+            color: #586069;
+            font-size: 13.5px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            text-align: center;
         }
-        .btn-google-play { background-color: #00875f; color: white; }
-        .btn-google-play:hover { background-color: #006b4b; color: white; }
+        .bcs-btn-group .btn {
+            margin-bottom: 12px;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            border-radius: 6px;
+            transition: opacity 0.2s;
+        }
+        .bcs-btn-group .btn:last-child { margin-bottom: 0; }
+        
+        /* আইকন ও কালার কাস্টমাইজেশন */
+        .btn-google { background-color: #00875f !important; border-color: #00875f !important; color: #fff !important; }
+        .btn-site { background-color: #1a237e !important; border-color: #1a237e !important; color: #fff !important; }
+        .btn-blog { background-color: #03a9f4 !important; border-color: #03a9f4 !important; color: #fff !important; }
     </style>
 
-    <div class="panel panel-default bcs-modern-card">
-        <div class="bcs-card-header">
-            <h3 style="margin:0; font-size: 20px;">BCS Exam Aid</h3>
-            <small style="opacity: 0.8;">স্মার্ট প্রস্তুতির আধুনিক মাধ্যম</small>
+    <div class="panel panel-default bcs-widget-card">
+        <div class="bcs-widget-header">
+            <h4>BCS Exam Aid</h4>
+            <p>Your Gateway to Civil Service Excellence</p>
         </div>
-        <div class="bcs-card-body">
-            <p class="text-muted text-center" style="font-size: 14px;">
-                ১ লক্ষাধিক প্রশ্ন এবং বিশেষজ্ঞ ক্যাডারদের তত্ত্বাবধানে তৈরি সেরা লার্নিং প্ল্যাটফর্ম।
+        <div class="bcs-widget-body">
+            <p class="desc">
+                ১ লক্ষাধিক প্রশ্ন এবং বিসিএস ক্যাডারদের প্রত্যক্ষ তত্ত্বাবধানে তৈরি বাংলাদেশের অন্যতম ডিজিটাল লার্নিং প্ল্যাটফর্ম।
             </p>
             
-            <!-- App Link -->
-            <a href="https://play.google.com/store" class="btn btn-block btn-bcs btn-google-play">
-                <i class="glyphicon glyphicon-download-alt"></i> প্লে-স্টোর থেকে অ্যাপ নিন
-            </a>
-            
-            <!-- Website Link -->
-            <a href="https://bcsexamaid.com" class="btn btn-block btn-bcs btn-primary">
-                <i class="glyphicon glyphicon-globe"></i> ওয়েবসাইট ভিজিট করুন
-            </a>
-            
-            <!-- Blog Link -->
-            <a href="https://bcsexamaid.com/blogs" class="btn btn-block btn-bcs btn-info">
-                <i class="glyphicon glyphicon-list-alt"></i> টিপস ও ব্লগ পড়ুন
-            </a>
+            <div class="bcs-btn-group">
+                <!-- App Link -->
+                <a href="https://play.google.com/store" target="_blank" class="btn btn-success btn-block btn-google">
+                    <i class="glyphicon glyphicon-play"></i> Get Android App
+                </a>
+                
+                <!-- Website Link -->
+                <a href="https://bcsexamaid.com" target="_blank" class="btn btn-primary btn-block btn-site">
+                    <i class="glyphicon glyphicon-globe"></i> Official Website
+                </a>
+                
+                <!-- Blog Link -->
+                <a href="https://bcsexamaid.com/blogs" target="_blank" class="btn btn-info btn-block btn-blog">
+                    <i class="glyphicon glyphicon-edit"></i> Preparation Blogs
+                </a>
+            </div>
         </div>
     </div>
 @endsection
