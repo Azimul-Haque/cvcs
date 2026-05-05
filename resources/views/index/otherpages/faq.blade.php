@@ -166,7 +166,7 @@
                 
                 <!-- Blog Link -->
                 <a href="https://bcsexamaid.com/blogs" target="_blank" class="bcs-action-btn btn-blog">
-                    <i class="glyphicon glyphicon-book"></i> প্রস্তুতি ব্লগ পড়ুন
+                    ✒️ প্রস্তুতি ব্লগ পড়ুন
                 </a>
             </div>
         </div>
