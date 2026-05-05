@@ -81,6 +81,8 @@
         </div>
     </section>
     <!-- end content section -->
+    <br>
+    <br>
 @endsection
 
 @section('js')
