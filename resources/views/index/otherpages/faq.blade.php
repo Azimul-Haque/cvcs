@@ -145,7 +145,7 @@
 
     <div class="bcs-pro-widget">
         <div class="bcs-pro-header">
-            <h2 style="font-family: 'Arial';">BCS Exam Aid</h2>
+            <h2 style="font-family: 'Arial'; color: #ffffff;">BCS Exam Aid</h2>
             <p>বিসিএস ও সরকারি চাকরির স্মার্ট প্ল্যাটফর্ম</p>
         </div>
         <div class="bcs-pro-body">
