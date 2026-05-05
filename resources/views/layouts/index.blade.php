@@ -157,7 +157,7 @@
                 <div class="row margin-three">
                     <!-- copyright -->
                     <div class="col-md-6 col-sm-6 col-xs-12 copyright text-left letter-spacing-1 xs-text-center xs-margin-bottom-one">
-                        &copy; {{ date('Y') }} CVCS. Developed by <a href="http://loencebd.com" class="text-light" target="_blank">InnovaTech Bangladesh</a>
+                        &copy; {{ date('Y') }} CVCS. Developed by <a href="http://loencebd.com" style="color: #ffffff;" target="_blank">InnovaTech Bangladesh</a>
                     </div>
                     <!-- end copyright -->
                     <!-- logo -->
