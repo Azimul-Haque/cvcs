@@ -83,6 +83,67 @@
     <!-- end content section -->
     <br>
     <br>
+    <!-- Custom Style to Modernize BS3 -->
+    <style>
+        .bcs-modern-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: none;
+            overflow: hidden;
+            max-width: 350px;
+            margin: 20px auto;
+            transition: transform 0.3s ease;
+        }
+        .bcs-modern-card:hover {
+            transform: translateY(-5px);
+        }
+        .bcs-card-header {
+            background: #1a237e; /* Royal Blue */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .bcs-card-body {
+            padding: 20px;
+            background: #ffffff;
+        }
+        .btn-bcs {
+            margin-bottom: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn-google-play { background-color: #00875f; color: white; }
+        .btn-google-play:hover { background-color: #006b4b; color: white; }
+    </style>
+
+    <div class="panel panel-default bcs-modern-card">
+        <div class="bcs-card-header">
+            <h3 style="margin:0; font-size: 20px;">BCS Exam Aid</h3>
+            <small style="opacity: 0.8;">স্মার্ট প্রস্তুতির আধুনিক মাধ্যম</small>
+        </div>
+        <div class="bcs-card-body">
+            <p class="text-muted text-center" style="font-size: 14px;">
+                ১ লক্ষাধিক প্রশ্ন এবং বিশেষজ্ঞ ক্যাডারদের তত্ত্বাবধানে তৈরি সেরা লার্নিং প্ল্যাটফর্ম।
+            </p>
+            
+            <!-- App Link -->
+            <a href="https://play.google.com/store" class="btn btn-block btn-bcs btn-google-play">
+                <i class="glyphicon glyphicon-download-alt"></i> প্লে-স্টোর থেকে অ্যাপ নিন
+            </a>
+            
+            <!-- Website Link -->
+            <a href="https://bcsexamaid.com" class="btn btn-block btn-bcs btn-primary">
+                <i class="glyphicon glyphicon-globe"></i> ওয়েবসাইট ভিজিট করুন
+            </a>
+            
+            <!-- Blog Link -->
+            <a href="https://bcsexamaid.com/blogs" class="btn btn-block btn-bcs btn-info">
+                <i class="glyphicon glyphicon-list-alt"></i> টিপস ও ব্লগ পড়ুন
+            </a>
+        </div>
+    </div>
 @endsection
 
 @section('js')
